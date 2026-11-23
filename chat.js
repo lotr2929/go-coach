@@ -159,10 +159,26 @@
     input.value = '';
     ask(v);
   });
-  $('#btnClear').addEventListener('click', () => { log = []; store(KEY.chat, log); box.textContent = ''; input.focus(); });
+  function clearChat() { log = []; store(KEY.chat, log); box.textContent = ''; }
+  $('#btnClear').addEventListener('click', () => { clearChat(); input.focus(); });
+
+  /* Enlarge / shrink: the chat can cover the screen for easier reading, then go back to its usual place. */
+  const sizeBtn = $('#btnChatSize');
+  const ICON_BIG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+  const ICON_SMALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>';
+  function setBig(big) {
+    document.body.classList.toggle('chatBig', big);
+    sizeBtn.innerHTML = big ? ICON_SMALL : ICON_BIG;
+    sizeBtn.setAttribute('aria-pressed', String(big));
+    sizeBtn.title = sizeBtn.ariaLabel = big ? 'Shrink the chat' : 'Enlarge the chat';
+    box.scrollTop = box.scrollHeight;
+  }
+  sizeBtn.onclick = () => setBig(!document.body.classList.contains('chatBig'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('chatBig')) setBig(false); });
+  setBig(false);
   setChips(PLAY_CHIPS);
   if (!log.length) { log.push({ who: 'coach', text: C.INTRO }); store(KEY.chat, log); }
   for (const m of log) append(m.who, m.text);
 
-  Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS });
+  Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS, clearChat });
 })();

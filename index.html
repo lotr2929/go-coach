@@ -12,7 +12,7 @@
 </head>
 <body>
 <header>
-  <h1>Go Coach</h1>
+  <div class="titleBox"><h1>Go Coach</h1><div id="verStamp" class="verStamp"></div></div>
   <button id="btnSettings" class="icon" aria-label="Settings">⚙</button>
 </header>
 
@@ -66,6 +66,7 @@
         </div>
       </div>
       <div id="chat" class="chat">
+        <button type="button" id="btnChatSize" class="chatSize" aria-label="Enlarge the chat" aria-pressed="false" title="Enlarge the chat"></button>
         <div class="chatLog" aria-live="polite"></div>
         <div class="quick"></div>
         <form class="chatForm" autocomplete="off">

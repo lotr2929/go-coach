@@ -21,6 +21,7 @@
     if (e.submitter && e.submitter.value === 'start') {
       settings.size = +chosen('size'); settings.colour = chosen('colour'); settings.level = chosen('level'); settings.coachLevel = chosen('coachlevel') || settings.coachLevel; settings.handicap = +chosen('handicap');
       saveSettings();
+      if (G.clearChat) G.clearChat(); /* a new game starts with an empty chat */
       setTimeout(startNewGame, 0);
     }
   });
@@ -47,15 +48,5 @@
   if (!restoreGame()) startNewGame();
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('sw.js').catch(() => { /* offline mode unavailable */ });
-    /* Right-click (or long-press) the title to see when this version was published (taken from the saved copy's name). */
-    let versionText = '';
-    navigator.serviceWorker.ready.then(() => caches.keys()).then(keys => {
-      const stamps = keys.map(k => /^gocoach-(\d{10,})$/.exec(k)).filter(Boolean).map(m => +m[1]);
-      if (stamps.length) versionText = 'Version: ' + new Date(Math.max(...stamps)).toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' });
-    }).catch(() => { /* no version to show */ });
-    $('h1').addEventListener('contextmenu', e => {
-      e.preventDefault();
-      toast(versionText || 'Version not available yet. Reopen the app and try again.', 4500);
-    });
   }
 })();
