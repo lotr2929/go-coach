@@ -53,6 +53,21 @@ async function t(name, fn) {
     const sc = E.scoreArea(9, s.board, await E.estimateDead(s, 60));
     assert(sc.black + sc.white <= 81);
   });
+  await t('hard level captures a stone in atari', async () => {
+    const s = E.newState(9, 0); /* White E5 surrounded on three sides by Black; Black to capture at E4 */
+    for (const m of [31, 40, 39, 0, 41, 8]) E.play(s, m);
+    const r = await E.chooseMove(s, 1, { level: 'hard', ms: 300 });
+    assert.strictEqual(r.move, 49);
+  });
+  await t('hard level plays a legal game to the end', async () => {
+    const s = E.newState(9, 0); let c = 0;
+    while (s.passes < 2 && c < 250) {
+      const r = await E.chooseMove(s, s.turn, { level: 'hard', ms: 30 });
+      if (r.move < 0) E.pass(s); else assert(E.play(s, r.move).ok, 'illegal computer move');
+      c++;
+    }
+    assert(s.passes >= 2, 'game did not end');
+  });
   await t('analysis ranks moves and the played move is included', async () => {
     const s = E.newState(9, 0); E.play(s, 20); E.play(s, 60);
     const r = await E.analyse(s, 1, { ms: 300, include: [0] });
