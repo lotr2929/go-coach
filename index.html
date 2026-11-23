@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1c2726">
+<title>Go Coach</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Go Coach</h1>
+  <button id="btnSettings" class="icon" aria-label="Settings">⚙</button>
+</header>
+
+<main>
+  <section id="playView" class="stage">
+    <div class="boardCol">
+      <div id="statusBar"><span id="whoTurn"></span><span id="posInfo" class="pos" hidden><i id="posB"></i><b id="posL"></b><b id="posR"></b></span><span id="capsInfo"></span></div>
+      <div class="boardWrap"><canvas id="playBoard"></canvas></div>
+      <div id="boardBar" class="boardBar">
+        <div class="barSide">
+          <button type="button" id="btnUndoArrow" class="tab" aria-label="Undo" title="Take back your last move">← Undo</button>
+          <button type="button" id="btnRedoArrow" class="tab" aria-label="Redo" title="Play again the move you took back">Redo →</button>
+        </div>
+        <button type="button" id="btnTerr" class="tab" aria-pressed="false">Territory</button>
+      </div>
+    </div>
+    <aside class="panel">
+      <div class="row controls" id="controls">
+        <button id="btnMode">Play mode</button>
+        <button id="btnPass">Pass</button>
+        <button id="btnUndo">Undo</button>
+        <button id="btnRedo">Redo</button>
+        <button id="btnAnalyse">Analyse</button>
+        <button id="btnResign">Resign</button>
+        <button id="btnNew" class="primary">New</button>
+      </div>
+      <div class="row controls" id="lessonBar" hidden>
+        <button id="btnLHint">Hint</button>
+        <button id="btnLReset">Reset</button>
+        <button id="btnLNext" class="primary">Next</button>
+        <button id="btnLMenu">Lessons</button>
+        <button id="btnLExit">Game</button>
+      </div>
+      <div class="row controls" id="kifuBar" hidden>
+        <button id="btnKFirst" title="Go to the start of the game">« First</button>
+        <button id="btnKBack" title="One move back (left arrow key)">‹ Back</button>
+        <button id="btnKAuto" title="Play the game through automatically">Auto</button>
+        <button id="btnKNext" class="primary" title="One move forward (right arrow key)">Next ›</button>
+        <button id="btnKLast" title="Go to the end of the game">Last »</button>
+        <button id="btnKAnalyse" title="Suggest moves for this position">Analyse</button>
+        <button id="btnKList" title="Choose another game">Games</button>
+        <button id="btnKExit" title="Back to your own game">Exit</button>
+        <input type="range" id="kifuSlider" min="0" max="0" value="0" aria-label="Move number">
+      </div>
+      <div id="quizOptions" class="row wrap" hidden></div>
+      <div id="scorePanel" class="note" hidden>
+        <p id="scoreText"></p>
+        <div class="row">
+          <button id="btnConfirm" class="primary">Confirm result</button>
+          <button id="btnResume">Keep playing</button>
+        </div>
+      </div>
+      <div id="chat" class="chat">
+        <div class="chatLog" aria-live="polite"></div>
+        <div class="quick"></div>
+        <form class="chatForm" autocomplete="off">
+          <input class="chatInput" type="text" placeholder="Ask your coach…" aria-label="Message to the coach" enterkeyhint="send">
+          <button type="button" id="btnClear" aria-label="Clear the chat">Clear</button>
+          <button type="submit" class="primary">Send</button>
+        </form>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<dialog id="newDlg">
+  <form method="dialog" id="newForm">
+    <h2>New game</h2>
+    <div id="optSize" class="opt"></div>
+    <div id="optColour" class="opt"></div>
+    <div id="optLevel" class="opt"></div>
+    <div id="optCoach" class="opt"></div>
+    <div id="optHandicap" class="opt"></div>
+    <p class="small" id="newHelp"></p>
+    <div class="row end">
+      <button value="cancel" formnovalidate>Cancel</button>
+      <button value="start" class="primary" id="btnStart">Start</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="setDlg">
+  <form method="dialog">
+    <h2>Settings</h2>
+    <label class="switch"><input type="checkbox" id="setCoords"> Show coordinates</label>
+    <label class="switch"><input type="checkbox" id="setLibs"> Show liberties (green dots, red when in atari)</label>
+    <label class="switch"><input type="checkbox" id="setCoach"> Coach tips</label>
+    <label class="switch"><input type="checkbox" id="setConfirm"> Tap twice to place (avoids slips on a phone)</label>
+    <label class="switch"><input type="checkbox" id="setSound"> Stone sound</label>
+    <div class="opt">
+      <label class="lbl" for="setTerrSecs">Territory accuracy: up to <b id="terrSecsOut"></b> per map</label>
+      <input type="range" id="setTerrSecs" min="0" max="9" step="1" aria-describedby="terrHelp">
+      <p class="small" id="terrHelp">The Territory tab plays random games after every move. A longer time means more games and a steadier map, but a longer wait.</p>
+    </div>
+    <div class="row wrap"><button type="button" id="btnSGF">Copy game record (SGF)</button></div>
+    <p class="small" id="installHelp"></p>
+    <div class="row end"><button value="close" class="primary">Done</button></div>
+  </form>
+</dialog>
+
+<dialog id="resultDlg">
+  <form method="dialog">
+    <h2 id="resultTitle"></h2>
+    <p id="resultText"></p>
+    <div class="row end">
+      <button value="close">Close</button>
+      <button value="new" class="primary" id="btnResultNew">New game</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="boardTip" hidden></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="engine.js"></script>
+<script src="lessons.js"></script>
+<script src="coach.js"></script>
+<script src="commentary.js"></script>
+<script src="curriculum.js"></script>
+<script src="teach.js"></script>
+<script src="explore.js"></script>
+<script src="sgf.js"></script>
+<script src="kifu.js"></script>
+<script src="intro.js"></script>
+<script src="history.js"></script>
+<script src="guide.js"></script>
+<script src="util.js"></script>
+<script src="board.js"></script>
+<script src="play.js"></script>
+<script src="coaching.js"></script>
+<script src="terr.js"></script>
+<script src="boardbar.js"></script>
+<script src="learn.js"></script>
+<script src="teachui.js"></script>
+<script src="exploreui.js"></script>
+<script src="page.js"></script>
+<script src="kifuui.js"></script>
+<script src="introui.js"></script>
+<script src="chat.js"></script>
+<script src="telemetry.js"></script>
+<script src="fontsize.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
