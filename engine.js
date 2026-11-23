@@ -336,6 +336,11 @@
     }
 
     const ms = opts.ms || LEVEL_MS[level] || 1200;
+    if (level === 'hard' || level === 'expert') { /* tree search in search.js */
+      const r = await (typeof GoSearch !== 'undefined' ? GoSearch : require('./search.js')).search(s, color, { ms, oppPassed, cancelled: opts.cancelled });
+      const c = r && cands.find(q => q.move === r.move);
+      return r && (r.move < 0 ? { move: -1, note: 'nothing left to gain', winrate: r.winrate } : { move: r.move, note: c ? describe(c) : 'a move found by reading ahead', winrate: r.winrate });
+    }
     const K = n <= 9 ? 12 : n <= 13 ? 10 : 8;
     const arms = cands.slice(0, K).map(c => {
       const r = tryPlay(g, s.board, c.move, color, s.ko);
@@ -373,10 +378,7 @@
     return { move: bestMove.move, note: describe(bestMove.c), winrate: rate(bestMove) };
   }
 
-  async function suggest(s, color, opts) {
-    const level = (opts && opts.level) || 'medium';
-    return chooseMove(s, color, Object.assign({ ms: LEVEL_MS[level] || 1200 }, opts || {}, { level }));
-  }
+  const suggest = (s, color, opts) => chooseMove(s, color, Object.assign({}, opts, { level: (opts && opts.level) || 'medium' }));
 
   /* ---------- dead-stone estimate for scoring ---------- */
   async function estimateDead(s, sims, cancelled) {
@@ -400,7 +402,6 @@
     }
     return dead;
   }
-
 
   /* ---------- analysis ---------- */
   function clone(s) {

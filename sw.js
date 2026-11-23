@@ -1,6 +1,6 @@
 /* Go Coach service worker: loads the newest files when online and falls back to its saved copy when offline. Bump VERSION when files change. */
-const VERSION = 'gocoach-1795362858193';
-const FILES = ['./', 'index.html', 'style.css', 'engine.js', 'lessons.js', 'util.js', 'board.js', 'play.js', 'coaching.js', 'learn.js', 'main.js', 'coach.js', 'commentary.js', 'curriculum.js', 'teach.js', 'teachui.js', 'explore.js', 'exploreui.js', 'intro.js', 'introui.js', 'history.js', 'history.md', 'guide.js', 'page.js', 'sgf.js', 'kifu.js', 'kifuui.js', 'terr.js', 'boardbar.js', 'chat.js', 'telemetry.js', 'fontsize.js', 'manifest.webmanifest'];
+const VERSION = 'gocoach-1795435277853';
+const FILES = ['./', 'index.html', 'style.css', 'engine.js', 'search.js', 'lessons.js', 'util.js', 'board.js', 'play.js', 'coaching.js', 'learn.js', 'main.js', 'coach.js', 'commentary.js', 'curriculum.js', 'teach.js', 'teachui.js', 'explore.js', 'exploreui.js', 'intro.js', 'introui.js', 'history.js', 'history.md', 'guide.js', 'page.js', 'sgf.js', 'kifu.js', 'kifuui.js', 'terr.js', 'boardbar.js', 'chat.js', 'telemetry.js', 'fontsize.js', 'manifest.webmanifest'];
 const ICONS = ['icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 
 self.addEventListener('install', e => {
