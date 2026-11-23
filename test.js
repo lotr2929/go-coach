@@ -13,6 +13,7 @@ const GUIDE = require('./guide.js');
 const SGF = require('./sgf.js');
 const KIFU = require('./kifu.js');
 const EXPLAIN = require('./explain.js');
+const SHAPES = require('./shapes.js');
 let failed = 0, passed = 0;
 async function t(name, fn) {
   try { await fn(); passed++; } catch (e) { failed++; console.log('FAIL ' + name + ': ' + e.message); }
@@ -76,6 +77,20 @@ async function t(name, fn) {
     const txt = await EXPLAIN.contrast(E, s, 49, 80, 1, 1, { ms: 200 });
     assert(/E4 finishes about \d+ points better/.test(txt), txt);
     assert(/White’s stone at E5 survives/.test(txt), txt);
+  });
+  await t('shapes: tiger, empty triangle, ponnuki, eye and cutting point are recognised', () => {
+    const at = (s, c, list) => { for (const k of list) s.board[(9 - +k.slice(1)) * 9 + 'ABCDEFGHJ'.indexOf(k[0])] = c; };
+    const kinds = s => SHAPES.scan(9, s.board).map(x => x.kind).sort().join(',');
+    let s = E.newState(9, 0); at(s, 1, ['C3', 'E3', 'D4']); assert.strictEqual(kinds(s), 'tiger');
+    s = E.newState(9, 0); at(s, 1, ['C3', 'D3', 'C4']); assert.strictEqual(kinds(s), 'triangle');
+    s = E.newState(9, 0); at(s, 1, ['E4', 'D5', 'F5', 'E6']); assert.strictEqual(kinds(s), 'ponnuki');
+    s = E.newState(9, 0); at(s, 1, ['A2', 'B1', 'B2']); assert.strictEqual(kinds(s), 'eye');
+    s = E.newState(9, 0); at(s, 1, ['D4', 'E5']); at(s, 2, ['E4']); assert.strictEqual(kinds(s), 'cut');
+  });
+  await t('shapes: possible next shapes are legal moves for the side to move', () => {
+    const s = E.newState(9, 0); for (const m of [40, 20, 41, 60]) E.play(s, m);
+    const list = SHAPES.possible(E, s, s.turn);
+    assert(list.length > 0 && list.every(x => x.potential && x.color === s.turn && !s.board[x.move] && E.tryPlay(E.geom(9), s.board, x.move, s.turn, s.ko).ok));
   });
   await t('analysis ranks moves and the played move is included', async () => {
     const s = E.newState(9, 0); E.play(s, 20); E.play(s, 60);

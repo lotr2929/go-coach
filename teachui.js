@@ -29,7 +29,7 @@
     $('#lessonBar').hidden = true; $('#quizOptions').hidden = true;
     playView.set({
       n: 9, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: v.libs, marks: v.marks, hint: v.hint,
-      ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: v.terr, dead: null, own: v.own
+      ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: v.terr, dead: null, own: v.own, shapes: null
     });
     $('#whoTurn').textContent = session.status();
     $('#posInfo').hidden = true;

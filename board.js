@@ -10,7 +10,7 @@
       this.n = 9; this.board = new Int8Array(81);
       this.coords = true; this.libs = false;
       this.last = -1; this.ko = -1; this.own = null; this.marks = {}; this.hint = []; this.terr = null; this.dead = null;
-      this.ghost = -1; this.ghostColor = 1; this.hover = -1; this.hoverColor = 0;
+      this.ghost = -1; this.ghostColor = 1; this.hover = -1; this.hoverColor = 0; this.shapes = null;
       this.W = 0; this.dpr = 1; this.cell = 1; this.pad = 1;
       canvas.addEventListener('click', e => { const i = this.pointAt(e); if (i >= 0 && this.onTap) this.onTap(i); });
       canvas.addEventListener('pointermove', e => {
@@ -62,6 +62,28 @@
         ctx.beginPath(); ctx.moveTo(x - d, y - d); ctx.lineTo(x + d, y + d); ctx.moveTo(x + d, y - d); ctx.lineTo(x - d, y + d); ctx.stroke();
       }
       ctx.restore();
+    }
+    /* Each shape: { pts, rgb, dashed, label, move }. A rounded box around its points, filled lightly (top = false) or
+       outlined and numbered (top = true). A shape that could be made is dashed, with a dashed ring on the move that makes it. */
+    drawShapes(px, cell, top) {
+      const ctx = this.ctx, n = this.n;
+      this.shapes.forEach((sh, k) => {
+        const xs = sh.pts.map(p => p % n), ys = sh.pts.map(p => (p / n) | 0), m = cell * (.42 - (k % 3) * .04);
+        const x0 = px(Math.min(...xs)) - m, y0 = px(Math.min(...ys)) - m, w = px(Math.max(...xs)) + m - x0, h = px(Math.max(...ys)) + m - y0;
+        ctx.save();
+        ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x0, y0, w, h, cell * .25) : ctx.rect(x0, y0, w, h);
+        if (!top) { ctx.fillStyle = `rgba(${sh.rgb},${sh.dashed ? .14 : .26})`; ctx.fill(); ctx.restore(); return; }
+        ctx.strokeStyle = `rgba(${sh.rgb},.95)`; ctx.lineWidth = Math.max(2, cell * .06);
+        if (sh.dashed) ctx.setLineDash([cell * .16, cell * .12]);
+        ctx.stroke();
+        if (sh.move >= 0) { ctx.beginPath(); ctx.arc(px(sh.move % n), px((sh.move / n) | 0), cell * .3, 0, 7); ctx.stroke(); }
+        ctx.setLineDash([]);
+        const r = cell * .2;
+        ctx.fillStyle = `rgb(${sh.rgb})`; ctx.beginPath(); ctx.arc(x0 + r * .6, y0 + r * .6, r, 0, 7); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.font = 'bold ' + Math.round(cell * .26) + 'px system-ui, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(sh.label), x0 + r * .6, y0 + r * .6 + 1);
+        ctx.restore();
+      });
     }
     draw() {
       const W = this.W;
@@ -134,6 +156,8 @@
           for (const l of gr.libs) { ctx.beginPath(); ctx.arc(px(l % n), px((l / n) | 0), cell * (atari ? .14 : .1), 0, 7); ctx.fill(); }
         }
       }
+      // shapes (shapesui.js): a light colour behind the stones; borders and numbers go on top of them
+      if (this.shapes) this.drawShapes(px, cell, false);
       // stones
       for (let i = 0; i < n * n; i++) {
         const c = this.board[i];
@@ -148,6 +172,7 @@
         const x = px(this.ko % n), y = px((this.ko / n) | 0), h = cell * .17;
         ctx.strokeStyle = '#b3261e'; ctx.lineWidth = 2; ctx.strokeRect(x - h, y - h, h * 2, h * 2);
       }
+      if (this.shapes) this.drawShapes(px, cell, true);
       // marks
       for (const k of Object.keys(this.marks)) {
         const i = +k, x = px(i % n), y = px((i / n) | 0);
