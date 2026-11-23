@@ -237,13 +237,12 @@
   }
 
   /* ---------- Play mode and Coach mode ---------- */
-  /* A small bar above the board: Black's share of the position. It comes from the latest analysis when there is one
-     for this exact position, otherwise from a quick estimate (random games to the end). Dimmed while one move out of date. */
+  /* A small bar above the board: Black's chance of winning, from a short read with the tree search in search.js
+     (which, unlike plain random games, values having the move, so komi does not make White look far ahead at the start).
+     Dimmed while one move out of date. */
   let est = null, estTok = 0;
   function blackPct() {
-    const c = current();
-    if (c && c.res.moves[0]) return { p: Math.round((c.s.turn === 1 ? c.res.moves[0].wr : 1 - c.res.moves[0].wr) * 100), fresh: true };
-    if (est) return { p: Math.max(2, Math.min(98, Math.round(50 + est.diff * 3))), fresh: !!Play.s && est.sig === sigOf(Play.s) };
+    if (est) return { p: Math.max(2, Math.min(98, est.p)), fresh: !!Play.s && est.sig === sigOf(Play.s) };
     return null;
   }
   function paintPos() {
@@ -258,9 +257,9 @@
     const s = Play.s;
     if (!s || Play.thinking || Play.phase !== 'play') return;
     const sig = sigOf(s), tok = ++estTok;
-    const r = await E.territory(E.clone(s), s.n <= 9 ? 60 : s.n <= 13 ? 40 : 24, () => tok !== estTok);
+    const r = await window.GoSearch.search(E.clone(s), s.turn, { ms: s.n <= 9 ? 400 : s.n <= 13 ? 600 : 800, cancelled: () => tok !== estTok });
     if (!r || tok !== estTok) return;
-    est = { sig, diff: r.diff };
+    est = { sig, p: Math.round((s.turn === 1 ? r.winrate : 1 - r.winrate) * 100) };
     paintPos();
   }
 

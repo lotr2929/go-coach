@@ -2,11 +2,12 @@
    1. Whenever the app is opened or brought back to the front, it asks for a new version. If one has arrived, the page
       reloads itself (the game in progress is saved after every move and carries on). During a lesson, guided teaching,
       exploring or a famous game it only shows a notice, so nothing is interrupted.
-   2. Settings has a "Check for updates" button that always reloads the newest files, and shows the version date. */
+   2. Settings has a "Check for updates" button that always reloads the newest files.
+   3. The version date shows under the title and in Settings. */
 (() => {
   'use strict';
   const G = window.GC, { $, toast } = G;
-  const btn = $('#btnUpdate'), ver = $('#verText');
+  const btn = $('#btnUpdate'), ver = $('#verText'), stamp = $('#verStamp');
   if (!('serviceWorker' in navigator) || location.protocol === 'file:') { if (btn) btn.hidden = true; return; }
 
   const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on);
@@ -24,15 +25,19 @@
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
   check();
 
-  /* The version date comes from the saved copy's name, which bump-version.js sets when a version is published. */
+  /* The version date comes from the saved copy's name, which bump-version.js sets when a version is published.
+     It shows under the title and in Settings. */
   function showVersion() {
-    if (!ver || !window.caches) return;
+    if (!window.caches) return;
     caches.keys().then(keys => {
       const stamps = keys.map(k => /^gocoach-(\d{10,})$/.exec(k)).filter(Boolean).map(m => +m[1]);
-      ver.textContent = stamps.length ? 'This version: ' + new Date(Math.max(...stamps)).toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+      const when = stamps.length ? new Date(Math.max(...stamps)).toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+      if (ver) ver.textContent = when ? 'This version: ' + when : '';
+      if (stamp) stamp.textContent = when ? 'Updated ' + when : '';
     }).catch(() => { /* no version to show */ });
   }
   $('#btnSettings').addEventListener('click', showVersion);
+  navigator.serviceWorker.ready.then(showVersion);
 
   if (btn) btn.onclick = () => {
     if (!navigator.onLine) { toast('You are offline. Connect to the internet and try again.', 4000); return; }
