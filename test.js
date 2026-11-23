@@ -12,6 +12,7 @@ const HISTORY = require('./history.js');
 const GUIDE = require('./guide.js');
 const SGF = require('./sgf.js');
 const KIFU = require('./kifu.js');
+const EXPLAIN = require('./explain.js');
 let failed = 0, passed = 0;
 async function t(name, fn) {
   try { await fn(); passed++; } catch (e) { failed++; console.log('FAIL ' + name + ': ' + e.message); }
@@ -53,11 +54,12 @@ async function t(name, fn) {
     const sc = E.scoreArea(9, s.board, await E.estimateDead(s, 60));
     assert(sc.black + sc.white <= 81);
   });
-  await t('hard level captures a stone in atari', async () => {
-    const s = E.newState(9, 0); /* White E5 surrounded on three sides by Black; Black to capture at E4 */
-    for (const m of [31, 40, 39, 0, 41, 8]) E.play(s, m);
+  await t('hard level captures a group in atari', async () => {
+    const s = E.newState(9, 0); /* White D5-E5-F5 in atari; Black must capture at G5 or the group escapes */
+    for (const i of [38, 30, 31, 32, 48, 49, 50]) s.board[i] = 1;
+    for (const i of [39, 40, 41, 20, 60, 24]) s.board[i] = 2;
     const r = await E.chooseMove(s, 1, { level: 'hard', ms: 300 });
-    assert.strictEqual(r.move, 49);
+    assert.strictEqual(E.coord(9, r.move), 'G5');
   });
   await t('hard level plays a legal game to the end', async () => {
     const s = E.newState(9, 0); let c = 0;
@@ -67,6 +69,13 @@ async function t(name, fn) {
       c++;
     }
     assert(s.passes >= 2, 'game did not end');
+  });
+  await t('coach explains why a capture beats a move elsewhere', async () => {
+    const s = E.newState(9, 0); /* White E5 in atari; Black E4 captures, J1 does nothing */
+    for (const m of [31, 40, 39, 0, 41, 8]) E.play(s, m);
+    const txt = await EXPLAIN.contrast(E, s, 49, 80, 1, 1, { ms: 200 });
+    assert(/E4 finishes about \d+ points better/.test(txt), txt);
+    assert(/White’s stone at E5 survives/.test(txt), txt);
   });
   await t('analysis ranks moves and the played move is included', async () => {
     const s = E.newState(9, 0); E.play(s, 20); E.play(s, 60);

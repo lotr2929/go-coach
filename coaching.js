@@ -97,11 +97,21 @@
     renderPlay();
   }
 
+  /* Plays both moves out and then says, with evidence, why `better` beat `worse`. Arrives as a follow-up message;
+     dropped if a different game has started by then. */
+  async function whyBetter(s, better, worse) {
+    const game = Play.s;
+    const t = await window.GoExplain.contrast(E, s, better, worse, s.turn, Play.human);
+    if (t && Play.s === game) say(section(`Why ${E.coord(s.n, better)} beats ${E.coord(s.n, worse)}`, t));
+  }
+
   /* ---------- feedback on the learner's own move (Coach mode) ---------- */
+  /* Returns the verdict text at once; for a weaker move, the evidence for the better one follows a moment later. */
   function verdictFor(prev, idx) {
     if (!prev || idx < 0) return '';
     const res = prev.res, best = res.moves[0], pl = res.moves.find(x => x.move === idx), n = prev.s.n;
     if (!best) return '';
+    if (idx !== best.move && (!pl || best.wr - pl.wr >= .02)) whyBetter(prev.s, best.move, idx);
     if (!pl) return section('Your move', `${E.coord(n, idx)} was not among my top ideas. My favourite was ${E.coord(n, best.move)} (${pct(best.wr)}%).`);
     const loss = best.wr - pl.wr;
     if (idx === best.move || loss < .02) return section('Your move', `${E.coord(n, idx)}: good move (${pct(pl.wr)}%).`);
@@ -199,6 +209,7 @@
         `${x.L}: ${E.coord(n, x.m.move)}, ${pct(x.m.wr)}%. ${y.L}: ${E.coord(n, y.m.move)}, ${pct(y.m.wr)}%.` +
         (Math.abs(x.m.wr - y.m.wr) < .05 ? ' The win rates are within 5%, so treat them as about equal.' : '') +
         '\n' + CM.compare(E, s, y.m.move, x.m.move, s.turn, Play.human)));
+      whyBetter(s, x.m.move, y.m.move);
       return true;
     }
     if (picks.length === 1 && /\b(explore|walk me through|what happens|follow)\b/.test(low)) {
@@ -214,6 +225,8 @@
       const m = picks[0].m;
       ring([m.move]);
       say(section(`${picks[0].L}: ${E.coord(n, m.move)}`, CM.deepDive(E, s, m.move, s.turn, Play.human)));
+      const other = m === list[0] ? list[1] : list[0];
+      if (other) whyBetter(s, m === list[0] ? m.move : other.move, m === list[0] ? other.move : m.move);
       return true;
     }
     if (/\b(best|strongest|safest|top|biggest)\b/.test(low)) {
