@@ -162,17 +162,18 @@
     }
     return areaScore(G, pos.b);
   }
+  /* Who owns point p at the end of a random game: +1 Black, -1 White, 0 neither. */
+  function ownerOf(G, b, p) {
+    const v = b[p];
+    if (v === 1) return 1;
+    if (v === 2) return -1;
+    let bl = false, wh = false;
+    for (let k = 0; k < 4; k++) { const w = b[p + G.dirs[k]]; if (w === 1) bl = true; else if (w === 2) wh = true; }
+    return bl && !wh ? 1 : wh && !bl ? -1 : 0;
+  }
   function areaScore(G, b) {
     let s = 0;
-    for (const p of G.pts) {
-      const v = b[p];
-      if (v === 1) s++; else if (v === 2) s--;
-      else {
-        let bl = false, wh = false;
-        for (let k = 0; k < 4; k++) { const w = b[p + G.dirs[k]]; if (w === 1) bl = true; else if (w === 2) wh = true; }
-        if (bl && !wh) s++; else if (wh && !bl) s--;
-      }
-    }
+    for (const p of G.pts) s += ownerOf(G, b, p);
     return s;
   }
 
@@ -278,5 +279,24 @@
     return { move: best.move, winrate: best.winrate, moves, sims };
   }
 
-  return { search };
+  /* Plays the position out to the end many times (for `ms` milliseconds, at least 20 games).
+     Returns { own, diff, sims }: own[i] runs from +1 (always Black's) to -1 (always White's); diff is Black's average lead after komi. */
+  async function ownership(s, opts) {
+    opts = opts || {};
+    const G = geo(s.n), N = s.n * s.n, b = G.board0.slice(), amaf = new Int8Array(G.size), own = new Float32Array(N);
+    for (let i = 0; i < N; i++) if (s.board[i]) b[toPad(G, i)] = s.board[i];
+    const ms = opts.ms || 500, t0 = now();
+    let ty = t0, k = 0, sum = 0;
+    while (now() - t0 < ms || k < 20) {
+      const pos = makePos(G, b.slice(), s.turn, toPad(G, s.ko), toPad(G, s.last));
+      sum += playout(G, pos, amaf) - s.komi;
+      for (let i = 0; i < N; i++) own[i] += ownerOf(G, pos.b, toPad(G, i));
+      k++;
+      if (now() - ty > 25) { await tick(); ty = now(); if (opts.cancelled && opts.cancelled()) return null; }
+    }
+    for (let i = 0; i < N; i++) own[i] /= k;
+    return { own, diff: sum / k, sims: k };
+  }
+
+  return { search, ownership };
 });
