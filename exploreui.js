@@ -23,13 +23,13 @@
       ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: null, shapes: null
     });
     $('#whoTurn').textContent = session.status();
-    $('#capsInfo').textContent = `Prisoners ● ${s.caps[1]}  ○ ${s.caps[2]}`;
+    $('#capsInfo').textContent = window.GoText.T('play.prisoners', { black: s.caps[1], white: s.caps[2] });
     $('#posInfo').hidden = true;
   }
   function startExploring(idx) {
-    if (Play.thinking) { G.say('Give me a moment: I am still thinking about my move.'); return; }
-    if (!Play.s || Play.phase !== 'play') { G.say('I can explore moves while a game is in progress.'); return; }
-    if ((G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.kifu && G.kifu.on) || session.on) { G.say('Finish what we are doing first: say "back to game", then ask again.'); return; }
+    if (Play.thinking) { G.say(window.GoText.T('app.busy-thinking')); return; }
+    if (!Play.s || Play.phase !== 'play') { G.say(window.GoText.T('explore.in-progress')); return; }
+    if ((G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.kifu && G.kifu.on) || session.on) { G.say(window.GoText.T('explore.finish-first')); return; }
     if (session.start(Play.s, idx)) G.setChips(CHIPS);
   }
   function endExploring() {
@@ -41,7 +41,7 @@
   function exitExploring() {
     if (!session.on) return;
     endExploring();
-    G.say('Back to your game. Nothing on the board has changed.');
+    G.say(window.GoText.T('explore.back'));
   }
 
   Object.assign(G, { exploring: session, startExploring, exitExploring, renderExplore, exploreTap: i => session.tap(i) });

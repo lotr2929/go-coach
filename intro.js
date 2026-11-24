@@ -1,24 +1,23 @@
 /* World of Go — the "teach me" introduction: a short welcome, a short history, and the choices that follow.
    No DOM here: introui.js shows it in the chat, and test.js runs it in Node. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.GoIntro = factory();
-})(typeof self !== 'undefined' ? self : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./text.js'));
+  else root.GoIntro = factory(root.GoText);
+})(typeof self !== 'undefined' ? self : this, function (TX) {
   'use strict';
+  const T = (k, v) => TX.T('intro.' + k, v), A = (k, v) => TX.T('app.' + k, v); /* wording: docs/text/en/intro.md and app.md */
 
-  const WELCOME = '**Welcome to Go**\n' +
-    'Go is an ancient two-player board game that began in China, where it is called weiqi. It is also played in Japan (igo) and Korea (baduk). ' +
-    'Players take turns placing stones on a grid, and the aim is to control more territory than your opponent.\n\n' +
-    'What would you like to do? Tap a choice, or type its number.';
+  const WELCOME = T('welcome');
 
   /* The choices, in the order they are shown. `words` lets a typed answer pick one. */
   const OPTIONS = [
-    { key: 'rules', label: '1  Basic rules of Go', words: /\b(rules?|basics?)\b/ },
-    { key: 'history', label: '2  History of Go', words: /\b(history|origins?)\b/ },
-    { key: 'play', label: '3  Play a Game', words: /\b(play|games?)\b/ },
-    { key: 'lessons', label: '4  Lessons and Puzzles', words: /\b(lessons?|puzzles?)\b/ },
-    { key: 'kifu', label: '5  Famous games (Kifu)', words: /\b(kifu|famous|records?|masters?)\b/, first: true }
+    { key: 'rules', words: /\b(rules?|basics?)\b/ },
+    { key: 'history', words: /\b(history|origins?)\b/ },
+    { key: 'play', words: /\b(play|games?)\b/ },
+    { key: 'lessons', words: /\b(lessons?|puzzles?)\b/ },
+    { key: 'kifu', words: /\b(kifu|famous|records?|masters?)\b/, first: true }
   ];
+  OPTIONS.forEach((o, i) => { o.label = `${i + 1}  ${T(o.key)}`; }); /* the labels are in intro.md */
 
   /* Which choice does a typed answer mean? Returns its key, or null when it is something else. */
   function match(raw) {

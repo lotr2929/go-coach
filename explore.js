@@ -1,10 +1,11 @@
 /* World of Go — "explore this move". Follows a move through a few replies, one step at a time, on a copy of the game.
    No DOM here: exploreui.js connects it to the board and the chat, and test.js runs it in Node. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.GoExplore = factory();
-})(typeof self !== 'undefined' ? self : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./text.js'));
+  else root.GoExplore = factory(root.GoText);
+})(typeof self !== 'undefined' ? self : this, function (TX) {
   'use strict';
+  const w = (k, v) => TX.T('explore.' + k, v), A = (k, v) => TX.T('app.' + k, v); /* wording: docs/text/en/explore.md and app.md */
 
   const MAXPLY = 12;
 
@@ -31,22 +32,20 @@
       return s;
     }
     function mk(s, move, color) {
-      const note = move < 0 ? `${col(color)} passes.` : CM.render(CM.describeMove(E, s, move, color, T.human), { head: `${col(color)} plays ${co(move)}.`, bullets: 2 });
+      const note = move < 0 ? w('passes', { player: col(color) }) : CM.render(CM.describeMove(E, s, move, color, T.human), { head: w('plays', { player: col(color), point: co(move) }), bullets: 2 });
       return { move, color, note };
     }
     function narrate(k, lead) {
       const last = T.pos === T.plies.length;
-      const tail = k === 0 ? 'Say "next" to see how the game might continue.'
-        : last ? 'Say "next" for a reply, "another" for a different idea, tap a point to try your own, or "back to game".'
-          : 'Say "next" to carry on, or "back" to step back.';
-      say([`**${lead || 'Move ' + (k + 1)}**`, T.plies[k].note, tail].join('\n'));
+      const tail = w(k === 0 ? 'tail-first' : last ? 'tail-last' : 'tail');
+      say([`**${lead || w('move', { count: k + 1 })}**`, T.plies[k].note, tail].join('\n'));
     }
 
     function start(s, first) {
       const color = s.turn, r = E.tryPlay(E.geom(s.n), s.board, first, color, s.ko);
       if (!r.ok) { say(C.describePoint(E, s, first, color)); return false; }
       T.on = true; T.base = E.clone(s); T.human = color; T.plies = []; T.pos = 0; T.tried = {}; T.s = E.clone(s);
-      say(`**Exploring ${co(first)}**\nI will follow this move on a copy of the board, one step at a time. Your game is not touched. Say "next" for each step, "back" to step back, "another" to see a different reply, or tap a point to try your own idea. Say "back to game" when you are done.`);
+      say(w('start', { point: co(first) }));
       run(async () => { T.plies.push(mk(T.base, first, color)); T.pos = 1; T.s = at(1); narrate(0); render(); });
       return true;
     }
@@ -54,7 +53,7 @@
     function forward() {
       return run(async () => {
         if (T.pos < T.plies.length) { T.pos++; T.s = at(T.pos); narrate(T.pos - 1); render(); return; }
-        if (T.plies.length >= MAXPLY) { say('That is far enough for one line. Say "back" to step back, "another" to change a reply, or "back to game".'); return; }
+        if (T.plies.length >= MAXPLY) { say(w('far-enough')); return; }
         const s = at(T.pos), color = s.turn;
         const res = await E.chooseMove(s, color, { level: 'medium', ms });
         T.plies.push(mk(s, res.move, color)); T.pos = T.plies.length; T.s = at(T.pos);
@@ -63,21 +62,21 @@
     }
     function another() {
       return run(async () => {
-        if (T.pos < 2) { say('There is no reply to change yet. Say "next" first.'); return; }
+        if (T.pos < 2) { say(w('no-reply-yet')); return; }
         const k = T.pos - 1, sb = at(k), color = sb.turn;
         const tried = T.tried[k] || (T.tried[k] = new Set([T.plies[k].move]));
         const options = E.candidates(sb, color, 0).map(c => c.move).filter(m => !tried.has(m));
-        if (!options.length) { say('I have no other sensible idea here. Say "back" to step back, or "back to game".'); return; }
+        if (!options.length) { say(w('no-other')); return; }
         tried.add(options[0]);
         T.plies.length = k; T.plies.push(mk(sb, options[0], color)); T.pos = k + 1; T.s = at(T.pos);
-        narrate(k, 'A different reply'); render();
+        narrate(k, w('different-reply')); render();
       });
     }
     function back() {
       return run(async () => {
-        if (T.pos <= 1) { say('This is the first move. Say "next" to go on.'); return; }
+        if (T.pos <= 1) { say(w('first-move')); return; }
         T.pos--; T.s = at(T.pos);
-        say(`**Back to move ${T.pos}**\n${T.plies[T.pos - 1].note}`); render();
+        say(w('back-to-move', { count: T.pos }) + '\n' + T.plies[T.pos - 1].note); render();
       });
     }
     function again() { return run(async () => { T.pos = 1; T.s = at(1); narrate(0); render(); }); }
@@ -88,13 +87,13 @@
         const s = at(T.pos), color = s.turn;
         if (s.board[i]) {
           const g = E.flood(E.geom(s.n), s.board, i);
-          say(`That ${col(g.color).toLowerCase()} ${g.stones.length > 1 ? 'group' : 'stone'} has ${g.libs.length} ${g.libs.length === 1 ? 'liberty (in atari!)' : 'liberties'}.`);
+          say(A('that-has', { colour: A(g.color === 1 ? 'black-word' : 'white-word'), what: A(g.stones.length > 1 ? 'group-word' : 'stone-word'), libs: g.libs.length === 1 ? A('libs-one') : A('libs-many', { count: g.libs.length }) }));
           return;
         }
         const r = E.tryPlay(E.geom(s.n), s.board, i, color, s.ko);
         if (!r.ok) { say(C.describePoint(E, s, i, color)); return; }
         T.plies.length = T.pos; T.plies.push(mk(s, i, color)); T.pos = T.plies.length; T.s = at(T.pos);
-        click(); narrate(T.pos - 1, 'Your idea'); render();
+        click(); narrate(T.pos - 1, w('your-idea')); render();
       });
     }
 
@@ -113,7 +112,7 @@
       return false;
     }
 
-    const status = () => (T.plies.length ? `Exploring ${co(T.plies[0].move)}: step ${T.pos} of ${T.plies.length}` : 'Exploring');
+    const status = () => (T.plies.length ? w('status', { point: co(T.plies[0].move), count: T.pos, total: T.plies.length }) : w('status-empty'));
     const view = () => ({ board: T.s.board, last: T.s.last, ko: T.s.ko, turn: T.s.turn, n: T.s.n });
     function exit() { T.on = false; }
 
