@@ -61,9 +61,12 @@
     for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
     return d[a.length][b.length];
   }
+  /* Shape names (ponnuki, tiger's mouth, keima…) come from shapes.js, which also marks them on the board. They are checked
+     first, so "false eye" and "cutting point" win over "eye" and "cut". */
+  const shapeTerms = () => (typeof GoShapes !== 'undefined' ? GoShapes : typeof require === 'function' ? require('./shapes.js') : { TERMS: [] }).TERMS;
   function findTerm(t) {
     const tokens = t.split(' ');
-    for (const term of TERMS) {
+    for (const term of shapeTerms().concat(TERMS)) {
       for (const w of term.w) {
         if (w.includes(' ') ? t.includes(w) : tokens.some(k => k === w || (w.length >= 5 && k.length >= 5 && lev(k, w) <= 1))) return term;
       }

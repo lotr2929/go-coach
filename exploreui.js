@@ -20,7 +20,7 @@
     $('#lessonBar').hidden = true; $('#quizOptions').hidden = true;
     playView.set({
       n: v.n, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: settings.libs, marks: {}, hint: [],
-      ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: null
+      ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: null, shapes: null
     });
     $('#whoTurn').textContent = session.status();
     $('#capsInfo').textContent = `Prisoners ● ${s.caps[1]}  ○ ${s.caps[2]}`;

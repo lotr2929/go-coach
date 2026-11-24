@@ -137,7 +137,7 @@
       n: s.n, board: s.board, last: s.last, ko: s.ko, coords: settings.coords, libs: settings.libs,
       hint: Play.hint, ghost: Play.pending, ghostColor: Play.human, hoverColor: (Play.phase === 'play' && !Play.thinking && s.turn === Play.human) ? Play.human : 0,
       terr: Play.phase === 'scoring' || Play.phase === 'done' ? Play.terr || null : null,
-      dead: Play.phase === 'scoring' || Play.phase === 'done' ? Play.dead : null, marks: G.anaMarks(), own: G.terrOwn()
+      dead: Play.phase === 'scoring' || Play.phase === 'done' ? Play.dead : null, marks: G.anaMarks(), own: G.terrOwn(), shapes: G.shapeMarks()
     });
     let who;
     if (Play.phase === 'scoring') who = 'Scoring: tap groups to mark them dead or alive';
@@ -168,6 +168,7 @@
     if (G.Lesson.on) return G.onLessonTap(i);
     if (G.teaching && G.teaching.on) return G.teachTap(i);
     if (G.exploring && G.exploring.on) return G.exploreTap(i);
+    if (G.shapeTap && G.shapeTap(i)) return; /* a tap on a marked shape's stone explains it */
     if (G.kifu && G.kifu.on) return G.kifuTap(i);
     if (Play.phase === 'scoring') return toggleDead(i);
     if (Play.phase !== 'play' || Play.thinking || s.turn !== Play.human) return;
