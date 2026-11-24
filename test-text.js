@@ -35,6 +35,11 @@ module.exports = async function (t) {
     for (const f of fs.readdirSync(__dirname).filter(f => /\.js$/.test(f) && !/^test/.test(f) && f !== 'text.js' && f !== 'text-data.js')) {
       const src = fs.readFileSync(path.join(__dirname, f), 'utf8');
       for (const m of src.matchAll(nameRe)) if (!/\.(js|md|json)$/.test(m[1]) && !TX.has(m[1])) missing.push(f + ': ' + m[1]); /* file names are not text names */
+      /* A file with a short form, such as const T = (k, v) => TX.T('commentary.' + k, v): every quoted name inside its T(…) calls. */
+      const short = src.match(/\.T\('([a-z-]+)\.' \+ k, v\)/);
+      if (short) for (const call of src.matchAll(/\bT\(([^(){]*)/g)) for (const q of call[1].matchAll(/'([a-z0-9][a-z0-9.-]*[a-z0-9])'/g)) {
+        if (!TX.has(short[1] + '.' + q[1])) missing.push(`${f}: ${short[1]}.${q[1]}`);
+      }
     }
     for (const id of require('./coach.js').TERM_IDS) if (!TX.has('terms.' + id)) missing.push('terms.' + id);
     /* names the code builds from parts */
