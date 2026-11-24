@@ -28,7 +28,8 @@
   function append(who, text) {
     const d = document.createElement('div');
     d.className = 'msg ' + who;
-    fill(d, text);
+    if (who === 'coach' && text === C.INTRO && G.fillWelcome) G.fillWelcome(d, fill); /* the welcome, with its choices as buttons */
+    else fill(d, text);
     box.append(d);
     box.scrollTop = box.scrollHeight;
   }
@@ -181,11 +182,11 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('chatBig')) setBig(false); });
   setBig(false);
   setChips(PLAY_CHIPS);
-  /* A chat saved by an older version (it starts with the old welcome) is replaced by the new welcome. */
-  if (firstVisit || (log.length && /^Hello, I am your Go coach\. I am not an AI model: /.test(log[0].text))) { log = [{ who: 'coach', text: C.INTRO }]; store(KEY.chat, log); }
+  /* The first visit starts with the welcome. A welcome saved by an older version (its wording has changed since) becomes today's, so it shows its buttons. */
+  if (firstVisit) log = [{ who: 'coach', text: C.INTRO }];
+  else log = log.map(m => (m.who === 'coach' && m.text !== C.INTRO && /^Hello, I am your Go coach\. I am not an AI model[.:] /.test(m.text) ? { who: 'coach', text: C.INTRO } : m));
+  store(KEY.chat, log);
   for (const m of log) append(m.who, m.text);
 
   Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS, clearChat });
-  /* The welcome's buttons are not saved with the chat, so they are added again when it was the last message. */
-  if (log.length && log[log.length - 1].text === C.INTRO && G.welcomeMenu) G.welcomeMenu();
 })();

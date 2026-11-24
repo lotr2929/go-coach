@@ -13,10 +13,11 @@
   let cache = null; /* { sig, list, keys, moves } for one position */
   let focus = null;  /* after a tap: { sig, keys } of the shapes being explained; only they are drawn until the board changes */
 
-  /* Same rules as the Territory tab: the board belongs to a lesson, the teacher or an exploration while they run. */
+  /* Same rules as the Territory tab: the board belongs to a lesson, the teacher or an exploration while they run,
+     and silent Play mode (play.js playSilent) shows no shapes: the tab is greyed out until Coach mode is on. */
   const kifuOn = () => !!(G.kifu && G.kifu.on);
   const live = () => (kifuOn() ? G.kifu.state() : Play.s);
-  const idle = () => !kifuOn() && (!Play.s || Play.phase !== 'play' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on));
+  const idle = () => !kifuOn() && (!Play.s || Play.phase !== 'play' || G.playSilent() || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on));
   const viewer = () => (kifuOn() ? 0 : Play.human);
   /* Possible shapes are shown for the side to move when that is the learner (or anyone, in a famous game). */
   const showPossible = s => kifuOn() || (s.turn === Play.human && !Play.thinking);
@@ -85,9 +86,10 @@
   }
 
   function syncButton() {
-    const b = $('#btnShapes'), on = !!settings.shapes;
-    b.setAttribute('aria-pressed', String(on));
-    b.title = on ? 'Shapes are marked on the board. Tap to hide them.' : 'Mark good and bad shapes on the board';
+    const b = $('#btnShapes'), on = !!settings.shapes, silent = G.playSilent();
+    b.disabled = silent;
+    b.setAttribute('aria-pressed', String(on && !silent));
+    b.title = silent ? 'Shapes are available in Coach mode' : on ?'Shapes are marked on the board. Tap to hide them.' : 'Mark good and bad shapes on the board';
   }
   $('#btnShapes').addEventListener('click', () => {
     settings.shapes = !settings.shapes; saveSettings(); syncButton();
@@ -98,5 +100,5 @@
   });
   syncButton();
 
-  Object.assign(G, { shapeMarks: marks, shapeTap: tap });
+  Object.assign(G, { shapeMarks: marks, shapeTap: tap, syncShapesTab: syncButton });
 })();

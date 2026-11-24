@@ -136,6 +136,9 @@ dialog::backdrop { background: rgba(8, 14, 13, .65); }
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
 .msg.menu { display: grid; gap: 6px; width: 92%; padding: 0; background: none; }
 .msg.menu .lcard { padding: 8px 10px; }
+/* The welcome's five choices, as buttons inside the welcome message. */
+.welcomeChoices { display: grid; gap: 6px; margin: 10px 0; white-space: normal; }
+.welcomeChoices .lcard { padding: 8px 10px; }
 
 .chat { flex: 1 1 auto; min-height: 150px; display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; position: relative; }
 /* The enlarge/shrink button at the top right of the chat; when enlarged the chat covers the screen until tapped again. */

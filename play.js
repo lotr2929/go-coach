@@ -49,14 +49,18 @@
   const Play = { s: null, human: 1, level: 'medium', phase: 'play', token: 0, thinking: false, dead: null, pending: -1, hint: [], over: false, redo: [], guided: false, seen: {} };
   const playView = new BoardView($('#playBoard'), i => onPlayTap(i));
 
+  /* Play mode is silent: in your own game no help appears on the board (move notes, Territory, Shapes) unless Coach mode is on.
+     The guided first game and a famous game (Kifu) are for learning, so they keep it. */
+  const playSilent = () => !(G.kifu && G.kifu.on) && settings.mode !== 'coach' && !Play.guided;
+
   /* A short note about the move under the pointer, in the same words as the suggestions. */
   const tipEl = $('#boardTip');
   function moveTip(i) {
     const s = (G.teaching && G.teaching.on) ? G.teaching.state() : (G.exploring && G.exploring.on) ? G.exploring.state() : (G.kifu && G.kifu.on) ? G.kifu.state() : Play.s, CM = window.GoCommentary;
     if (!s || i < 0 || s.board[i]) return '';
     const square = G.squareInfo && !(G.teaching && G.teaching.on) && !(G.exploring && G.exploring.on) ? G.squareInfo(i) : '';
-    /* When it is not the learner's turn to move, a note about "playing here" makes no sense: show only the territory score. */
-    if (s === Play.s && !(Play.phase === 'play' && !Play.thinking && s.turn === Play.human)) return square;
+    /* In your own game the move note appears only when Play mode is not silent, and only on your turn. */
+    if (s === Play.s && (playSilent() || !(Play.phase === 'play' && !Play.thinking && s.turn === Play.human))) return square;
     const who = (G.kifu && G.kifu.on) ? 3 : Play.human; /* in a game record nobody is "you" */
     const d = CM.describeMove(E, s, i, s.turn, who);
     const note = d.ok ? `${E.coord(s.n, i)}: ${CM.headline(E, s, i, s.turn, who)}` : d.points[0];
@@ -146,7 +150,8 @@
     else who = s.turn === Play.human ? `Your move (${colourName(Play.human)})` : `${colourName(s.turn)} to play`;
     let nb = 0, nw = 0;
     for (let k = 0; k < s.board.length; k++) { if (s.board[k] === 1) nb++; else if (s.board[k] === 2) nw++; }
-    $('#whoTurn').textContent = who + (Play.phase === 'play' ? `  ● ${nb}  ○ ${nw}` : '');
+    /* Stone counts are help, so silent Play mode leaves them out; prisoners stay, as in any game of Go. */
+    $('#whoTurn').textContent = who + (Play.phase === 'play' && !playSilent() ? `  ● ${nb}  ○ ${nw}` : '');
     $('#capsInfo').textContent = `Prisoners ● ${s.caps[1]}  ○ ${s.caps[2]}`;
     const playing = Play.phase === 'play';
     const mine = playing && !Play.thinking && s.turn === Play.human;
@@ -157,6 +162,8 @@
     $('#btnAnalyse').disabled = !playing || Play.thinking;
     $('#btnMode').textContent = settings.mode === 'coach' ? 'Coach mode' : 'Play mode';
     $('#btnMode').classList.toggle('primary', settings.mode === 'coach');
+    if (G.syncTerrTab) G.syncTerrTab();
+    if (G.syncShapesTab) G.syncShapesTab();
     G.paintPos();
     $('#scorePanel').hidden = Play.phase !== 'scoring';
     $('#btnConfirm').disabled = Play.thinking;
@@ -329,5 +336,5 @@
   }
 
 
-  Object.assign(G, { Play, playView, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
+  Object.assign(G, { Play, playView, playSilent, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
 })();

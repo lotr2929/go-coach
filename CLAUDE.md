@@ -12,12 +12,16 @@ Go Coach is the beginner's version of Boon's Go app: a PWA (plain JavaScript, no
 4. Any mode that takes over the board must be added to every guard that already lists teaching and lessons: renderPlay, onPlayTap, the hover note, analyse, review, paintPos and the chat routing.
 5. No new dependencies without Boon's approval. No patching: design for long-term robustness. Smallest possible change. Read a file before changing it; never invent file names, functions or variables.
 6. Never put keys, passwords or tokens in code. deploy.env and .env files are not in the repository; do not create them.
-7. Do not run deploy.bat or any vercel command, and never push to `main`. The live site changes only when Boon merges a pull request into `main`.
+7. Merging and deploying. Vercel deploys the live site by itself whenever `main` on GitHub changes, so merging into `main` is deploying.
+   - Laptop sessions (Boon's Claude Code on his laptop, in C:\_Personal\_myApps\myGoCoach): when Boon asks for a change to go live, work on a branch, check the work (below), merge it into `main` and push `main`. Then tell Boon it is live and how to see it.
+   - Phone and cloud sessions: never push to `main`. Open a pull request; Boon tries the Vercel preview and merges it himself.
+   - In every session: do not run deploy.bat or any vercel command. They deploy the local folder directly and bypass GitHub.
+8. Play mode is silent, like a normal game of Go: in your own game no help appears unless Coach mode is on (no move notes on hover, no Territory or Shapes, no score bar, no stone counts; prisoners stay). play.js `playSilent()` decides this; any new on-board help must check it. The guided first game and famous games (Kifu) keep their help.
 
 ## How to check your work
 1. Run `node test.js`. It must pass. Report failures exactly as they appear; never invent results.
 2. Run `node --check file.js` on each JavaScript file you changed.
-3. Before the work is ready to merge, run `node bump-version.js`. It sets VERSION in sw.js, which deploy.bat normally does. Without it, installed copies of the app keep the old files.
+3. Before the work is ready to merge, run `node bump-version.js`. It sets VERSION in sw.js. Without it, installed copies of the app keep the old files.
 4. Browser-only behaviour (the board, touch, sound) cannot be tested here. Say so plainly: "syntax-checked and the tests pass, not tried in a browser".
 
 ## How to work from a phone or the cloud
