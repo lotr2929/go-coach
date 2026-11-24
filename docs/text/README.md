@@ -6,7 +6,7 @@ All the words Go Coach shows are kept here, so they can be edited or translated 
 ## The folders
 
 - `en/` holds the English wording. A translation is a copy of this folder under the language's code, such as `zh/` for Chinese or `ja/` for Japanese.
-- `en/*.md`: one file for each part of the app: `welcome.md`, `tour.md`, `pages.md`, `coach.md` (the coach's answers), `terms.md` (Go terms), `point.md` (notes on a point on the board) and `lesson-help.md` (help inside a lesson).
+- `en/*.md`: one file for each part of the app: `welcome.md`, `tour.md`, `pages.md`, `coach.md` (the coach's answers), `terms.md` (Go terms), `point.md` (notes on a point on the board), `lesson-help.md` (help inside a lesson), `lessons.md` (the 16 lessons) and `curriculum.md` (the guided "Teach me" steps).
 - `en/pages/`: the long pages the app shows whole, such as *What is Go?* and *A history of Go*.
 - `en/lists/`: lists the app is built from, such as the famous games (`kifu-picks.md`).
 
