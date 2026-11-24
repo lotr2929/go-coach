@@ -6,31 +6,34 @@
   'use strict';
   const G = window.GC;
   const { $ } = G;
+  const { T } = window.GoText;
 
-  /* sel: one selector, or several to highlight together. hover: false where a tip would get in the way. */
+  /* sel: one selector, or several to highlight together. hover: false where a tip would get in the way.
+     key: the step's name in docs/text/en/tour.md, which holds its title (key.title) and explanation (key.text). */
   const STEPS = [
-    { sel: '.titleBox', title: 'Go Coach', text: 'The date under the title is the version you are using. If it looks old, open Settings (⚙) and tap Check for updates.' },
-    { sel: '#btnFlag', title: 'Flag', text: 'If something looks wrong, tap here and type a few words. The position and the last messages are sent to the developer, as long as usage logging is on in Settings.' },
-    { sel: '#btnSettings', title: 'Settings', text: 'Coordinates, liberties, tap twice to place, stone sound, how long the territory map may think, copying the game record, usage logging, and Check for updates.' },
-    { sel: '#whoTurn', title: 'Whose move', text: 'Whose turn it is, and how many stones each side has on the board.' },
-    { sel: '#posInfo', title: 'Who is ahead', text: 'Each side’s chance of winning, from the computer reading the position. About 50 : 50 means the game is even. Shown in Coach mode only.' },
-    { sel: '#capsInfo', title: 'Prisoners', text: 'How many stones each side has captured.' },
-    { sel: '.boardWrap', hover: false, title: 'The board', text: 'Tap a point to place your stone. With "Tap twice to place" on in Settings, the first tap shows where it will go and the second places it. With Shapes on, tap one of your stones inside a box to hear about its shape.' },
-    { sel: ['#btnUndoArrow', '#btnRedoArrow'], title: 'Undo and Redo', text: 'Take back your last move, or play it again. In a famous game they step back and forward through the record.' },
-    { sel: '#btnShapes', title: 'Shapes', text: 'Marks good shapes in green, bad shapes in red, neutral ones in blue and weak points in orange. Dashed boxes are shapes you could make next. Tap a stone in a box for an explanation. In your own game it works in Coach mode only.' },
-    { sel: '#btnTerr', title: 'Territory', text: 'Shades each empty point by who is likely to own it, worked out from many quick games played to the end. Bigger, stronger squares mean more certain. In your own game it works in Coach mode only.' },
-    { sel: '#btnMode', title: 'Play mode or Coach mode', text: 'In Play mode the coach stays quiet until you ask. In Coach mode it suggests moves every turn and tells you how each of your moves went, with the evidence.' },
-    { sel: '#btnPass', title: 'Pass', text: 'Skip your turn. When both players pass one after the other, the game ends and is counted.' },
-    { sel: ['#btnUndo', '#btnRedo'], title: 'Undo and Redo', text: 'The same as the arrows under the board: take back your last move, or play it again.' },
-    { sel: '#btnAnalyse', title: 'Analyse', text: 'The coach marks its best ideas A to E on the board, with each one’s chance of winning. Then ask "why A?" or "compare A and B".' },
-    { sel: '#btnResign', title: 'Resign', text: 'Give up this game.' },
-    { sel: '#btnNew', title: 'New game', text: 'Choose the board size (9 × 9 is quick, 13 × 13 is medium, 19 × 19 is the full game), your colour, the computer’s level (Easy, Medium or Hard), the coach’s level and any handicap stones. Starting a new game also clears the chat.' },
-    { sel: '.chatLog', hover: false, title: 'The chat', text: 'The coach’s messages appear here. Bold headings mark analyses, reviews and explanations.' },
-    { sel: '#btnChatSize', title: 'Enlarge the chat', text: 'Makes the chat fill the screen for easier reading. Tap it again to go back to the board.' },
-    { sel: '.chatInput', hover: false, title: 'Ask the coach', text: 'Type anything here: "hint", "why?", "what is a ponnuki?", a point such as "D4", or a number from the welcome. Type Help to see the welcome again.' },
-    { sel: '#btnClear', title: 'Clear', text: 'Empties the chat. Type Help at any time to see the welcome again.' },
-    { sel: '.chatForm button[type="submit"]', title: 'Send', text: 'Sends your message. Pressing Enter does the same.' }
+    { key: 'title', sel: '.titleBox' },
+    { key: 'flag', sel: '#btnFlag' },
+    { key: 'settings', sel: '#btnSettings' },
+    { key: 'whoturn', sel: '#whoTurn' },
+    { key: 'ahead', sel: '#posInfo' },
+    { key: 'prisoners', sel: '#capsInfo' },
+    { key: 'board', sel: '.boardWrap', hover: false },
+    { key: 'arrows', sel: ['#btnUndoArrow', '#btnRedoArrow'] },
+    { key: 'shapes', sel: '#btnShapes' },
+    { key: 'territory', sel: '#btnTerr' },
+    { key: 'mode', sel: '#btnMode' },
+    { key: 'pass', sel: '#btnPass' },
+    { key: 'undo', sel: ['#btnUndo', '#btnRedo'] },
+    { key: 'analyse', sel: '#btnAnalyse' },
+    { key: 'resign', sel: '#btnResign' },
+    { key: 'new', sel: '#btnNew' },
+    { key: 'chat', sel: '.chatLog', hover: false },
+    { key: 'chatsize', sel: '#btnChatSize' },
+    { key: 'ask', sel: '.chatInput', hover: false },
+    { key: 'clear', sel: '#btnClear' },
+    { key: 'send', sel: '.chatForm button[type="submit"]' }
   ];
+  for (const s of STEPS) { s.title = T(`tour.${s.key}.title`); s.text = T(`tour.${s.key}.text`); }
   const MS = 7000; /* how long each step stays when the tour moves on by itself */
 
   const list = s => (Array.isArray(s.sel) ? s.sel : [s.sel]);
@@ -76,10 +79,10 @@
     const count = mk('span', 'tourCount'); count.textContent = `${idx + 1} / ${steps.length}`;
     const btn = (label, aria, f) => { const b = mk('button', ''); b.type = 'button'; b.textContent = label; b.setAttribute('aria-label', aria); b.onclick = e => { e.stopPropagation(); f(); }; return b; };
     bar.append(count,
-      btn('‹', 'Back', () => { paused = true; go(idx - 1); }),
-      btn(paused ? '▶' : '❚❚', paused ? 'Play' : 'Pause', () => { paused = !paused; show(); }),
-      btn('›', 'Next', () => go(idx + 1)),
-      btn('✕', 'End the tour', end));
+      btn('‹', T('tour.back'), () => { paused = true; go(idx - 1); }),
+      btn(paused ? '▶' : '❚❚', T(paused ? 'tour.play' : 'tour.pause'), () => { paused = !paused; show(); }),
+      btn('›', T('tour.next'), () => go(idx + 1)),
+      btn('✕', T('tour.close'), end));
     tip.append(h, p, bar);
     placeTip(tip, r);
     if (!paused) timer = setTimeout(() => go(idx + 1), MS);
@@ -101,7 +104,7 @@
     clearTimeout(timer);
     document.body.classList.remove('touring');
     const mouse = window.matchMedia && window.matchMedia('(hover: hover)').matches;
-    G.say('That was the tour. ' + (mouse ? 'Rest the mouse on any button to see its explanation again' : 'Press and hold any button to see its explanation again') + ', or type 5 to replay the tour.');
+    G.say(T(mouse ? 'tour.end-mouse' : 'tour.end-touch'));
   }
   document.addEventListener('keydown', e => {
     if (!document.body.classList.contains('touring')) return;

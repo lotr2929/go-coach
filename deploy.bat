@@ -14,7 +14,7 @@ cd /d "%~3"
 
 REM ============================================================
 REM Deploys Go Coach from the laptop: deploy.bat - git push - Vercel.
-REM 1. Runs the tests.
+REM 1. Copies the wording from docs/text into the app (make-text.js) and runs the tests.
 REM 2. Sets a new version number, so installed copies update.
 REM 3. Merges the current branch into main and pushes main to GitHub.
 REM Vercel then puts GitHub's main live by itself.
@@ -47,6 +47,13 @@ if errorlevel 1 (
     goto fail
 )
 
+call node make-text.js
+if errorlevel 1 (
+    echo.
+    echo The wording in docs/text has a mistake, shown above. Nothing was deployed.
+    goto fail
+)
+
 call node test.js
 if errorlevel 1 (
     echo.
@@ -59,7 +66,7 @@ if errorlevel 1 (
     echo Could not update the version number. Nothing was deployed.
     goto fail
 )
-git commit -q -m "Set the version number for deploy" sw.js
+git commit -q -m "Set the version number and wording for deploy" sw.js text-data.js
 if errorlevel 1 (
     echo Could not save the version number. Nothing was deployed.
     goto fail

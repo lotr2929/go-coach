@@ -1,5 +1,5 @@
-/* World of Go — reads the history article from history.md.
-   The article itself lives in history.md, so it can be edited and extended without touching the code. This file only turns that Markdown into a page
+/* World of Go — reads the history article (and the other whole pages) from docs/text/<language>/pages, such as history.md.
+   The article itself lives in that Markdown file, so it can be edited and extended without touching the code. This file only turns that Markdown into a page
    that page.js can draw, and checks it for mistakes. No DOM here: test.js runs it in Node, and deploy.bat runs the tests before every deploy.
    Format: "# title", the first paragraph is the introduction, "## heading", "### smaller heading", "- " bullets, [n] citations, <!-- comments -->,
    and a "## References" section with lines "n. Title | Publisher | https://link". */

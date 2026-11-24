@@ -62,7 +62,7 @@ function main() {
   const E = require('./engine.js'), SGF = require('./sgf.js');
   const sourceDir = process.argv[2] || 'C:\\_Personal\\_kifu-sourcefiles', outDir = path.join(__dirname, 'kifu');
   if (!fs.existsSync(sourceDir)) { console.log('I cannot find the source folder: ' + sourceDir); process.exit(1); }
-  const cats = parsePicks(fs.readFileSync(path.join(__dirname, 'kifu-picks.md'), 'utf8'));
+  const cats = parsePicks(fs.readFileSync(path.join(__dirname, 'docs', 'text', 'en', 'lists', 'kifu-picks.md'), 'utf8'));
   fs.mkdirSync(outDir, { recursive: true });
   for (const f of fs.readdirSync(outDir)) if (/\.sgf$/.test(f)) fs.unlinkSync(path.join(outDir, f));
   const r = build({ cats, sourceDir, outDir, E, SGF });

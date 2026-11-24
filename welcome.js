@@ -1,19 +1,21 @@
 /* Go Coach — the welcome menu: the five things the coach offers first, and which one a typed request means.
-   The welcome text itself is coach.js's INTRO. No DOM here: welcomeui.js shows it, and test.js runs it in Node. */
+   The welcome text itself is coach.js's INTRO; the choices' wording is in docs/text/en/welcome.md.
+   No DOM here: welcomeui.js shows it, and the tests run it in Node. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.GoWelcome = factory();
-})(typeof self !== 'undefined' ? self : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./text.js'));
+  else root.GoWelcome = factory(root.GoText);
+})(typeof self !== 'undefined' ? self : this, function (TX) {
   'use strict';
 
-  /* In the order of the numbers in the welcome. `words` lets a request in your own words pick one. */
+  /* In the order of the numbers in the welcome (coach.js WELCOME_KEYS). `words` lets a request in your own words pick one. */
   const OPTIONS = [
-    { key: 'whatisgo', label: '1  What is Go?', words: /^(what('s| is) go|about go|tell me about go)\b/ },
-    { key: 'history', label: '2  A Short History of Go', words: /^(a )?(short )?history( of go)?$/ },
-    { key: 'teach', label: '3  Teach me', words: /^teach me$/ },
-    { key: 'coach', label: '4  Coach me', words: /^(coach me|coach mode)$/ },
-    { key: 'tour', label: '5  How to use the app', words: /^(how (do i|to|can i) use (the |this )?app|(app )?tour|show me (around|the app)|how does (the |this )?app work)\b/ }
+    { key: 'whatisgo', words: /^(what('s| is) go|about go|tell me about go)\b/ },
+    { key: 'history', words: /^(a )?(short )?history( of go)?$/ },
+    { key: 'teach', words: /^teach me$/ },
+    { key: 'coach', words: /^(coach me|coach mode)$/ },
+    { key: 'tour', words: /^(how (do i|to|can i) use (the |this )?app|(app )?tour|show me (around|the app)|how does (the |this )?app work)\b/ }
   ];
+  OPTIONS.forEach((o, i) => { o.label = `${i + 1}  ${TX.T('welcome.' + o.key)}`; });
 
   /* Which request does a message mean? A key from OPTIONS, 'help', or null when it is something else. */
   function match(raw) {
