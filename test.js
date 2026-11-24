@@ -84,6 +84,8 @@ async function t(name, fn) {
     const P = require('./proverbs.js');
     assert.strictEqual(P.pick({ gain: -3, rescue: true }), null);
     assert.strictEqual(P.pick({ gain: 4, rescue: true, kill: true }).key, 'rescue');
+    assert(/^Go master: "Go is harmony\." \(attributed to Go Seigen\)\./.test(P.line(P.pick({ gain: 4, attackB: true }, 0.1), 'C3', 'J1')), 'a master’s words are labelled');
+    assert(/Sun Tzu/.test(P.line(P.pick({ gain: 4, attackB: true }, 0.9), 'C3', 'J1')), 'otherwise the saying');
     assert(/^Go principle: "Give up the small to take the large\." \(Ten Golden Rules of Go\)\. Both moves have a point, but the area C3 claims/.test(P.line(P.pick({ gain: 5 }), 'C3', 'J1')));
   });
   await t('shapes: tiger, empty triangle, ponnuki, eye and cutting point are recognised', () => {

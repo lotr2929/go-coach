@@ -2,7 +2,7 @@
    One saying per explanation, chosen by what the play-outs showed, with a sentence tying it back to the position.
    The coach states costs and gains; a saying only sums them up. Quotes are attributed: Sun Tzu in Lionel Giles's
    1910 translation of The Art of War, the Ten Golden Rules of Go (traditionally from Tang-dynasty China),
-   and well-known Go proverbs, which have no single author. The wording is in docs/text/en/proverbs.md. Exposed as GoProverbs. */
+   well-known Go proverbs, which have no single author, and words from Go masters (marked "attributed to" until checked). The wording is in docs/text/en/proverbs.md. Exposed as GoProverbs. */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(require('./text.js'));
   else root.GoProverbs = factory(root.GoText);
@@ -20,13 +20,22 @@
   for (const [key, [label, src]] of Object.entries(KIND)) {
     SAYINGS[key] = { label: T('proverbs.' + label), text: T(`proverbs.${key}.text`), src: src ? T('proverbs.' + src) : '', link: T(`proverbs.${key}.link`) };
   }
+  /* Words from a Go master for some situations, used instead of the saying half the time. Until a quote is checked
+     against a book or interview it is shown as "attributed to". */
+  const MASTERS = {};
+  for (const key of ['whole', 'lost']) {
+    MASTERS[key] = { label: T('proverbs.master'), text: T(`proverbs.${key}.master.text`), src: T('proverbs.attributed', { name: T(`proverbs.${key}.master.name`) }), link: T(`proverbs.${key}.master.link`) };
+  }
 
   /* The first situation that applies, in order of how specific it is. facts: { sacrifice, rescue, kill, lost, punished, attackB, gain }. */
-  function pick(f) {
+  /* rnd: a number from 0 to 1 (Math.random by default) choosing between the saying and a master's words. */
+  function pick(f, rnd) {
     if (!f || f.gain <= -1.5) return null; /* the evidence does not favour A: no saying */
     const key = f.sacrifice && f.gain >= 1.5 ? 'sacrifice' : f.rescue ? 'rescue' : f.kill ? 'kill' : f.lost ? 'lost'
       : f.punished ? 'punished' : f.attackB && f.gain >= 1.5 ? 'whole' : f.gain >= 3 ? 'big' : null;
-    return key ? Object.assign({ key }, SAYINGS[key]) : null;
+    if (!key) return null;
+    const useMaster = MASTERS[key] && (rnd === undefined ? Math.random() : rnd) < 0.5;
+    return Object.assign({ key, master: useMaster }, useMaster ? MASTERS[key] : SAYINGS[key]);
   }
   /* The line for the chat, with A and B replaced by the actual points. */
   function line(s, A, B) {
@@ -35,5 +44,5 @@
     return T(s.src ? 'proverbs.line' : 'proverbs.line-plain', { label: s.label, text: s.text, source: s.src, link });
   }
 
-  return { pick, line, SAYINGS };
+  return { pick, line, SAYINGS, MASTERS };
 });

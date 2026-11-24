@@ -2,6 +2,8 @@
 
 One saying sums up the evidence when the coach explains why one move beats another ("why A beats B").
 "principle" and "proverb" are the labels; "sun" and "rules" are the sources. In each ".link", A is the better move and B the weaker one.
+Some situations also have words from a Go master (".master"): the coach uses either the saying or the master's words, at random.
+A master's words that have not been checked against a book or interview are marked "attributed to" ("attributed"); only change that once the source is confirmed.
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 Words in curly brackets, such as {point}, are filled in by the app: keep them.
@@ -19,6 +21,15 @@ Go proverb
 (Ten Golden Rules of Go)
 
 ## line
+{label}: "{text}" {source}. {link}
+
+## master
+Go master
+
+## attributed
+(attributed to {name})
+
+## line-master
 {label}: "{text}" {source}. {link}
 
 ## line-plain
@@ -65,3 +76,21 @@ Give up the small to take the large.
 
 ## big.link
 Both moves have a point, but the area A claims is worth more.
+
+## whole.master.text
+Go is harmony.
+
+## whole.master.name
+Go Seigen
+
+## whole.master.link
+A builds in balance with the whole board; B attacks for its own sake and gains less.
+
+## lost.master.text
+Match strength with strength, lightness with lightness.
+
+## lost.master.name
+Cho Chikun
+
+## lost.master.link
+Against the opponent’s strength, play lightly: B plunges in heavily where it cannot live.
