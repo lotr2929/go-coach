@@ -150,7 +150,8 @@
     else who = s.turn === Play.human ? `Your move (${colourName(Play.human)})` : `${colourName(s.turn)} to play`;
     let nb = 0, nw = 0;
     for (let k = 0; k < s.board.length; k++) { if (s.board[k] === 1) nb++; else if (s.board[k] === 2) nw++; }
-    $('#whoTurn').textContent = who + (Play.phase === 'play' ? `  ● ${nb}  ○ ${nw}` : '');
+    /* Stone counts are help, so silent Play mode leaves them out; prisoners stay, as in any game of Go. */
+    $('#whoTurn').textContent = who + (Play.phase === 'play' && !playSilent() ? `  ● ${nb}  ○ ${nw}` : '');
     $('#capsInfo').textContent = `Prisoners ● ${s.caps[1]}  ○ ${s.caps[2]}`;
     const playing = Play.phase === 'play';
     const mine = playing && !Play.thinking && s.turn === Play.human;

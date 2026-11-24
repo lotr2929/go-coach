@@ -13,7 +13,7 @@
     { sel: '#btnFlag', title: 'Flag', text: 'If something looks wrong, tap here and type a few words. The position and the last messages are sent to the developer, as long as usage logging is on in Settings.' },
     { sel: '#btnSettings', title: 'Settings', text: 'Coordinates, liberties, tap twice to place, stone sound, how long the territory map may think, copying the game record, usage logging, and Check for updates.' },
     { sel: '#whoTurn', title: 'Whose move', text: 'Whose turn it is, and how many stones each side has on the board.' },
-    { sel: '#posInfo', title: 'Who is ahead', text: 'Each side’s chance of winning, from the computer reading the position. About 50 : 50 means the game is even.' },
+    { sel: '#posInfo', title: 'Who is ahead', text: 'Each side’s chance of winning, from the computer reading the position. About 50 : 50 means the game is even. Shown in Coach mode only.' },
     { sel: '#capsInfo', title: 'Prisoners', text: 'How many stones each side has captured.' },
     { sel: '.boardWrap', hover: false, title: 'The board', text: 'Tap a point to place your stone. With "Tap twice to place" on in Settings, the first tap shows where it will go and the second places it. With Shapes on, tap one of your stones inside a box to hear about its shape.' },
     { sel: ['#btnUndoArrow', '#btnRedoArrow'], title: 'Undo and Redo', text: 'Take back your last move, or play it again. In a famous game they step back and forward through the record.' },

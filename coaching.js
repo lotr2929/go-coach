@@ -246,7 +246,8 @@
     return null;
   }
   function paintPos() {
-    const el = $('#posInfo'), busy = !Play.s || Play.phase !== 'play' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on);
+    /* Silent Play mode (play.js playSilent) shows no estimate, as in a normal game of Go. */
+    const el = $('#posInfo'), busy = !Play.s || Play.phase !== 'play' || G.playSilent() || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on);
     const v = busy ? null : blackPct();
     if (!v) { el.hidden = true; return; }
     el.hidden = false; el.style.opacity = v.fresh ? '1' : '.55';
