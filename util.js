@@ -35,12 +35,10 @@ window.GC = {};
       o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + .1);
     } catch (e) { /* no audio */ }
   }
-  const colourName = c => (c === 1 ? 'Black' : 'White');
-  const REASONS = {
-    occupied: 'That point is already taken.',
-    ko: 'Ko: you cannot retake straight away. Play elsewhere first.',
-    suicide: 'Illegal: that stone would have no liberties.'
-  };
+  /* The wording is in docs/text/en/app.md. */
+  const T = window.GoText.T;
+  const colourName = c => T(c === 1 ? 'app.black' : 'app.white');
+  const REASONS = { occupied: T('app.reason.occupied'), ko: T('app.reason.ko'), suicide: T('app.reason.suicide') };
 
   Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS });
 })();

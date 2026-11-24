@@ -1,53 +1,81 @@
 # What is Go?
 
-Go is one of the oldest continuously played board games. Its origins are rooted in China where it is called _weiqi_ but it is now widely played around the world, particularly in Korea, where it is known as _baduk_ and Japan, where it is known as _Igo_. The name _Go_ is a shortened version of the Japanese name because the West learnt about the game largely from Japan.
+Go is one of the oldest continuously played board games in the world. It originated in China more than 2,500 years ago, where it is called _weiqi_. In Korea it is known as _baduk_, and in Japan as _igo_, often shortened simply to _go_. The West came to know the game largely through Japan, which is why the Japanese name became established in English.
 
-Like chess, _Go_ is essentially game that simulates a war. Two armies, Black and White, contest one battlefield. The rules are few: place a stone, surround to capture, and claim the most ground. Beyond that, almost anything goes. Every tactic, formation and principle has been discovered by players, not imposed by rules. This is not unlike an actual war and indeed, a lot of useful strategies about competition and strategic thinking can come from this.
+Like chess, Go can be understood as a game of war. Two armies, Black and White, contest a common battlefield. But they represent very different conceptions of warfare.
+
+Chess is hierarchical. Its pieces have different ranks, powers and values, and ultimately everything may be sacrificed to protect the king. Go has no king and no hierarchy. Every stone begins equal. A stone acquires strength and value only through its position and its relationship with other stones.
+
+The rules are remarkably few: place a stone, surround to capture, and control more ground than your opponent. Beyond that, strategy emerges from the interaction between the two players.
+
+Perhaps for this reason, Go offers not merely a simulation of battle but a remarkably rich way of thinking about competition itself.
 
 ## The battlefield
 
-Go is played on a grid of lines: 19 × 19 for a full game, or 9 × 9 and 13 × 13 for shorter ones. Stones are placed on the points where the lines cross, not in the squares. Black moves first, then the players take turns, one stone at a time. Once placed, a stone does not move.
+Go is played on a grid of lines: 19 × 19 for a full game, or 9 × 9 and 13 × 13 for shorter games. Stones are placed on the intersections of the lines, not in the squares.
 
-It began in China more than 2,500 years ago, where it is called weiqi. It is igo in Japan and baduk in Korea, and today it is played all over the world.
+Black moves first, after which the players alternate, placing one stone at a time. Once placed, a stone does not move.
+
+Unlike chess, there is no predetermined front line, no king to defend and no single objective to attack. The battlefield develops progressively as both players establish positions, extend their influence, attack weaknesses and defend what they have gained.
 
 ## The rules in brief
 
--   The empty points next to a stone (up, down, left and right) are its liberties: its lines of supply.
--   Stones of one colour that touch along the lines form a group and share their liberties.
--   A stone or group with no liberties left is captured and taken off the board.
--   You may not play where your stone would have no liberties, unless that move captures.
--   Ko: you may not take back a single stone at once if that would repeat the position; play elsewhere first.
--   When both players pass, the battle ends. Each side counts its stones and the empty ground it surrounds. White receives a few points (komi) for moving second.
+The empty points immediately next to a stone are called its **liberties**. In military terms, they might be thought of as its lines of supply.
+
+Stones of the same colour that connect along the lines form a group and share their liberties. When a stone or group has no liberties remaining, it is surrounded, captured and removed from the board.
+
+A stone may not normally be played where it would immediately have no liberties of its own, unless doing so captures opposing stones.
+
+The **ko** rule prevents an immediate recapture that would simply recreate the previous position.
+
+When neither player sees further advantage in continuing, both pass and the battle ends. The players then determine who controls more of the board. White receives additional points, called _komi_, to compensate for Black moving first.
 
 ## The four skills of command
 
 ### Reading the terrain
 
-Seeing which ground is open to seize, which can be attacked, and where you are exposed. The Territory tab under the board shows the computer's estimate.
+Seeing which ground can be occupied, where influence can be extended, which positions can be attacked and where one's own forces are exposed.
 
 ### Judging formations
 
-Knowing which positions are strong or weak, and why. Go players call this shape. The Shapes tab under the board marks good formations, bad ones and weak points.
+Understanding which arrangements of forces are strong or weak, and why. Go players call this **shape**. A collection of stones may be numerous yet inefficient, while a much smaller force can be extremely strong if its stones support one another well.
 
 ### Calculating the engagement
 
-Foreseeing how a clash will unfold: if I play here, my opponent answers there, and then? Go players call this reading.
+Foreseeing how a local battle is likely to develop: _if I attack here, my opponent responds there; if I answer there, what happens next?_
 
-### Commanding the campaign
+Go players call this **reading**.
 
-Choosing what matters most on the whole board, and directing every move towards it. A won skirmish means little if the war is lost elsewhere.
+### Developing strategies
 
-## Winning without destroying
+Recognising what matters most across the whole battlefield and directing individual engagements towards that larger purpose.
 
-In a contest with almost no restrictions, Go reveals something unexpected: restraint wins. Armies that overreach are cut off. Commanders who try to destroy everything leave their own positions open. The player who builds strength, takes only what can be held and accepts a fair exchange wins more often.
+A commander may win a skirmish yet lose the war. Conversely, stones may deliberately be sacrificed because defending them would consume resources better employed elsewhere.
 
-As Sun Tzu wrote in The Art of War: "The best thing of all is to take the enemy's country whole and intact; to shatter and destroy it is not so good." A game of Go is usually won by a few points, not by wiping out the opponent, and both sides end with territory of their own.
+## Winning by strategic advantage
 
-Go teaches, game after game, that the most lasting victories come from building, not from destroying.
+Go offers a strikingly different conception of victory.
 
-## Where to go next
+The objective is not the annihilation of the opposing army. Both sides normally survive, retain substantial forces and control territory when the game ends. Victory requires not the destruction of the opponent, but a stronger overall position.
 
--   Type 2 for a short history of Go.
--   Type 3 and I will teach you the rules step by step.
--   Type 4 to play a game with me coaching you.
--   Type 5 for a tour of the app.
+This changes the logic of battle.
+
+An enemy group does not need to be destroyed merely because it can be attacked. An attack must justify the resources committed to it. Territory should not be seized simply because it appears available. It must also be capable of being defended. A local defeat may be accepted because fighting elsewhere produces greater strategic value.
+
+Above all, **strength comes from relationships**. An isolated stone is vulnerable. Connected stones support one another. Yet simply accumulating more stones is not enough: badly positioned forces become inefficient, while well-connected forces can exert influence far beyond the ground they physically occupy.
+
+Go therefore rewards restraint as much as aggression, connection as much as independence, and judgement as much as strength.
+
+This recalls the strategic principles associated with Sun Tzu's _The Art of War_: the highest achievement of command is not indiscriminate destruction, but achieving one's objective while conserving forces, avoiding unnecessary engagements and preserving what is valuable.
+
+Go therefore suggests an alternative way of thinking about competition.
+
+**To compete is not necessarily to destroy.**
+
+Competitors may fight intensely while continuing to coexist. An opponent does not have to lose everything for you to win. Indeed, attempts to dominate everywhere frequently produce overextension, vulnerability and eventual defeat.
+
+This lesson reaches beyond warfare and the Go board. Modern businesses, nations and individuals increasingly operate within systems of mutual dependence. Competitors may simultaneously be collaborators; prosperity depends upon customers, workers, suppliers, communities, competitors and ecological systems remaining viable.
+
+Go does not ask us to abandon competition. It suggests something more subtle:
+
+> **Compete vigorously. Build strength. Choose your battles. Do not overreach. Cooperate where cooperation makes you stronger. Accept that your opponent also needs room to live. And always play the whole board.**

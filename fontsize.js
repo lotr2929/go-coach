@@ -33,14 +33,14 @@
   slider.type = 'range';
   slider.min = String(MIN); slider.max = String(MAX); slider.step = String(STEP);
   slider.style.flex = '1';
-  slider.setAttribute('aria-label', 'Text size');
+  slider.setAttribute('aria-label', window.GoText.T('app.text-size'));
   const reset = document.createElement('button');
   reset.type = 'button';
   reset.textContent = 'Reset';
 
   const show = () => {
     slider.value = String(scale);
-    lbl.textContent = 'Text size: ' + Math.round(scale * 100) + '%';
+    lbl.textContent = window.GoText.T('app.text-size-value', { percent: Math.round(scale * 100) });
   };
   const set = v => { scale = clamp(v); save(scale); apply(scale); show(); };
 

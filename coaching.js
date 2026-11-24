@@ -7,6 +7,8 @@
   const G = window.GC;
   const { E, $, settings, saveSettings, colourName, Play, renderPlay, load, store } = G;
   const CM = window.GoCommentary;
+  /* The wording is in docs/text/en/coaching.md. head(k): the heading a commentary.md line starts with, before its colon. */
+  const T = (k, v) => window.GoText.T('coaching.' + k, v), head = k => window.GoText.T('commentary.' + k).split(':')[0];
   const LETS = 'ABCDE';
   const pct = x => Math.round(x * 100);
   const say = text => { if (G.say && text) G.say(text); };
@@ -15,7 +17,8 @@
   const sigOf = s => Array.from(s.board).join('') + s.turn;
   /* How hard the coach thinks: the level chosen for it, but always at least one above the computer's level. */
   const coachLevel = () => E.coachLevel(Play.level, settings.coachLevel);
-  const kindOf = loss => (loss < .02 ? 'good move' : loss < .06 ? 'slight inaccuracy' : loss < .12 ? 'mistake' : 'blunder');
+  const kindOf = loss => (loss < .02 ? 'good' : loss < .06 ? 'slight' : loss < .12 ? 'mistake' : 'blunder'); /* coaching.kind.… */
+  const kindName = k => T('kind.' + k);
 
   /* The latest analysis. It counts only while the board is exactly as it was when the analysis was made. */
   let last = null, tried = false;
@@ -42,9 +45,9 @@
   function stonesText(s) {
     const me = Play.human, op = 3 - me, cnt = [0, 0, 0];
     for (const v of s.board) cnt[v]++;
-    return `You (${colourName(me)}) ${cnt[me]}, ${colourName(op)} ${cnt[op]}. Prisoners: you ${s.caps[me]}, ${colourName(op)} ${s.caps[op]}.`;
+    return T('stones', { colour: colourName(me), mine: cnt[me], other: colourName(op), theirs: cnt[op], mycaps: s.caps[me], theircaps: s.caps[op] });
   }
-  /* The commentary engine writes "Heading: text" lines; split them so each can sit under its own bold heading. */
+  /* The commentary engine writes "Heading: text" lines; split them so each can sit under its own bold heading (keys are the headings). */
   function summaryParts(s) {
     const out = {};
     for (const ln of CM.positionSummary(E, s, Play.human).split('\n')) {
@@ -54,32 +57,28 @@
     return out;
   }
   function standing(s, res) {
-    let t = `${res.diff > 0 ? 'Black' : 'White'} ahead by about ${Math.abs(res.diff).toFixed(1)} points (komi included).`;
+    let t = T('ahead', { side: colourName(res.diff > 0 ? 1 : 2), points: Math.abs(res.diff).toFixed(1) });
     const best = res.moves[0];
-    if (best) t += ` ${colourName(s.turn)} to play; the best move wins about ${pct(best.wr)}% of the random games I play out.`;
+    if (best) t += ' ' + T('best', { player: colourName(s.turn), pct: pct(best.wr) });
     return t;
   }
   function suggestions(s, res) {
-    return res.moves.slice(0, 5).map((m, i) => `${LETS[i]}. ${E.coord(s.n, m.move)} · ${pct(m.wr)}%: ${CM.headline(E, s, m.move, s.turn, Play.human)}`).join('\n');
+    return res.moves.slice(0, 5).map((m, i) => T('suggestion', { letter: LETS[i], point: E.coord(s.n, m.move), pct: pct(m.wr), what: CM.headline(E, s, m.move, s.turn, Play.human) })).join('\n');
   }
   function positionLine(s) {
     const m = s.moves[s.moves.length - 1];
-    const after = m ? `After move ${s.moves.length} (${colourName(m.c)} ${m.i >= 0 ? E.coord(s.n, m.i) : 'pass'})` : 'Start of the game';
-    return `${after}: ${colourName(s.turn)} to play.`;
+    const after = m ? T('after-move', { count: s.moves.length, player: colourName(m.c), point: m.i >= 0 ? E.coord(s.n, m.i) : T('pass') }) : T('start');
+    return T('to-play', { after, player: colourName(s.turn) });
   }
   function analysisText(s, res, brief) {
-    const parts = [section('Position', positionLine(s)), section('Territory estimate', standing(s, res))];
+    const parts = [section(T('h.position'), positionLine(s)), section(T('h.territory'), standing(s, res))];
     if (!brief) {
       const p = summaryParts(s);
-      parts.push(section('Stones', stonesText(s)));
-      if (p['Where things stand']) parts.push(section('Where things stand', p['Where things stand']));
-      if (p.Safety) parts.push(section('Safety', p.Safety));
-      if (p['Biggest open area']) parts.push(section('Biggest open area', p['Biggest open area']));
+      parts.push(section(T('h.stones'), stonesText(s)));
+      for (const k of ['summary-where', 'summary-safety', 'summary-open']) if (p[head(k)]) parts.push(section(head(k), p[head(k)]));
     }
-    if (res.moves.length) parts.push(section('Suggestions', suggestions(s, res)));
-    parts.push(brief
-      ? 'Tap a lettered point to play it, or ask "why A?".'
-      : 'Tap a lettered point on the board to play it, or ask "why A?" or "compare A and B". Win rates come from random playouts, so gaps under 5% are equal.');
+    if (res.moves.length) parts.push(section(T('h.suggestions'), suggestions(s, res)));
+    parts.push(T(brief ? 'end-brief' : 'end-full'));
     return parts.join('\n\n');
   }
 
@@ -87,7 +86,7 @@
     const s0 = Play.s;
     if (!s0 || Play.thinking || Play.phase !== 'play' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on)) return;
     const s = E.clone(s0), tok = ++Play.token;
-    Play.thinking = true; Play.note = { tok, text: 'Coach is analysing…' }; renderPlay();
+    Play.thinking = true; Play.note = { tok, text: T('analysing') }; renderPlay();
     const res = await E.analyse(s, s.turn, { ms: E.analysisMs(coachLevel(), s.n), cancelled: () => tok !== Play.token });
     if (tok !== Play.token || !res) return;
     Play.thinking = false;
@@ -102,7 +101,7 @@
   async function whyBetter(s, better, worse) {
     const game = Play.s;
     const t = await window.GoExplain.contrast(E, s, better, worse, s.turn, Play.human);
-    if (t && Play.s === game) say(section(`Why ${E.coord(s.n, better)} beats ${E.coord(s.n, worse)}`, t));
+    if (t && Play.s === game) say(section(T('h.why-beats', { better: E.coord(s.n, better), worse: E.coord(s.n, worse) }), t));
   }
 
   /* ---------- feedback on the learner's own move (Coach mode) ---------- */
@@ -112,10 +111,10 @@
     const res = prev.res, best = res.moves[0], pl = res.moves.find(x => x.move === idx), n = prev.s.n;
     if (!best) return '';
     if (idx !== best.move && (!pl || best.wr - pl.wr >= .02)) whyBetter(prev.s, best.move, idx);
-    if (!pl) return section('Your move', `${E.coord(n, idx)} was not among my top ideas. My favourite was ${E.coord(n, best.move)} (${pct(best.wr)}%).`);
+    if (!pl) return section(T('h.your-move'), T('not-top', { point: E.coord(n, idx), best: E.coord(n, best.move), pct: pct(best.wr) }));
     const loss = best.wr - pl.wr;
-    if (idx === best.move || loss < .02) return section('Your move', `${E.coord(n, idx)}: good move (${pct(pl.wr)}%).`);
-    return section('Your move', `${E.coord(n, idx)}: ${kindOf(loss)} (${pct(pl.wr)}% against ${pct(best.wr)}% for ${E.coord(n, best.move)}). ${CM.compare(E, prev.s, idx, best.move, prev.s.turn, Play.human)}`);
+    if (idx === best.move || loss < .02) return section(T('h.your-move'), T('good', { point: E.coord(n, idx), pct: pct(pl.wr) }));
+    return section(T('h.your-move'), T('weaker', { point: E.coord(n, idx), kind: kindName(kindOf(loss)), pct: pct(pl.wr), bestpct: pct(best.wr), best: E.coord(n, best.move), compare: CM.compare(E, prev.s, idx, best.move, prev.s.turn, Play.human) }));
   }
 
   /* ---------- game review ---------- */
@@ -125,27 +124,27 @@
     full.moves.forEach((m, k) => {
       const res = results[k], best = res.moves[0];
       const pl = m.i >= 0 ? res.moves.find(x => x.move === m.i) : null;
-      let kind = m.i < 0 ? 'pass' : 'not rated', loss = 0;
-      if (best && pl) { loss = Math.max(0, best.wr - pl.wr); kind = m.i === best.move ? 'good move' : kindOf(loss); }
+      let kind = m.i < 0 ? 'pass' : 'unrated', loss = 0;
+      if (best && pl) { loss = Math.max(0, best.wr - pl.wr); kind = m.i === best.move ? 'good' : kindOf(loss); }
       if (pl) carry = pct(m.c === 1 ? pl.wr : 1 - pl.wr);
       rows.push({ k, m, best, loss, kind, black: carry });
     });
-    const who = c => colourName(c) + (c === Play.human ? ' (you)' : '');
+    const who = c => (c === Play.human ? T('you', { player: colourName(c) }) : colourName(c));
     const tally = [];
     for (const c of [1, 2]) {
       const mine = rows.filter(r => r.m.c === c && r.m.i >= 0), t = k => mine.filter(r => r.kind === k).length;
-      if (mine.length) tally.push(`${who(c)}: ${t('good move')} good, ${t('slight inaccuracy')} slight inaccuracies, ${t('mistake')} mistakes, ${t('blunder')} blunders.`);
+      if (mine.length) tally.push(T('tally', { who: who(c), good: t('good'), slight: t('slight'), mistake: t('mistake'), blunder: t('blunder') }));
     }
     const worst = rows.filter(r => r.loss >= .06 && r.best).sort((a, b) => b.loss - a.loss).slice(0, 3);
     const swings = worst.length
-      ? worst.map(r => `Move ${r.k + 1}, ${colourName(r.m.c)} ${E.coord(n, r.m.i)}: ${r.kind}, about ${pct(r.loss)}% win chance lost. ${E.coord(n, r.best.move)} was better.`).join('\n')
-      : 'No big mistakes by either side.';
+      ? worst.map(r => T('swing', { count: r.k + 1, player: colourName(r.m.c), point: E.coord(n, r.m.i), kind: kindName(r.kind), pct: pct(r.loss), best: E.coord(n, r.best.move) })).join('\n')
+      : T('no-swings');
     return [
-      section('Game review', `${rows.length} moves. The percentages are Black's chance of winning after each move; they come from quick random games, so small differences are noise.`),
-      section('Where we stand', `${fin.diff > 0 ? 'Black' : 'White'} ahead by about ${Math.abs(fin.diff).toFixed(1)} points (komi included)` + (fin.blackPct != null ? `; Black has roughly a ${fin.blackPct}% chance of winning` : '') + '.'),
-      section('How each side played', tally.join('\n')),
-      section('Biggest swings', swings),
-      section('Move by move', rows.map(r => `${r.k + 1}. ${r.m.c === 1 ? '●' : '○'} ${r.m.i >= 0 ? E.coord(n, r.m.i) : 'pass'}: ${r.kind} (Black ${r.black}%)`).join('\n'))
+      section(T('h.review'), T('review-intro', { count: rows.length })),
+      section(T('h.where-we-stand'), T(fin.blackPct != null ? 'final-chance' : 'final', { side: colourName(fin.diff > 0 ? 1 : 2), points: Math.abs(fin.diff).toFixed(1), pct: fin.blackPct })),
+      section(T('h.how-played'), tally.join('\n')),
+      section(T('h.swings'), swings),
+      section(T('h.move-by-move'), rows.map(r => T('row', { count: r.k + 1, stone: r.m.c === 1 ? '●' : '○', point: r.m.i >= 0 ? E.coord(n, r.m.i) : T('pass'), kind: kindName(r.kind), pct: r.black })).join('\n'))
     ].join('\n\n');
   }
 
@@ -153,18 +152,18 @@
     const full = Play.s;
     if (!full || Play.thinking || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on)) return;
     const tot = full.moves.length, n = full.n;
-    if (!tot) return say('There are no moves to review yet.');
+    if (!tot) return say(T('nothing-to-review'));
     const tok = ++Play.token, cancelled = () => tok !== Play.token, ms = Math.round(E.analysisMs(coachLevel(), n) / 3);
     Play.thinking = true;
     const results = [];
     for (let k = 0; k < tot; k++) {
-      Play.note = { tok, text: `Reviewing move ${k + 1} of ${tot}…` }; renderPlay();
+      Play.note = { tok, text: T('reviewing', { count: k + 1, total: tot }) }; renderPlay();
       const st = E.stateAt(full, k), mv = full.moves[k];
       const res = await E.analyse(st, st.turn, { include: mv.i >= 0 ? [mv.i] : [], ms, cancelled });
       if (!res || cancelled()) return;
       results.push(res);
     }
-    Play.note = { tok, text: 'Working out where the game stands…' }; renderPlay();
+    Play.note = { tok, text: T('working-out') }; renderPlay();
     const fs = E.stateAt(full, tot);
     let fin;
     if (fs.passes >= 2) {
@@ -188,10 +187,10 @@
     const c = current();
     if (!c) {
       if (/\b[A-E]\b/.test(q) && /\b(why|explain|compare|play|better|worse|advantage|safe)\b/i.test(q)) {
-        say('The board has changed since my last suggestions, so I will analyse the new position first.');
+        say(T('changed'));
         analyse(true).then(() => {
           if (current()) ask(q);
-          else say('I could not analyse just now. Press Analyse when it is your turn, then ask again.');
+          else say(T('could-not'));
         });
         return true;
       }
@@ -205,9 +204,8 @@
     if (picks.length >= 2 && /\b(vs|versus|compare|comparison|better|worse|than|or|and|difference|between|instead)\b/.test(low)) {
       const [x, y] = picks.slice(0, 2).sort((p, r) => list.indexOf(p.m) - list.indexOf(r.m));
       ring([x.m.move, y.m.move]);
-      say(section(`Comparing ${x.L} and ${y.L}`,
-        `${x.L}: ${E.coord(n, x.m.move)}, ${pct(x.m.wr)}%. ${y.L}: ${E.coord(n, y.m.move)}, ${pct(y.m.wr)}%.` +
-        (Math.abs(x.m.wr - y.m.wr) < .05 ? ' The win rates are within 5%, so treat them as about equal.' : '') +
+      say(section(T('h.comparing', { x: x.L, y: y.L }),
+        T(Math.abs(x.m.wr - y.m.wr) < .05 ? 'compare-equal' : 'compare', { x: x.L, xpoint: E.coord(n, x.m.move), xpct: pct(x.m.wr), y: y.L, ypoint: E.coord(n, y.m.move), ypct: pct(y.m.wr) }) +
         '\n' + CM.compare(E, s, y.m.move, x.m.move, s.turn, Play.human)));
       whyBetter(s, x.m.move, y.m.move);
       return true;
@@ -218,19 +216,19 @@
     }
     if (picks.length === 1 && /\b(play|try|put|place)\b/.test(low)) {
       if (Play.phase === 'play' && !Play.thinking && Play.s.turn === Play.human) { Play.pending = picks[0].m.move; G.onPlayTap(picks[0].m.move); }
-      else say('It is not your turn.');
+      else say(T('not-your-turn'));
       return true;
     }
     if (picks.length === 1) {
       const m = picks[0].m;
       ring([m.move]);
-      say(section(`${picks[0].L}: ${E.coord(n, m.move)}`, CM.deepDive(E, s, m.move, s.turn, Play.human)));
+      say(section(T('h.letter', { letter: picks[0].L, point: E.coord(n, m.move) }), CM.deepDive(E, s, m.move, s.turn, Play.human)));
       const other = m === list[0] ? list[1] : list[0];
       if (other) whyBetter(s, m === list[0] ? m.move : other.move, m === list[0] ? other.move : m.move);
       return true;
     }
     if (/\b(best|strongest|safest|top|biggest)\b/.test(low)) {
-      say(section('Suggestions', suggestions(s, c.res)) + '\n\nAsk "why A?" or "compare A and B" for more.');
+      say(section(T('h.suggestions'), suggestions(s, c.res)) + '\n\n' + T('ask-more'));
       return true;
     }
     return false;
@@ -252,7 +250,7 @@
     if (!v) { el.hidden = true; return; }
     el.hidden = false; el.style.opacity = v.fresh ? '1' : '.55';
     $('#posB').style.width = v.p + '%'; $('#posL').textContent = '● ' + v.p; $('#posR').textContent = (100 - v.p) + ' ○';
-    el.title = `Black ${v.p}%, White ${100 - v.p}%. A rough estimate of who is ahead.`;
+    el.title = T('estimate', { black: v.p, white: 100 - v.p });
   }
   async function refreshEstimate() {
     const s = Play.s;
@@ -272,9 +270,9 @@
   function setMode(mode) {
     settings.mode = mode; saveSettings(); renderPlay();
     if (mode === 'coach') {
-      say('Coach mode: after every turn I will suggest moves, and I will tell you how each of your moves went. Switch back to Play mode if you would rather play without help.');
+      say(T('coach-mode'));
       coachAuto();
-    } else say('Play mode: I stay quiet unless you ask. Ask me for a hint, an analysis or a review at any time.');
+    } else say(T('play-mode'));
   }
   $('#btnAnalyse').onclick = () => analyse(false);
   $('#btnMode').onclick = () => setMode(settings.mode === 'coach' ? 'play' : 'coach');
