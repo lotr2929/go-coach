@@ -9,6 +9,9 @@ Last updated: 24 November 2026.
 - **Go Coach stays local:** rules and random play-outs, no neural network, no network calls except the optional usage logging.
 - **Audience and message:** attract competitive people and show them, with evidence, that restraint wins. Go as a war game you win by building, not destroying.
 
+## Look
+- **Redesigned 25 Nov 2026:** light and calm (white cards on warm off-white, soft shadows, one deep-green accent, clean sans-serif title with a two-stone mark), with a matching dark version when the phone or computer is set to dark mode. Boon admires SmartGo's clean design but asked for our own, not a copy. All colours are tokens at the top of style.css.
+
 ## The coach's voice
 - **Realistic, not idealistic or moralistic.** Never "you should be nice"; always "here is what each move costs or gains". Ethics are justified by better outcomes, as in Sun Tzu.
 - **Evidence first, saying last.** The "Why X beats Y" message plays both moves out and reports points, which groups live or die and where. One fitting principle or proverb comes at the end, tied back to the position (`proverbs.js`).

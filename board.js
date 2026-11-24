@@ -96,9 +96,9 @@
       const px = v => (pad + v) * cell;
       // wood
       const bg = ctx.createLinearGradient(0, 0, W, W);
-      bg.addColorStop(0, '#e6bd6e'); bg.addColorStop(1, '#cf9c45');
+      bg.addColorStop(0, '#edcd92'); bg.addColorStop(1, '#dfb470'); /* a lighter, cleaner wood (redesign, 25 Nov 2026) */
       ctx.fillStyle = bg; ctx.fillRect(0, 0, W, W);
-      ctx.save(); ctx.globalAlpha = .08; ctx.strokeStyle = '#5a3a10'; ctx.lineWidth = 1;
+      ctx.save(); ctx.globalAlpha = .05; ctx.strokeStyle = '#5a3a10'; ctx.lineWidth = 1;
       for (let k = 0; k < 26; k++) {
         const y = (k + .5) * W / 26;
         ctx.beginPath(); ctx.moveTo(0, y);
