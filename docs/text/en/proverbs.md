@@ -4,6 +4,7 @@ One saying sums up the evidence when the coach explains why one move beats anoth
 "principle" and "proverb" are the labels; "sun" and "rules" are the sources. In each ".link", A is the better move and B the weaker one.
 Some situations also have words from a Go master (".master"): the coach uses either the saying or the master's words, at random.
 A master's words that have not been checked against a book or interview are marked "attributed to" ("attributed"); only change that once the source is confirmed.
+A master's words that have been checked carry their source in ".master.source" instead, such as "(Edward Lasker, Go and Go-Moku)".
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 Words in curly brackets, such as {point}, are filled in by the app: keep them.
@@ -94,3 +95,15 @@ Cho Chikun
 
 ## lost.master.link
 Against the opponent’s strength, play lightly: B plunges in heavily where it cannot live.
+
+## big.master.text
+The Go board is so much larger than the Chess board that a defeat on one wing of the battle-field can often be compensated by victory on another.
+
+## big.master.name
+Edward Lasker
+
+## big.master.source
+(Edward Lasker, Go and Go-Moku, 1960, page 100)
+
+## big.master.link
+Think of the whole battlefield: the ground A claims is worth more than what B fights for.

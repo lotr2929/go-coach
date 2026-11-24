@@ -288,7 +288,7 @@ The stronger formation is the tiger’s mouth: play at A. Now three black stones
 Make a tiger’s mouth by playing at A.
 
 ## tiger.done
-A tiger’s mouth. A white stone pushed in at B would be captured at once, so your stones are safe, and your formation covers more ground than a solid connection. Turn on Shapes in Coach mode and I will point these out in your own games.
+A tiger’s mouth. A white stone pushed in at B would be captured at once, so your stones are safe, and your formation covers more ground than a solid connection. As Edward Lasker wrote in Go and Go-Moku: “A premature tightening of the connection between the members of a chain is evidently a waste of time which the opponent can utilize to his advantage.” Turn on Shapes in Coach mode and I will point these out in your own games.
 
 ## tiger.solid
 That connects solidly: safe, but slower, because the stone at B claims nothing new. Press Reset and try A.
