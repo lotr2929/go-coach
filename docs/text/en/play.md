@@ -151,3 +151,12 @@ The computer plays {colour} again.
 
 ## both-no-game
 Start a game first, then say "play both sides".
+
+## tree-move
+Move {num}: {point}
+
+## tree-pass
+pass
+
+## tree-start
+Start of the game
