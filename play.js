@@ -81,7 +81,9 @@
 
   function saveGame() {
     if (!Play.s) return;
-    store(KEY.game, { human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, both: !!Play.both, s: E.serialize(Play.s) });
+    if (G.Tree) Play.tree = G.Tree.add(Play.tree || G.Tree.fresh(), Play.s.moves); /* the move tree (movetree.js) keeps every line tried */
+    store(KEY.game, { human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, both: !!Play.both, s: E.serialize(Play.s), tree: Play.tree });
+    if (G.renderTree) G.renderTree();
   }
   function startNewGame(opts) {
     if (G.kifu && G.kifu.on) G.exitKifu(true);
@@ -91,7 +93,7 @@
     Play.human = settings.colour === 'random' ? (Math.random() < .5 ? 1 : 2) : (settings.colour === 'white' ? 2 : 1);
     Play.level = settings.level;
     Play.both = settings.colour === 'both' && !Play.guided; /* you play Black; the coach suggests White's moves and you choose */
-    Play.phase = 'play'; Play.dead = null; Play.pending = -1; Play.hint = []; Play.over = false; Play.thinking = false; Play.lastAI = null; Play.redo = []; G.explained = null; G.lastExplain = null;
+    Play.phase = 'play'; Play.dead = null; Play.pending = -1; Play.hint = []; Play.over = false; Play.thinking = false; Play.lastAI = null; Play.redo = []; Play.tree = null; G.explained = null; G.lastExplain = null;
     renderPlay(); saveGame();
     /* An ordinary new game says nothing in the chat (New brings back the welcome); the guided first game explains itself. */
     if (Play.guided) say(window.GoGuide.opening({ handicap: settings.handicap, human: Play.human, computerFirst: Play.s.turn !== Play.human }));
@@ -110,6 +112,7 @@
     if (!g) return false;
     try {
       Play.s = E.deserialize(g.s); Play.human = g.human; Play.level = g.level; Play.over = !!g.over; Play.guided = !!g.guided; Play.both = !!g.both; Play.seen = {};
+      Play.tree = g.tree && g.tree.k ? g.tree : null;
     } catch (e) { return false; }
     Play.phase = 'play'; Play.dead = null; Play.hint = []; Play.pending = -1; Play.thinking = false;
     renderPlay();
@@ -180,6 +183,7 @@
     G.paintPos();
     $('#scorePanel').hidden = Play.phase !== 'scoring';
     $('#btnConfirm').disabled = Play.thinking;
+    if (G.renderTree) G.renderTree();
   }
 
   function onPlayTap(i) {
@@ -278,6 +282,27 @@
     else G.coachAuto();
   }
 
+  /* A tap on the move tree (movetree.js): go to the position after those moves, as Undo and Redo do. Moves the two lines
+     share are kept; the rest are taken back and the chosen line played. Going back along the line leaves Redo able to return. */
+  function jumpTo(path) {
+    const s = Play.s;
+    if (!s || Play.phase !== 'play') return;
+    Play.token++; Play.thinking = false; Play.pending = -1; Play.hint = [];
+    const before = s.moves.slice();
+    let k = 0;
+    while (k < before.length && k < path.length && before[k].i === path[k].i) k++;
+    if (k === before.length && k === path.length) return renderPlay();
+    while (s.moves.length > k) E.undo(s);
+    for (const m of path.slice(k)) { if (!(m.i < 0 ? E.pass(s) : E.play(s, m.i)).ok) break; }
+    Play.redo = k === path.length && k < before.length ? [before.slice(k)] : [];
+    click();
+    G.explained = null; G.lastExplain = null;
+    renderPlay(); saveGame();
+    if (s.passes >= 2) startScoring();
+    else if (s.turn !== Play.human) maybeAI();
+    else G.coachAuto();
+  }
+
   async function giveHint() {
     const s = Play.s;
     if (!s || !myTurn(s)) return;
@@ -350,5 +375,5 @@
   }
 
 
-  Object.assign(G, { Play, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
+  Object.assign(G, { Play, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, jumpTo, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
 })();

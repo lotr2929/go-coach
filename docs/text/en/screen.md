@@ -208,3 +208,9 @@ New game
 
 ## next-arrow
 Next →
+
+## move-tree.aria
+Moves of this game
+
+## move-tree.tip
+Every move of this game. Tap one to go back to it; moves you tried before stay as branches.
