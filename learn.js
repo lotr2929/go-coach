@@ -9,8 +9,17 @@
 
   const Lesson = { on: false, idx: -1, s: null, status: null, answered: false, hintPts: [], done: new Set(load(KEY.done, [])) };
 
+  /* The lessons by chapter: each chapter is a skill from "What is Go?", in order from the simplest. */
   function showMenu() {
-    G.chatMenu(LS.list.map((L, i) => ({ label: `${Lesson.done.has(L.id) ? '✓' : i + 1}  ${L.title}`, done: Lesson.done.has(L.id), run: () => openLesson(i) })));
+    const items = [];
+    LS.CHAPTERS.forEach((c, k) => {
+      items.push({ head: true, label: T('chapter-head', { count: k + 1, title: c.title }), note: c.intro });
+      for (const id of c.ids) {
+        const i = LS.list.findIndex(L => L.id === id), L = LS.list[i];
+        items.push({ label: `${Lesson.done.has(id) ? '✓' : i + 1}  ${L.title}`, done: Lesson.done.has(id), run: () => openLesson(i) });
+      }
+    });
+    G.chatMenu(items);
   }
   function openLesson(i) {
     if (Play.thinking) return say(window.GoText.T('app.busy-thinking'));
@@ -26,7 +35,8 @@
       });
     }
     G.setChips(CHIPS);
-    say(T('heading', { count: i + 1, total: LS.list.length, title: L.title }) + '\n\n' + L.text.join('\n\n'));
+    const ch = LS.chapterOf(L.id);
+    say(T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.list.length, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'));
     say((L.task ? T('task', { task: L.task }) + '\n' : '') + T('ask-me'));
     renderLesson();
   }

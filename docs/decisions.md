@@ -1,0 +1,48 @@
+# Go Coach: direction and decisions
+
+A summary of Boon's decisions and the reasoning behind them, so any session (phone, cloud or laptop) can pick up where the last one stopped. The code changes themselves are in `docs/phone-notes/`. Update this file when a decision changes.
+
+Last updated: 24 November 2026.
+
+## Product
+- **Go Coach first.** Develop it until Boon is satisfied before approaching anyone. World of Go (neural network, subscription) comes later, funded by traction.
+- **Go Coach stays local:** rules and random play-outs, no neural network, no network calls except the optional usage logging.
+- **Audience and message:** attract competitive people and show them, with evidence, that restraint wins. Go as a war game you win by building, not destroying.
+
+## The coach's voice
+- **Realistic, not idealistic or moralistic.** Never "you should be nice"; always "here is what each move costs or gains". Ethics are justified by better outcomes, as in Sun Tzu.
+- **Evidence first, saying last.** The "Why X beats Y" message plays both moves out and reports points, which groups live or die and where. One fitting principle or proverb comes at the end, tied back to the position (`proverbs.js`).
+- **Quotes must be real and attributed:** Sun Tzu (Giles translation), the Ten Golden Rules of Go, traditional proverbs. No quotes from named players until Boon supplies one with a source.
+- **War vocabulary is welcome** (terrain, formation, engagement, campaign), with the Go term in brackets for Go players.
+
+## How Go is described (`whatisgo.md`)
+- Few rules; everything else emerges from play.
+- Four skills: reading the terrain (territory), judging formations (shape), calculating the engagement (reading), commanding the campaign (strategy).
+- Winning without destroying: restraint wins in a contest where almost anything goes.
+
+## Lessons
+- The lessons are organised in chapters that follow the skills in "What is Go?", from simple to complex: Basic training, Tactics, Formations, Reading the terrain, Calculating the engagement, Developing strategies. New lessons go into the chapter of the skill they teach. Reading and the terrain are the thinnest chapters so far.
+
+## Partnerships (not started; Boon chose to finish Go Coach first)
+- **Order:** an informal, friendly email to the International Go Federation (IGF) and a formal pilot with the Australian Go Association, in parallel; a formal IGF proposal later, with the pilot's results.
+- **Role:** the IGF's technology partner, not a co-founder of a new authority. Ask first for "recommended" or "endorsed", not "the official app".
+- **Money:** about 10% of net revenue (after GST, store and payment fees) to the IGF; about 20% of net revenue from users an association brings; any exclusivity limited in time and scope, with milestones and a way out. Lawyer and accountant before signing; an ABN and a business payment account before charging.
+- **No own multiplayer server:** partner with an existing server (for example OGS) for live play.
+- **Make Go Coach free for the pilot:** traction first.
+- Research notes: the IGF has no app that we could find, publishes no budget, and is closely tied to the Nihon Ki-in. Comparable learning apps charge about US$5–7 a month or US$40–50 a year (BadukPop). No app we found marks shapes on the player's own board.
+
+## Engine (search.js)
+- Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.
+- Measured: beat the old engine 20–0 (9×9) and 4–0 (13×13); against GNU Go 3.8 on 9×9 at Hard, 9 wins and 7 losses (about 5–10 kyu). Wins are close; losses are large, from misjudging whether a big group lives.
+- Next engine work, if wanted: life and death in the play-outs, ladders, not collapsing when behind.
+
+## Open items (Boon to choose)
+- Analyse and hints still use the older, weaker method.
+- Show sequences on the board, move by move.
+- Japanese/Korean scoring option; a privacy note; a language file for native versions.
+- More sayings (Thirty-Six Stratagems, Clausewitz's culminating point).
+
+## How we work
+- **Cloud sessions** (phone, or the Desktop app set to cloud) clone GitHub fresh and work through pull requests; Boon says "merge it" to put a change live.
+- **Laptop (local) sessions** start with `git pull` on `main` in `C:\_Personal\_myApps\myGoCoach`, then read this file and the newest `docs/phone-notes/`.
+- GitHub is the meeting point; avoid changing the same thing on two devices at once.

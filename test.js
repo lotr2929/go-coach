@@ -106,6 +106,27 @@ async function t(name, fn) {
     assert(/^A false eye/.test(C.reply('what is a false eye', { n: 9 }).text));
     assert(/^An eye is/.test(C.reply('what is an eye', { n: 9 }).text));
   });
+  await t('lessons: every lesson sits in exactly one chapter, in menu order', () => {
+    const ids = LS.CHAPTERS.flatMap(c => c.ids);
+    assert.deepStrictEqual(ids.slice().sort(), LS.list.map(L => L.id).sort(), 'a lesson is missing from the chapters, or listed twice');
+    assert.deepStrictEqual(LS.list.map(L => L.id), ids, 'the list must follow the chapter order');
+    assert.strictEqual(C.reply('lesson 12', { n: 9 }).arg.id, LS.list[11].id, '"lesson 12" must open the twelfth lesson in the menu');
+  });
+  await t('lessons: in the tiger’s mouth, a white stone pushed in is in atari', () => {
+    const L = LS.list.find(l => l.id === 'tiger'), s = LS.setup(L);
+    const [[x, y]] = L.solution;
+    assert.strictEqual(LS.handle(L, s, LS.P(9, x, y)).status, 'win');
+    s.turn = 2; const mouth = LS.P(9, x, y + 1);
+    assert(E.play(s, mouth).ok);
+    assert.strictEqual(E.flood(E.geom(9), s.board, mouth).libs.length, 1);
+  });
+  await t('lessons: in the capturing race both groups have two liberties and Black, moving first, captures', () => {
+    const L = LS.list.find(l => l.id === 'race'), s = LS.setup(L), g = E.geom(9);
+    assert.strictEqual(E.flood(g, s.board, LS.P(9, 1, 0)).libs.length, 2);
+    assert.strictEqual(E.flood(g, s.board, LS.P(9, 2, 0)).libs.length, 2);
+    for (const [x, y] of [[3, 0], [0, 1]]) assert(E.play(s, LS.P(9, x, y)).ok);
+    assert.strictEqual(E.play(s, LS.P(9, 3, 1)).captured.length, 2);
+  });
   await t('analysis ranks moves and the played move is included', async () => {
     const s = E.newState(9, 0); E.play(s, 20); E.play(s, 60);
     const r = await E.analyse(s, 1, { ms: 300, include: [0] });
@@ -164,7 +185,7 @@ async function t(name, fn) {
     assert(/corner/.test(ask("what's the first move?").text));
     assert(/Atari is a warning/.test(C.reply('tell me more', { n: 9, topic: 'atari' }).text));
     assert.strictEqual(C.reply('what is ko?', { n: 9 }).topic, 'ko');
-    assert.strictEqual(ask('lesson 16').arg.id, 'firstmove');
+    assert.strictEqual(ask('lesson 18').arg.id, 'firstmove'); /* numbered in the chapter order of the lessons menu */
   });
   await t('coach describes points and weak groups', () => {
     const s = LS.setup(LS.list.find(l => l.id === 'capture'));

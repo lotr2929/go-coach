@@ -8,6 +8,12 @@ How to edit: change the words under a "## name" heading, but leave the heading i
 ## heading
 Lesson {count} of {total}: {title}
 
+## heading-chapter
+Lesson {count} of {total} ({chapter}): {title}
+
+## chapter-head
+Chapter {count}: {title}
+
 ## task
 Your task: {task}
 

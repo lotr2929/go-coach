@@ -1,12 +1,48 @@
 # Lessons
 
-The step-by-step 9×9 lessons. For each lesson: its title, the explanation (".text", one paragraph per blank line), the task,
+The step-by-step 9×9 lessons, in six chapters ("chapter.<name>": the chapter's title and one-line introduction in the lessons menu). For each lesson: its title, the explanation (".text", one paragraph per blank line), the task,
 and what the coach says when the learner plays (".done" when the task is solved, the others when it is not yet).
 Quiz lessons also have their answer options (".options", one per line, in the same order), ".wrong" and ".explain".
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 Words in curly brackets, such as {count}, are filled in by the app: keep them.
 Do not change the order of the quiz options: the app knows which one is right by its place in the list.
+
+## chapter.basics.title
+Basic training
+
+## chapter.basics.intro
+Know your troops: how stones stand on the board, breathe and are captured.
+
+## chapter.tactics.title
+Tactics
+
+## chapter.tactics.intro
+The skirmish: threats, forbidden moves, and the two eyes that keep a group alive.
+
+## chapter.formations.title
+Formations
+
+## chapter.formations.intro
+Judging formations (shape): how stones stand together, where they can be cut, and which shapes waste stones.
+
+## chapter.terrain.title
+Reading the terrain
+
+## chapter.terrain.intro
+Mapping: who owns which ground, and when the battle is over.
+
+## chapter.reading.title
+Calculating the engagement
+
+## chapter.reading.intro
+Reading: count the moves before you fight.
+
+## chapter.campaign.title
+Developing strategies
+
+## chapter.campaign.intro
+Strategy: where to begin, and how to give or take a head start.
 
 ## reason.occupied
 That point is already taken. Stones can only go on empty points.
@@ -238,6 +274,50 @@ Those stones are still joined. Play at A or B.
 ## cut.done
 Cut. Black must now spend a move to reconnect at the other point, and a divided group is weaker.
 
+## tiger.title
+The tiger’s mouth
+
+## tiger.text
+Formations matter as much as single stones. Here two black stones stand one point apart, and White is approaching from below. White would like to push in at B and split them.
+
+You could fill B yourself: a solid connection. It is safe, but it uses a stone on a point that claims nothing new.
+
+The stronger formation is the tiger’s mouth: play at A. Now three black stones surround B like an open mouth. If White pushes in at B, that stone has only one liberty, and you capture it with your next move. The two stones are as good as connected, and A also reaches out to claim more ground.
+
+## tiger.task
+Make a tiger’s mouth by playing at A.
+
+## tiger.done
+A tiger’s mouth. A white stone pushed in at B would be captured at once, so your stones are safe, and your formation covers more ground than a solid connection. Turn on Shapes in Coach mode and I will point these out in your own games.
+
+## tiger.solid
+That connects solidly: safe, but slower, because the stone at B claims nothing new. Press Reset and try A.
+
+## tiger.not-yet
+That leaves B open for White to split your stones. Press Reset and try A.
+
+## triangle.title
+Bad shape: the empty triangle
+
+## triangle.text
+Some formations waste stones. The best-known is the empty triangle: three stones in an L, with the fourth corner of the little square left empty.
+
+Three stones in an empty triangle have fewer liberties than three stones spread out, and they claim less ground. You have spent three stones doing the work of two. Strong players avoid it unless nothing better exists.
+
+## triangle.task
+Black has two stones side by side. Which of the marked moves would make an empty triangle?
+
+## triangle.options
+A
+B
+C
+
+## triangle.wrong
+Not quite. Look for the move that makes an L of three stones with the fourth corner of the square empty.
+
+## triangle.explain
+A makes an empty triangle: three stones in an L, bunched together. B reaches out diagonally and C jumps one point: both claim more ground with the same stone. Turn on Shapes in Coach mode and empty triangles are marked in red.
+
 ## scoring.title
 Counting the score
 
@@ -285,6 +365,30 @@ Not quite. Think about what passing means: there is nothing useful left to play.
 
 ## ending.explain
 Two passes in a row end the game. Dead stones come off the board, then both sides count their stones plus their territory.
+
+## race.title
+Counting before you fight: the capturing race
+
+## race.text
+Reading means working out a fight before you start it. The simplest case is the capturing race: two groups are trapped next to each other, and neither can escape or make two eyes. Each side fills the other’s liberties, one per move, and the first to fill them all captures.
+
+In the top-left corner, two black stones and two white stones are locked together. Each pair is walled in by the other side’s strong stones. The points marked B are the black pair’s liberties, and the points marked W are the white pair’s: two each.
+
+It is Black’s turn.
+
+## race.task
+Count the liberties. Who wins the race?
+
+## race.options
+Black, because Black moves first
+White
+Neither: both groups live
+
+## race.wrong
+Not quite. Play it out in your head: each move fills one liberty. Who runs out first?
+
+## race.explain
+Black fills one of White’s two liberties, White fills one of Black’s, and Black fills White’s last liberty and captures. With equal liberties, the side that moves first wins the race. So count before you fight: one liberty, or one move, decides it.
 
 ## handicap.title
 Handicap and komi

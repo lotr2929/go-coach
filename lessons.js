@@ -166,6 +166,25 @@
       }
     },
     {
+      id: 'tiger', n: N, turn: 1, solo: true,
+      black: M.pts([[1, 2], [3, 2]]), white: M.pts([[2, 4]]),
+      marks: M.key({ '2,1': 'A', '2,2': 'B' }),
+      hint: M.pts([[2, 1]]),
+      solution: M.pts([[2, 1]]),
+      check(s, ev) {
+        if (ev.type !== 'move') return null;
+        if (ev.point === M.i(2, 1) || ev.point === M.i(2, 3)) return win(T('lessons.tiger.done')); /* a tiger's mouth either way round */
+        if (ev.point === M.i(2, 2)) return say(T('lessons.tiger.solid'));
+        return say(T('lessons.tiger.not-yet'));
+      }
+    },
+    {
+      id: 'triangle', n: N, type: 'quiz',
+      black: M.pts([[1, 1], [2, 1]]),
+      marks: M.key({ '1,2': 'A', '3,2': 'B', '1,3': 'C' }),
+      answer: 0 /* the first option in lessons.md: A */
+    },
+    {
       id: 'scoring', n: N, type: 'quiz',
       black: wall(3, 0, 8), white: wall(4, 0, 8),
       answer: 1 /* the second option in lessons.md */
@@ -174,6 +193,14 @@
       id: 'ending', n: N, type: 'quiz',
       black: wall(3, 0, 8), white: wall(5, 0, 8),
       answer: 0 /* the first option in lessons.md */
+    },
+    {
+      /* Both pairs have exactly two liberties and the walls around them are strong, so the side to move wins (test.js plays it out). */
+      id: 'race', n: N, type: 'quiz',
+      black: K.pts([[1, 0], [1, 1], [2, 2], [3, 2], [4, 2], [4, 1], [4, 0]]),
+      white: K.pts([[2, 0], [2, 1], [0, 2], [1, 2], [1, 3], [0, 3]]),
+      marks: K.key({ '0,0': 'B', '0,1': 'B', '3,0': 'W', '3,1': 'W' }),
+      answer: 0 /* the first option in lessons.md: Black */
     },
     {
       id: 'handicap', n: N, type: 'info',
@@ -208,6 +235,21 @@
     if (L.type === 'quiz') { L.options = w('options').split('\n'); L.wrong = w('wrong'); L.explain = w('explain'); }
   }
 
+  /* The lessons in chapters that follow the skills in "What is Go?", from the simplest to the most complex.
+     The list is put in chapter order, which is also the order of the lessons menu and of "lesson 12" (coach.js LESSON_IDS). */
+  const CHAPTERS = [
+    { key: 'basics', ids: ['board', 'liberties', 'capture', 'groups'] },
+    { key: 'tactics', ids: ['atari', 'suicide', 'exception', 'ko', 'eyes'] },
+    { key: 'formations', ids: ['connect', 'cut', 'tiger', 'triangle'] },
+    { key: 'terrain', ids: ['scoring', 'ending'] },
+    { key: 'reading', ids: ['race'] },
+    { key: 'campaign', ids: ['strategy', 'firstmove', 'handicap'] }
+  ];
+  for (const c of CHAPTERS) { c.title = T(`lessons.chapter.${c.key}.title`); c.intro = T(`lessons.chapter.${c.key}.intro`); }
+  const order = CHAPTERS.flatMap(c => c.ids);
+  list.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  const chapterOf = id => CHAPTERS.find(c => c.ids.includes(id));
+
   function setup(L) {
     const s = E.newState(L.n, 0);
     for (const [x, y] of L.black || []) s.board[P(L.n, x, y)] = 1;
@@ -237,5 +279,5 @@
     return out;
   }
 
-  return { list, setup, handle, hintPoints, marksFor, P };
+  return { list, CHAPTERS, chapterOf, setup, handle, hintPoints, marksFor, P };
 });

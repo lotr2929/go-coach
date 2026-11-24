@@ -34,6 +34,8 @@ When neither player sees further advantage in continuing, both pass and the batt
 
 ## The Four Skills of Command
 
+The lessons follow these skills in order: basic training and tactics first, then formations, the terrain, calculating the engagement and, last, strategy. Type 3, then choose Lessons and Puzzles.
+
 ### Reading the terrain
 
 Seeing which ground can be occupied, where influence can be extended, which positions can be attacked and where one's own forces are exposed. This is called mapping the **territory** in Go.

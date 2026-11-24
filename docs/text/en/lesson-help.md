@@ -45,6 +45,15 @@ Stones are connected only if they touch along a line, up, down, left or right. T
 ## cut
 The two black stones touch only at a corner, so the points A and B are both cutting points. A white stone on either one stands between them. Black can still connect with the other point, but the cut forces Black to spend a move on it, and that is how cuts win tempo and make groups weak.
 
+## tiger
+A tiger’s mouth is three stones around one empty point, with the fourth side open. A stone played inside has only one liberty, so it is captured at once. That is why the tiger’s mouth counts as connected without filling the point, and why it is lighter and covers more ground than a solid connection.
+
+## triangle
+An empty triangle is three stones in an L with the fourth corner empty. Compare it with three stones spread out: the triangle has fewer liberties and surrounds less. That is why it is called bad shape. It is sometimes the only move, but look for a better one first.
+
+## race
+In a capturing race, count each side’s liberties. Each move fills one. If one side has more liberties, it usually wins; with equal liberties, whoever moves first wins. Liberties shared by both groups, and eyes, change the count, which later lessons can cover.
+
 ## ending
 A player may pass instead of playing. Two passes in a row end the game. Before counting, dead stones (stones that could not survive) are removed, then each side adds its stones to the empty points only it surrounds. White also adds komi.
 
