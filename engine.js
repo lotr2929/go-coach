@@ -1,8 +1,8 @@
 /* Go Coach — rules, scoring and computer opponent. No dependencies. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.GoEngine = factory();
-})(typeof self !== 'undefined' ? self : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./text.js'));
+  else root.GoEngine = factory(root.GoText);
+})(typeof self !== 'undefined' ? self : this, function (TX) { /* TX: the wording, docs/text/en/engine.md */
   'use strict';
 
   const LETTERS = 'ABCDEFGHJKLMNOPQRST';
@@ -240,7 +240,7 @@
     const edge = Math.min(x, y, n - 1 - x, n - 1 - y);
     if (r.captured.length) {
       s += 12 + 3 * r.captured.length;
-      why.push(r.captured.length === 1 ? 'captures a stone' : `captures ${r.captured.length} stones`);
+      why.push(r.captured.length === 1 ? TX.T('engine.captures-one') : TX.T('engine.captures-many', { count: r.captured.length }));
     }
     const mine = flood(g, r.board, i);
     if (mine.libs.length === 1 && !r.captured.length) s -= 16;
@@ -260,12 +260,12 @@
       } else {
         if (gr.libs.length === 1 && mine.libs.length >= 2) {
           s += 10 + gr.stones.length * 2;
-          why.push('rescues a group that was in atari');
+          why.push(TX.T('engine.rescues'));
         } else if (gr.libs.length === 2 && mine.libs.length >= 3) s += 1.5;
         s += 0.6;
       }
     }
-    if (atari && !r.captured.length) why.push('puts an enemy group in atari');
+    if (atari && !r.captured.length) why.push(TX.T('engine.ataris'));
     const opening = stones.length < Math.max(5, n * n * 0.1);
     if (edge === 0) s -= 3;
     else if (edge === 1) s -= 0.3;
@@ -297,10 +297,10 @@
   }
 
   function describe(c) {
-    if (c.why.length) return c.why.join(' and ');
-    if (c.edge === 2) return 'a 3rd-line point: a good balance of territory and safety';
-    if (c.edge === 3) return 'a 4th-line point: good for influence over the board';
-    return 'a sensible move that builds on the stones nearby';
+    if (c.why.length) return c.why.join(` ${TX.T('engine.and')} `);
+    if (c.edge === 2) return TX.T('engine.third-line');
+    if (c.edge === 3) return TX.T('engine.fourth-line');
+    return TX.T('engine.sensible');
   }
 
   /* ---------- levels ---------- */
@@ -324,12 +324,12 @@
     const n = s.n, N = n * n, g = geom(n);
     const last = s.moves[s.moves.length - 1];
     const oppPassed = !!last && last.i === -1;
-    if (s.moves.length > N * 3) return { move: -1, note: 'nothing left to gain' };
+    if (s.moves.length > N * 3) return { move: -1, note: TX.T('engine.nothing-left') };
     const cands = candidates(s, color, level === 'easy' ? 6 : 0.6);
-    if (!cands.length) return { move: -1, note: 'no useful moves left' };
+    if (!cands.length) return { move: -1, note: TX.T('engine.no-moves') };
 
     if (level === 'easy') {
-      if (oppPassed && cands[0].score < 1.5) return { move: -1, note: 'nothing left to gain' };
+      if (oppPassed && cands[0].score < 1.5) return { move: -1, note: TX.T('engine.nothing-left') };
       const top = cands.slice(0, 3);
       const pick = top[(Math.random() * top.length) | 0];
       return { move: pick.move, note: describe(pick) };
@@ -339,7 +339,7 @@
     if (level === 'hard' || level === 'expert') { /* tree search in search.js */
       const r = await (typeof GoSearch !== 'undefined' ? GoSearch : require('./search.js')).search(s, color, { ms, oppPassed, cancelled: opts.cancelled });
       const c = r && cands.find(q => q.move === r.move);
-      return r && (r.move < 0 ? { move: -1, note: 'nothing left to gain', winrate: r.winrate } : { move: r.move, note: c ? describe(c) : 'a move found by reading ahead', winrate: r.winrate });
+      return r && (r.move < 0 ? { move: -1, note: TX.T('engine.nothing-left'), winrate: r.winrate } : { move: r.move, note: c ? describe(c) : TX.T('engine.reading-ahead'), winrate: r.winrate });
     }
     const K = n <= 9 ? 12 : n <= 13 ? 10 : 8;
     const arms = cands.slice(0, K).map(c => {
@@ -372,9 +372,9 @@
     const bestMove = moves.slice().sort((a, c) => c.v - a.v)[0];
     const passArm = arms.find(a => a.move < 0);
     if (passArm && passArm.v > 5 && (!bestMove || rate(passArm) >= rate(bestMove) - 0.03) && oppPassed) {
-      return { move: -1, note: 'nothing left to gain', winrate: rate(passArm) };
+      return { move: -1, note: TX.T('engine.nothing-left'), winrate: rate(passArm) };
     }
-    if (!bestMove) return { move: -1, note: 'no useful moves left' };
+    if (!bestMove) return { move: -1, note: TX.T('engine.no-moves') };
     return { move: bestMove.move, note: describe(bestMove.c), winrate: rate(bestMove) };
   }
 

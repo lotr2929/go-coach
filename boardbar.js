@@ -14,7 +14,7 @@
     const kifu = kifuOn(), undo = $('#btnUndoArrow'), redo = $('#btnRedoArrow');
     bar.hidden = $('#controls').hidden && !kifu;
     undo.textContent = kifu ? '← Back' : '← Undo'; redo.textContent = kifu ? 'Next →' : 'Redo →';
-    undo.title = kifu ? 'One move back in the game' : 'Take back your last move'; redo.title = kifu ? 'One move forward in the game' : 'Play again the move you took back';
+    undo.title = window.GoText.T(kifu ? 'app.back-tip' : 'app.undo-tip'); redo.title = window.GoText.T(kifu ? 'app.forward-tip' : 'app.redo-tip');
     if (kifu) { undo.disabled = !G.kifu.canBack(); redo.disabled = !G.kifu.canNext(); }
     else for (const [arrow, button] of links) $(arrow).disabled = $(button).disabled;
   }

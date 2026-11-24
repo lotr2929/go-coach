@@ -37,7 +37,7 @@
     b.disabled = silent;
     b.setAttribute('aria-pressed', String(on && !silent));
     b.classList.toggle('busy', on && working && !silent);
-    b.title = silent ? 'The territory map is available in Coach mode' : on && map ?`Territory map from ${map.sims} random games${map.done ? '' : ' so far'}. Tap to switch it off.` : 'Show who is likely to own each empty point';
+    b.title = window.GoText.T(silent ? 'app.terr-silent' : on && map ? (map.done ? 'app.terr-tip' : 'app.terr-tip-working') : 'app.terr-off-tip', { count: map ? map.sims : 0 });
   }
 
   async function update() {
@@ -64,8 +64,8 @@
 
   $('#btnTerr').addEventListener('click', () => {
     settings.terr = !settings.terr; saveSettings();
-    if (settings.terr) { toast('Territory map on. Hover over a square to see its score.'); update(); }
-    else { tok++; working = false; map = null; G.renderPlay(); toast('Territory map off'); }
+    if (settings.terr) { toast(window.GoText.T('app.terr-on')); update(); }
+    else { tok++; working = false; map = null; G.renderPlay(); toast(window.GoText.T('app.terr-off')); }
     syncButton();
   });
 

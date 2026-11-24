@@ -5,6 +5,7 @@
   const { E, LS, $, KEY, load, store, settings, saveSettings, Play } = G;
   const C = window.GoCoach;
   const CM = window.GoCommentary;
+  const T = k => window.GoText.T('chat.' + k); /* wording: docs/text/en/chat.md */
   const MAX = 80;
   const PLAY_CHIPS = []; /* no suggestion buttons while playing: you just ask */
 
@@ -69,7 +70,7 @@
 
   const context = () => ({ n: Play.s ? Play.s.n : 9, phase: Play.phase, human: Play.human, topic });
   const myTurn = () => Play.s && Play.phase === 'play' && !Play.thinking && Play.s.turn === Play.human;
-  const press = id => { const b = $(id); if (b.disabled) { say('I cannot do that right now.'); return false; } b.click(); return true; };
+  const press = id => { const b = $(id); if (b.disabled) { say(T('cannot')); return false; } b.click(); return true; };
   const MORE_RE = /^(why|why is that( good| better)?|why there|how come|explain( that| it| more)?|tell me more|more( detail| please)?|go on|in more detail|elaborate)\W*$/i;
   const deepDive = x => CM.deepDive(E, x.s, x.idx, x.color, Play.human);
   const lessonIndex = arg => (arg && arg.id ? LS.list.findIndex(l => l.id === arg.id) : -1);
@@ -77,21 +78,21 @@
   /* What each request does while you are playing a game. */
   const PLAY_ACTIONS = {
     undo: () => press('#btnUndo'),
-    pass: () => { if (!myTurn()) return say('It is not your turn.'); press('#btnPass'); },
+    pass: () => { if (!myTurn()) return say(T('not-your-turn')); press('#btnPass'); },
     resign: () => press('#btnResign'),
-    hint: () => { if (!myTurn()) return say('Hints are available on your turn.'); G.giveHint(); },
+    hint: () => { if (!myTurn()) return say(T('hints-on-turn')); G.giveHint(); },
     analyse: () => press('#btnAnalyse'),
     review: () => G.review(),
     why: () => {
       const x = (G.explained && G.explained.coach) || G.lastExplain;
-      say(x ? deepDive(x) : 'There is nothing to explain yet. Ask for a hint, or wait for the computer’s move.');
+      say(x ? deepDive(x) : T('nothing-to-explain'));
     },
     summary: () => { if (Play.s) say(CM.positionSummary(E, Play.s, Play.human)); },
     think: () => say(CM.CHECKLIST),
-    weak: () => say(Play.s ? C.weakReport(E, Play.s, Play.human) : 'There is no game yet.'),
-    point: idx => say(Play.s ? C.describePoint(E, Play.s, idx, Play.s.turn) : 'There is no game yet.'),
+    weak: () => say(Play.s ? C.weakReport(E, Play.s, Play.human) : T('no-game')),
+    point: idx => say(Play.s ? C.describePoint(E, Play.s, idx, Play.s.turn) : T('no-game')),
     play: idx => {
-      if (!myTurn()) return say('It is not your turn.');
+      if (!myTurn()) return say(T('not-your-turn'));
       Play.pending = idx; G.onPlayTap(idx);
     },
     set: arg => { Object.assign(settings, arg); saveSettings(); G.renderPlay(); },
@@ -107,15 +108,15 @@
     history: () => G.openHistory(),
     kifu: () => G.openKifuList(),
     explore: idx => G.startExploring(idx),
-    exit: () => say('You are already in your game.')
+    exit: () => say(T('in-game'))
   };
 
   /* What each request does while a lesson is open. */
   const LESSON_ACTIONS = {
-    hint: () => { const info = G.lessonInfo(); if (info && info.hasHint) G.lessonHint(); else say('There is no move to play in this lesson, so there is no blue ring.'); },
+    hint: () => { const info = G.lessonInfo(); if (info && info.hasHint) G.lessonHint(); else say(T('no-ring')); },
     why: () => { const r = C.lessonReply(E, 'explain more', G.lessonInfo()); if (r) say(r.text); },
     reset: () => G.lessonReset(),
-    next: () => { if ($('#btnLNext').disabled) say('Finish the task first, then press Next.'); else G.lessonNext(); },
+    next: () => { if ($('#btnLNext').disabled) say(T('finish-first')); else G.lessonNext(); },
     point: idx => say(C.describePoint(E, G.Lesson.s, idx, G.Lesson.s.turn)),
     play: idx => G.onLessonTap(idx),
     set: arg => { Object.assign(settings, arg); saveSettings(); },
@@ -128,7 +129,7 @@
   /* What each request does while the teaching mode is on: only the ones that make sense inside a lesson. */
   const TEACH_ACTIONS = {
     exit: () => (G.kifu && G.kifu.on ? G.exitKifu() : G.exploring && G.exploring.on ? G.exitExploring() : G.exitTeaching()),
-    teach: () => say('We are already in the middle of something. Say "back to game" to leave it first.'),
+    teach: () => say(T('busy')),
     history: () => G.openHistory(),
     kifu: () => G.openKifuList(),
     set: arg => { Object.assign(settings, arg); saveSettings(); }
@@ -151,7 +152,7 @@
     const r = (info && C.lessonReply(E, q, info)) || C.reply(q, info ? { n: info.n, topic } : teaching ? { n: 9, topic } : context());
     if (r.topic) { topic = r.topic; G.focus = 'term'; }
     const f = r.action ? (info ? LESSON_ACTIONS : held ? TEACH_ACTIONS : PLAY_ACTIONS)[r.action] : null;
-    if (r.action && !f) return say('That works in the game. Say "back to game" first.');
+    if (r.action && !f) return say(T('game-only'));
     if (r.text) say(r.text);
     if (f && !['history', 'kifu'].includes(r.action) && G.pageOpen()) G.closePage();
     if (f) f(r.arg);
@@ -175,7 +176,7 @@
     document.body.classList.toggle('chatBig', big);
     sizeBtn.innerHTML = big ? ICON_SMALL : ICON_BIG;
     sizeBtn.setAttribute('aria-pressed', String(big));
-    sizeBtn.title = sizeBtn.ariaLabel = big ? 'Shrink the chat' : 'Enlarge the chat';
+    sizeBtn.title = sizeBtn.ariaLabel = T(big ? 'shrink' : 'enlarge');
     box.scrollTop = box.scrollHeight;
   }
   sizeBtn.onclick = () => setBig(!document.body.classList.contains('chatBig'));

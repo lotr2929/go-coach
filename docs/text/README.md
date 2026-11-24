@@ -6,7 +6,7 @@ All the words Go Coach shows are kept here, so they can be edited or translated 
 ## The folders
 
 - `en/` holds the English wording. A translation is a copy of this folder under the language's code, such as `zh/` for Chinese or `ja/` for Japanese.
-- `en/*.md`: one file for each part of the app: `welcome.md`, `tour.md`, `pages.md`, `coach.md` (the coach's answers), `terms.md` (Go terms), `point.md` (notes on a point on the board), `lesson-help.md` (help inside a lesson), `lessons.md` (the 16 lessons), `curriculum.md` (the guided "Teach me" steps), `commentary.md` (what the coach says about a move), `shapes.md` (the Shapes tab), `proverbs.md` (Go sayings) and `guide.md` (the guided first game).
+- `en/*.md`: one file for each part of the app: `welcome.md`, `tour.md`, `pages.md`, `coach.md` (the coach's answers), `terms.md` (Go terms), `point.md` (notes on a point on the board), `lesson-help.md` (help inside a lesson), `lessons.md` (the 16 lessons), `curriculum.md` (the guided "Teach me" steps), `commentary.md` (what the coach says about a move), `shapes.md` (the Shapes tab), `proverbs.md` (Go sayings), `guide.md` (the guided first game), `play.md` (playing a game and the New game box), `coaching.md` (analysis, move feedback, game review), `explain.md` ("why A beats B"), `engine.md` (the computer's reasons), `chat.md` and `app.md` (small messages from around the app).
 - Some files hold short pieces that the app joins into sentences (for example `commentary.md`). A piece cannot begin or end with a space; the app adds those.
 - `en/pages/`: the long pages the app shows whole, such as *What is Go?* and *A history of Go*.
 - `en/lists/`: lists the app is built from, such as the famous games (`kifu-picks.md`).

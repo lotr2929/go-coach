@@ -10,7 +10,7 @@
   const panel = document.querySelector('aside.panel');
   const root = document.createElement('article');
   root.className = 'pageView';
-  root.setAttribute('aria-label', 'Reading page');
+  root.setAttribute('aria-label', window.GoText.T('app.reading-page'));
   wrap.append(root);
   let open = false;
 
@@ -93,7 +93,7 @@
   function showPage(page) {
     root.textContent = '';
     const head = el('div', 'pageHead');
-    const close = el('button', 'pageClose primary', '← Back to the board');
+    const close = el('button', 'pageClose primary', window.GoText.T('app.back-to-board'));
     close.type = 'button';
     close.addEventListener('click', closePage);
     head.append(close);

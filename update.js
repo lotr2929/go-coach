@@ -17,8 +17,8 @@
   /* A new service worker takes over only when sw.js has changed, i.e. a new version was published. */
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (!hadController) { hadController = true; return; } /* first install, not an update */
-    if (busy()) toast('A new version of Go Coach is ready. It will load next time you open the app, or tap Settings → Check for updates.', 6000);
-    else { toast('Updating Go Coach…'); setTimeout(reload, 600); }
+    if (busy()) toast(window.GoText.T('app.update-ready'), 6000);
+    else { toast(window.GoText.T('app.updating')); setTimeout(reload, 600); }
   });
 
   const check = () => navigator.serviceWorker.getRegistration().then(r => r && r.update()).catch(() => { /* offline: try later */ });
@@ -32,7 +32,7 @@
     caches.keys().then(keys => {
       const stamps = keys.map(k => /^gocoach-(\d{10,})$/.exec(k)).filter(Boolean).map(m => +m[1]);
       const when = stamps.length ? new Date(Math.max(...stamps)).toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }) : '';
-      if (ver) ver.textContent = when ? 'This version: ' + when : '';
+      if (ver) ver.textContent = when ? window.GoText.T('app.this-version', { when }) : '';
       if (stamp) stamp.textContent = when ? 'Updated ' + when : '';
     }).catch(() => { /* no version to show */ });
   }
@@ -40,8 +40,8 @@
   navigator.serviceWorker.ready.then(showVersion);
 
   if (btn) btn.onclick = () => {
-    if (!navigator.onLine) { toast('You are offline. Connect to the internet and try again.', 4000); return; }
-    toast('Checking for updates…');
+    if (!navigator.onLine) { toast(window.GoText.T('app.offline'), 4000); return; }
+    toast(window.GoText.T('app.checking'));
     /* The app always loads its files from the internet when it can, so a reload gives the newest version either way. */
     Promise.race([check(), new Promise(r => setTimeout(r, 4000))]).then(reload);
   };
