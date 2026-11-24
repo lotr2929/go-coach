@@ -1,15 +1,16 @@
 /* World of Go — the teaching engine. Plays the scripted lessons from curriculum.js on a 9×9 board.
    No DOM here: teachui.js connects it to the board and the chat, and test.js runs it in Node. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.GoTeach = factory();
-})(typeof self !== 'undefined' ? self : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./text.js'));
+  else root.GoTeach = factory(root.GoText);
+})(typeof self !== 'undefined' ? self : this, function (TX) {
   'use strict';
+  const w = (k, v) => TX.T('teach.' + k, v), A = (k, v) => TX.T('app.' + k, v); /* wording: docs/text/en/teach.md and app.md */
 
   const COLS = 'ABCDEFGHJ';
   const pt = c => (9 - +c.slice(1)) * 9 + COLS.indexOf(c[0]);
   const name = i => COLS[i % 9] + (9 - ((i / 9) | 0));
-  const word = c => (c === 1 ? 'black' : 'white');
+  const word = c => A(c === 1 ? 'black-word' : 'white-word');
 
   /* A simple picture of who is closer to each empty point (no scoring): from -1 (White) to +1 (Black). */
   function influence(s) {
@@ -46,7 +47,7 @@
     }
     const subst = (text, i, cap) => {
       const libs = T.s.board[i] ? E.flood(geom, T.s.board, i).libs.length : 0;
-      return String(text).replace('{libs}', libs).replace('{cap}', cap + (cap === 1 ? ' stone' : ' stones'));
+      return String(text).replace('{libs}', libs).replace('{cap}', cap === 1 ? w('cap-one') : w('cap-many', { count: cap }));
     };
     const solved = () => { T.solved = true; T.solvedAt = T.s.moves.length; };
     /* A wrong try stays on the board while you read about it; it is taken back when you try again. */
@@ -54,13 +55,13 @@
 
     function prompt(sc) {
       const t = sc.task, last = sc.text[sc.text.length - 1];
-      if (!t) return /Say "/.test(last) ? '' : 'Say "next" when you are ready, or ask me anything. You can also tap the board to try a move.';
-      const how = t.type === 'answer' ? 'Type your answer.' : 'Tap the board.';
-      return `**Your turn:**\n${t.goal} ${how} Say "hint" if you are stuck.`;
+      if (!t) return /Say "/.test(last) ? '' : w('ready');
+      const how = w(t.type === 'answer' ? 'type-answer' : 'tap-board');
+      return w('your-turn', { goal: t.goal, how });
     }
     function introduce() {
       const parts = [];
-      if (T.scene === 0) parts.push(`**Step ${T.step + 1} of ${steps.length}: ${steps[T.step].title}**`);
+      if (T.scene === 0) parts.push(w('step-heading', { count: T.step + 1, total: steps.length, title: steps[T.step].title }));
       for (const p of scene().text) parts.push(p);
       const pr = prompt(scene());
       if (pr) parts.push(pr);
@@ -89,12 +90,12 @@
       for (const c of Object.keys(sc.marks || {})) if (!s.board[pt(c)]) marks[pt(c)] = sc.marks[c];
       return { board: s.board, last: s.last, ko: s.ko, libs: !!sc.libs, marks, hint: T.hint, terr, own, turn: s.turn };
     }
-    const status = () => `Step ${T.step + 1} of ${steps.length}: ${steps[T.step].title}`;
+    const status = () => w('status', { count: T.step + 1, total: steps.length, title: steps[T.step].title });
 
     /* ---------- tapping the board ---------- */
     function stoneNote(i) {
       const g = E.flood(geom, T.s.board, i), n = g.stones.length;
-      say(`That is ${n > 1 ? `a ${word(g.color)} group of ${n} stones` : `a ${word(g.color)} stone`} at ${name(i)}. It has ${g.libs.length} ${g.libs.length === 1 ? 'liberty (in atari!)' : 'liberties'}: ${g.libs.map(name).join(', ')}.`);
+      say(w(n > 1 ? 'group-note' : 'stone-note', { colour: word(g.color), count: n, point: name(i), libs: g.libs.length === 1 ? A('libs-one') : A('libs-many', { count: g.libs.length }), list: g.libs.map(name).join(', ') }));
     }
     function refuse(i, reason, color, sc) {
       const why = C.describePoint(E, T.s, i, color), t = sc.task;
@@ -119,12 +120,12 @@
         if (t.type === 'move' && t.solution.map(pt).includes(i)) { solved(); say(subst(t.ok, i, cap)); }
         else {
           T.wrong = true;
-          say(subst(t.wrong, i, cap) + '\n\n' + note + '\n\nTry again: I will take that stone back first. Say "hint" if you are stuck.');
+          say(subst(t.wrong, i, cap) + '\n\n' + note + '\n\n' + w('try-again'));
         }
       } else if (open && t.type === 'any') {
         solved();
         say([note, t.praise && t.praise.map(pt).includes(i) ? t.praiseText : '', t.after].filter(Boolean).join('\n\n'));
-      } else say(note + '\n\nSay "undo" to take it back, or "next" to carry on.');
+      } else say(note + '\n\n' + w('undo-or-next'));
       render();
     }
 
@@ -138,46 +139,46 @@
     function next() {
       settle();
       const t = scene().task;
-      if (t && !T.solved) { say(`Have a go first. ${t.goal} Say "hint" for help, "show me" to see it done, or "skip" to move on.`); return; }
+      if (t && !T.solved) { say(w('have-a-go', { goal: t.goal })); return; }
       advance();
     }
     function prev() {
       settle();
       if (T.scene > 0) load(T.step, T.scene - 1);
       else if (T.step > 0) load(T.step - 1, steps[T.step - 1].scenes.length - 1);
-      else say('This is the very first part.');
+      else say(w('first-part'));
     }
     function jump(n) {
-      if (n < 1 || n > steps.length) { say(`There are ${steps.length} steps. Say "outline" to see them.`); return; }
+      if (n < 1 || n > steps.length) { say(w('no-such-step', { count: steps.length })); return; }
       load(n - 1, 0);
     }
     function outline() {
-      say('**The steps**\n' + steps.map((s, k) => `${k + 1}. ${s.title}${k === T.step ? '   (you are here)' : ''}`).join('\n') + '\n\nSay "step 3", for example, to jump to one.');
+      say(w('outline') + '\n' + steps.map((s, k) => `${k + 1}. ${s.title}${k === T.step ? '   ' + w('you-are-here') : ''}`).join('\n') + '\n\n' + w('outline-end'));
     }
     function undo() {
-      if (T.wrong) { settle(); say('Taken back.'); render(); return; }
-      if (!T.s.hist.length) { say('There is nothing to take back here.'); return; }
+      if (T.wrong) { settle(); say(w('taken-back')); render(); return; }
+      if (!T.s.hist.length) { say(w('nothing-to-take-back')); return; }
       E.undo(T.s);
       if (T.s.moves.length < T.solvedAt) T.solved = false;
       T.hint = [];
-      say('Taken back.'); render();
+      say(w('taken-back')); render();
     }
     function hint() {
       settle();
       const t = scene().task;
-      if (!t || T.solved) { say('There is no task right now. Tap any stone to count its liberties, or ask "what if I play E5?".'); render(); return; }
+      if (!t || T.solved) { say(w('no-task')); render(); return; }
       if (t.type === 'move') T.hint = [pt(t.solution[0])];
       else if (t.type === 'try') T.hint = [pt(t.at)];
-      say(t.hint || 'Just try something: you cannot break anything, and "undo" takes a stone back.');
+      say(t.hint || w('just-try'));
       render();
     }
     function show() {
       settle();
       const t = scene().task;
-      if (!t || T.solved) { say('Tap any point to try a move, or say "next".'); return; }
+      if (!t || T.solved) { say(w('tap-or-next')); return; }
       if (t.type === 'move') tap(pt(t.solution[0]));
       else if (t.type === 'try') tap(pt(t.at));
-      else if (t.type === 'answer') { solved(); say(`The answer is ${t.answer}. ${t.ok}`); }
+      else if (t.type === 'answer') { solved(); say(w('answer-is', { answer: t.answer, ok: t.ok })); }
       else {
         const b = T.s.board;
         let i = (t.praise || []).map(pt).find(x => !b[x]);
@@ -212,7 +213,7 @@
       if (has(/\b(previous|go back|back a step|last step)\b/)) { prev(); return true; }
       if (has(/\b(repeat|say that again|read (it|that) again)\b/)) { settle(); introduce(); return true; }
       if (has(/\b(undo|take (that|it) back|takeback)\b/)) { undo(); return true; }
-      if (has(/\b(reset|start (this )?(part |step )?(over|again)|try again|retry|again)\b/)) { settle(); load(T.step, T.scene, true); say('Back to the start of this part. Tap the board to try again.'); return true; }
+      if (has(/\b(reset|start (this )?(part |step )?(over|again)|try again|retry|again)\b/)) { settle(); load(T.step, T.scene, true); say(w('back-to-start')); return true; }
       if (has(/\b(hint|clue|stuck|help me|i don'?t know|what should i do)\b/)) { hint(); return true; }
       if (has(/\b(show me|demonstrate|do it for me|solve it|tell me the answer|what is the answer)\b/)) { show(); return true; }
       if (T.pending >= 0 && has(/^(try it|do it|place it|play it|go ahead and try it|yes try it)$/)) { tap(T.pending); return true; }
@@ -222,14 +223,14 @@
         if (T.s.board[idx]) { stoneNote(idx); return true; }
         const dm = CM.describeMove(E, T.s, idx, T.s.turn, 1);
         T.pending = dm.ok ? idx : -1;
-        say(dm.ok ? CM.render(dm, { head: `If ${word(T.s.turn)} plays ${name(idx)}:`, bullets: 3 }) + '\n\nSay "try it" and I will place the stone.' : C.describePoint(E, T.s, idx, T.s.turn));
+        say(dm.ok ? CM.render(dm, { head: w('if-plays', { colour: word(T.s.turn), point: name(idx) }), bullets: 3 }) + '\n\n' + w('try-it') : C.describePoint(E, T.s, idx, T.s.turn));
         return true;
       }
       if (has(/\b(explain|more detail|tell me more|elaborate|why|how come|clarify|confused|don'?t (understand|get)|what does (that|this) mean|what do you mean)\b/)) {
         const r = C.reply(q, { n: 9 });
         if (!r.action && r.text && !/^I am a rule-based coach/.test(r.text) && t.split(' ').length > 3) return false;
         settle();
-        say(sc.more || 'Ask me about anything on the board: tap a stone to see its liberties, or ask "what if I play E5?".');
+        say(sc.more || w('ask-anything'));
         return true;
       }
       return false;
@@ -242,8 +243,7 @@
       if (saved && steps[saved.step] && (saved.step > 0 || saved.scene > 0)) {
         st = saved.step; sn = Math.min(saved.scene | 0, steps[st].scenes.length - 1); resumed = true;
       }
-      say('**Teaching mode**\nWe will learn the basics of Go on a 9×9 board, a little at a time. Tap the board to place stones, or just talk to me: say "next", "hint", "show me", "explain more", "undo" or "start again", ask any question, or try "what if I play E5?". Say "back to game" whenever you want to return to your game.' +
-        (resumed ? `\n\nWelcome back: we are at step ${st + 1}. Say "from the beginning" to restart.` : ''));
+      say(w('intro') + (resumed ? '\n\n' + w('welcome-back', { count: st + 1 }) : ''));
       load(st, sn);
     }
     function exit() { T.on = false; }

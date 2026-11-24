@@ -103,3 +103,30 @@ Reading page
 
 ## back-to-board
 ← Back to the board
+
+## busy-thinking
+Give me a moment: I am still thinking about my move.
+
+## back-to-game
+Back to your game.
+
+## black-word
+black
+
+## white-word
+white
+
+## stone-word
+stone
+
+## group-word
+group
+
+## libs-one
+1 liberty (in atari!)
+
+## libs-many
+{count} liberties
+
+## that-has
+That {colour} {what} has {libs}.

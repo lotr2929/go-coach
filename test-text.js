@@ -60,6 +60,16 @@ module.exports = async function (t) {
     for (const p of ['whatisgo', 'history']) for (const part of ['title', 'opened']) if (!TX.has(`pages.${p}-${part}`)) missing.push(`pages.${p}-${part}`);
     assert.deepStrictEqual(missing, []);
   });
+  await t('the page (index.html) takes its words from screen.md, and each data-t element holds text only', () => {
+    const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), problems = [];
+    for (const m of html.matchAll(/data-t(?:-title|-aria|-placeholder)?="([^"]+)"/g)) if (!TX.has(m[1])) problems.push('missing ' + m[1]);
+    for (const m of html.matchAll(/<(\w+)[^>]*\sdata-t="([^"]+)"[^>]*>([^<]*)<\/(\w+)>/g)) {
+      if (m[1] !== m[4]) problems.push(`${m[2]}: the element holds other elements, which data-t would replace`);
+      else if (m[3] !== TX.T(m[2])) problems.push(`${m[2]}: index.html says "${m[3]}" but screen.md says "${TX.T(m[2])}"`);
+    }
+    assert(html.match(/\sdata-t="/g).length >= 40, 'expected the page\'s buttons to use data-t');
+    assert.deepStrictEqual(problems, []);
+  });
   await t('the welcome: numbers, words and help pick the right request', () => {
     const W = require('./welcome.js');
     assert.deepStrictEqual(W.OPTIONS.map(o => o.key), C.WELCOME_KEYS);

@@ -28,16 +28,16 @@
     return index;
   }
   async function openKifuList() {
-    if (Play.thinking && !session.on) { G.say('Give me a moment: I am still thinking about my move.'); return; }
+    if (Play.thinking && !session.on) { G.say(window.GoText.T('app.busy-thinking')); return; }
     let page;
     try {
       page = window.GoKifu.listPage(await loadIndex());
       for (const b of page.blocks) if (b.t === 'cards') b.onPick = openKifuGame;
     } catch (e) {
-      page = { title: 'Famous games (Kifu)', blocks: [{ t: 'p', text: 'The famous games could not be loaded just now. They need a connection the first time; after that the games you have opened are kept for offline use. (If you are the developer: check that kifu/index.json exists, and run make-kifu.js if it does not.)' }] };
+      page = { title: window.GoText.T('kifu.list-title'), blocks: [{ t: 'p', text: window.GoText.T('kifu.load-failed') }] };
     }
     G.showPage(page);
-    G.say('The famous games are listed in the board window. Tap a game to open it.');
+    G.say(window.GoText.T('kifu.listed'));
   }
 
   /* ---------- a game ---------- */
@@ -47,7 +47,7 @@
     if (G.exploring && G.exploring.on) G.exitExploring();
   }
   async function openKifuGame(entry) {
-    if (Play.thinking && !session.on) { G.say('Give me a moment: I am still thinking about my move.'); return; }
+    if (Play.thinking && !session.on) { G.say(window.GoText.T('app.busy-thinking')); return; }
     try {
       const res = await fetch(entry.file, { cache: 'no-cache' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -59,7 +59,7 @@
       G.setChips(CHIPS);
       if (G.pageOpen()) G.closePage();
     } catch (e) {
-      G.say('I could not open that game just now. It needs a connection the first time you open it. Please try again.');
+      G.say(window.GoText.T('kifu.open-failed'));
     }
   }
   function exitKifu(silent) {
@@ -70,7 +70,7 @@
     G.setChips(G.PLAY_CHIPS);
     G.renderPlay();
     if (G.syncBar) G.syncBar();
-    if (!silent) G.say('Back to your game.');
+    if (!silent) G.say(window.GoText.T('app.back-to-game'));
   }
 
   /* ---------- drawing ---------- */
@@ -84,7 +84,7 @@
       ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: G.terrOwn(), shapes: G.shapeMarks()
     });
     $('#whoTurn').textContent = session.status();
-    $('#capsInfo').textContent = `Prisoners ● ${s.caps[1]}  ○ ${s.caps[2]}`;
+    $('#capsInfo').textContent = window.GoText.T('play.prisoners', { black: s.caps[1], white: s.caps[2] });
     $('#posInfo').hidden = true;
     const slider = $('#kifuSlider');
     slider.max = String(session.limit); slider.value = String(session.pos); slider.disabled = vary;
@@ -99,7 +99,7 @@
   }
 
   /* ---------- playing the game through ---------- */
-  const syncAuto = () => { $('#btnKAuto').textContent = autoTimer ? 'Pause' : 'Auto'; };
+  const syncAuto = () => { $('#btnKAuto').textContent = window.GoText.T(autoTimer ? 'kifu.pause' : 'kifu.auto'); };
   function stopAuto() {
     if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
     syncAuto();

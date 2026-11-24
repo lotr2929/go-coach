@@ -71,7 +71,7 @@
 
   /* The Accuracy slider in Settings: it picks a time, and the map is redone when the slider is let go. */
   const slider = $('#setTerrSecs'), out = $('#terrSecsOut');
-  const label = () => { out.textContent = secs() + (secs() === 1 ? ' second' : ' seconds'); };
+  const label = () => { out.textContent = secs() === 1 ? window.GoText.T('screen.second') : window.GoText.T('screen.seconds', { count: secs() }); };
   slider.max = String(STEPS.length - 1); slider.value = String(STEPS.indexOf(secs()));
   slider.addEventListener('input', () => { settings.terrSecs = STEPS[+slider.value]; label(); });
   slider.addEventListener('change', () => { saveSettings(); if (settings.terr) update(); });

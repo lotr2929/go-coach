@@ -13,7 +13,7 @@
 <body>
 <header>
   <div class="titleBox"><h1>Go Coach</h1><div id="verStamp" class="verStamp"></div></div>
-  <button id="btnSettings" class="icon" aria-label="Settings">⚙</button>
+  <button data-t-aria="screen.settings.aria" id="btnSettings" class="icon" aria-label="Settings">⚙</button>
 </header>
 
 <main>
@@ -23,59 +23,59 @@
       <div class="boardWrap"><canvas id="playBoard"></canvas></div>
       <div id="boardBar" class="boardBar">
         <div class="barSide">
-          <button type="button" id="btnUndoArrow" class="tab" aria-label="Undo" title="Take back your last move">← Undo</button>
-          <button type="button" id="btnRedoArrow" class="tab" aria-label="Redo" title="Play again the move you took back">Redo →</button>
+          <button data-t="screen.undo-arrow" data-t-aria="screen.undo-arrow.aria" data-t-title="screen.undo-arrow.tip" type="button" id="btnUndoArrow" class="tab" aria-label="Undo" title="Take back your last move">← Undo</button>
+          <button data-t="screen.redo-arrow" data-t-aria="screen.redo-arrow.aria" data-t-title="screen.redo-arrow.tip" type="button" id="btnRedoArrow" class="tab" aria-label="Redo" title="Play again the move you took back">Redo →</button>
         </div>
         <div class="barSide">
-          <button type="button" id="btnShapes" class="tab" aria-pressed="false">Shapes</button>
-          <button type="button" id="btnTerr" class="tab" aria-pressed="false">Territory</button>
+          <button data-t="screen.shapes" type="button" id="btnShapes" class="tab" aria-pressed="false">Shapes</button>
+          <button data-t="screen.territory" type="button" id="btnTerr" class="tab" aria-pressed="false">Territory</button>
         </div>
       </div>
     </div>
     <aside class="panel">
       <div class="row controls" id="controls">
-        <button id="btnMode">Play mode</button>
-        <button id="btnPass">Pass</button>
-        <button id="btnUndo">Undo</button>
-        <button id="btnRedo">Redo</button>
-        <button id="btnAnalyse">Analyse</button>
-        <button id="btnResign">Resign</button>
-        <button id="btnNew" class="primary">New</button>
+        <button data-t="screen.mode" id="btnMode">Play mode</button>
+        <button data-t="screen.pass" id="btnPass">Pass</button>
+        <button data-t="screen.undo" id="btnUndo">Undo</button>
+        <button data-t="screen.redo" id="btnRedo">Redo</button>
+        <button data-t="screen.analyse" id="btnAnalyse">Analyse</button>
+        <button data-t="screen.resign" id="btnResign">Resign</button>
+        <button data-t="screen.new" id="btnNew" class="primary">New</button>
       </div>
       <div class="row controls" id="lessonBar" hidden>
-        <button id="btnLHint">Hint</button>
-        <button id="btnLReset">Reset</button>
-        <button id="btnLNext" class="primary">Next</button>
-        <button id="btnLMenu">Lessons</button>
-        <button id="btnLExit">Game</button>
+        <button data-t="screen.lesson-hint" id="btnLHint">Hint</button>
+        <button data-t="screen.lesson-reset" id="btnLReset">Reset</button>
+        <button data-t="screen.lesson-next" id="btnLNext" class="primary">Next</button>
+        <button data-t="screen.lesson-menu" id="btnLMenu">Lessons</button>
+        <button data-t="screen.lesson-exit" id="btnLExit">Game</button>
       </div>
       <div class="row controls" id="kifuBar" hidden>
-        <button id="btnKFirst" title="Go to the start of the game">« First</button>
-        <button id="btnKBack" title="One move back (left arrow key)">‹ Back</button>
-        <button id="btnKAuto" title="Play the game through automatically">Auto</button>
-        <button id="btnKNext" class="primary" title="One move forward (right arrow key)">Next ›</button>
-        <button id="btnKLast" title="Go to the end of the game">Last »</button>
-        <button id="btnKAnalyse" title="Suggest moves for this position">Analyse</button>
-        <button id="btnKList" title="Choose another game">Games</button>
-        <button id="btnKExit" title="Back to your own game">Exit</button>
-        <input type="range" id="kifuSlider" min="0" max="0" value="0" aria-label="Move number">
+        <button data-t="screen.kifu-first" data-t-title="screen.kifu-first.tip" id="btnKFirst" title="Go to the start of the game">« First</button>
+        <button data-t="screen.kifu-back" data-t-title="screen.kifu-back.tip" id="btnKBack" title="One move back (left arrow key)">‹ Back</button>
+        <button data-t="screen.kifu-auto" data-t-title="screen.kifu-auto.tip" id="btnKAuto" title="Play the game through automatically">Auto</button>
+        <button data-t="screen.kifu-next" data-t-title="screen.kifu-next.tip" id="btnKNext" class="primary" title="One move forward (right arrow key)">Next ›</button>
+        <button data-t="screen.kifu-last" data-t-title="screen.kifu-last.tip" id="btnKLast" title="Go to the end of the game">Last »</button>
+        <button data-t="screen.kifu-analyse" data-t-title="screen.kifu-analyse.tip" id="btnKAnalyse" title="Suggest moves for this position">Analyse</button>
+        <button data-t="screen.kifu-games" data-t-title="screen.kifu-games.tip" id="btnKList" title="Choose another game">Games</button>
+        <button data-t="screen.kifu-exit" data-t-title="screen.kifu-exit.tip" id="btnKExit" title="Back to your own game">Exit</button>
+        <input data-t-aria="screen.kifu-slider.aria" type="range" id="kifuSlider" min="0" max="0" value="0" aria-label="Move number">
       </div>
       <div id="quizOptions" class="row wrap" hidden></div>
       <div id="scorePanel" class="note" hidden>
         <p id="scoreText"></p>
         <div class="row">
-          <button id="btnConfirm" class="primary">Confirm result</button>
-          <button id="btnResume">Keep playing</button>
+          <button data-t="screen.confirm" id="btnConfirm" class="primary">Confirm result</button>
+          <button data-t="screen.keep-playing" id="btnResume">Keep playing</button>
         </div>
       </div>
       <div id="chat" class="chat">
-        <button type="button" id="btnChatSize" class="chatSize" aria-label="Enlarge the chat" aria-pressed="false" title="Enlarge the chat"></button>
+        <button data-t-aria="screen.chat-size.aria" data-t-title="screen.chat-size.tip" type="button" id="btnChatSize" class="chatSize" aria-label="Enlarge the chat" aria-pressed="false" title="Enlarge the chat"></button>
         <div class="chatLog" aria-live="polite"></div>
         <div class="quick"></div>
         <form class="chatForm" autocomplete="off">
-          <input class="chatInput" type="text" placeholder="Ask your coach…" aria-label="Message to the coach" enterkeyhint="send">
-          <button type="button" id="btnClear" aria-label="Clear the chat">Clear</button>
-          <button type="submit" class="primary">Send</button>
+          <input data-t-placeholder="screen.chat-input.hint" data-t-aria="screen.chat-input.aria" class="chatInput" type="text" placeholder="Ask your coach…" aria-label="Message to the coach" enterkeyhint="send">
+          <button data-t="screen.clear" data-t-aria="screen.clear.aria" type="button" id="btnClear" aria-label="Clear the chat">Clear</button>
+          <button data-t="screen.send" type="submit" class="primary">Send</button>
         </form>
       </div>
     </aside>
@@ -84,7 +84,7 @@
 
 <dialog id="newDlg">
   <form method="dialog" id="newForm">
-    <h2>New game</h2>
+    <h2 data-t="screen.new-game">New game</h2>
     <div id="optSize" class="opt"></div>
     <div id="optColour" class="opt"></div>
     <div id="optLevel" class="opt"></div>
@@ -92,30 +92,30 @@
     <div id="optHandicap" class="opt"></div>
     <p class="small" id="newHelp"></p>
     <div class="row end">
-      <button value="cancel" formnovalidate>Cancel</button>
-      <button value="start" class="primary" id="btnStart">Start</button>
+      <button data-t="screen.cancel" value="cancel" formnovalidate>Cancel</button>
+      <button data-t="screen.start" value="start" class="primary" id="btnStart">Start</button>
     </div>
   </form>
 </dialog>
 
 <dialog id="setDlg">
   <form method="dialog">
-    <h2>Settings</h2>
-    <label class="switch"><input type="checkbox" id="setCoords"> Show coordinates</label>
-    <label class="switch"><input type="checkbox" id="setLibs"> Show liberties (green dots, red when in atari)</label>
-    <label class="switch"><input type="checkbox" id="setCoach"> Coach tips</label>
-    <label class="switch"><input type="checkbox" id="setConfirm"> Tap twice to place (avoids slips on a phone)</label>
-    <label class="switch"><input type="checkbox" id="setSound"> Stone sound</label>
+    <h2 data-t="screen.settings">Settings</h2>
+    <label class="switch"><input type="checkbox" id="setCoords"> <span data-t="screen.coords">Show coordinates</span></label>
+    <label class="switch"><input type="checkbox" id="setLibs"> <span data-t="screen.libs">Show liberties (green dots, red when in atari)</span></label>
+    <label class="switch"><input type="checkbox" id="setCoach"> <span data-t="screen.coach-tips">Coach tips</span></label>
+    <label class="switch"><input type="checkbox" id="setConfirm"> <span data-t="screen.tap-twice">Tap twice to place (avoids slips on a phone)</span></label>
+    <label class="switch"><input type="checkbox" id="setSound"> <span data-t="screen.sound">Stone sound</span></label>
     <div class="opt">
-      <label class="lbl" for="setTerrSecs">Territory accuracy: up to <b id="terrSecsOut"></b> per map</label>
+      <label class="lbl" for="setTerrSecs"><span data-t="screen.accuracy-before">Territory accuracy: up to</span> <b id="terrSecsOut"></b> <span data-t="screen.accuracy-after">per map</span></label>
       <input type="range" id="setTerrSecs" min="0" max="9" step="1" aria-describedby="terrHelp">
-      <p class="small" id="terrHelp">The Territory tab plays random games after every move. A longer time means more games and a steadier map, but a longer wait.</p>
+      <p data-t="screen.accuracy-help" class="small" id="terrHelp">The Territory tab plays random games after every move. A longer time means more games and a steadier map, but a longer wait.</p>
     </div>
-    <div class="row wrap"><button type="button" id="btnSGF">Copy game record (SGF)</button></div>
-    <div class="row wrap"><button type="button" id="btnUpdate">Check for updates</button></div>
+    <div class="row wrap"><button data-t="screen.copy-sgf" type="button" id="btnSGF">Copy game record (SGF)</button></div>
+    <div class="row wrap"><button data-t="screen.check-updates" type="button" id="btnUpdate">Check for updates</button></div>
     <p class="small" id="verText"></p>
     <p class="small" id="installHelp"></p>
-    <div class="row end"><button value="close" class="primary">Done</button></div>
+    <div class="row end"><button data-t="screen.done" value="close" class="primary">Done</button></div>
   </form>
 </dialog>
 
@@ -124,8 +124,8 @@
     <h2 id="resultTitle"></h2>
     <p id="resultText"></p>
     <div class="row end">
-      <button value="close">Close</button>
-      <button value="new" class="primary" id="btnResultNew">New game</button>
+      <button data-t="screen.close" value="close">Close</button>
+      <button data-t="screen.result-new" value="new" class="primary" id="btnResultNew">New game</button>
     </div>
   </form>
 </dialog>
@@ -135,6 +135,7 @@
 
 <script src="text-data.js"></script>
 <script src="text.js"></script>
+<script src="pagetext.js"></script>
 <script src="engine.js"></script>
 <script src="search.js"></script>
 <script src="proverbs.js"></script>
