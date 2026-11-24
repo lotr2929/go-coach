@@ -55,8 +55,10 @@
     const s = (G.teaching && G.teaching.on) ? G.teaching.state() : (G.exploring && G.exploring.on) ? G.exploring.state() : (G.kifu && G.kifu.on) ? G.kifu.state() : Play.s, CM = window.GoCommentary;
     if (!s || i < 0 || s.board[i]) return '';
     const square = G.squareInfo && !(G.teaching && G.teaching.on) && !(G.exploring && G.exploring.on) ? G.squareInfo(i) : '';
-    /* When it is not the learner's turn to move, a note about "playing here" makes no sense: show only the territory score. */
-    if (s === Play.s && !(Play.phase === 'play' && !Play.thinking && s.turn === Play.human)) return square;
+    /* In your own game the move note is help, so it appears only in Coach mode (or the guided first game) and on your turn.
+       Play mode is silent: only the territory score, when you have switched the map on yourself. */
+    const helping = settings.mode === 'coach' || Play.guided;
+    if (s === Play.s && !(helping && Play.phase === 'play' && !Play.thinking && s.turn === Play.human)) return square;
     const who = (G.kifu && G.kifu.on) ? 3 : Play.human; /* in a game record nobody is "you" */
     const d = CM.describeMove(E, s, i, s.turn, who);
     const note = d.ok ? `${E.coord(s.n, i)}: ${CM.headline(E, s, i, s.turn, who)}` : d.points[0];
