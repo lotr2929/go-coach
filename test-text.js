@@ -42,6 +42,14 @@ module.exports = async function (t) {
     for (const id of C.LESSON_IDS) if (id !== 'firstmove' && !TX.has('lesson-help.' + id)) missing.push('lesson-help.' + id);
     for (const m of fs.readFileSync(path.join(__dirname, 'tour.js'), 'utf8').matchAll(/\{ key: '([a-z]+)'/g))
       for (const part of ['title', 'text']) if (!TX.has(`tour.${m[1]}.${part}`)) missing.push(`tour.${m[1]}.${part}`);
+    for (const L of require('./lessons.js').list) {
+      for (const part of ['title', 'text'].concat(L.type === 'quiz' ? ['options', 'wrong', 'explain'] : [])) if (!TX.has(`lessons.${L.id}.${part}`)) missing.push(`lessons.${L.id}.${part}`);
+      if (L.type === 'quiz' && !(L.options.length > L.answer)) missing.push(`lessons.${L.id}.options (the right answer is option ${L.answer + 1})`);
+    }
+    for (const st of require('./curriculum.js').steps) {
+      if (!TX.has(`curriculum.${st.id}.title`)) missing.push(`curriculum.${st.id}.title`);
+      st.scenes.forEach((sc, k) => { for (const part of ['text', 'more']) if (!TX.has(`curriculum.${st.id}.${k + 1}.${part}`)) missing.push(`curriculum.${st.id}.${k + 1}.${part}`); });
+    }
     for (const p of ['whatisgo', 'history']) for (const part of ['title', 'opened']) if (!TX.has(`pages.${p}-${part}`)) missing.push(`pages.${p}-${part}`);
     assert.deepStrictEqual(missing, []);
   });
