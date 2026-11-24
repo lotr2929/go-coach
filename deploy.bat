@@ -1,6 +1,16 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+
+REM Windows reads a .bat file line by line while it runs, and switching branches below
+REM replaces this file on disk. So the script first copies itself to the temporary
+REM folder and runs that copy, which nothing changes. The block below is read whole
+REM before it runs, so returning to this file afterwards is safe.
+if /i not "%~2"=="/copy" (
+    copy /y "%~f0" "%TEMP%\gocoach-deploy.bat" >nul
+    call "%TEMP%\gocoach-deploy.bat" "%~1" /copy "%~dp0."
+    exit /b
+)
+cd /d "%~3"
 
 REM ============================================================
 REM Deploys Go Coach from the laptop: deploy.bat - git push - Vercel.
