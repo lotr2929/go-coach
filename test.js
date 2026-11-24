@@ -106,23 +106,6 @@ async function t(name, fn) {
     assert(/^A false eye/.test(C.reply('what is a false eye', { n: 9 }).text));
     assert(/^An eye is/.test(C.reply('what is an eye', { n: 9 }).text));
   });
-  await t('the welcome: numbers, words and help pick the right request', () => {
-    const W = require('./welcome.js');
-    assert.deepStrictEqual(['1', '2', '3', '4', '5'].map(W.match), ['whatisgo', 'history', 'teach', 'coach', 'tour']);
-    assert.strictEqual(W.match('What is Go?'), 'whatisgo');
-    assert.strictEqual(W.match('How do I use the app?'), 'tour');
-    assert.strictEqual(W.match('Help'), 'help');
-    assert.strictEqual(W.match('coach me'), 'coach');
-    assert.strictEqual(W.match('what is ko?'), null);
-    assert.strictEqual(W.match('D4'), null);
-    assert(/^Hello, I am your Go coach\./.test(C.INTRO_TOP) && C.INTRO.startsWith(C.INTRO_TOP) && C.INTRO.endsWith(C.INTRO_END) && /5\. How to use the app\./.test(C.INTRO));
-  });
-  await t('whatisgo.md reads as a page with no mistakes', () => {
-    const page = HISTORY.parse(require('fs').readFileSync(__dirname + '/whatisgo.md', 'utf8'));
-    assert.strictEqual(page.title, 'What is Go?');
-    assert(page.blocks.length > 10 && page.blocks[0].t === 'lead');
-    assert.deepStrictEqual(HISTORY.problems(page), []);
-  });
   await t('analysis ranks moves and the played move is included', async () => {
     const s = E.newState(9, 0); E.play(s, 20); E.play(s, 60);
     const r = await E.analyse(s, 1, { ms: 300, include: [0] });
@@ -246,14 +229,6 @@ async function t(name, fn) {
     assert.strictEqual(ask('teach me').text, '');
     assert.strictEqual(ask('teach me about ko').arg.id, 'ko');
   });
-  await t('history.md is read into a page whose sources all check out', () => {
-    const md = require('fs').readFileSync(__dirname + '/history.md', 'utf8');
-    const page = HISTORY.parse(md);
-    assert.strictEqual(page.title, 'A history of Go');
-    assert(page.blocks.some(b => b.t === 'lead') && page.blocks.filter(b => b.t === 'h').length >= 6 && page.blocks.some(b => b.t === 'refs'));
-    assert(page.refs.length >= 11);
-    assert.deepStrictEqual(HISTORY.problems(page), [], 'fix history.md: ' + HISTORY.problems(page).join(' '));
-  });
   await t('the history reader understands headings, lists, comments and references', () => {
     const p = HISTORY.parse('<!-- note\n## not a heading -->\n# T\n\nIntro [1].\n\n## A\n\nOne\ntwo.\n\n### B\n\n- x [1]\n- y\n\nAfter.\n\n## References\n\n1. Name | Pub | https://example.org/a\n');
     assert.strictEqual(p.title, 'T');
@@ -359,20 +334,6 @@ async function t(name, fn) {
     k.load({ title: 'Partial' }, SGF.parse('(;SZ[5];B[cc];W[cc];B[aa])'));
     k.goto(5); assert.strictEqual(k.pos, 1); assert(/1\+/.test(k.status()) && /refuse/.test(msgs[msgs.length - 1]));
     k.exit(); assert(!k.on);
-  });
-  await t('the Kifu shortlist is well formed', () => {
-    const MK = require('./make-kifu.js');
-    const cats = MK.parsePicks(require('fs').readFileSync(__dirname + '/kifu-picks.md', 'utf8')), seen = new Set();
-    const games = cats.flatMap(c => c.games);
-    assert(cats.length >= 5 && games.length >= 90, 'expected about 100 games, found ' + games.length);
-    for (const c of cats) {
-      assert(c.title && c.blurb, 'every category needs a title and a description: ' + c.title);
-      for (const g of c.games) {
-        assert(/\.sgf$/.test(g.src) && g.title && g.note, 'incomplete line in kifu-picks.md: ' + g.src);
-        assert(!seen.has(g.src), 'listed twice: ' + g.src); seen.add(g.src);
-        assert(!/21x21/.test(g.src), 'boards bigger than 19x19 cannot be labelled: ' + g.src);
-      }
-    }
   });
   await t('make-kifu builds the collection from a shortlist', () => {
     const fs = require('fs'), os = require('os'), path = require('path'), MK = require('./make-kifu.js');
@@ -506,6 +467,7 @@ async function t(name, fn) {
     assert(msgs.some(m => /Exploring C3/.test(m)));
     assert.strictEqual(EXPLORE.create({ E, CM, C, say() {} }).start(E.newState(9, 0), -1), false);
   });
+  await require('./test-text.js')(t); /* the app's wording in docs/text */
   console.log(failed ? failed + ' FAILED, ' + passed + ' passed' : 'all ' + passed + ' tests passed');
   process.exit(failed ? 1 : 0);
 })();

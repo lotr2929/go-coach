@@ -4,16 +4,16 @@
   'use strict';
   const G = window.GC;
   const { $, settings } = G;
-  const C = window.GoCoach, W = window.GoWelcome;
+  const C = window.GoCoach, W = window.GoWelcome, { T } = window.GoText;
   const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on);
 
   const ACTIONS = {
-    whatisgo: () => G.openDoc('whatisgo.md', 'What is Go?', '"What is Go?" is open in the board window. Press "Back to the board" when you have finished reading.'),
+    whatisgo: () => G.openDoc('whatisgo'),
     history: () => G.openHistory(),
     teach: () => G.teachIntro(),
     coach: () => {
-      if (busy()) return G.say('Coach mode is for your own game. Say "back to game" first, then "coach me".');
-      if (settings.mode === 'coach') return G.say('Coach mode is already on: I suggest moves after every turn and tell you how each of your moves went. Tap "Coach mode" to switch it off.');
+      if (busy()) return G.say(T('welcome.coach-busy'));
+      if (settings.mode === 'coach') return G.say(T('welcome.coach-already'));
       $('#btnMode').click(); /* coaching.js switches the mode and explains it in the chat */
     },
     tour: () => G.startTour(),

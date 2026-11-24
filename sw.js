@@ -1,6 +1,6 @@
 /* Go Coach service worker: loads the newest files when online and falls back to its saved copy when offline. Bump VERSION when files change. */
-const VERSION = 'gocoach-1795496837539';
-const FILES = ['./', 'index.html', 'style.css', 'engine.js', 'search.js', 'proverbs.js', 'explain.js', 'shapes.js', 'lessons.js', 'util.js', 'board.js', 'play.js', 'coaching.js', 'learn.js', 'main.js', 'update.js', 'coach.js', 'commentary.js', 'curriculum.js', 'teach.js', 'teachui.js', 'explore.js', 'exploreui.js', 'intro.js', 'welcome.js', 'welcomeui.js', 'tour.js', 'whatisgo.md', 'introui.js', 'history.js', 'history.md', 'guide.js', 'page.js', 'sgf.js', 'kifu.js', 'kifuui.js', 'terr.js', 'shapesui.js', 'boardbar.js', 'chat.js', 'telemetry.js', 'fontsize.js', 'manifest.webmanifest'];
+const VERSION = 'gocoach-1795499410647';
+const FILES = ['./', 'index.html', 'style.css', 'text-data.js', 'text.js', 'engine.js', 'search.js', 'proverbs.js', 'explain.js', 'shapes.js', 'lessons.js', 'util.js', 'board.js', 'play.js', 'coaching.js', 'learn.js', 'main.js', 'update.js', 'coach.js', 'commentary.js', 'curriculum.js', 'teach.js', 'teachui.js', 'explore.js', 'exploreui.js', 'intro.js', 'welcome.js', 'welcomeui.js', 'tour.js', 'docs/text/en/pages/whatisgo.md', 'introui.js', 'history.js', 'docs/text/en/pages/history.md', 'guide.js', 'page.js', 'sgf.js', 'kifu.js', 'kifuui.js', 'terr.js', 'shapesui.js', 'boardbar.js', 'chat.js', 'telemetry.js', 'fontsize.js', 'manifest.webmanifest'];
 const ICONS = ['icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 
 self.addEventListener('install', e => {

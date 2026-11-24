@@ -1,19 +1,8 @@
-<!--
-HOW TO EDIT THIS PAGE
-Go Coach reads this file when someone chooses "1. What is Go?", so you can change it freely.
-
-  # Title                 the page title (one only, at the top)
-  The first paragraph     after the title is the introduction (shown slightly larger).
-  ## Heading              starts a section.   ### Heading   starts a smaller part of a section.
-  Blank line              between paragraphs.
-  - item                  a bullet list (one item per line, starting with "- ").
-
-If you add sources, use [1] in the text and a "## References" section at the end, as in history.md.
--->
-
 # What is Go?
 
-Go is a war game. Two armies, Black and White, contest one battlefield. The rules are few: place a stone, surround to capture, and claim the most ground. Beyond that, almost anything goes. Every tactic, formation and principle has been discovered by players, not imposed by rules.
+Go is one of the oldest continuously played board games. Its origins are rooted in China where it is called _weiqi_ but it is now widely played around the world, particularly in Korea, where it is known as _baduk_ and Japan, where it is known as _Igo_. The name _Go_ is a shortened version of the Japanese name because the West learnt about the game largely from Japan.
+
+Like chess, _Go_ is essentially game that simulates a war. Two armies, Black and White, contest one battlefield. The rules are few: place a stone, surround to capture, and claim the most ground. Beyond that, almost anything goes. Every tactic, formation and principle has been discovered by players, not imposed by rules. This is not unlike an actual war and indeed, a lot of useful strategies about competition and strategic thinking can come from this.
 
 ## The battlefield
 
@@ -23,12 +12,12 @@ It began in China more than 2,500 years ago, where it is called weiqi. It is igo
 
 ## The rules in brief
 
-- The empty points next to a stone (up, down, left and right) are its liberties: its lines of supply.
-- Stones of one colour that touch along the lines form a group and share their liberties.
-- A stone or group with no liberties left is captured and taken off the board.
-- You may not play where your stone would have no liberties, unless that move captures.
-- Ko: you may not take back a single stone at once if that would repeat the position; play elsewhere first.
-- When both players pass, the battle ends. Each side counts its stones and the empty ground it surrounds. White receives a few points (komi) for moving second.
+-   The empty points next to a stone (up, down, left and right) are its liberties: its lines of supply.
+-   Stones of one colour that touch along the lines form a group and share their liberties.
+-   A stone or group with no liberties left is captured and taken off the board.
+-   You may not play where your stone would have no liberties, unless that move captures.
+-   Ko: you may not take back a single stone at once if that would repeat the position; play elsewhere first.
+-   When both players pass, the battle ends. Each side counts its stones and the empty ground it surrounds. White receives a few points (komi) for moving second.
 
 ## The four skills of command
 
@@ -58,7 +47,7 @@ Go teaches, game after game, that the most lasting victories come from building,
 
 ## Where to go next
 
-- Type 2 for a short history of Go.
-- Type 3 and I will teach you the rules step by step.
-- Type 4 to play a game with me coaching you.
-- Type 5 for a tour of the app.
+-   Type 2 for a short history of Go.
+-   Type 3 and I will teach you the rules step by step.
+-   Type 4 to play a game with me coaching you.
+-   Type 5 for a tour of the app.

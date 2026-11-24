@@ -4,5 +4,7 @@ make-icons.js
 deploy.env
 deploy.bat
 make-kifu.js
-kifu-picks.md
+docs/text/en/lists/kifu-picks.md
+make-text.js
+test-text.js
 .git
