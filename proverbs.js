@@ -23,8 +23,12 @@
   /* Words from a Go master for some situations, used instead of the saying half the time. Until a quote is checked
      against a book or interview it is shown as "attributed to". */
   const MASTERS = {};
-  for (const key of ['whole', 'lost']) {
-    MASTERS[key] = { label: T('proverbs.master'), text: T(`proverbs.${key}.master.text`), src: T('proverbs.attributed', { name: T(`proverbs.${key}.master.name`) }), link: T(`proverbs.${key}.master.link`) };
+  for (const key of ['whole', 'lost', 'big']) {
+    const checked = TX.has(`proverbs.${key}.master.source`); /* a quote checked against its book carries the source itself */
+    MASTERS[key] = {
+      label: T('proverbs.master'), text: T(`proverbs.${key}.master.text`), link: T(`proverbs.${key}.master.link`),
+      src: checked ? T(`proverbs.${key}.master.source`) : T('proverbs.attributed', { name: T(`proverbs.${key}.master.name`) })
+    };
   }
 
   /* The first situation that applies, in order of how specific it is. facts: { sacrifice, rescue, kill, lost, punished, attackB, gain }. */
