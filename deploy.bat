@@ -1,52 +1,111 @@
 @echo off
-cd /d "%~dp0"
+setlocal
 
-REM ============================================================
-REM Deploys Go Coach to Vercel.
-REM Needs deploy.env (VERCEL_TOKEN) in this folder.
-REM ============================================================
-
-if not exist deploy.env (
-    echo deploy.env is missing.
-    pause
-    exit /b 1
+REM Windows reads a .bat file line by line while it runs, and switching branches below
+REM replaces this file on disk. So the script first copies itself to the temporary
+REM folder and runs that copy, which nothing changes. The block below is read whole
+REM before it runs, so returning to this file afterwards is safe.
+if /i not "%~2"=="/copy" (
+    copy /y "%~f0" "%TEMP%\gocoach-deploy.bat" >nul
+    call "%TEMP%\gocoach-deploy.bat" "%~1" /copy "%~dp0."
+    exit /b
 )
-for /f "usebackq tokens=1,* delims==" %%A in ("deploy.env") do (
-    if "%%A"=="VERCEL_TOKEN" set VERCEL_TOKEN=%%B
+cd /d "%~3"
+
+REM ============================================================
+REM Deploys Go Coach from the laptop: deploy.bat - git push - Vercel.
+REM 1. Runs the tests.
+REM 2. Sets a new version number, so installed copies update.
+REM 3. Merges the current branch into main and pushes main to GitHub.
+REM Vercel then puts GitHub's main live by itself.
+REM Run it from the branch that holds the work (or from main).
+REM Add /nopause when it is run by Claude, so the window does not wait.
+REM ============================================================
+
+set BRANCH=
+for /f "delims=" %%B in ('git branch --show-current') do set BRANCH=%%B
+if "%BRANCH%"=="" (
+    echo Could not tell which branch this folder is on. Nothing was deployed.
+    goto fail
+)
+
+set DIRTY=
+for /f "delims=" %%L in ('git status --porcelain') do set DIRTY=1
+if defined DIRTY (
+    echo There are changes that have not been committed. Nothing was deployed.
+    git status --short
+    goto fail
 )
 
 echo.
 echo ==============================================================
-echo                    Go Coach: running tests
+echo          Go Coach: deploying branch %BRANCH%
 echo ==============================================================
+git fetch origin
+if errorlevel 1 (
+    echo Could not reach GitHub. Nothing was deployed.
+    goto fail
+)
+
 call node test.js
-if %ERRORLEVEL% NEQ 0 (
+if errorlevel 1 (
     echo.
     echo Tests failed. Nothing was deployed.
-    pause
-    exit /b 1
+    goto fail
 )
 
 call node bump-version.js
-if %ERRORLEVEL% NEQ 0 (
-    echo Could not update the cache version. Nothing was deployed.
-    pause
-    exit /b 1
+if errorlevel 1 (
+    echo Could not update the version number. Nothing was deployed.
+    goto fail
+)
+git commit -q -m "Set the version number for deploy" sw.js
+if errorlevel 1 (
+    echo Could not save the version number. Nothing was deployed.
+    goto fail
 )
 
-echo.
-echo ==============================================================
-echo                    Go Coach: deploying...
-echo ==============================================================
-call vercel deploy --prod --yes
-if %ERRORLEVEL% NEQ 0 (
+if /i "%BRANCH%"=="main" goto merged
+git switch -q main
+if errorlevel 1 (
+    echo Could not switch to main. Nothing was deployed.
+    goto fail
+)
+git merge -q --ff-only origin/main
+if errorlevel 1 (
+    echo main on this laptop differs from GitHub. Nothing was deployed.
+    git switch -q %BRANCH%
+    goto fail
+)
+git merge -q --no-ff %BRANCH% -m "Deploy %BRANCH% from the laptop"
+if errorlevel 1 (
+    echo %BRANCH% could not be merged into main. Nothing was deployed.
+    git merge --abort
+    git switch -q %BRANCH%
+    goto fail
+)
+
+:merged
+call node test.js
+if errorlevel 1 (
     echo.
-    echo Deploy failed. Take a screenshot of this window.
-    pause
-    exit /b 1
+    echo Tests failed after merging. Nothing was deployed.
+    goto fail
+)
+
+git push origin main
+if errorlevel 1 (
+    echo.
+    echo Could not send main to GitHub. Nothing was deployed.
+    goto fail
 )
 
 echo.
-echo Done. The live address is printed above.
-echo Press Ctrl+Shift+R in the app to load the new version.
-pause
+echo Done. GitHub has the new version and Vercel is putting it live.
+echo It takes a minute or two. Then press Ctrl+Shift+R in the app.
+if /i not "%~1"=="/nopause" pause
+exit /b 0
+
+:fail
+if /i not "%~1"=="/nopause" pause
+exit /b 1
