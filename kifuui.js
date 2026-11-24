@@ -31,8 +31,11 @@
     if (Play.thinking && !session.on) { G.say(window.GoText.T('app.busy-thinking')); return; }
     let page;
     try {
-      page = window.GoKifu.listPage(await loadIndex());
-      for (const b of page.blocks) if (b.t === 'cards') b.onPick = openKifuGame;
+      const idx = await loadIndex();
+      page = window.GoKifu.listPage(idx);
+      /* A card carries only what it shows (id, title, details, note); the game's file is in its index entry. */
+      const entryOf = id => idx.categories.flatMap(c => c.games).find(e => e.id === id);
+      for (const b of page.blocks) if (b.t === 'cards') b.onPick = card => openKifuGame(entryOf(card.id) || card);
     } catch (e) {
       page = { title: window.GoText.T('kifu.list-title'), blocks: [{ t: 'p', text: window.GoText.T('kifu.load-failed') }] };
     }
