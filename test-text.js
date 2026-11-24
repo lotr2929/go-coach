@@ -88,7 +88,8 @@ module.exports = async function (t) {
   await t('whatisgo.md reads as a page with no mistakes', () => {
     const page = HISTORY.parse(read('pages', 'whatisgo.md'));
     assert.strictEqual(page.title, 'What is Go?');
-    assert(page.blocks.length > 10 && page.blocks[0].t === 'lead');
+    /* It opens with its introduction, perhaps after a quotation. */
+    assert(page.blocks.length > 10 && page.blocks.find(b => b.t !== 'quote').t === 'lead');
     assert.deepStrictEqual(HISTORY.problems(page), []);
   });
   await t('pages show **bold**, _italics_ and > quotations, and no stars or underscores are left over', () => {
