@@ -1,6 +1,6 @@
 # What is Go?
 
-> Go is harmony - Go Seigen
+> Go is harmony (attributed to Go Seigen)
 
 Go is one of the oldest continuously played board games in the world. It originated in China more than 2,500 years ago, where it is called _weiqi_. In Korea it is known as _baduk_, and in Japan as _igo_, often shortened simply to _go_. The West came to know the game largely through Japan, which is why the Japanese name became established in English.
 
