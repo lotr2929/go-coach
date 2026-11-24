@@ -29,7 +29,7 @@ Last updated: 24 November 2026.
 - **Money:** about 10% of net revenue (after GST, store and payment fees) to the IGF; about 20% of net revenue from users an association brings; any exclusivity limited in time and scope, with milestones and a way out. Lawyer and accountant before signing; an ABN and a business payment account before charging.
 - **No own multiplayer server:** partner with an existing server (for example OGS) for live play.
 - **Make Go Coach free for the pilot:** traction first.
-- Research notes: the IGF has no app that we could find, publishes no budget, and is closely tied to the Nihon Ki-in. Comparable learning apps charge about US$5–7 a month or US$40–50 a year (BadukPop). No app we found marks shapes on the player's own board.
+- Research notes: the IGF has no app that we could find, publishes no budget, and is closely tied to the Nihon Ki-in. Comparable learning apps charge about US$5–7 a month or US$40–50 a year (BadukPop). No app we found marks shapes on the player's own board. Competitors (SmartGo first) are summarised in `docs/competitor-apps.md`.
 
 ## Engine (search.js)
 - Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.
