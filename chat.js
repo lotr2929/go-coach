@@ -47,6 +47,14 @@
     const d = document.createElement('div');
     d.className = 'msg coach menu';
     for (const it of items) {
+      if (it.head) { /* a heading between groups of choices, such as a chapter of the lessons */
+        const h = document.createElement('div');
+        h.className = 'menuHead';
+        h.append(Object.assign(document.createElement('strong'), { textContent: it.label }));
+        if (it.note) h.append(Object.assign(document.createElement('span'), { textContent: it.note }));
+        d.append(h);
+        continue;
+      }
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'lcard' + (it.done ? ' done' : '');
       b.textContent = it.label;

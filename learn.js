@@ -8,8 +8,17 @@
 
   const Lesson = { on: false, idx: -1, s: null, status: null, answered: false, hintPts: [], done: new Set(load(KEY.done, [])) };
 
+  /* The lessons by chapter: each chapter is a skill from "What is Go?", in order from the simplest. */
   function showMenu() {
-    G.chatMenu(LS.list.map((L, i) => ({ label: `${Lesson.done.has(L.id) ? '✓' : i + 1}  ${L.title}`, done: Lesson.done.has(L.id), run: () => openLesson(i) })));
+    const items = [];
+    LS.CHAPTERS.forEach((c, k) => {
+      items.push({ head: true, label: `Chapter ${k + 1}: ${c.title}`, note: c.intro });
+      for (const id of c.ids) {
+        const i = LS.list.findIndex(L => L.id === id), L = LS.list[i];
+        items.push({ label: `${Lesson.done.has(id) ? '✓' : i + 1}  ${L.title}`, done: Lesson.done.has(id), run: () => openLesson(i) });
+      }
+    });
+    G.chatMenu(items);
   }
   function openLesson(i) {
     if (Play.thinking) return say('Give me a moment: I am still thinking about my move.');
@@ -25,7 +34,8 @@
       });
     }
     G.setChips(CHIPS);
-    say(`Lesson ${i + 1} of ${LS.list.length}: ${L.title}\n\n${L.text.join('\n\n')}`);
+    const ch = LS.chapterOf(L.id);
+    say(`Lesson ${i + 1} of ${LS.list.length}${ch ? ` (${ch.title})` : ''}: ${L.title}\n\n${L.text.join('\n\n')}`);
     say((L.task ? 'Your task: ' + L.task + '\n' : '') + 'Ask me if anything is unclear, or say "back to game" to return to your game.');
     renderLesson();
   }

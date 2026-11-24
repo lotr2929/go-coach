@@ -32,6 +32,8 @@ It began in China more than 2,500 years ago, where it is called weiqi. It is igo
 
 ## The four skills of command
 
+The lessons follow these skills in order: basic training and tactics first, then formations, the terrain, reading the engagement and, last, the campaign. Type 3, then choose Lessons and Puzzles.
+
 ### Reading the terrain
 
 Seeing which ground is open to seize, which can be attacked, and where you are exposed. The Territory tab under the board shows the computer's estimate.

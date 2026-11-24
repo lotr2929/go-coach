@@ -232,6 +232,39 @@
       }
     },
     {
+      id: 'tiger', title: 'The tiger’s mouth', n: N, turn: 1, solo: true,
+      black: M.pts([[1, 2], [3, 2]]), white: M.pts([[2, 4]]),
+      marks: M.key({ '2,1': 'A', '2,2': 'B' }),
+      text: [
+        'Formations matter as much as single stones. Here two black stones stand one point apart, and White is approaching from below. White would like to push in at B and split them.',
+        'You could fill B yourself: a solid connection. It is safe, but it uses a stone on a point that claims nothing new.',
+        'The stronger formation is the tiger’s mouth: play at A. Now three black stones surround B like an open mouth. If White pushes in at B, that stone has only one liberty, and you capture it with your next move. The two stones are as good as connected, and A also reaches out to claim more ground.'
+      ],
+      task: 'Make a tiger’s mouth by playing at A.',
+      hint: M.pts([[2, 1]]),
+      solution: M.pts([[2, 1]]),
+      check(s, ev) {
+        if (ev.type !== 'move') return null;
+        if (ev.point === M.i(2, 1) || ev.point === M.i(2, 3)) return win('A tiger’s mouth. A white stone pushed in at B would be captured at once, so your stones are safe, and your formation covers more ground than a solid connection. Turn on Shapes in your own games and I will point these out.');
+        if (ev.point === M.i(2, 2)) return say('That connects solidly: safe, but slower, because the stone at B claims nothing new. Press Reset and try A.');
+        return say('That leaves B open for White to split your stones. Press Reset and try A.');
+      }
+    },
+    {
+      id: 'triangle', title: 'Bad shape: the empty triangle', n: N, type: 'quiz',
+      black: M.pts([[1, 1], [2, 1]]),
+      marks: M.key({ '1,2': 'A', '3,2': 'B', '1,3': 'C' }),
+      text: [
+        'Some formations waste stones. The best-known is the empty triangle: three stones in an L, with the fourth corner of the little square left empty.',
+        'Three stones in an empty triangle have fewer liberties than three stones spread out, and they claim less ground. You have spent three stones doing the work of two. Strong players avoid it unless nothing better exists.'
+      ],
+      task: 'Black has two stones side by side. Which of the marked moves would make an empty triangle?',
+      options: ['A', 'B', 'C'],
+      answer: 0,
+      wrong: 'Not quite. Look for the move that makes an L of three stones with the fourth corner of the square empty.',
+      explain: 'A makes an empty triangle: three stones in an L, bunched together. B reaches out diagonally and C jumps one point: both claim more ground with the same stone. Turn on Shapes in your own games and empty triangles are marked in red.'
+    },
+    {
       id: 'scoring', title: 'Counting the score', n: N, type: 'quiz',
       black: wall(3, 0, 8), white: wall(4, 0, 8),
       text: [
@@ -257,6 +290,22 @@
       answer: 0,
       wrong: 'Not quite. Think about what passing means: there is nothing useful left to play.',
       explain: 'Two passes in a row end the game. Dead stones come off the board, then both sides count their stones plus their territory.'
+    },
+    {
+      id: 'race', title: 'Counting before you fight: the capturing race', n: N, type: 'quiz',
+      black: K.pts([[1, 0], [1, 1], [2, 2], [3, 2], [4, 2], [4, 1], [4, 0]]),
+      white: K.pts([[2, 0], [2, 1], [0, 2], [1, 2], [1, 3], [0, 3]]),
+      marks: K.key({ '0,0': 'B', '0,1': 'B', '3,0': 'W', '3,1': 'W' }),
+      text: [
+        'Reading means working out a fight before you start it. The simplest case is the capturing race: two groups are trapped next to each other, and neither can escape or make two eyes. Each side fills the other’s liberties, one per move, and the first to fill them all captures.',
+        'In the top-left corner, two black stones and two white stones are locked together. Each pair is walled in by the other side’s strong stones. The points marked B are the black pair’s liberties, and the points marked W are the white pair’s: two each.',
+        'It is Black’s turn.'
+      ],
+      task: 'Count the liberties. Who wins the race?',
+      options: ['Black, because Black moves first', 'White', 'Neither: both groups live'],
+      answer: 0,
+      wrong: 'Not quite. Play it out in your head: each move fills one liberty. Who runs out first?',
+      explain: 'Black fills one of White’s two liberties, White fills one of Black’s, and Black fills White’s last liberty and captures. With equal liberties, the side that moves first wins the race. So count before you fight: one liberty, or one move, decides it.'
     },
     {
       id: 'handicap', title: 'Handicap and komi', n: N, type: 'info',
@@ -300,6 +349,19 @@
     }
   ];
 
+  /* The lessons in chapters that follow the skills in "What is Go?" (whatisgo.md), from the simplest to the most complex. */
+  const CHAPTERS = [
+    { title: 'Basic training', intro: 'Know your troops: how stones stand on the board, breathe and are captured.', ids: ['board', 'liberties', 'capture', 'groups'] },
+    { title: 'Tactics', intro: 'The skirmish: threats, forbidden moves, and the two eyes that keep a group alive.', ids: ['atari', 'suicide', 'exception', 'ko', 'eyes'] },
+    { title: 'Formations', intro: 'Judging formations (shape): how stones stand together, where they can be cut, and which shapes waste stones.', ids: ['connect', 'cut', 'tiger', 'triangle'] },
+    { title: 'Reading the terrain', intro: 'Mapping: who owns which ground, and when the battle is over.', ids: ['scoring', 'ending'] },
+    { title: 'Calculating the engagement', intro: 'Reading: count the moves before you fight.', ids: ['race'] },
+    { title: 'Commanding the campaign', intro: 'Strategy: where to begin, and how to give or take a head start.', ids: ['strategy', 'firstmove', 'handicap'] }
+  ];
+  const order = CHAPTERS.flatMap(c => c.ids);
+  list.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  const chapterOf = id => CHAPTERS.find(c => c.ids.includes(id));
+
   function setup(L) {
     const s = E.newState(L.n, 0);
     for (const [x, y] of L.black || []) s.board[P(L.n, x, y)] = 1;
@@ -329,5 +391,5 @@
     return out;
   }
 
-  return { list, setup, handle, hintPoints, marksFor, P };
+  return { list, CHAPTERS, chapterOf, setup, handle, hintPoints, marksFor, P };
 });
