@@ -142,6 +142,7 @@
     if (kifu && G.kifu.ask(q)) return;
     const held = teaching || exploring || kifu;
     if (!info && !held && G.introAsk && G.introAsk(q)) return;
+    if (!info && !held && G.welcomeAsk && G.welcomeAsk(q)) return; /* 1 to 5, help, and the welcome's requests in words */
     if (!info && !held && G.askCoach && G.askCoach(q)) return;
     if (!info && !held && G.focus === 'move' && G.lastExplain && MORE_RE.test(q)) return say(deepDive(G.lastExplain));
     const r = (info && C.lessonReply(E, q, info)) || C.reply(q, info ? { n: info.n, topic } : teaching ? { n: 9, topic } : context());
@@ -159,7 +160,8 @@
     input.value = '';
     ask(v);
   });
-  function clearChat() { log = []; store(KEY.chat, log); box.textContent = ''; }
+  /* An empty chat starts again with the welcome. */
+  function clearChat() { log = []; store(KEY.chat, log); box.textContent = ''; if (G.showWelcome) G.showWelcome(); }
   $('#btnClear').addEventListener('click', () => { clearChat(); input.focus(); });
 
   /* Enlarge / shrink: the chat can cover the screen for easier reading, then go back to its usual place. */
@@ -177,8 +179,11 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('chatBig')) setBig(false); });
   setBig(false);
   setChips(PLAY_CHIPS);
-  if (!log.length) { log.push({ who: 'coach', text: C.INTRO }); store(KEY.chat, log); }
+  /* A chat saved by an older version (it starts with the old welcome) is replaced by the new welcome. */
+  if (!log.length || /^Hello, I am your Go coach\. I am not an AI model: /.test(log[0].text)) { log = [{ who: 'coach', text: C.INTRO }]; store(KEY.chat, log); }
   for (const m of log) append(m.who, m.text);
 
   Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS, clearChat });
+  /* The welcome's buttons are not saved with the chat, so they are added again when it was the last message. */
+  if (log[log.length - 1].text === C.INTRO && G.welcomeMenu) G.welcomeMenu();
 })();

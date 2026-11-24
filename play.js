@@ -85,8 +85,8 @@
     Play.level = settings.level;
     Play.phase = 'play'; Play.dead = null; Play.pending = -1; Play.hint = []; Play.over = false; Play.thinking = false; Play.lastAI = null; Play.redo = []; G.explained = null; G.lastExplain = null;
     renderPlay(); saveGame();
+    /* An ordinary new game says nothing in the chat (New brings back the welcome); the guided first game explains itself. */
     if (Play.guided) say(window.GoGuide.opening({ handicap: settings.handicap, human: Play.human, computerFirst: Play.s.turn !== Play.human }));
-    else say(`New ${settings.size}×${settings.size} game, ${settings.level} level (the coach plays at ${G.coachLevel()} level). You play ${colourName(Play.human)}${settings.handicap ? ' with ' + settings.handicap + ' handicap stones' : ''}. ${Play.s.turn === Play.human ? 'You move first.' : 'The computer moves first.'}`);
     maybeAI();
     G.coachAuto();
   }

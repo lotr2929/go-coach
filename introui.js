@@ -14,19 +14,21 @@
     if (G.kifu && G.kifu.on) G.exitKifu(true);
   }
 
-  /* The history is an article kept in history.md (so it can be edited without touching the code). It opens in the board window and the chat only says so. */
-  async function openHistory() {
+  /* An article kept in a Markdown file (so it can be edited without touching the code), such as history.md or whatisgo.md.
+     It opens in the board window and the chat only says so. */
+  async function openDoc(file, title, note) {
     let page;
     try {
-      const res = await fetch('history.md', { cache: 'no-cache' });
+      const res = await fetch(file, { cache: 'no-cache' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       page = window.GoHistory.parse(await res.text());
     } catch (e) {
-      page = { title: 'A history of Go', blocks: [{ t: 'p', text: 'The history page could not be loaded just now. It needs a connection the first time; after that it is kept for offline use. Please try again.' }] };
+      page = { title, blocks: [{ t: 'p', text: 'This page could not be loaded just now. It needs a connection the first time; after that it is kept for offline use. Please try again.' }] };
     }
     G.showPage(page);
-    G.say('The history of Go is open in the board window. Tap a small number such as [2] to jump to its source, and press "Back to the board" when you have finished reading.');
+    G.say(note);
   }
+  const openHistory = () => openDoc('history.md', 'A history of Go', 'The history of Go is open in the board window. Tap a small number such as [2] to jump to its source, and press "Back to the board" when you have finished reading.');
 
   const ACTIONS = {
     rules: () => { if (G.exploring && G.exploring.on) G.exitExploring(); G.startTeaching(); },
@@ -59,5 +61,5 @@
     return true;
   }
 
-  Object.assign(G, { teachIntro: intro, introAsk: ask, openHistory });
+  Object.assign(G, { teachIntro: intro, introAsk: ask, openHistory, openDoc });
 })();
