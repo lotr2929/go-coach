@@ -7,16 +7,17 @@
   'use strict';
   const G = window.GC;
   const { E, $, settings, saveSettings, toast, Play } = G;
-  const SH = window.GoShapes;
+  const SH = window.GoShapes, T = (k, v) => window.GoText.T('shapes.' + k, v); /* wording: docs/text/en/shapes.md */
   const RGB = { good: '46,160,80', bad: '215,60,45', neutral: '40,110,205', weak: '230,140,20' };
   const sigOf = s => Array.from(s.board).join('') + s.turn;
   let cache = null; /* { sig, list, keys, moves } for one position */
   let focus = null;  /* after a tap: { sig, keys } of the shapes being explained; only they are drawn until the board changes */
 
-  /* Same rules as the Territory tab: the board belongs to a lesson, the teacher or an exploration while they run. */
+  /* Same rules as the Territory tab: the board belongs to a lesson, the teacher or an exploration while they run,
+     and silent Play mode (play.js playSilent) shows no shapes: the tab is greyed out until Coach mode is on. */
   const kifuOn = () => !!(G.kifu && G.kifu.on);
   const live = () => (kifuOn() ? G.kifu.state() : Play.s);
-  const idle = () => !kifuOn() && (!Play.s || Play.phase !== 'play' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on));
+  const idle = () => !kifuOn() && (!Play.s || Play.phase !== 'play' || G.playSilent() || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on));
   const viewer = () => (kifuOn() ? 0 : Play.human);
   /* Possible shapes are shown for the side to move when that is the learner (or anyone, in a famous game). */
   const showPossible = s => kifuOn() || (s.turn === Play.human && !Play.thinking);
@@ -33,7 +34,7 @@
     /* One move later: name the shapes that move made. */
     if (prev && prev.n === s.n && s.moves.length === prev.moves + 1 && s.last >= 0) {
       const fresh = made.filter(x => !prev.keys.has(x.key) && x.pts.includes(s.last)).slice(0, 2);
-      if (fresh.length) setTimeout(() => G.say(`**Shapes:**\n` + fresh.map(x => `${x.label}. ${SH.describe(s.n, x, viewer())}`).join('\n')), 0);
+      if (fresh.length) setTimeout(() => G.say(T('made') + '\n' + fresh.map(x => `${x.label}. ${SH.describe(s.n, x, viewer())}`).join('\n')), 0);
     }
     return cache;
   }
@@ -52,12 +53,12 @@
     if (!c || !s) return;
     const made = c.list.filter(x => !x.potential), could = c.list.filter(x => x.potential);
     const line = x => `${x.label}. ${SH.describe(s.n, x, viewer(), true)}`;
-    const parts = ['**Shapes on the board:**', made.length ? made.map(line).join('\n') : 'None yet.'];
-    if (could.length) parts.push('', `**Shapes ${viewer() === s.turn ? 'you' : s.turn === 1 ? 'Black' : 'White'} could make next (dashed borders):**`, could.map(line).join('\n'));
+    const parts = [T('list'), made.length ? made.map(line).join('\n') : T('none')];
+    if (could.length) parts.push('', T('could', { who: T(viewer() === s.turn ? 'you' : s.turn === 1 ? 'black' : 'white') }), could.map(line).join('\n'));
     /* Each kind of shape is explained once. */
     const kinds = [...new Set(c.list.map(x => x.kind))];
-    if (kinds.length) parts.push('', '**What they mean:**', kinds.map(k => `${SH.KINDS[k].name}: ${SH.KINDS[k].text}`).join('\n'));
-    parts.push('', 'Colours: green good shape, red bad shape, blue neutral, orange weak point.');
+    if (kinds.length) parts.push('', T('mean'), kinds.map(k => T('mean-line', { name: SH.KINDS[k].name, text: SH.KINDS[k].text })).join('\n'));
+    parts.push('', T('colours'));
     G.say(parts.join('\n'));
   }
 
@@ -78,25 +79,26 @@
     focus = { sig: c.sig, keys };
     rerender();
     G.say(hit.map(sh => {
-      const K = SH.KINDS[sh.kind], tone = { good: 'a good shape', bad: 'a bad shape', neutral: 'a common shape', weak: 'a weak point' }[K.tone];
-      return `**${sh.label}. ${K.name}:**\nThis is ${/^[AEIOU]/.test(K.name) ? 'an' : 'a'} ${K.name.toLowerCase()}, ${tone}. ${SH.describe(s.n, sh, viewer(), true).replace(/^[^(]*\(([^)]*)\).*$/, 'Here: $1.')}\n${K.more}`;
-    }).join('\n\n') + '\n\nTap the stone again, or any stone outside a shape, to see all the shapes.');
+      const K = SH.KINDS[sh.kind], line = SH.describe(s.n, sh, viewer(), true), m = line.match(/^[^(]*\(([^)]*)\).*$/);
+      return T('tap', { label: sh.label, name: K.name, a: K.a, tone: T('tap-tone.' + K.tone), here: m ? T('here', { where: m[1] }) : line, more: K.more });
+    }).join('\n\n') + '\n\n' + T('tap-again'));
     return true;
   }
 
   function syncButton() {
-    const b = $('#btnShapes'), on = !!settings.shapes;
-    b.setAttribute('aria-pressed', String(on));
-    b.title = on ? 'Shapes are marked on the board. Tap to hide them.' : 'Mark good and bad shapes on the board';
+    const b = $('#btnShapes'), on = !!settings.shapes, silent = G.playSilent();
+    b.disabled = silent;
+    b.setAttribute('aria-pressed', String(on && !silent));
+    b.title = T(silent ? 'tab-silent' : on ? 'tab-on' : 'tab-off');
   }
   $('#btnShapes').addEventListener('click', () => {
     settings.shapes = !settings.shapes; saveSettings(); syncButton();
-    if (settings.shapes && idle()) { toast('Shapes are shown on your game or a famous game.'); return; }
+    if (settings.shapes && idle()) { toast(T('toast-idle')); return; }
     cache = null; focus = null;
     if (kifuOn()) G.renderKifu(); else G.renderPlay();
-    if (settings.shapes) listAll(); else toast('Shapes hidden');
+    if (settings.shapes) listAll(); else toast(T('toast-hidden'));
   });
   syncButton();
 
-  Object.assign(G, { shapeMarks: marks, shapeTap: tap });
+  Object.assign(G, { shapeMarks: marks, shapeTap: tap, syncShapesTab: syncButton });
 })();

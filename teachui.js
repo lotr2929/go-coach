@@ -33,10 +33,10 @@
     });
     $('#whoTurn').textContent = session.status();
     $('#posInfo').hidden = true;
-    $('#capsInfo').textContent = `Prisoners: ● ${s.caps[1]}  ○ ${s.caps[2]}`;
+    $('#capsInfo').textContent = window.GoText.T('teach.prisoners', { black: s.caps[1], white: s.caps[2] });
   }
   function startTeaching() {
-    if (Play.thinking) { G.say('Give me a moment: I am still thinking about my move.'); return; }
+    if (Play.thinking) { G.say(window.GoText.T('app.busy-thinking')); return; }
     if (G.Lesson && G.Lesson.on) G.exitLesson();
     if (G.kifu && G.kifu.on) G.exitKifu(true);
     G.setChips(CHIPS);
@@ -51,7 +51,7 @@
   function exitTeaching() {
     if (!session.on) return;
     endTeaching();
-    G.say('Back to your game. Say "teach me" whenever you want to carry on with the lessons.');
+    G.say(window.GoText.T('teach.back'));
   }
 
   Object.assign(G, { teaching: session, startTeaching, exitTeaching, renderTeach, teachTap: i => session.tap(i) });

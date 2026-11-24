@@ -1,6 +1,6 @@
 /* World of Go — the page viewer: shows an article (such as the history of Go) in the board window.
-   A page is { title, blocks }. A block is { t: 'lead' | 'p' | 'h', text } or { t: 'refs', items: [{ n, title, by, url }] }.
-   A number in square brackets in the text, such as [3], becomes a link that jumps to reference 3.
+   A page is { title, blocks }. A block is { t: 'lead' | 'p' | 'quote' | 'h', text } or { t: 'refs', items: [{ n, title, by, url }] }.
+   A number in square brackets in the text, such as [3], becomes a link that jumps to reference 3; **bold** and _italics_ are shown as such.
    The board is only hidden while a page is open; closing the page draws whatever was on the board before. */
 (() => {
   'use strict';
@@ -10,7 +10,7 @@
   const panel = document.querySelector('aside.panel');
   const root = document.createElement('article');
   root.className = 'pageView';
-  root.setAttribute('aria-label', 'Reading page');
+  root.setAttribute('aria-label', window.GoText.T('app.reading-page'));
   wrap.append(root);
   let open = false;
 
@@ -28,17 +28,20 @@
     t.classList.add('flash');
     setTimeout(() => t.classList.remove('flash'), 1800);
   }
-  /* Text with [n] markers: each marker becomes a link to reference n. */
-  function fill(parent, text) {
-    String(text).split(/(\[\d+\])/).forEach(part => {
-      const m = /^\[(\d+)\]$/.exec(part);
-      if (!m) { if (part) parent.append(document.createTextNode(part)); return; }
-      const a = el('a', 'cite', part);
-      a.href = '#ref-' + m[1];
-      a.addEventListener('click', e => { e.preventDefault(); jump(m[1]); });
-      parent.append(a);
-    });
+  /* Text with **bold**, _italics_ and [n] markers (split up by history.js inline): each marker becomes a link to reference n. */
+  function draw(parent, pieces) {
+    for (const p of pieces) {
+      if (p.t === 'text') parent.append(document.createTextNode(p.text));
+      else if (p.t === 'b' || p.t === 'i') { const e = el(p.t === 'b' ? 'strong' : 'em'); draw(e, p.parts); parent.append(e); }
+      else if (p.t === 'cite') {
+        const a = el('a', 'cite', p.text);
+        a.href = '#ref-' + p.n;
+        a.addEventListener('click', e => { e.preventDefault(); jump(p.n); });
+        parent.append(a);
+      }
+    }
   }
+  const fill = (parent, text) => draw(parent, window.GoHistory.inline(text));
   function host(url) {
     try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return ''; }
   }
@@ -63,6 +66,7 @@
     h: b => { const h = el('h2', null, b.text); if (b.id) h.id = b.id; return h; },
     h3: b => el('h3', null, b.text),
     p: b => { const p = el('p'); fill(p, b.text); return p; },
+    quote: b => { const q = el('blockquote'); fill(q, b.text); return q; },
     ul: b => { const ul = el('ul'); for (const item of b.items) { const li = el('li'); fill(li, item); ul.append(li); } return ul; },
     refs: b => refs(b.items),
     /* A jump list: each item scrolls the page to the heading with that id. */
@@ -93,7 +97,7 @@
   function showPage(page) {
     root.textContent = '';
     const head = el('div', 'pageHead');
-    const close = el('button', 'pageClose primary', '← Back to the board');
+    const close = el('button', 'pageClose primary', window.GoText.T('app.back-to-board'));
     close.type = 'button';
     close.addEventListener('click', closePage);
     head.append(close);

@@ -13,11 +13,12 @@
   let tok = 0, working = false;
 
   const secs = () => (STEPS.includes(+settings.terrSecs) ? +settings.terrSecs : 2);
-  /* The map belongs to the game board, so it waits while a lesson, the teacher or an exploration has the board, and during scoring. */
+  /* The map belongs to the game board, so it waits while a lesson, the teacher or an exploration has the board, and during scoring.
+     It is also off in silent Play mode (play.js playSilent): the tab is greyed out until Coach mode is on. */
   const kifuOn = () => !!(G.kifu && G.kifu.on);
   /* The position the map is about: the game record being studied (Kifu), or the learner's own game. */
   const live = () => (kifuOn() ? G.kifu.state() : Play.s);
-  const idle = () => !kifuOn() && (!Play.s || Play.phase !== 'play' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on));
+  const idle = () => !kifuOn() && (!Play.s || Play.phase !== 'play' || G.playSilent() || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on));
 
   /* The scores to draw, or null when the map is off or does not apply. */
   function own() {
@@ -32,10 +33,11 @@
     return 'Territory ' + Math.abs(o[i]).toFixed(2) + (fresh ? '' : ' (updating)');
   }
   function syncButton() {
-    const b = $('#btnTerr'), on = !!settings.terr;
-    b.setAttribute('aria-pressed', String(on));
-    b.classList.toggle('busy', on && working);
-    b.title = on && map ? `Territory map from ${map.sims} random games${map.done ? '' : ' so far'}. Tap to switch it off.` : 'Show who is likely to own each empty point';
+    const b = $('#btnTerr'), on = !!settings.terr, silent = G.playSilent();
+    b.disabled = silent;
+    b.setAttribute('aria-pressed', String(on && !silent));
+    b.classList.toggle('busy', on && working && !silent);
+    b.title = window.GoText.T(silent ? 'app.terr-silent' : on && map ? (map.done ? 'app.terr-tip' : 'app.terr-tip-working') : 'app.terr-off-tip', { count: map ? map.sims : 0 });
   }
 
   async function update() {
@@ -62,18 +64,18 @@
 
   $('#btnTerr').addEventListener('click', () => {
     settings.terr = !settings.terr; saveSettings();
-    if (settings.terr) { toast('Territory map on. Hover over a square to see its score.'); update(); }
-    else { tok++; working = false; map = null; G.renderPlay(); toast('Territory map off'); }
+    if (settings.terr) { toast(window.GoText.T('app.terr-on')); update(); }
+    else { tok++; working = false; map = null; G.renderPlay(); toast(window.GoText.T('app.terr-off')); }
     syncButton();
   });
 
   /* The Accuracy slider in Settings: it picks a time, and the map is redone when the slider is let go. */
   const slider = $('#setTerrSecs'), out = $('#terrSecsOut');
-  const label = () => { out.textContent = secs() + (secs() === 1 ? ' second' : ' seconds'); };
+  const label = () => { out.textContent = secs() === 1 ? window.GoText.T('screen.second') : window.GoText.T('screen.seconds', { count: secs() }); };
   slider.max = String(STEPS.length - 1); slider.value = String(STEPS.indexOf(secs()));
   slider.addEventListener('input', () => { settings.terrSecs = STEPS[+slider.value]; label(); });
   slider.addEventListener('change', () => { saveSettings(); if (settings.terr) update(); });
   label(); syncButton();
 
-  Object.assign(G, { mapTerritory: update, terrOwn: own, squareInfo: info });
+  Object.assign(G, { mapTerritory: update, terrOwn: own, squareInfo: info, syncTerrTab: syncButton });
 })();

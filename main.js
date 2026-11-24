@@ -30,17 +30,17 @@
   $('#btnSettings').onclick = () => {
     $('#setCoords').checked = settings.coords; $('#setLibs').checked = settings.libs; $('#setCoach').checked = settings.coach;
     $('#setConfirm').checked = settings.confirm; $('#setSound').checked = settings.sound;
-    $('#installHelp').textContent = 'To install: in Chrome or Edge use the install icon in the address bar; on Android use ⋮ › Add to Home screen.';
+    $('#installHelp').textContent = window.GoText.T('app.install-help');
     $('#setDlg').showModal();
   };
   for (const [id, key] of [['#setCoords', 'coords'], ['#setLibs', 'libs'], ['#setCoach', 'coach'], ['#setConfirm', 'confirm'], ['#setSound', 'sound']]) {
     $(id).addEventListener('change', e => { settings[key] = e.target.checked; saveSettings(); renderPlay(); });
   }
   $('#btnSGF').onclick = async () => {
-    if (!Play.s) return toast('No game yet');
+    if (!Play.s) return toast(window.GoText.T('app.no-game'));
     const sgf = E.toSGF(Play.s, `PB[${Play.human === 1 ? 'You' : 'Computer'}]PW[${Play.human === 2 ? 'You' : 'Computer'}]`);
-    try { await navigator.clipboard.writeText(sgf); toast('Game record copied'); }
-    catch (e) { prompt('Copy this SGF:', sgf); }
+    try { await navigator.clipboard.writeText(sgf); toast(window.GoText.T('app.record-copied')); }
+    catch (e) { prompt(window.GoText.T('app.copy-sgf'), sgf); }
   };
 
   /* ---------- start ---------- */

@@ -112,16 +112,16 @@
   if (head && settingsBtn) {
     const f = document.createElement('button');
     f.id = 'btnFlag'; f.className = 'icon'; f.type = 'button';
-    f.textContent = '⚑'; f.setAttribute('aria-label', 'Flag this position for Claude');
+    f.textContent = '⚑'; f.setAttribute('aria-label', window.GoText.T('app.flag'));
     f.style.marginLeft = 'auto'; f.style.marginRight = '.4rem';
     f.onclick = () => {
-      const note = prompt('What should Claude look at? (a few words)', '');
+      const note = prompt(window.GoText.T('app.flag-ask'), '');
       if (note === null) return;
       const p = snap('flag', true);
       const lines = chatBox ? Array.from(chatBox.children).slice(-8).map(n => (n.classList.contains('user') ? 'You: ' : 'Coach: ') + (n.textContent || '').trim().slice(0, 300)) : [];
       log('flag', { note, sgf: p ? p.sgf : null, chat: lines });
       flush();
-      toast(isOn() ? 'Flagged. Tell Claude to look.' : 'Logging is off in Settings, so Claude cannot see this.');
+      toast(window.GoText.T(isOn() ? 'app.flagged' : 'app.flag-off'));
     };
     head.insertBefore(f, settingsBtn);
   }
@@ -134,7 +134,7 @@
     lab.className = 'switch';
     const cb = document.createElement('input');
     cb.type = 'checkbox'; cb.id = 'setLog'; cb.checked = isOn();
-    lab.append(cb, ' Share usage log with Claude');
+    lab.append(cb, ' ' + window.GoText.T('app.share-log'));
     row.parentElement.insertBefore(lab, row);
     cb.addEventListener('change', () => { setOn(cb.checked); if (cb.checked) log('log-on'); });
     settingsBtn.addEventListener('click', () => { cb.checked = isOn(); });

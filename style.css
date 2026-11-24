@@ -99,7 +99,8 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .pageBody .cardTitle { font: 600 1rem var(--serif); }
 .pageBody .cardMeta { font-size: .8rem; color: #5a6560; }
 .pageBody .cardNote { font-size: .88rem; line-height: 1.4; }
-.pageBody .lead { font-style: italic; color: #3a4642; }
+.pageBody .lead { color: #3a4642; } /* the introduction (before the first ## heading): normal text, a shade softer (Boon's choice) */
+.pageBody blockquote { margin: 1rem 0; padding: .4rem 1rem; border-left: 3px solid #b9a77a; background: #ece5d3; border-radius: 0 6px 6px 0; }
 .pageBody a { color: #1a5f8a; }
 .pageBody a.cite { font-size: .75em; vertical-align: super; text-decoration: none; margin-left: 1px; }
 .pageBody .refs { padding-left: 1.6rem; font-size: .9rem; }
@@ -136,6 +137,9 @@ dialog::backdrop { background: rgba(8, 14, 13, .65); }
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
 .msg.menu { display: grid; gap: 6px; width: 92%; padding: 0; background: none; }
 .msg.menu .lcard { padding: 8px 10px; }
+/* The welcome's five choices, as buttons inside the welcome message. */
+.welcomeChoices { display: grid; gap: 6px; margin: 10px 0; white-space: normal; }
+.welcomeChoices .lcard { padding: 8px 10px; }
 
 .chat { flex: 1 1 auto; min-height: 150px; display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; position: relative; }
 /* The enlarge/shrink button at the top right of the chat; when enlarged the chat covers the screen until tapped again. */
