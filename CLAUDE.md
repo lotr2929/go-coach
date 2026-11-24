@@ -11,19 +11,19 @@ Go Coach is the beginner's version of Boon's Go app: a PWA (plain JavaScript, no
 3. A new script file must be added to index.html and sw.js in the same change, so the parse test covers it.
 4. Any mode that takes over the board must be added to every guard that already lists teaching and lessons: renderPlay, onPlayTap, the hover note, analyse, review, paintPos and the chat routing.
 5. No new dependencies without Boon's approval. No patching: design for long-term robustness. Smallest possible change. Read a file before changing it; never invent file names, functions or variables.
-6. Never put keys, passwords or tokens in code. deploy.env and .env files are not in the repository; do not create them.
+6. Never put keys, passwords or tokens in code. .env files are not in the repository; do not create them. (deploy.env held a Vercel token for the old deploy.bat and is no longer needed.)
 7. Putting a change live. Vercel updates the live site by itself whenever `main` on GitHub changes. Use these words with Boon, so he knows where it is coming from:
-   - **Deploy from the laptop** (laptop sessions, in C:\_Personal\_myApps\myGoCoach): merge the branch into `main` in the local folder and push `main` to GitHub. The laptop folder and GitHub stay the same.
+   - **Deploy from the laptop** (laptop sessions, in C:\_Personal\_myApps\myGoCoach): commit the work on its branch, stay on that branch and run `deploy.bat /nopause`. It runs the tests, sets the version number, merges the branch into `main` and pushes `main` to GitHub (deploy.bat - git push - Vercel). If it stops, report its message exactly. The laptop folder and GitHub stay the same.
    - **Merge on GitHub** (phone and cloud sessions): merge the pushed branch into `main` on GitHub.
    - Either way: work on a branch and check the work (below), then ask Boon in the chat for permission, using the right words ("May I deploy from the laptop?" or "May I merge on GitHub?") and saying in one or two lines what will go live. Never change `main` without his yes for that change; an earlier yes does not cover a later one.
    - On his yes, do the whole job yourself, check the live site has the new version, and tell him it is live. Do not ask Boon to pull, merge, click anything on GitHub or do any other step on his end.
-   - Do not run deploy.bat or any vercel command: they put the laptop folder live without updating GitHub, so phone sessions would start from an older copy.
+   - Never run any vercel command (or first-deploy.bat): they put the laptop folder live without updating GitHub, so phone sessions would start from an older copy. deploy.bat is the only way to deploy from the laptop.
 8. Play mode is silent, like a normal game of Go: in your own game no help appears unless Coach mode is on (no move notes on hover, no Territory or Shapes, no score bar, no stone counts; prisoners stay). play.js `playSilent()` decides this; any new on-board help must check it. The guided first game and famous games (Kifu) keep their help. The Analyse button and asking the coach for a hint stay available in Play mode (Boon's decision): help only when asked.
 
 ## How to check your work
 1. Run `node test.js`. It must pass. Report failures exactly as they appear; never invent results.
 2. Run `node --check file.js` on each JavaScript file you changed.
-3. Before the work is ready to merge, run `node bump-version.js`. It sets VERSION in sw.js. Without it, installed copies of the app keep the old files.
+3. Before the work is ready to merge, run `node bump-version.js` (deploy.bat does this itself). It sets VERSION in sw.js. Without it, installed copies of the app keep the old files.
 4. Browser-only behaviour (the board, touch, sound) cannot be tested here. Say so plainly: "syntax-checked and the tests pass, not tried in a browser".
 
 ## How to work from a phone or the cloud
