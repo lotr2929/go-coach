@@ -1,5 +1,7 @@
 # What is Go?
 
+> Go is harmony - Go Seigen
+
 Go is one of the oldest continuously played board games in the world. It originated in China more than 2,500 years ago, where it is called _weiqi_. In Korea it is known as _baduk_, and in Japan as _igo_, often shortened simply to _go_. The West came to know the game largely through Japan, which is why the Japanese name became established in English.
 
 Like chess, Go can be understood as a game of war. Two armies, Black and White, contest a common battlefield. But they represent very different conceptions of warfare.
@@ -48,7 +50,9 @@ Go players call this **reading**. In this app, we call it **analysis**.
 
 ### Developing strategies
 
-Strategy involves recognising what matters most across the whole battlefield and directing your moves towards that larger purpose. A commander may win a skirmish yet lose the war. Conversely, stones may deliberately be sacrificed because defending them would consume resources better employed elsewhere.
+**Strategy** involves recognising what matters most across the whole battlefield and directing your moves towards that larger purpose. A commander may win a skirmish yet lose the war. Conversely, stones may deliberately be sacrificed because defending them would consume resources better employed elsewhere.
+
+This app will teach you Go by teaching you all these skills - mapping territories, judging shapes, analysing the game, and developing strategies.
 
 ## Winning in Go
 
@@ -60,7 +64,9 @@ This changes the logic of battle.
 
 An enemy group does not need to be destroyed merely because it can be attacked. An attack must justify the resources committed to it. Territory should not be seized simply because it appears available. It must also be capable of being defended. A local defeat may be accepted because fighting elsewhere produces greater strategic value.
 
-Above all, **strength comes from relationships**. An isolated stone is vulnerable. Connected stones support one another. Yet simply accumulating more stones is not enough: badly positioned forces become inefficient, while well-connected forces can exert influence far beyond the ground they physically occupy.
+Above all, **strength comes from relationships**. An isolated stone is vulnerable. Connected stones support one another. Yet simply accumulating more stones is not enough: badly positioned forces become inefficient, while well-connected forces can exert influence far beyond the ground they physically occupy.  
+
+Also, the relationship of the stones to the rest of the board is also important. In that sense, strength depends on location and terrain as well.
 
 Go therefore rewards restraint as much as aggression, connection as much as independence, and judgement as much as strength.
 
@@ -76,4 +82,4 @@ This lesson reaches beyond warfare and the Go board. Modern businesses, nations 
 
 Go does not ask us to abandon competition. It suggests something more subtle:
 
-> **Compete vigorously. Build strength. Choose your battles. Do not overreach. Cooperate where cooperation makes you stronger. Accept that your opponent also needs room to live. And always play the whole board.**
+> **Do not seek to destroy your opponent; they are also the source of your strength. Opposition gives shape to purpose, resistance gives rise to wisdom, and both sides must live. The greatest victory is not annihilation, but a stronger position within the whole. Strength lies in knowing when to fight, when to yield, and when to let both sides live. Keep your eyes on the whole board.**
