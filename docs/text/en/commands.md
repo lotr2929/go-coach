@@ -23,7 +23,7 @@ Type in the box at the bottom and press Send (or Enter). I understand short requ
 "undo", "pass", "resign", "new game".
 
 **Looking ahead**
-"show me": I play the best move and the likely replies by myself on a copy of the board, then stop so you can replay them with ← Back and Next →.
+"show me": I pick the move I would play and follow it on a copy of the board. You step through it with "next" and "back" (or ← Back and Next → under the board), and can ask "why?" or other questions along the way.
 "play both sides": on the other side's turn I mark my five best moves and you choose one, or play any other point. "computer plays" switches it off. You can also choose it in the New game box.
 "explore D4" or "explore A": follow a move a few steps ahead on a copy of the board. Then "next", "back", "another" (a different reply) and "back to game".
 

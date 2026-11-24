@@ -25,7 +25,7 @@ Move {count}
 
 ## start
 **Exploring {point}**
-I will follow this move on a copy of the board, one step at a time. Your game is not touched. Say "next" for each step, "back" to step back, "another" to see a different reply, or tap a point to try your own idea. Say "back to game" when you are done.
+I will follow this move on a copy of the board, one step at a time. Your game is not touched. Say "next" (or tap Next → under the board) for each step, "back" to step back, "another" to see a different reply, or tap a point to try your own idea. Ask me anything along the way, such as "why?", "what about D4?", "am I in danger?" or "explain the position". Say "back to game" when you are done.
 
 ## far-enough
 That is far enough for one line. Say "back" to step back, "another" to change a reply, or "back to game".
@@ -64,11 +64,8 @@ Finish what we are doing first: say "back to game", then ask again.
 Back to your game. Nothing on the board has changed.
 
 ## show-me-start
-**Show me**
-I will play the best move and the likely replies by myself on a copy of the board, one move every two seconds. Your game is not touched. Type anything or tap the board to stop me early.
+Let me find the move I would play here…
 
 ## show-me-nothing
 I find no useful move to show here.
 
-## show-me-done
-That is as far as I go on my own. Use ← Back and Next → under the board (or say "back" and "next") to replay the moves, "another" for a different reply, or tap a point to try your own idea. Say "back to game" when you are ready to return to your game.

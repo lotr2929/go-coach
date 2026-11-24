@@ -109,6 +109,13 @@
       const idx = C.parseCoord(String(raw), T.base.n);
       if (idx >= 0 && has(/\b(play|put|place|try|tap)\b/)) { tap(idx); return true; }
       if (idx >= 0 && has(/\b(what|if|would|how)\b/)) { say(C.describePoint(E, T.s, idx, T.s.turn)); return true; }
+      /* Questions about the position on the exploring board (not the real game). */
+      if (T.pos && has(/^(why|why that|why there|why this move|explain|explain (that|it|this) move|tell me more|more|in more detail)$/)) {
+        const p = T.plies[T.pos - 1];
+        if (p.move >= 0) { say(CM.deepDive(E, at(T.pos - 1), p.move, p.color, T.human)); return true; }
+      }
+      if (has(/\b(danger|in trouble|weak|at risk|in atari|short of liberties)\b/)) { say(C.weakReport(E, T.s, T.human)); return true; }
+      if (has(/\b(explain|describe|summari[sz]e)\b.*\b(position|board)\b|\bwhat('s| is) (happening|going on)\b|\bwho('s| is) (winning|ahead)\b/)) { say(CM.positionSummary(E, T.s, T.human)); return true; }
       return false;
     }
 
