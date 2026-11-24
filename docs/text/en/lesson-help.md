@@ -54,6 +54,18 @@ An empty triangle is three stones in an L with the fourth corner empty. Compare 
 ## race
 In a capturing race, count each side’s liberties. Each move fills one. If one side has more liberties, it usually wins; with equal liberties, whoever moves first wins. Liberties shared by both groups, and eyes, change the count, which later lessons can cover.
 
+## border
+A gap in a wall lets the empty points on your side join up with ground that touches the opponent, and ground that touches both colours counts for nobody. One stone in the gap seals it, and the whole area becomes your territory.
+
+## dame
+A neutral point, or dame, is an empty point between the two sides that touches both colours. It counts for nobody. At the end of the game, fill the neutral points before you pass: in area scoring, each one you fill is a point for you.
+
+## ladder
+In a ladder, Black gives atari again and again while White runs in a zig-zag. It works if the chase reaches the edge, and fails if it meets a White stone on the way (a ladder breaker). Always follow it to the end in your head before you start.
+
+## net
+A net blocks the escape route instead of giving atari. The white stone has two liberties; whichever one it uses to run, the net stone is waiting to close it in. Look one point further than the obvious atari.
+
 ## ending
 A player may pass instead of playing. Two passes in a row end the game. Before counting, dead stones (stones that could not survive) are removed, then each side adds its stones to the empty points only it surrounds. White also adds komi.
 

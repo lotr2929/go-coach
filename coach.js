@@ -8,8 +8,8 @@
 
   const LETTERS = 'ABCDEFGHJKLMNOPQRST';
   /* In the order of the lessons menu (the chapters in lessons.js), so "lesson 12" means the twelfth one listed. */
-  const LESSON_IDS = ['board', 'liberties', 'capture', 'groups', 'atari', 'suicide', 'exception', 'ko', 'eyes', 'connect', 'cut', 'tiger', 'triangle', 'scoring', 'ending', 'race', 'strategy', 'firstmove', 'handicap'];
-  const LESSON_WORDS = [['tiger', ['tiger']], ['triangle', ['empty triangle', 'bad shape']], ['race', ['capturing race', 'semeai']], ['liberties', ['liberty', 'liberties']], ['capture', ['capturing', 'capture']], ['groups', ['group', 'groups']], ['atari', ['atari', 'escape']],
+  const LESSON_IDS = ['board', 'liberties', 'capture', 'groups', 'atari', 'suicide', 'exception', 'ko', 'eyes', 'connect', 'cut', 'tiger', 'triangle', 'scoring', 'border', 'dame', 'ending', 'race', 'ladder', 'net', 'strategy', 'firstmove', 'handicap'];
+  const LESSON_WORDS = [['ladder', ['ladder']], ['net', ['the net', 'geta']], ['dame', ['dame', 'neutral point']], ['border', ['border', 'seal']], ['tiger', ['tiger']], ['triangle', ['empty triangle', 'bad shape']], ['race', ['capturing race', 'semeai']], ['liberties', ['liberty', 'liberties']], ['capture', ['capturing', 'capture']], ['groups', ['group', 'groups']], ['atari', ['atari', 'escape']],
     ['suicide', ['suicide']], ['ko', ['ko']], ['eyes', ['eye', 'eyes', 'alive']], ['scoring', ['counting', 'scoring', 'score']], ['strategy', ['strategy', 'first ideas']],
     ['connect', ['connect', 'connecting']], ['cut', ['cut', 'cutting']], ['ending', ['ending', 'passing', 'finish']], ['handicap', ['handicap', 'komi']], ['firstmove', ['first move', 'opening']]];
 

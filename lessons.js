@@ -190,6 +190,23 @@
       answer: 1 /* the second option in lessons.md */
     },
     {
+      /* A black wall with a gap at (3, 4), a white wall two columns away: Black's side counts only once the gap is closed. */
+      id: 'border', n: N, turn: 1, solo: true,
+      black: wall(3, 0, 3).concat(wall(3, 5, 8)), white: wall(5, 0, 8),
+      hint: [[3, 4]],
+      solution: [[3, 4]],
+      check(s, ev) {
+        if (ev.type !== 'move') return null;
+        return E.scoreArea(s.n, s.board).terr[P(s.n, 1, 4)] === 1 ? win(T('lessons.border.done')) : say(T('lessons.border.not-yet'));
+      }
+    },
+    {
+      id: 'dame', n: N, type: 'quiz',
+      black: wall(3, 0, 8), white: wall(5, 0, 8),
+      marks: { '4,4': 'A', '1,4': 'B' },
+      answer: 2 /* the third option in lessons.md: nobody's */
+    },
+    {
       id: 'ending', n: N, type: 'quiz',
       black: wall(3, 0, 8), white: wall(5, 0, 8),
       answer: 0 /* the first option in lessons.md */
@@ -201,6 +218,26 @@
       white: K.pts([[2, 0], [2, 1], [0, 2], [1, 2], [1, 3], [0, 3]]),
       marks: K.key({ '0,0': 'B', '0,1': 'B', '3,0': 'W', '3,1': 'W' }),
       answer: 0 /* the first option in lessons.md: Black */
+    },
+    {
+      /* Black's atari at A starts a ladder towards the bottom right; the white stone at X (G3) breaks it (test.js reads it out both ways). */
+      id: 'ladder', n: N, type: 'quiz',
+      black: [[1, 2], [2, 1], [3, 1]], white: [[2, 2], [6, 6]],
+      marks: { '2,3': 'A', '6,6': 'X' },
+      answer: 1 /* the second option in lessons.md: no */
+    },
+    {
+      /* White E5 has two liberties; atari on either lets it run, and only the net at D4 captures (test.js reads every reply). */
+      id: 'net', n: N, turn: 1, solo: true,
+      black: [[3, 3], [4, 3], [5, 4], [5, 5]], white: [[4, 4]],
+      hint: [[3, 5]],
+      solution: [[3, 5]],
+      check(s, ev) {
+        if (ev.type !== 'move') return null;
+        if (ev.point === P(N, 3, 5)) return win(T('lessons.net.done'));
+        if (ev.point === P(N, 3, 4) || ev.point === P(N, 4, 5)) return say(T('lessons.net.atari'));
+        return say(T('lessons.net.not-yet'));
+      }
     },
     {
       id: 'handicap', n: N, type: 'info',
@@ -241,8 +278,8 @@
     { key: 'basics', ids: ['board', 'liberties', 'capture', 'groups'] },
     { key: 'tactics', ids: ['atari', 'suicide', 'exception', 'ko', 'eyes'] },
     { key: 'formations', ids: ['connect', 'cut', 'tiger', 'triangle'] },
-    { key: 'terrain', ids: ['scoring', 'ending'] },
-    { key: 'reading', ids: ['race'] },
+    { key: 'terrain', ids: ['scoring', 'border', 'dame', 'ending'] },
+    { key: 'reading', ids: ['race', 'ladder', 'net'] },
     { key: 'campaign', ids: ['strategy', 'firstmove', 'handicap'] }
   ];
   for (const c of CHAPTERS) { c.title = T(`lessons.chapter.${c.key}.title`); c.intro = T(`lessons.chapter.${c.key}.intro`); }

@@ -343,6 +343,45 @@ Not quite. Count each side’s stones, then the empty points that only that side
 ## scoring.explain
 Black: 9 stones + 27 empty points = 36. White: 9 stones + 36 empty points = 45. White is ahead by 9 before komi.
 
+## border.title
+Sealing the border
+
+## border.text
+Territory only counts when it is sealed. Here Black has built a wall down the board, and White has a wall of its own. But Black’s wall has a gap.
+
+Through the gap, the empty points on Black’s side join up with the empty column between the two walls, and that column touches White’s stones too. Ground that touches both colours belongs to nobody, so at the moment none of Black’s side counts as Black’s territory, and White could walk in.
+
+## border.task
+Seal the gap so that Black’s side becomes Black’s territory.
+
+## border.done
+Sealed. Every empty point on Black’s side now touches only black stones, so it all counts as Black’s territory. One stone in the right place turned a whole area into points.
+
+## border.not-yet
+Black’s side still leaks through the gap. Press Reset and close the gap in the wall.
+
+## dame.title
+Neutral points
+
+## dame.text
+When two walls face each other with a gap between them, the empty points in the gap touch both colours. In area scoring, an empty point counts only for a side that surrounds it alone, so these points count for nobody. They are called neutral points, or dame (say “dah-meh”).
+
+Here a black wall and a white wall face each other across one empty column.
+
+## dame.task
+When the game is counted, whose point is A?
+
+## dame.options
+Black’s
+White’s
+Nobody’s: it is a neutral point
+
+## dame.wrong
+Not quite. Look at what A touches: which colours are next to it?
+
+## dame.explain
+A touches a black stone on one side and a white stone on the other, so it counts for nobody. B, on Black’s side, touches only black stones, so it is Black’s territory. Before you pass at the end of a game, fill the neutral points: in area scoring, a stone on a neutral point is one more point for you.
+
 ## ending.title
 Ending the game
 
@@ -389,6 +428,47 @@ Not quite. Play it out in your head: each move fills one liberty. Who runs out f
 
 ## race.explain
 Black fills one of White’s two liberties, White fills one of Black’s, and Black fills White’s last liberty and captures. With equal liberties, the side that moves first wins the race. So count before you fight: one liberty, or one move, decides it.
+
+## ladder.title
+The ladder: read it to the end
+
+## ladder.text
+A ladder is a chase. Black plays at A: atari. White runs, Black gives atari again from the other side, and the chase zig-zags across the board like the steps of a ladder. If nothing stops it, the white stones run into the edge and are captured.
+
+But a ladder can only be judged by reading it to the end. Here a white stone, marked X, stands on the path the ladder will take.
+
+## ladder.task
+Black plays at A and keeps giving atari. Does the ladder capture White?
+
+## ladder.options
+Yes: a ladder always captures in the end
+No: the stone at X lets White escape
+
+## ladder.wrong
+Not quite. Follow the chase in your head, one step at a time, all the way to the stone at X.
+
+## ladder.explain
+When the running stones reach X, they join it and gain liberties, so the chase fails, and Black is left with a line of weak stones that White can now attack. A stone like X is called a ladder breaker. Without it, this ladder would run into the edge and capture. Read every ladder to the end before you start it.
+
+## net.title
+The net
+
+## net.text
+Sometimes the direct attack fails. The white stone in the middle has two liberties. If you give atari on either one, it simply runs out of the other side and escapes.
+
+The answer is a net: a move that does not touch the stone, but stands on its escape route. Whichever way White runs, Black can then close the net and capture. This is why reading matters: the strongest move is often not the most obvious one.
+
+## net.task
+Capture the white stone with a net. Do not give atari: find the move that blocks its escape.
+
+## net.done
+A net. White cannot get out: if it runs to either side, Black closes the net with atari and captures. You read past the obvious atari to the move that really works.
+
+## net.atari
+That is atari, and White escapes through the other liberty. Press Reset and look for a move that blocks the escape route without touching the stone.
+
+## net.not-yet
+White can still run out. Press Reset and look one point further along the escape route.
 
 ## handicap.title
 Handicap and komi
