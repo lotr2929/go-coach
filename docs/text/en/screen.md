@@ -202,3 +202,9 @@ Close
 
 ## result-new
 New game
+
+## back-arrow
+← Back
+
+## next-arrow
+Next →

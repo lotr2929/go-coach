@@ -104,6 +104,13 @@
     const question = /^(can|could|should|shall|is|would|will|what|how|does|do|why)\b/.test(t) || /\?\s*$/.test(raw);
     const isWhat = has(/\b(what('s| is| are| does)?|explain|define|meaning|mean|tell me about|describe)\b/);
 
+    /* "commands": how the chat works and what to type (commands.md). */
+    if (has(/^((please )?(show|list|give) me )?(the |a |all )?(list of )?(text |chat )?(commands?|command list|prompts)( please)?$|\bwhat (can|should) i (type|say|ask)\b|\b(text|chat) (commands|prompts|hints)\b|\blist of commands\b/)) return out(TX.T('commands.list'));
+    /* Play both sides: on the other side's turn the coach marks its best moves and you choose (play.js). */
+    if (has(/\b(play (both|two) sides|both sides|let me (choose|pick|play) (the )?(computer'?s|white'?s|black'?s|opponent'?s|other side'?s|its|both) moves?)\b/)) return out('', { action: 'both', arg: true });
+    if (has(/^(the )?computer plays?( again)?$|\blet the computer play\b|\bstop (playing )?both sides\b/)) return out('', { action: 'both', arg: false });
+    /* Show me: the coach plays the best move and the likely replies by itself on a copy of the board (exploreui.js). */
+    if (has(/^(please )?(show me|show me what happens|show me how it goes|play it out|play it out for me)( please)?$/)) return out('', { action: 'showme' });
     if (has(/^(hi|hello|hey|hiya|g'?day|good (morning|afternoon|evening))\b/)) return out(T('coach.hello'));
     if (has(/\b(thanks|thank you|cheers)\b/)) return out(T('coach.thanks'));
     if (has(/\b(history|origins?|who (invented|created) (go|the game)|where (did|does) (go|the game) come from|how old is (go|the game))\b/)) return out(T('coach.history'), { action: 'history' });
@@ -155,7 +162,7 @@
       if (has(/\b(play|put|place|move)\b/) && !question) return out(T('coach.play', { point: coordName(n, pt) }), { action: 'play', arg: pt });
       return out('', { action: 'point', arg: pt });
     }
-    if (has(/^(help|\?)$|\bwhat can (you|i)\b|\bcommands\b|\bhow do i use (you|this|the coach)\b/)) return out(HELP);
+    if (has(/^(help|\?)$|\bwhat can (you|i)\b|\bhow do i use (you|this|the coach)\b/)) return out(HELP);
     const term = findTerm(t);
     if (term) return out(term.t, { topic: term.w[0] });
     return out(FALLBACK);

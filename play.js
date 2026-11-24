@@ -34,7 +34,7 @@
 
   function openNewDialog() {
     chips($('#optSize'), 'size', T('opt.size'), [[9, '9×9'], [13, '13×13'], [19, '19×19']], settings.size);
-    chips($('#optColour'), 'colour', T('opt.colour'), [['black', T('opt.black')], ['white', T('opt.white')], ['random', T('opt.random')]], settings.colour);
+    chips($('#optColour'), 'colour', T('opt.colour'), [['black', T('opt.black')], ['white', T('opt.white')], ['random', T('opt.random')], ['both', T('opt.both')]], settings.colour);
     chips($('#optLevel'), 'level', T('opt.level'), [['easy', T('opt.easy')], ['medium', T('opt.medium')], ['hard', T('opt.hard')]], settings.level);
     chips($('#optCoach'), 'coachlevel', T('opt.coach'), [['medium', T('opt.medium')], ['hard', T('opt.hard')], ['expert', T('opt.expert')]], settings.coachLevel);
     chips($('#optHandicap'), 'handicap', T('opt.handicap'), [[0, T('opt.none')], [2, '2'], [3, '3'], [4, '4'], [5, '5']], settings.handicap);
@@ -46,12 +46,15 @@
   }
 
   /* ---------- PLAY ---------- */
-  const Play = { s: null, human: 1, level: 'medium', phase: 'play', token: 0, thinking: false, dead: null, pending: -1, hint: [], over: false, redo: [], guided: false, seen: {} };
+  const Play = { s: null, human: 1, level: 'medium', phase: 'play', token: 0, thinking: false, dead: null, pending: -1, hint: [], over: false, redo: [], guided: false, seen: {}, both: false };
   const playView = new BoardView($('#playBoard'), i => onPlayTap(i));
 
   /* Play mode is silent: in your own game no help appears on the board (move notes, Territory, Shapes) unless Coach mode is on.
      The guided first game and a famous game (Kifu) are for learning, so they keep it. */
-  const playSilent = () => !(G.kifu && G.kifu.on) && settings.mode !== 'coach' && !Play.guided;
+  const playSilent = () => !(G.kifu && G.kifu.on) && settings.mode !== 'coach' && !Play.guided && !Play.both;
+  /* Whether a tap on the board plays a move: your turn, or either side's turn in Play both sides (Play.both), where the coach
+     marks the other side's best moves A to E and you choose one, or any other point. */
+  const myTurn = s => Play.phase === 'play' && !Play.thinking && (Play.both || s.turn === Play.human);
 
   /* A short note about the move under the pointer, in the same words as the suggestions. */
   const tipEl = $('#boardTip');
@@ -60,7 +63,7 @@
     if (!s || i < 0 || s.board[i]) return '';
     const square = G.squareInfo && !(G.teaching && G.teaching.on) && !(G.exploring && G.exploring.on) ? G.squareInfo(i) : '';
     /* In your own game the move note appears only when Play mode is not silent, and only on your turn. */
-    if (s === Play.s && (playSilent() || !(Play.phase === 'play' && !Play.thinking && s.turn === Play.human))) return square;
+    if (s === Play.s && (playSilent() || !myTurn(s))) return square;
     const who = (G.kifu && G.kifu.on) ? 3 : Play.human; /* in a game record nobody is "you" */
     const d = CM.describeMove(E, s, i, s.turn, who);
     const note = d.ok ? `${E.coord(s.n, i)}: ${CM.headline(E, s, i, s.turn, who)}` : d.points[0];
@@ -78,7 +81,7 @@
 
   function saveGame() {
     if (!Play.s) return;
-    store(KEY.game, { human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, s: E.serialize(Play.s) });
+    store(KEY.game, { human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, both: !!Play.both, s: E.serialize(Play.s) });
   }
   function startNewGame(opts) {
     if (G.kifu && G.kifu.on) G.exitKifu(true);
@@ -87,6 +90,7 @@
     Play.s = E.newState(settings.size, settings.handicap);
     Play.human = settings.colour === 'random' ? (Math.random() < .5 ? 1 : 2) : (settings.colour === 'white' ? 2 : 1);
     Play.level = settings.level;
+    Play.both = settings.colour === 'both' && !Play.guided; /* you play Black; the coach suggests White's moves and you choose */
     Play.phase = 'play'; Play.dead = null; Play.pending = -1; Play.hint = []; Play.over = false; Play.thinking = false; Play.lastAI = null; Play.redo = []; G.explained = null; G.lastExplain = null;
     renderPlay(); saveGame();
     /* An ordinary new game says nothing in the chat (New brings back the welcome); the guided first game explains itself. */
@@ -105,7 +109,7 @@
     const g = load(KEY.game, null);
     if (!g) return false;
     try {
-      Play.s = E.deserialize(g.s); Play.human = g.human; Play.level = g.level; Play.over = !!g.over; Play.guided = !!g.guided; Play.seen = {};
+      Play.s = E.deserialize(g.s); Play.human = g.human; Play.level = g.level; Play.over = !!g.over; Play.guided = !!g.guided; Play.both = !!g.both; Play.seen = {};
     } catch (e) { return false; }
     Play.phase = 'play'; Play.dead = null; Play.hint = []; Play.pending = -1; Play.thinking = false;
     renderPlay();
@@ -113,6 +117,14 @@
     else if (Play.s.passes >= 2) startScoring();
     else { maybeAI(); G.coachAuto(); }
     return true;
+  }
+
+  /* "play both sides" and "computer plays" in the chat: switch Play both sides on or off for this game. */
+  function setBoth(on) {
+    if (!Play.s || Play.phase !== 'play') return say(T('both-no-game'));
+    Play.both = !!on; saveGame();
+    say(T(on ? 'both-on' : 'both-off', { colour: colourName(3 - Play.human) }));
+    if (Play.s.turn !== Play.human) { Play.token++; Play.thinking = false; maybeAI(); } else renderPlay();
   }
 
   function coachText() {
@@ -140,7 +152,7 @@
     $('#lessonBar').hidden = true; $('#quizOptions').hidden = true;
     playView.set({
       n: s.n, board: s.board, last: s.last, ko: s.ko, coords: settings.coords, libs: settings.libs,
-      hint: Play.hint, ghost: Play.pending, ghostColor: Play.human, hoverColor: (Play.phase === 'play' && !Play.thinking && s.turn === Play.human) ? Play.human : 0,
+      hint: Play.hint, ghost: Play.pending, ghostColor: Play.both ? s.turn : Play.human, hoverColor: myTurn(s) ? s.turn : 0,
       terr: Play.phase === 'scoring' || Play.phase === 'done' ? Play.terr || null : null,
       dead: Play.phase === 'scoring' || Play.phase === 'done' ? Play.dead : null, marks: G.anaMarks(), own: G.terrOwn(), shapes: G.shapeMarks()
     });
@@ -148,14 +160,14 @@
     if (Play.phase === 'scoring') who = T('scoring');
     else if (Play.phase === 'done') who = Play.resultText || T('game-over');
     else if (Play.thinking) who = Play.note && Play.note.tok === Play.token ? Play.note.text : T('thinking');
-    else who = s.turn === Play.human ? T('your-move', { colour: colourName(Play.human) }) : T('to-play', { colour: colourName(s.turn) });
+    else who = Play.both || s.turn === Play.human ? T('your-move', { colour: colourName(s.turn) }) : T('to-play', { colour: colourName(s.turn) });
     let nb = 0, nw = 0;
     for (let k = 0; k < s.board.length; k++) { if (s.board[k] === 1) nb++; else if (s.board[k] === 2) nw++; }
     /* Stone counts are help, so silent Play mode leaves them out; prisoners stay, as in any game of Go. */
     $('#whoTurn').textContent = who + (Play.phase === 'play' && !playSilent() ? `  ● ${nb}  ○ ${nw}` : '');
     $('#capsInfo').textContent = T('prisoners', { black: s.caps[1], white: s.caps[2] });
     const playing = Play.phase === 'play';
-    const mine = playing && !Play.thinking && s.turn === Play.human;
+    const mine = playing && myTurn(s);
     $('#btnPass').disabled = !mine;
     $('#btnUndo').disabled = !playing || s.hist.length === 0;
     $('#btnRedo').disabled = !playing || Play.thinking || !Play.redo.length;
@@ -179,7 +191,7 @@
     if (G.shapeTap && G.shapeTap(i)) return; /* a tap on a marked shape's stone explains it */
     if (G.kifu && G.kifu.on) return G.kifuTap(i);
     if (Play.phase === 'scoring') return toggleDead(i);
-    if (Play.phase !== 'play' || Play.thinking || s.turn !== Play.human) return;
+    if (!myTurn(s)) return;
     if (settings.confirm && Play.pending !== i) {
       if (s.board[i]) return;
       Play.pending = i; Play.hint = []; renderPlay();
@@ -203,6 +215,7 @@
   async function maybeAI() {
     const s = Play.s;
     if (!s || Play.phase !== 'play' || s.turn === Play.human || s.passes >= 2) return;
+    if (Play.both) { renderPlay(); G.analyse(true); return; } /* Play both sides: mark the best moves A to E and let the learner choose */
     const tok = ++Play.token;
     Play.thinking = true; renderPlay();
     const res = await E.chooseMove(s, s.turn, { level: Play.level, cancelled: () => tok !== Play.token });
@@ -231,7 +244,7 @@
 
   function humanPass() {
     const s = Play.s;
-    if (!s || Play.phase !== 'play' || Play.thinking || s.turn !== Play.human) return;
+    if (!s || !myTurn(s)) return;
     Play.pending = -1; Play.hint = []; Play.redo = [];
     E.pass(s); saveGame();
     if (Play.guided) say(window.GoGuide.humanPass());
@@ -244,7 +257,7 @@
     if (!s || Play.phase !== 'play' || !s.hist.length) return;
     Play.token++; Play.thinking = false; Play.pending = -1; Play.hint = [];
     const before = s.moves.slice();
-    do { E.undo(s); } while (s.turn !== Play.human && s.hist.length);
+    do { E.undo(s); } while (!Play.both && s.turn !== Play.human && s.hist.length); /* in Play both sides, one move at a time */
     const gone = before.slice(s.moves.length);
     if (gone.length) Play.redo.push(gone);
     G.explained = null; G.lastExplain = null;
@@ -267,14 +280,14 @@
 
   async function giveHint() {
     const s = Play.s;
-    if (!s || Play.thinking || s.turn !== Play.human) return;
+    if (!s || !myTurn(s)) return;
     const tok = ++Play.token;
     Play.thinking = true; renderPlay();
-    const res = await E.suggest(s, Play.human, { level: G.coachLevel(), cancelled: () => tok !== Play.token });
+    const res = await E.suggest(s, s.turn, { level: G.coachLevel(), cancelled: () => tok !== Play.token });
     if (tok !== Play.token || !res) return;
     Play.thinking = false;
     if (res.move < 0) { Play.hint = []; say(T('nothing-urgent')); }
-    else { Play.hint = [res.move]; explain(res.move, Play.human, 'hint'); }
+    else { Play.hint = [res.move]; explain(res.move, s.turn, 'hint'); }
     renderPlay();
   }
 
@@ -337,5 +350,5 @@
   }
 
 
-  Object.assign(G, { Play, playView, playSilent, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
+  Object.assign(G, { Play, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
 })();

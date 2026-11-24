@@ -139,3 +139,15 @@ You win
 
 ## computer-wins
 Computer wins
+
+## opt.both
+Play both sides
+
+## both-on
+Play both sides is on. On {colour}'s turn I mark my five best moves, A to E. Tap one of them, or any other point, to play it for {colour}. Ask "why B?" or "compare A and C" first if you like.
+
+## both-off
+The computer plays {colour} again.
+
+## both-no-game
+Start a game first, then say "play both sides".

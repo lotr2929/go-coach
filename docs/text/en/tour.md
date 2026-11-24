@@ -117,7 +117,7 @@ Makes the chat fill the screen for easier reading. Tap it again to go back to th
 Ask the coach
 
 ## ask.text
-Type anything here: "hint", "why?", "what is a ponnuki?", a point such as "D4", or a number from the welcome. Type Help to see the welcome again.
+Type anything here: "hint", "why?", "what is a ponnuki?", a point such as "D4", or a number from the welcome. Type "commands" to see everything you can type, and Help to see the welcome again.
 
 ## clear.title
 Clear

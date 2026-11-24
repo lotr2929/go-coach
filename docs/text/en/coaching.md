@@ -92,7 +92,7 @@ Start of the game
 Tap a lettered point to play it, or ask "why A?".
 
 ## end-full
-Tap a lettered point on the board to play it, or ask "why A?" or "compare A and B". Win rates come from random playouts, so gaps under 5% are equal.
+Tap a lettered point on the board to play it, or ask "why A?", "compare A and B" or "explore A". Win rates come from random playouts, so gaps under 5% are equal.
 
 ## analysing
 Coach is analysing…
