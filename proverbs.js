@@ -20,15 +20,19 @@
   for (const [key, [label, src]] of Object.entries(KIND)) {
     SAYINGS[key] = { label: T('proverbs.' + label), text: T(`proverbs.${key}.text`), src: src ? T('proverbs.' + src) : '', link: T(`proverbs.${key}.link`) };
   }
-  /* Words from a Go master for some situations, used instead of the saying half the time. Until a quote is checked
-     against a book or interview it is shown as "attributed to". */
+  /* Words from Go masters and teachers for some situations, used instead of the saying half the time. In proverbs.md each
+     situation may have "<key>.master", "<key>.master2" and so on. A quote checked against its book carries ".source";
+     one not yet checked shows "attributed to" with ".name". ".label" (optional) replaces "Go master", e.g. for a stratagem. */
   const MASTERS = {};
-  for (const key of ['whole', 'lost', 'big']) {
-    const checked = TX.has(`proverbs.${key}.master.source`); /* a quote checked against its book carries the source itself */
-    MASTERS[key] = {
-      label: T('proverbs.master'), text: T(`proverbs.${key}.master.text`), link: T(`proverbs.${key}.master.link`),
-      src: checked ? T(`proverbs.${key}.master.source`) : T('proverbs.attributed', { name: T(`proverbs.${key}.master.name`) })
-    };
+  for (const key of Object.keys(KIND)) {
+    for (let n = 1; n <= 5; n++) {
+      const m = `proverbs.${key}.master${n === 1 ? '' : n}`;
+      if (!TX.has(m + '.text')) continue;
+      (MASTERS[key] = MASTERS[key] || []).push({
+        label: TX.has(m + '.label') ? T(m + '.label') : T('proverbs.master'), text: T(m + '.text'), link: T(m + '.link'),
+        src: TX.has(m + '.source') ? T(m + '.source') : T('proverbs.attributed', { name: T(m + '.name') })
+      });
+    }
   }
 
   /* The first situation that applies, in order of how specific it is. facts: { sacrifice, rescue, kill, lost, punished, attackB, gain }. */
@@ -38,8 +42,9 @@
     const key = f.sacrifice && f.gain >= 1.5 ? 'sacrifice' : f.rescue ? 'rescue' : f.kill ? 'kill' : f.lost ? 'lost'
       : f.punished ? 'punished' : f.attackB && f.gain >= 1.5 ? 'whole' : f.gain >= 3 ? 'big' : null;
     if (!key) return null;
-    const useMaster = MASTERS[key] && (rnd === undefined ? Math.random() : rnd) < 0.5;
-    return Object.assign({ key, master: useMaster }, useMaster ? MASTERS[key] : SAYINGS[key]);
+    const r = rnd === undefined ? Math.random() : rnd, list = MASTERS[key];
+    if (!list || r >= 0.5) return Object.assign({ key, master: false }, SAYINGS[key]);
+    return Object.assign({ key, master: true }, list[Math.min(list.length - 1, Math.floor(r * 2 * list.length))]);
   }
   /* The line for the chat, with A and B replaced by the actual points. */
   function line(s, A, B) {
