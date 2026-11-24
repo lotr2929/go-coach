@@ -182,3 +182,5 @@ body:not(.touring) .tourShade, body:not(.touring) .tourRing, body:not(.touring) 
 .tourBar button { padding: 4px 10px; min-width: 36px; }
 .tourCount { flex: 1; color: var(--mute); font-size: .85rem; }
 @media (prefers-reduced-motion: reduce) { .tourRing { transition: none; } }
+/* Press and hold on a button shows its tip (tour.js), so the phone's own text-selection menu is kept out of the way. */
+button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
