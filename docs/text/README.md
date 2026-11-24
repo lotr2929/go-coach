@@ -28,4 +28,4 @@ The change reaches the app at the next deploy: `deploy.bat` copies the wording i
 
 ## Formatting in the long pages
 
-The pages in `pages/` understand **bold** (two stars each side), _italics_ (one underscore or one star each side), a quotation (a line starting with `> `), headings (`##` and `###`), lists (lines starting with `- `) and source numbers such as [2]. Inside the introduction, which is already in italics, italic words show upright so they still stand out.
+The pages in `pages/` understand **bold** (two stars each side), _italics_ (one underscore or one star each side), a quotation (a line starting with `> `), headings (`##` and `###`), lists (lines starting with `- `) and source numbers such as [2].
