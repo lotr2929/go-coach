@@ -11,6 +11,7 @@
   const RGB = { good: '46,160,80', bad: '215,60,45', neutral: '40,110,205', weak: '230,140,20' };
   const sigOf = s => Array.from(s.board).join('') + s.turn;
   let cache = null; /* { sig, list, keys, moves } for one position */
+  let focus = null;  /* after a tap: { sig, keys } of the shapes being explained; only they are drawn until the board changes */
 
   /* Same rules as the Territory tab: the board belongs to a lesson, the teacher or an exploration while they run. */
   const kifuOn = () => !!(G.kifu && G.kifu.on);
@@ -41,7 +42,9 @@
   function marks() {
     if (!settings.shapes || idle()) return null;
     const c = compute();
-    return c ? c.list.map(sh => ({ pts: sh.pts, rgb: RGB[SH.KINDS[sh.kind].tone], dashed: !!sh.potential, label: sh.label, move: sh.potential ? sh.move : -1 })) : null;
+    if (!c) return null;
+    const shown = focus && focus.sig === c.sig ? c.list.filter(sh => focus.keys.includes(sh.key)) : c.list;
+    return shown.map(sh => ({ pts: sh.pts, rgb: RGB[SH.KINDS[sh.kind].tone], dashed: !!sh.potential, label: sh.label, move: sh.potential ? sh.move : -1 }));
   }
 
   function listAll() {
@@ -58,6 +61,29 @@
     G.say(parts.join('\n'));
   }
 
+  /* A tap on a stone that is part of a marked shape explains that shape (an empty point still plays a move).
+     Returns true when the tap was used for this. */
+  function tap(i) {
+    if (!settings.shapes || idle()) return false;
+    const s = live(), c = compute();
+    if (!s || !c || !s.board[i]) return false;
+    const hit = c.list.filter(sh => !sh.potential && sh.stones.includes(i)).slice(0, 2);
+    const rerender = () => (kifuOn() ? G.renderKifu() : G.renderPlay());
+    if (!hit.length) {
+      if (focus) { focus = null; rerender(); return true; }
+      return false;
+    }
+    const keys = hit.map(sh => sh.key);
+    if (focus && focus.sig === c.sig && keys.every(k => focus.keys.includes(k))) { focus = null; rerender(); return true; } /* second tap: all shapes again */
+    focus = { sig: c.sig, keys };
+    rerender();
+    G.say(hit.map(sh => {
+      const K = SH.KINDS[sh.kind], tone = { good: 'a good shape', bad: 'a bad shape', neutral: 'a common shape', weak: 'a weak point' }[K.tone];
+      return `**${sh.label}. ${K.name}:**\nThis is ${/^[AEIOU]/.test(K.name) ? 'an' : 'a'} ${K.name.toLowerCase()}, ${tone}. ${SH.describe(s.n, sh, viewer(), true).replace(/^[^(]*\(([^)]*)\).*$/, 'Here: $1.')}\n${K.more}`;
+    }).join('\n\n') + '\n\nTap the stone again, or any stone outside a shape, to see all the shapes.');
+    return true;
+  }
+
   function syncButton() {
     const b = $('#btnShapes'), on = !!settings.shapes;
     b.setAttribute('aria-pressed', String(on));
@@ -66,11 +92,11 @@
   $('#btnShapes').addEventListener('click', () => {
     settings.shapes = !settings.shapes; saveSettings(); syncButton();
     if (settings.shapes && idle()) { toast('Shapes are shown on your game or a famous game.'); return; }
-    cache = null;
+    cache = null; focus = null;
     if (kifuOn()) G.renderKifu(); else G.renderPlay();
     if (settings.shapes) listAll(); else toast('Shapes hidden');
   });
   syncButton();
 
-  Object.assign(G, { shapeMarks: marks });
+  Object.assign(G, { shapeMarks: marks, shapeTap: tap });
 })();

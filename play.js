@@ -168,6 +168,7 @@
     if (G.Lesson.on) return G.onLessonTap(i);
     if (G.teaching && G.teaching.on) return G.teachTap(i);
     if (G.exploring && G.exploring.on) return G.exploreTap(i);
+    if (G.shapeTap && G.shapeTap(i)) return; /* a tap on a marked shape's stone explains it */
     if (G.kifu && G.kifu.on) return G.kifuTap(i);
     if (Play.phase === 'scoring') return toggleDead(i);
     if (Play.phase !== 'play' || Play.thinking || s.turn !== Play.human) return;

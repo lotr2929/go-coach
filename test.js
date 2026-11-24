@@ -92,6 +92,12 @@ async function t(name, fn) {
     const list = SHAPES.possible(E, s, s.turn);
     assert(list.length > 0 && list.every(x => x.potential && x.color === s.turn && !s.board[x.move] && E.tryPlay(E.geom(9), s.board, x.move, s.turn, s.ko).ok));
   });
+  await t('the coach explains shape names when asked', () => {
+    assert(/^A ponnuki is/.test(C.reply('what is a ponnuki?', { n: 9 }).text));
+    assert(/^A knight’s move/.test(C.reply("what's a knight's move", { n: 9 }).text));
+    assert(/^A false eye/.test(C.reply('what is a false eye', { n: 9 }).text));
+    assert(/^An eye is/.test(C.reply('what is an eye', { n: 9 }).text));
+  });
   await t('analysis ranks moves and the played move is included', async () => {
     const s = E.newState(9, 0); E.play(s, 20); E.play(s, 60);
     const r = await E.analyse(s, 1, { ms: 300, include: [0] });
