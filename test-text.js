@@ -91,6 +91,22 @@ module.exports = async function (t) {
     assert(page.blocks.length > 10 && page.blocks[0].t === 'lead');
     assert.deepStrictEqual(HISTORY.problems(page), []);
   });
+  await t('pages show **bold**, _italics_ and > quotations, and no stars or underscores are left over', () => {
+    const I = HISTORY.inline;
+    assert.deepStrictEqual(I('a **b** _c_ *d* [2]'), [{ t: 'text', text: 'a ' }, { t: 'b', parts: [{ t: 'text', text: 'b' }] }, { t: 'text', text: ' ' }, { t: 'i', parts: [{ t: 'text', text: 'c' }] }, { t: 'text', text: ' ' }, { t: 'i', parts: [{ t: 'text', text: 'd' }] }, { t: 'text', text: ' ' }, { t: 'cite', n: 2, text: '[2]' }]);
+    assert.deepStrictEqual(I('Go_(game) and 2 * 3 * 4'), [{ t: 'text', text: 'Go_(game) and 2 * 3 * 4' }], 'underscores and stars inside words or between spaces stay as they are');
+    assert.deepStrictEqual(I('**bold with _it_ [1]**')[0].parts.map(p => p.t), ['text', 'i', 'text', 'cite']);
+    const quote = HISTORY.parse('# T\n\nIntro.\n\n## S\n\n> Line one\n> line **two**.\n\nAfter.');
+    assert.deepStrictEqual(quote.blocks.map(b => b.t), ['lead', 'h', 'quote', 'p']);
+    assert.strictEqual(quote.blocks[2].text, 'Line one line **two**.');
+    const flat = ps => ps.map(p => (p.parts ? flat(p.parts) : p.text)).join('');
+    for (const file of ['whatisgo.md', 'history.md']) {
+      for (const b of HISTORY.parse(read('pages', file)).blocks) for (const text of b.items && b.t === 'ul' ? b.items : b.text ? [b.text] : []) {
+        const shown = flat(I(text));
+        assert(!/\*\*|(^|\s)[_*]\S/.test(shown), `${file}: a star or underscore would show in "${shown.slice(0, 60)}"`);
+      }
+    }
+  });
   await t('history.md is read into a page whose sources all check out', () => {
     const page = HISTORY.parse(read('pages', 'history.md'));
     assert.strictEqual(page.title, 'A history of Go');

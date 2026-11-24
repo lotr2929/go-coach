@@ -25,3 +25,7 @@ the heading is how the app finds the text.
 ## After editing
 
 The change reaches the app at the next deploy: `deploy.bat` copies the wording into the app (`make-text.js`) and checks it.
+
+## Formatting in the long pages
+
+The pages in `pages/` understand **bold** (two stars each side), _italics_ (one underscore or one star each side), a quotation (a line starting with `> `), headings (`##` and `###`), lists (lines starting with `- `) and source numbers such as [2]. Inside the introduction, which is already in italics, italic words show upright so they still stand out.
