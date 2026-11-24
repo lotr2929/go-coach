@@ -28,7 +28,8 @@
   function append(who, text) {
     const d = document.createElement('div');
     d.className = 'msg ' + who;
-    fill(d, text);
+    if (who === 'coach' && text === C.INTRO && G.fillWelcome) G.fillWelcome(d, fill); /* the welcome, with its choices as buttons */
+    else fill(d, text);
     box.append(d);
     box.scrollTop = box.scrollHeight;
   }
@@ -186,6 +187,4 @@
   for (const m of log) append(m.who, m.text);
 
   Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS, clearChat });
-  /* The welcome's buttons are not saved with the chat, so they are added again when it was the last message. */
-  if (log.length && log[log.length - 1].text === C.INTRO && G.welcomeMenu) G.welcomeMenu();
 })();

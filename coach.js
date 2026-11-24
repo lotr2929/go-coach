@@ -11,8 +11,11 @@
     ['suicide', ['suicide']], ['ko', ['ko']], ['eyes', ['eye', 'eyes', 'alive']], ['scoring', ['counting', 'scoring', 'score']], ['strategy', ['strategy', 'first ideas']],
     ['connect', ['connect', 'connecting']], ['cut', ['cut', 'cutting']], ['ending', ['ending', 'passing', 'finish']], ['handicap', ['handicap', 'komi']], ['firstmove', ['first move', 'opening']]];
 
-  /* The welcome: the first message in the chat, shown again by New, Clear and "help". welcome.js knows its five choices. */
-  const INTRO = 'Hello, I am your Go coach. I am not an AI model. I answer from the rules of Go and by analysing the board on your device. You can ask me to do the following:\n\n1. What is Go?\n2. A Short History of Go.\n3. Teach me.\n4. Coach me.\n5. How to use the app.\n\nType your request by typing one of the numbers above or in your own words in the box below. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt.';
+  /* The welcome: the first message in the chat, shown again by "help". welcome.js knows its five choices.
+     In the chat, welcomeui.js shows INTRO_TOP, the five choices as buttons, then INTRO_END. INTRO is the whole text as saved in the chat. */
+  const INTRO_TOP = 'Hello, I am your Go coach. I am not an AI model. I answer from the rules of Go and by analysing the board on your device. You can ask me to do the following:';
+  const INTRO_END = 'Type your request by typing one of the numbers above or in your own words in the box below. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt.';
+  const INTRO = INTRO_TOP + '\n\n1. What is Go?\n2. A Short History of Go.\n3. Teach me.\n4. Coach me.\n5. How to use the app.\n\n' + INTRO_END;
   const HELP = INTRO;
   const FIRST_MOVE_SHORT = 'Start in a corner, then the sides, then the centre: corners make territory with the fewest stones. Ask me to "explain the first move in more detail" for the full reasoning, or say "hint" for a suggestion in this position.';
   const FIRST_MOVE_DETAIL = 'Why the first move usually goes in a corner:\n1. A corner stone has two edges to help it, so it takes fewer stones to claim territory there than anywhere else.\n2. The sides come next. The centre is the hardest area to hold, so it is usually left until later.\n3. Which point? On a 9×9 board the favourite points are the 3-3 points (C3, G3, C7, G7): they are safe and claim a corner quickly. The centre point (E5) is also played, but it is harder to use. On 13×13 and 19×19 the star points (the dots) near the corners do the same job.\n4. Avoid the first line (the edge) and usually the second line: a stone there has few liberties and little room for territory.\n5. After your move your opponent replies. You can then take another corner, or press the stone that came near yours.';
@@ -261,5 +264,5 @@
     return null;
   }
 
-  return { reply, lessonReply, describePoint, weakReport, parseCoord, INTRO, HELP, RULES };
+  return { reply, lessonReply, describePoint, weakReport, parseCoord, INTRO, INTRO_TOP, INTRO_END, HELP, RULES };
 });

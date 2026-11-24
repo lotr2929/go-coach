@@ -115,7 +115,7 @@ async function t(name, fn) {
     assert.strictEqual(W.match('coach me'), 'coach');
     assert.strictEqual(W.match('what is ko?'), null);
     assert.strictEqual(W.match('D4'), null);
-    assert(/^Hello, I am your Go coach\./.test(C.INTRO) && /5\. How to use the app\./.test(C.INTRO));
+    assert(/^Hello, I am your Go coach\./.test(C.INTRO_TOP) && C.INTRO.startsWith(C.INTRO_TOP) && C.INTRO.endsWith(C.INTRO_END) && /5\. How to use the app\./.test(C.INTRO));
   });
   await t('whatisgo.md reads as a page with no mistakes', () => {
     const page = HISTORY.parse(require('fs').readFileSync(__dirname + '/whatisgo.md', 'utf8'));
