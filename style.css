@@ -99,8 +99,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .pageBody .cardTitle { font: 600 1rem var(--serif); }
 .pageBody .cardMeta { font-size: .8rem; color: #5a6560; }
 .pageBody .cardNote { font-size: .88rem; line-height: 1.4; }
-.pageBody .lead { font-style: italic; color: #3a4642; }
-.pageBody .lead em { font-style: normal; } /* italics inside the italic introduction stand out by going upright */
+.pageBody .lead { color: #3a4642; } /* the introduction (before the first ## heading): normal text, a shade softer (Boon's choice) */
 .pageBody blockquote { margin: 1rem 0; padding: .4rem 1rem; border-left: 3px solid #b9a77a; background: #ece5d3; border-radius: 0 6px 6px 0; }
 .pageBody a { color: #1a5f8a; }
 .pageBody a.cite { font-size: .75em; vertical-align: super; text-decoration: none; margin-left: 1px; }
