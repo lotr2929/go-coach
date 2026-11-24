@@ -105,6 +105,23 @@ async function t(name, fn) {
     assert(/^A false eye/.test(C.reply('what is a false eye', { n: 9 }).text));
     assert(/^An eye is/.test(C.reply('what is an eye', { n: 9 }).text));
   });
+  await t('the welcome: numbers, words and help pick the right request', () => {
+    const W = require('./welcome.js');
+    assert.deepStrictEqual(['1', '2', '3', '4', '5'].map(W.match), ['whatisgo', 'history', 'teach', 'coach', 'tour']);
+    assert.strictEqual(W.match('What is Go?'), 'whatisgo');
+    assert.strictEqual(W.match('How do I use the app?'), 'tour');
+    assert.strictEqual(W.match('Help'), 'help');
+    assert.strictEqual(W.match('coach me'), 'coach');
+    assert.strictEqual(W.match('what is ko?'), null);
+    assert.strictEqual(W.match('D4'), null);
+    assert(/^Hello, I am your Go coach\./.test(C.INTRO) && /5\. How to use the app\./.test(C.INTRO));
+  });
+  await t('whatisgo.md reads as a page with no mistakes', () => {
+    const page = HISTORY.parse(require('fs').readFileSync(__dirname + '/whatisgo.md', 'utf8'));
+    assert.strictEqual(page.title, 'What is Go?');
+    assert(page.blocks.length > 10 && page.blocks[0].t === 'lead');
+    assert.deepStrictEqual(HISTORY.problems(page), []);
+  });
   await t('analysis ranks moves and the played move is included', async () => {
     const s = E.newState(9, 0); E.play(s, 20); E.play(s, 60);
     const r = await E.analyse(s, 1, { ms: 300, include: [0] });
