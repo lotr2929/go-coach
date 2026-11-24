@@ -21,7 +21,7 @@ Last updated: 24 November 2026.
 - Winning without destroying: restraint wins in a contest where almost anything goes.
 
 ## Lessons
-- The lessons are organised in chapters that follow the skills in "What is Go?", from simple to complex: Basic training, Tactics, Formations, Reading the terrain, Calculating the engagement, Developing strategies. New lessons go into the chapter of the skill they teach. Reading and the terrain are the thinnest chapters so far.
+- The lessons are organised in chapters that follow the skills in "What is Go?", from simple to complex: Basic training, Tactics, Formations, Reading the terrain, Calculating the engagement, Developing strategies. New lessons go into the chapter of the skill they teach. Chapters 4 and 5 now have four and three lessons. New lesson diagrams are checked by test-lessons.js, which reads ladders and nets out move by move.
 
 ## Partnerships (not started; Boon chose to finish Go Coach first)
 - **Order:** an informal, friendly email to the International Go Federation (IGF) and a formal pilot with the Australian Go Association, in parallel; a formal IGF proposal later, with the pilot's results.

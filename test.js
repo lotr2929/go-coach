@@ -185,7 +185,7 @@ async function t(name, fn) {
     assert(/corner/.test(ask("what's the first move?").text));
     assert(/Atari is a warning/.test(C.reply('tell me more', { n: 9, topic: 'atari' }).text));
     assert.strictEqual(C.reply('what is ko?', { n: 9 }).topic, 'ko');
-    assert.strictEqual(ask('lesson 18').arg.id, 'firstmove'); /* numbered in the chapter order of the lessons menu */
+    assert.strictEqual(ask('lesson 22').arg.id, 'firstmove'); /* numbered in the chapter order of the lessons menu */
   });
   await t('coach describes points and weak groups', () => {
     const s = LS.setup(LS.list.find(l => l.id === 'capture'));
@@ -489,6 +489,7 @@ async function t(name, fn) {
     assert.strictEqual(EXPLORE.create({ E, CM, C, say() {} }).start(E.newState(9, 0), -1), false);
   });
   await require('./test-text.js')(t); /* the app's wording in docs/text */
+  await require('./test-lessons.js')(t); /* the lesson diagrams do what their words say */
   console.log(failed ? failed + ' FAILED, ' + passed + ' passed' : 'all ' + passed + ' tests passed');
   process.exit(failed ? 1 : 0);
 })();
