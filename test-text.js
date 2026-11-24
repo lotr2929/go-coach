@@ -29,13 +29,17 @@ module.exports = async function (t) {
   });
   await t('every name the code asks for is in docs/text', () => {
     const missing = [];
-    /* every T('name') or T('name', {…}) in the code; text.js itself only explains T */
-    for (const f of fs.readdirSync(__dirname).filter(f => /\.js$/.test(f) && !/^test/.test(f) && f !== 'text.js')) {
+    /* every whole name in quotes, such as 'coach.hint', whose first part is one of the files in docs/text/en; text.js itself only explains T */
+    const areas = fs.readdirSync(TEXT_DIR).filter(f => /\.md$/.test(f)).map(f => f.replace(/\.md$/, ''));
+    const nameRe = new RegExp(`'((?:${areas.join('|')})\\.[a-z0-9.-]*[a-z0-9])'`, 'g');
+    for (const f of fs.readdirSync(__dirname).filter(f => /\.js$/.test(f) && !/^test/.test(f) && f !== 'text.js' && f !== 'text-data.js')) {
       const src = fs.readFileSync(path.join(__dirname, f), 'utf8');
-      for (const m of src.matchAll(/\bT\('([a-z0-9.-]+)'\s*[,)]/g)) if (!TX.has(m[1])) missing.push(f + ': ' + m[1]);
+      for (const m of src.matchAll(nameRe)) if (!/\.(js|md|json)$/.test(m[1]) && !TX.has(m[1])) missing.push(f + ': ' + m[1]); /* file names are not text names */
     }
+    for (const id of require('./coach.js').TERM_IDS) if (!TX.has('terms.' + id)) missing.push('terms.' + id);
     /* names the code builds from parts */
     for (const k of C.WELCOME_KEYS) if (!TX.has('welcome.' + k)) missing.push('welcome.' + k);
+    for (const id of C.LESSON_IDS) if (id !== 'firstmove' && !TX.has('lesson-help.' + id)) missing.push('lesson-help.' + id);
     for (const m of fs.readFileSync(path.join(__dirname, 'tour.js'), 'utf8').matchAll(/\{ key: '([a-z]+)'/g))
       for (const part of ['title', 'text']) if (!TX.has(`tour.${m[1]}.${part}`)) missing.push(`tour.${m[1]}.${part}`);
     for (const p of ['whatisgo', 'history']) for (const part of ['title', 'opened']) if (!TX.has(`pages.${p}-${part}`)) missing.push(`pages.${p}-${part}`);
