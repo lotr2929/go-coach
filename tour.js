@@ -1,5 +1,5 @@
 /* Go Coach — "How to use the app": a moving tour that highlights each part of the screen in turn with a short explanation,
-   and afterwards the same explanation as a small tip when a mouse rests on that button.
+   and afterwards the same explanation as a small tip when a mouse rests on that button, or a finger presses and holds it.
    The tour moves on by itself every few seconds; Back, Pause and Next steer it, and Esc or ✕ ends it.
    Parts that are hidden at the moment (such as the win-chance bar before it has a reading) are skipped. */
 (() => {
@@ -24,11 +24,11 @@
     { sel: ['#btnUndo', '#btnRedo'], title: 'Undo and Redo', text: 'The same as the arrows under the board: take back your last move, or play it again.' },
     { sel: '#btnAnalyse', title: 'Analyse', text: 'The coach marks its best ideas A to E on the board, with each one’s chance of winning. Then ask "why A?" or "compare A and B".' },
     { sel: '#btnResign', title: 'Resign', text: 'Give up this game.' },
-    { sel: '#btnNew', title: 'New game', text: 'Choose the board size (9 × 9 is quick, 13 × 13 is medium, 19 × 19 is the full game), your colour, the computer’s level (Easy, Medium or Hard), the coach’s level and any handicap stones. The chat starts again with the welcome.' },
+    { sel: '#btnNew', title: 'New game', text: 'Choose the board size (9 × 9 is quick, 13 × 13 is medium, 19 × 19 is the full game), your colour, the computer’s level (Easy, Medium or Hard), the coach’s level and any handicap stones. Starting a new game also clears the chat.' },
     { sel: '.chatLog', hover: false, title: 'The chat', text: 'The coach’s messages appear here. Bold headings mark analyses, reviews and explanations.' },
     { sel: '#btnChatSize', title: 'Enlarge the chat', text: 'Makes the chat fill the screen for easier reading. Tap it again to go back to the board.' },
     { sel: '.chatInput', hover: false, title: 'Ask the coach', text: 'Type anything here: "hint", "why?", "what is a ponnuki?", a point such as "D4", or a number from the welcome. Type Help to see the welcome again.' },
-    { sel: '#btnClear', title: 'Clear', text: 'Empties the chat and shows the welcome again.' },
+    { sel: '#btnClear', title: 'Clear', text: 'Empties the chat. Type Help at any time to see the welcome again.' },
     { sel: '.chatForm button[type="submit"]', title: 'Send', text: 'Sends your message. Pressing Enter does the same.' }
   ];
   const MS = 7000; /* how long each step stays when the tour moves on by itself */
@@ -101,7 +101,7 @@
     clearTimeout(timer);
     document.body.classList.remove('touring');
     const mouse = window.matchMedia && window.matchMedia('(hover: hover)').matches;
-    G.say('That was the tour. ' + (mouse ? 'Rest the mouse on any button to see its explanation again, or type 5 to replay the tour.' : 'Type 5 at any time to see it again.'));
+    G.say('That was the tour. ' + (mouse ? 'Rest the mouse on any button to see its explanation again' : 'Press and hold any button to see its explanation again') + ', or type 5 to replay the tour.');
   }
   document.addEventListener('keydown', e => {
     if (!document.body.classList.contains('touring')) return;
@@ -111,7 +111,7 @@
   });
   window.addEventListener('resize', () => { if (document.body.classList.contains('touring')) show(); });
 
-  /* ---------- tips when a mouse rests on a button ---------- */
+  /* ---------- tips: a mouse resting on a button, or a finger pressing and holding it ---------- */
   let hint = null, hintFor = null, hintTimer = 0, savedTitle = null;
   const stepFor = target => {
     for (const s of STEPS) {
@@ -126,27 +126,53 @@
     if (hintFor && savedTitle !== null) hintFor.setAttribute('title', savedTitle);
     hintFor = null; savedTitle = null;
   }
+  function showHint(f) {
+    if (!hint) { hint = mk('div', 'tourHint'); hint.setAttribute('role', 'tooltip'); document.body.append(hint); }
+    hint.innerHTML = '';
+    const h = mk('strong', 'tourTitle'); h.textContent = f.s.title;
+    const p = mk('p', 'tourText'); p.textContent = f.s.text;
+    hint.append(h, p); hint.hidden = false;
+    placeTip(hint, f.e.getBoundingClientRect());
+  }
+  const touring = () => document.body.classList.contains('touring');
+
+  /* Mouse: the tip appears after a short rest and goes when the mouse leaves. */
   document.addEventListener('pointerover', e => {
-    if (e.pointerType !== 'mouse' || document.body.classList.contains('touring')) return;
+    if (e.pointerType !== 'mouse' || touring()) return;
     const f = stepFor(e.target);
     if (!f || f.e === hintFor) return;
     hideHint();
     hintFor = f.e;
     /* The button's own browser tooltip would repeat this, so it is set aside while the tip shows. */
     if (f.e.hasAttribute('title')) { savedTitle = f.e.getAttribute('title'); f.e.removeAttribute('title'); }
-    hintTimer = setTimeout(() => {
-      if (!hint) { hint = mk('div', 'tourHint'); hint.setAttribute('role', 'tooltip'); document.body.append(hint); }
-      hint.innerHTML = '';
-      const h = mk('strong', 'tourTitle'); h.textContent = f.s.title;
-      const p = mk('p', 'tourText'); p.textContent = f.s.text;
-      hint.append(h, p); hint.hidden = false;
-      placeTip(hint, f.e.getBoundingClientRect());
-    }, 450);
+    hintTimer = setTimeout(() => showHint(f), 450);
   });
   document.addEventListener('pointerout', e => {
-    if (hintFor && !(e.relatedTarget && hintFor.contains(e.relatedTarget))) hideHint();
+    if (e.pointerType === 'mouse' && hintFor && !(e.relatedTarget && hintFor.contains(e.relatedTarget))) hideHint();
   });
-  document.addEventListener('pointerdown', hideHint, true);
+
+  /* Touch: press and hold a button for half a second to see its tip. Letting go then does not press the button.
+     The tip stays for a few seconds, or until the next touch. */
+  let hold = 0, held = false, startX = 0, startY = 0;
+  const cancelHold = () => { clearTimeout(hold); hold = 0; };
+  document.addEventListener('pointerdown', e => {
+    hideHint();
+    held = false;
+    if (e.pointerType === 'mouse' || touring()) return;
+    const f = stepFor(e.target);
+    if (!f) return;
+    startX = e.clientX; startY = e.clientY;
+    hold = setTimeout(() => {
+      hold = 0; held = true;
+      hintFor = f.e; showHint(f);
+      hintTimer = setTimeout(hideHint, 4000);
+    }, 500);
+  }, true);
+  document.addEventListener('pointermove', e => { if (hold && Math.hypot(e.clientX - startX, e.clientY - startY) > 10) cancelHold(); }, true);
+  document.addEventListener('pointerup', cancelHold, true);
+  document.addEventListener('pointercancel', cancelHold, true);
+  document.addEventListener('click', e => { if (held) { held = false; e.preventDefault(); e.stopPropagation(); } }, true);
+  document.addEventListener('contextmenu', e => { if (held || hold) e.preventDefault(); }, true);
 
   Object.assign(G, { startTour: start, TOUR_STEPS: STEPS });
 })();

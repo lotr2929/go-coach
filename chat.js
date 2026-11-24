@@ -10,7 +10,9 @@
 
   const root = $('#chat'), box = root.querySelector('.chatLog'), form = root.querySelector('.chatForm');
   const input = root.querySelector('.chatInput'), quick = root.querySelector('.quick');
-  let log = load(KEY.chat, []);
+  let log = load(KEY.chat, null);
+  const firstVisit = !Array.isArray(log); /* nothing saved yet: the welcome is shown once */
+  if (firstVisit) log = [];
   let topic = null;
 
   /* Lines written as **Heading:** appear in bold. Everything else is plain text. */
@@ -160,8 +162,8 @@
     input.value = '';
     ask(v);
   });
-  /* An empty chat starts again with the welcome. */
-  function clearChat() { log = []; store(KEY.chat, log); box.textContent = ''; if (G.showWelcome) G.showWelcome(); }
+  /* New and Clear empty the chat and leave it empty; typing Help brings back the welcome. */
+  function clearChat() { log = []; store(KEY.chat, log); box.textContent = ''; }
   $('#btnClear').addEventListener('click', () => { clearChat(); input.focus(); });
 
   /* Enlarge / shrink: the chat can cover the screen for easier reading, then go back to its usual place. */
@@ -180,10 +182,10 @@
   setBig(false);
   setChips(PLAY_CHIPS);
   /* A chat saved by an older version (it starts with the old welcome) is replaced by the new welcome. */
-  if (!log.length || /^Hello, I am your Go coach\. I am not an AI model: /.test(log[0].text)) { log = [{ who: 'coach', text: C.INTRO }]; store(KEY.chat, log); }
+  if (firstVisit || (log.length && /^Hello, I am your Go coach\. I am not an AI model: /.test(log[0].text))) { log = [{ who: 'coach', text: C.INTRO }]; store(KEY.chat, log); }
   for (const m of log) append(m.who, m.text);
 
   Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS, clearChat });
   /* The welcome's buttons are not saved with the chat, so they are added again when it was the last message. */
-  if (log[log.length - 1].text === C.INTRO && G.welcomeMenu) G.welcomeMenu();
+  if (log.length && log[log.length - 1].text === C.INTRO && G.welcomeMenu) G.welcomeMenu();
 })();

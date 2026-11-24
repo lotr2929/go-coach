@@ -59,7 +59,8 @@ async function t(name, fn) {
     const s = E.newState(9, 0); /* White D5-E5-F5 in atari; Black must capture at G5 or the group escapes */
     for (const i of [38, 30, 31, 32, 48, 49, 50]) s.board[i] = 1;
     for (const i of [39, 40, 41, 20, 60, 24]) s.board[i] = 2;
-    const r = await E.chooseMove(s, 1, { level: 'hard', ms: 300 });
+    /* 1 second, not less: at 0.3 s the search had not always settled (about 1 run in 30 played elsewhere); at 1 s it captured 60 of 60. */
+    const r = await E.chooseMove(s, 1, { level: 'hard', ms: 1000 });
     assert.strictEqual(E.coord(9, r.move), 'G5');
   });
   await t('hard level plays a legal game to the end', async () => {
