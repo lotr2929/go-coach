@@ -215,7 +215,7 @@
       return true;
     }
     if (picks.length === 1 && /\b(play|try|put|place)\b/.test(low)) {
-      if (Play.phase === 'play' && !Play.thinking && Play.s.turn === Play.human) { Play.pending = picks[0].m.move; G.onPlayTap(picks[0].m.move); }
+      if (G.myTurn(Play.s)) { Play.pending = picks[0].m.move; G.onPlayTap(picks[0].m.move); }
       else say(T('not-your-turn'));
       return true;
     }

@@ -130,3 +130,9 @@ group
 
 ## that-has
 That {colour} {what} has {libs}.
+
+## explore-back-tip
+One move back
+
+## explore-next-tip
+One move forward, or the next reply

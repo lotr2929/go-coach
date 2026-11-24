@@ -70,6 +70,17 @@ module.exports = async function (t) {
     assert(html.match(/\sdata-t="/g).length >= 40, 'expected the page\'s buttons to use data-t');
     assert.deepStrictEqual(problems, []);
   });
+  await t('"commands", "show me" and "play both sides" are understood, and each example in commands.md is', () => {
+    const r = q => C.reply(q, { n: 9 });
+    for (const q of ['commands', 'text commands', 'show me the commands', 'What can I type?', 'list of commands']) assert.strictEqual(r(q).text, TX.T('commands.list'), q);
+    assert.strictEqual(r('help').text, C.INTRO);
+    assert.strictEqual(r('show me').action, 'showme');
+    for (const q of ['play both sides', 'let me choose White\'s moves', 'both sides']) assert.deepStrictEqual([r(q).action, r(q).arg], ['both', true], q);
+    for (const q of ['computer plays', 'let the computer play']) assert.deepStrictEqual([r(q).action, r(q).arg], ['both', false], q);
+    for (const q of ['hint', 'analyse', 'what about D4?', 'play D4', 'am I in danger?', 'explain the position', 'review', 'undo', 'pass', 'resign', 'new game', 'explore D4', 'teach me', 'lessons', 'lesson 3', 'what is ko?', 'rules', 'first move', 'checklist', 'famous games', 'history of Go', 'show liberties', 'hide liberties', 'show coordinates', 'hide coordinates', 'turn on sound', 'turn off sound']) {
+      assert.notStrictEqual(r(q).text, TX.T('coach.fallback'), 'commands.md suggests "' + q + '" but the coach does not understand it');
+    }
+  });
   await t('the welcome: numbers, words and help pick the right request', () => {
     const W = require('./welcome.js');
     assert.deepStrictEqual(W.OPTIONS.map(o => o.key), C.WELCOME_KEYS);

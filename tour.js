@@ -29,7 +29,7 @@
     { key: 'new', sel: '#btnNew' },
     { key: 'chat', sel: '.chatLog', hover: false },
     { key: 'chatsize', sel: '#btnChatSize' },
-    { key: 'ask', sel: '.chatInput', hover: false },
+    { key: 'ask', sel: '.chatInput', hover: 'mouse' }, /* a tip when the mouse rests on it; on a phone, holding the box is for typing */
     { key: 'clear', sel: '#btnClear' },
     { key: 'send', sel: '.chatForm button[type="submit"]' }
   ];
@@ -116,9 +116,9 @@
 
   /* ---------- tips: a mouse resting on a button, or a finger pressing and holding it ---------- */
   let hint = null, hintFor = null, hintTimer = 0, savedTitle = null;
-  const stepFor = target => {
+  const stepFor = (target, touch) => {
     for (const s of STEPS) {
-      if (s.hover === false) continue;
+      if (s.hover === false || (touch && s.hover === 'mouse')) continue;
       for (const q of list(s)) { const e = target.closest && target.closest(q); if (e) return { s, e }; }
     }
     return null;
@@ -162,7 +162,7 @@
     hideHint();
     held = false;
     if (e.pointerType === 'mouse' || touring()) return;
-    const f = stepFor(e.target);
+    const f = stepFor(e.target, true);
     if (!f) return;
     startX = e.clientX; startY = e.clientY;
     hold = setTimeout(() => {

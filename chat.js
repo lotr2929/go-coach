@@ -69,7 +69,7 @@
   }
 
   const context = () => ({ n: Play.s ? Play.s.n : 9, phase: Play.phase, human: Play.human, topic });
-  const myTurn = () => Play.s && Play.phase === 'play' && !Play.thinking && Play.s.turn === Play.human;
+  const myTurn = () => Play.s && G.myTurn(Play.s); /* play.js: your turn, or either side's in Play both sides */
   const press = id => { const b = $(id); if (b.disabled) { say(T('cannot')); return false; } b.click(); return true; };
   const MORE_RE = /^(why|why is that( good| better)?|why there|how come|explain( that| it| more)?|tell me more|more( detail| please)?|go on|in more detail|elaborate)\W*$/i;
   const deepDive = x => CM.deepDive(E, x.s, x.idx, x.color, Play.human);
@@ -108,7 +108,9 @@
     history: () => G.openHistory(),
     kifu: () => G.openKifuList(),
     explore: idx => G.startExploring(idx),
-    exit: () => say(T('in-game'))
+    exit: () => say(T('in-game')),
+    both: on => G.setBoth(on),
+    showme: () => G.showMe()
   };
 
   /* What each request does while a lesson is open. */
@@ -142,6 +144,7 @@
     const info = G.lessonInfo();
     const teaching = !!(G.teaching && G.teaching.on), exploring = !!(G.exploring && G.exploring.on), kifu = !!(G.kifu && G.kifu.on);
     if (teaching && G.teaching.ask(q)) return;
+    if (exploring && G.stopShowMe) G.stopShowMe(); /* typing while "show me" plays stops it */
     if (exploring && G.exploring.ask(q)) return;
     if (kifu && G.kifu.ask(q)) return;
     const held = teaching || exploring || kifu;
