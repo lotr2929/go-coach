@@ -94,6 +94,7 @@
     $('#btnKNext').disabled = !session.canNext();
     $('#btnKAuto').disabled = vary;
     if (G.syncBar) G.syncBar();
+    G.syncTerrTab(); G.syncShapesTab(); /* both tabs work on a famous game, whichever mode your own game is in */
     if (settings.terr) { clearTimeout(terrTimer); terrTimer = setTimeout(() => { if (session.on && G.mapTerritory) G.mapTerritory(); }, 250); }
   }
 
