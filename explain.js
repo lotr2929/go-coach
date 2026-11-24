@@ -41,7 +41,7 @@
     if (!rB) return null;
     const A = name(n, better), B = name(n, worse);
     const who = c => (c === viewer ? 'you' : col(c)), whose = c => (c === viewer ? 'your' : col(c) + '’s');
-    const lines = [];
+    const lines = [], facts = {};
 
     /* 1. Points. */
     const gain = sg * (rA.diff - rB.diff), games = rA.sims + rB.sims;
@@ -60,10 +60,14 @@
       let t = `${cap(whose(g.color))} ${groupName(n, g)} survives in ${pct(a)}% of the games after ${A}, but in ${pct(b)}% after ${B}.`;
       if (g.color === color && a >= 0.6 && b <= 0.4) t += ` ${A} keeps it alive; ${B} lets it die.`;
       else if (g.color === o && a <= 0.4 && b >= 0.6) t += ` ${A} kills it; after ${B} it gets away.`;
+      if (g.color === color && a >= 0.5 && a - b >= 0.25) facts.rescue = true; /* for the saying (section 5) */
+      if (g.color === o && a <= 0.4 && b - a >= 0.25) facts.kill = true;
       lines.push(t);
     }
     const newB = alive(rB.own, [worse], color);
-    if (newB <= 0.35 && alive(rA.own, [better], color) > newB + 0.2) lines.push(`The stone at ${B} itself is lost in ${pct(1 - newB)}% of the games: it does not have enough room or support to survive.`);
+    facts.sacrifice = alive(rA.own, [better], color) <= 0.35;
+    if (newB <= 0.35 && alive(rA.own, [better], color) > newB + 0.2) facts.lost = true;
+    if (facts.lost) lines.push(`The stone at ${B} itself is lost in ${pct(1 - newB)}% of the games: it does not have enough room or support to survive.`);
 
     /* 3. Where on the board the points change hands. */
     const z = new Float32Array(9);
@@ -76,11 +80,18 @@
     const reply = E.candidates(sB, o, 0)[0];
     if (reply) {
       const d = CM.describeMove(E, sB, reply.move, o, viewer);
-      if (d.ok && d.concept === CM.IDEAS.rescue) lines.push(`After ${B}, ${col(o)} can answer at ${name(n, reply.move)} and rescue the stones that were in atari.`);
+      if (d.ok && d.concept === CM.IDEAS.rescue) { lines.push(`After ${B}, ${col(o)} can answer at ${name(n, reply.move)} and rescue the stones that were in atari.`); facts.kill = true; }
       else if (d.ok && [CM.IDEAS.capture, CM.IDEAS.atari, CM.IDEAS.cut].includes(d.concept)) {
         lines.push(`After ${B}, ${col(o)} can answer at ${name(n, reply.move)}: ${d.points[0].split(/(?<=\.)\s/)[0].replace(/^It /, 'it ')}`);
+        if (d.concept === CM.IDEAS.cut) facts.punished = true; else facts.rescue = true; /* a capture or atari against our stones */
       }
     }
+
+    /* 5. One Go principle or proverb that sums up the evidence above, tied back to these two moves. */
+    facts.gain = gain;
+    facts.attackB = E.geom(n).nb[worse].some(j => s.board[j] === o);
+    const saying = lib('GoProverbs', './proverbs.js').line(lib('GoProverbs', './proverbs.js').pick(facts), A, B);
+    if (saying) lines.push(saying);
     return lines.join('\n');
   }
 

@@ -77,6 +77,13 @@ async function t(name, fn) {
     const txt = await EXPLAIN.contrast(E, s, 49, 80, 1, 1, { ms: 200 });
     assert(/E4 finishes about \d+ points better/.test(txt), txt);
     assert(/White’s stone at E5 survives/.test(txt), txt);
+    assert(/Sun Tzu, The Art of War\)\. The weak group is the target: E4 catches it/.test(txt), 'the saying should fit the evidence: ' + txt);
+  });
+  await t('one Go saying, only when the evidence favours the better move', () => {
+    const P = require('./proverbs.js');
+    assert.strictEqual(P.pick({ gain: -3, rescue: true }), null);
+    assert.strictEqual(P.pick({ gain: 4, rescue: true, kill: true }).key, 'rescue');
+    assert(/^Go principle: "Give up the small to take the large\." \(Ten Golden Rules of Go\)\. Both moves have a point, but the area C3 claims/.test(P.line(P.pick({ gain: 5 }), 'C3', 'J1')));
   });
   await t('shapes: tiger, empty triangle, ponnuki, eye and cutting point are recognised', () => {
     const at = (s, c, list) => { for (const k of list) s.board[(9 - +k.slice(1)) * 9 + 'ABCDEFGHJ'.indexOf(k[0])] = c; };
