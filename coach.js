@@ -14,7 +14,7 @@
   /* The welcome: the first message in the chat, shown again by "help". welcome.js knows its five choices.
      In the chat, welcomeui.js shows INTRO_TOP, the five choices as buttons, then INTRO_END. INTRO is the whole text as saved in the chat. */
   const INTRO_TOP = 'Hello, I am your Go coach. I am not an AI model. I answer from the rules of Go and by analysing the board on your device. You can ask me to do the following:';
-  const INTRO_END = 'Type your request by typing one of the numbers above or in your own words in the box below. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt.';
+  const INTRO_END = 'Type your request by typing one of the numbers above or by clicking on one of the options. You can also make your own request simply by asking in your own words. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt.';
   const INTRO = INTRO_TOP + '\n\n1. What is Go?\n2. A Short History of Go.\n3. Teach me.\n4. Coach me.\n5. How to use the app.\n\n' + INTRO_END;
   const HELP = INTRO;
   const FIRST_MOVE_SHORT = 'Start in a corner, then the sides, then the centre: corners make territory with the fewest stones. Ask me to "explain the first move in more detail" for the full reasoning, or say "hint" for a suggestion in this position.';
