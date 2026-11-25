@@ -80,7 +80,7 @@
     },
     menu: () => G.showMenu(),
     lesson: arg => { const i = lessonIndex(arg); if (i >= 0) G.openLesson(i); else G.showMenu(); },
-    teach: () => G.teachIntro(),
+    teach: () => G.showMenu(), /* "Teach me" goes straight to the lessons (Boon, 25 Nov 2026) */
     history: () => G.openHistory(),
     kifu: () => G.openKifuList(),
     explore: idx => G.startExploring(idx),
