@@ -5,6 +5,12 @@ Small messages from all over the app: colour names, short notices (toasts), Sett
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 Words in curly brackets, such as {count}, are filled in by the app: keep them.
 
+## count-white
+{count} White stones
+
+## count-black
+{count} Black stones
+
 ## black
 Black
 

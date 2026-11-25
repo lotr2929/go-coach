@@ -40,6 +40,26 @@ window.GC = {};
   const colourName = c => T(c === 1 ? 'app.black' : 'app.white');
   const REASONS = { occupied: T('app.reason.occupied'), ko: T('app.reason.ko'), suicide: T('app.reason.suicide') };
 
+  /* The stone counts at the top of the board, "○ 3  ● 4", each with a drawn stone as tall as the letters. `mine` (1 Black,
+     2 White) is the colour you are playing, underlined; 0 underlines neither (Play both sides). Boon, 25 Nov 2026. */
+  function stoneCounts(el, nb, nw, mine) {
+    el.textContent = '';
+    for (const [c, n] of [[2, nw], [1, nb]]) {
+      const s = document.createElement('span');
+      s.className = 'cnt' + (c === mine ? ' mine' : '');
+      s.setAttribute('role', 'img'); s.setAttribute('aria-label', T('app.count-' + (c === 1 ? 'black' : 'white'), { count: n }));
+      s.append(Object.assign(document.createElement('i'), { className: 'stone ' + (c === 1 ? 'b' : 'w') }), document.createTextNode(String(n)));
+      el.append(s);
+    }
+  }
+  /* Text with ● and ○ in it (such as the prisoners line), shown with the same drawn stones as the counts. */
+  function stoneText(el, text) {
+    el.textContent = '';
+    for (const part of String(text).split(/([●○])/)) {
+      if (part === '●' || part === '○') el.append(Object.assign(document.createElement('i'), { className: 'stone ' + (part === '●' ? 'b' : 'w') }));
+      else if (part) el.append(document.createTextNode(part));
+    }
+  }
   /* The words of a clickable choice in the coach's messages (the welcome's options, the lessons menu), with a leading number
      or tick kept apart so only the words are underlined. */
   const CHOICE_RE = /^(\d+[.)]?|✓)\s+([\s\S]+)$/;
@@ -50,5 +70,5 @@ window.GC = {};
     b.append(Object.assign(document.createElement('span'), { className: 'lt', textContent: text }));
   }
 
-  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS, choiceLabel, choiceWords });
+  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS, choiceLabel, choiceWords, stoneCounts, stoneText });
 })();

@@ -88,7 +88,7 @@
       ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: G.terrOwn(), shapes: G.shapeMarks()
     });
     $('#whoTurn').textContent = session.status();
-    $('#capsInfo').textContent = window.GoText.T('play.prisoners', { black: s.caps[1], white: s.caps[2] });
+    G.stoneText($('#capsInfo'), window.GoText.T('play.prisoners', { black: s.caps[1], white: s.caps[2] }));
     $('#posInfo').hidden = true;
     const slider = $('#kifuSlider');
     slider.max = String(session.limit); slider.value = String(session.pos); slider.disabled = vary;

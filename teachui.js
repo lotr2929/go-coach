@@ -33,7 +33,7 @@
     });
     $('#whoTurn').textContent = session.status();
     $('#posInfo').hidden = true;
-    $('#capsInfo').textContent = window.GoText.T('teach.prisoners', { black: s.caps[1], white: s.caps[2] });
+    G.stoneText($('#capsInfo'), window.GoText.T('teach.prisoners', { black: s.caps[1], white: s.caps[2] }));
   }
   function startTeaching() {
     if (Play.thinking) { G.say(window.GoText.T('app.busy-thinking')); return; }

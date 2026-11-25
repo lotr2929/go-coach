@@ -4,6 +4,8 @@
   else root.GoTextData = data;
 })(typeof self !== 'undefined' ? self : this, {
  "en": {
+  "app.count-white": "{count} White stones",
+  "app.count-black": "{count} Black stones",
   "app.black": "Black",
   "app.white": "White",
   "app.reason.occupied": "That point is already taken.",
@@ -712,9 +714,6 @@
   "play.tip-opening": "Opening tip: corners first, then the sides, then the centre.",
   "play.scoring": "Scoring: tap groups to mark them dead or alive",
   "play.game-over": "Game over",
-  "play.thinking": "Computer is thinking…",
-  "play.your-move": "Your move ({colour})",
-  "play.to-play": "{colour} to play",
   "play.prisoners": "Prisoners ● {black}  ○ {white}",
   "play.coach-mode": "Coach mode",
   "play.play-mode": "Play mode",
@@ -914,8 +913,7 @@
   "screen.next-arrow": "Next",
   "screen.move-tree.aria": "Moves of this game",
   "screen.move-tree.tip": "Every move of this game. Tap one to go back to it; moves you tried before stay as branches.",
-  "setup.started": "Change the board as you like. Tap an empty point to place a stone; tap the stone at the top of the board to switch between Black and White. To remove a stone, tap it once to select it and tap it again to remove it; tapping anywhere else deselects it. Tap Done to play on from this position, or Cancel to go back to your game.",
-  "setup.status": "{stone} Placing {colour} (tap to switch)",
+  "setup.started": "Change the board as you like. Tap an empty point to place a stone; tap the stone counts at the top of the board to switch between Black and White (the colour you are placing is underlined). To remove a stone, tap it once to select it and tap it again to remove it; tapping anywhere else deselects it. Tap Done to play on from this position, or Cancel to go back to your game.",
   "setup.done-button": "Done",
   "setup.done": "Your position is set. {colour} to play.",
   "setup.removed": "I took off {count} stone(s) that had no liberties.",
@@ -1067,7 +1065,7 @@
   "tour.settings.title": "Settings",
   "tour.settings.text": "Coordinates, liberties, tap twice to place, stone sound, how long the territory map may think, copying the game record, usage logging, and Check for updates.",
   "tour.whoturn.title": "Whose move",
-  "tour.whoturn.text": "Whose turn it is, and how many stones each side has on the board.",
+  "tour.whoturn.text": "How many stones each side has on the board. Your colour is underlined.",
   "tour.ahead.title": "Who is ahead",
   "tour.ahead.text": "Each side’s chance of winning, from the computer reading the position. About 50 : 50 means the game is even. Shown in Coach mode only.",
   "tour.prisoners.title": "Prisoners",

@@ -23,7 +23,7 @@
       ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: null, shapes: null
     });
     $('#whoTurn').textContent = session.status();
-    $('#capsInfo').textContent = window.GoText.T('play.prisoners', { black: s.caps[1], white: s.caps[2] });
+    G.stoneText($('#capsInfo'), window.GoText.T('play.prisoners', { black: s.caps[1], white: s.caps[2] }));
     $('#posInfo').hidden = true;
     if (G.syncBar) G.syncBar(); /* the arrows under the board become Back and Next */
   }

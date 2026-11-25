@@ -36,9 +36,9 @@
     });
     let nb = 0, nw = 0;
     for (const v of S.board) { if (v === 1) nb++; else if (v === 2) nw++; }
-    $('#whoTurn').textContent = T('status', { stone: S.colour === 1 ? '●' : '○', colour: colourName(S.colour) });
+    G.stoneCounts($('#whoTurn'), nb, nw, S.colour); /* the colour being placed is underlined; tap the counts to switch */
     $('#whoTurn').classList.add('pick');
-    $('#capsInfo').textContent = `● ${nb}  ○ ${nw}`;
+    $('#capsInfo').textContent = '';
   }
 
   function tap(i) {

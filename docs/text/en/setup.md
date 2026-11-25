@@ -6,10 +6,7 @@ Words in curly brackets, such as {colour}, are filled in by the app: keep them.
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 
 ## started
-Change the board as you like. Tap an empty point to place a stone; tap the stone at the top of the board to switch between Black and White. To remove a stone, tap it once to select it and tap it again to remove it; tapping anywhere else deselects it. Tap Done to play on from this position, or Cancel to go back to your game.
-
-## status
-{stone} Placing {colour} (tap to switch)
+Change the board as you like. Tap an empty point to place a stone; tap the stone counts at the top of the board to switch between Black and White (the colour you are placing is underlined). To remove a stone, tap it once to select it and tap it again to remove it; tapping anywhere else deselects it. Tap Done to play on from this position, or Cancel to go back to your game.
 
 ## done-button
 Done

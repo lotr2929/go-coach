@@ -164,16 +164,17 @@
       terr: Play.phase === 'scoring' || Play.phase === 'done' ? Play.terr || null : null,
       dead: Play.phase === 'scoring' || Play.phase === 'done' ? Play.dead : null, marks: G.anaMarks(), markColor: s.turn, own: G.terrOwn(), shapes: G.shapeMarks()
     });
-    let who;
+    /* During a game the top of the board shows the stone counts, with your colour underlined (Boon, 25 Nov 2026); words appear
+       only for scoring, the result, and the coach's analysis or review in progress. */
+    let who = '';
     if (Play.phase === 'scoring') who = T('scoring');
     else if (Play.phase === 'done') who = Play.resultText || T('game-over');
-    else if (Play.thinking) who = Play.note && Play.note.tok === Play.token ? Play.note.text : T('thinking');
-    else who = Play.both || s.turn === Play.human ? T('your-move', { colour: colourName(s.turn) }) : T('to-play', { colour: colourName(s.turn) });
+    else if (Play.thinking && Play.note && Play.note.tok === Play.token) who = Play.note.text;
     let nb = 0, nw = 0;
     for (let k = 0; k < s.board.length; k++) { if (s.board[k] === 1) nb++; else if (s.board[k] === 2) nw++; }
-    /* Stone counts are help, so silent Play mode leaves them out; prisoners stay, as in any game of Go. */
-    $('#whoTurn').textContent = who + (Play.phase === 'play' && !playSilent() ? `  ● ${nb}  ○ ${nw}` : '');
-    $('#capsInfo').textContent = T('prisoners', { black: s.caps[1], white: s.caps[2] });
+    if (who) $('#whoTurn').textContent = who;
+    else G.stoneCounts($('#whoTurn'), nb, nw, Play.both ? 0 : Play.human);
+    G.stoneText($('#capsInfo'), T('prisoners', { black: s.caps[1], white: s.caps[2] }));
     const playing = Play.phase === 'play';
     const mine = playing && myTurn(s);
     $('#btnPass').disabled = !mine;

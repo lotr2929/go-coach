@@ -161,7 +161,14 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 
 #lessonBar { margin-top: 0; }
 #kifuBar { margin-top: 0; }
-#whoTurn.pick { cursor: pointer; text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; } /* Set up: tap to switch colour */
+#whoTurn.pick { cursor: pointer; } /* Set up: tap the counts to switch colour */
+/* The stone counts at the top of the board (util.js stoneCounts): stones as tall as the letters; your colour underlined. */
+#whoTurn .cnt { display: inline-block; margin-right: .9em; padding-bottom: 1px; border-bottom: 2px solid transparent; white-space: nowrap; }
+#whoTurn .cnt.mine { border-bottom-color: currentColor; }
+#whoTurn .stone, #capsInfo .stone { display: inline-block; width: .85em; height: .85em; border-radius: 50%; margin-right: .3em; vertical-align: -.08em; box-sizing: border-box; border: 1px solid currentColor; }
+#whoTurn .stone.b, #capsInfo .stone.b { background: #111; }
+#whoTurn .stone.w, #capsInfo .stone.w { background: #fff; }
+#capsInfo .stone { margin: 0 .25em 0 .4em; }
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
 /* Lists in the chat sit close together, with no extra space between lines (Boon's choice). */
 .msg.menu { display: grid; gap: 0; width: 92%; padding: 0; background: none; }
