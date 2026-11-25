@@ -63,7 +63,9 @@
     return t;
   }
   function suggestions(s, res) {
-    return res.moves.slice(0, 5).map((m, i) => T('suggestion', { letter: LETS[i], point: E.coord(s.n, m.move), pct: pct(m.wr), what: CM.headline(E, s, m.move, s.turn, Play.human) })).join('\n');
+    const top = res.moves.slice(0, 5);
+    const intro = top.length ? T(s.moves.length ? 'options' : 'options-first', { count: top.length, player: colourName(s.turn), letters: top.length > 1 ? 'A to ' + LETS[top.length - 1] : 'A' }) + '\n' : '';
+    return intro + top.map((m, i) => T('suggestion', { letter: LETS[i], point: E.coord(s.n, m.move), pct: pct(m.wr), what: CM.headline(E, s, m.move, s.turn, Play.human) })).join('\n');
   }
   function positionLine(s) {
     const m = s.moves[s.moves.length - 1];
