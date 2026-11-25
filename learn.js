@@ -19,7 +19,7 @@
         items.push({ label: `${Lesson.done.has(id) ? '✓' : i + 1}  ${L.title}`, done: Lesson.done.has(id), run: () => openLesson(i) });
       }
     });
-    G.chatMenu(items);
+    G.chatMenu(items, T('menu-title'));
   }
   function openLesson(i) {
     if (Play.thinking) return say(window.GoText.T('app.busy-thinking'));

@@ -501,6 +501,7 @@
   "kifu.open-failed": "I could not open that game just now. It needs a connection the first time you open it. Please try again.",
   "kifu.pause": "Pause",
   "kifu.auto": "Auto",
+  "learn.menu-title": "The lessons",
   "learn.heading": "Lesson {count} of {total}: {title}",
   "learn.heading-chapter": "Lesson {count} of {total} ({chapter}): {title}",
   "learn.chapter-head": "Chapter {count}: {title}",

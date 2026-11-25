@@ -13,10 +13,13 @@
   let topic = null;
 
   const say = text => G.chatRecord('coach', text); /* chatlog.js keeps and shows the chat */
-  /* A list of tappable choices inside the chat (used for the lessons). */
-  function menu(items) {
+  /* A list of tappable choices inside the chat (used for the lessons), headed by its title. Like a coach's message, it folds to
+     its title once a newer message comes (chatlog.js); tap the title to open or fold it again. */
+  function menu(items, title) {
     const d = document.createElement('div');
     d.className = 'msg coach menu';
+    d.append(Object.assign(document.createElement('strong'), { className: 'menuTitle', textContent: title }));
+    d.addEventListener('click', e => { if (!e.target.closest('button')) d.classList.toggle('clip'); });
     for (const it of items) {
       if (it.head) { /* a heading between groups of choices, such as a chapter of the lessons */
         const h = document.createElement('div');

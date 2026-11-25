@@ -5,6 +5,9 @@ Words in curly brackets, such as {count}, are filled in by the app: keep them.
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 
+## menu-title
+The lessons
+
 ## heading
 Lesson {count} of {total}: {title}
 

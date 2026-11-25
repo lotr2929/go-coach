@@ -265,10 +265,12 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .chatLog .day.shut > .fb, .chatLog .sess.shut > .fb { display: none; }
 
 /* A folded coach's message: its first line only, as clickable text (italics, thin dotted underline). Tap to read it all. */
-.chatLog .msg.coach:not(.menu) { cursor: pointer; }
+.chatLog .msg.coach { cursor: pointer; }
 .chatLog .msg.clip { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; padding-top: 0; padding-bottom: 0; margin: 2px 0; font-style: italic;
   text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
-.chatLog .msg.clip .welcomeChoices { display: none; }
+.chatLog .msg.clip .welcomeChoices, .chatLog .msg.menu.clip > :not(.menuTitle) { display: none; }
+.msg.menu .menuTitle { margin: 0 2px 4px; }
+.chatLog .msg.menu.clip .menuTitle { font-weight: normal; margin: 0; }
 /* Every earlier line of the chat (a folded coach's message, or what you typed) starts with a dash. The dash hangs in the margin,
    so it is not underlined and the text keeps its single line. A folded "Position" or "Your move" message is not listed. */
 .chatLog .msg.clip, .chatLog .msg.user.line { position: relative; padding-left: 12px; }
