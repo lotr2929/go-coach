@@ -12,7 +12,7 @@ Try {point}.
 Computer plays {point}.
 
 ## why-more
-Say "why" if you would like the idea behind it.
+Ask "why" if you want an explanation for the move.
 
 ## opt.size
 Board size

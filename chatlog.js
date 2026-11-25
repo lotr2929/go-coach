@@ -61,8 +61,10 @@
     const d = document.createElement('div');
     d.className = 'msg coach';
     d.dataset.head = HEADS.some(h => String(text).startsWith(h)) ? '1' : '';
-    if (isIntro(text) && G.fillWelcome) G.fillWelcome(d, fill); /* the welcome, with its choices as buttons */
-    else fill(d, text);
+    if (isIntro(text) && G.fillWelcome) { /* the welcome, headed "Welcome", with its choices as buttons */
+      d.append(Object.assign(document.createElement('strong'), { textContent: T('welcome-head') }), document.createTextNode('\n'));
+      G.fillWelcome(d, fill);
+    } else fill(d, text);
     d.addEventListener('click', e => { if (!e.target.closest('button')) { d.classList.toggle('clip'); tidy(d); } });
     return d;
   }
