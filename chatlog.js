@@ -166,6 +166,15 @@
     clipOlder();
     box.scrollTop = box.scrollHeight;
   }
+  /* A passing notice, such as "Coach is analysing…": shown at the end of the chat while the work goes on and taken away when it
+     is done (Boon, 25 Nov 2026). It is not kept in the session. An empty text takes it away. */
+  let busyEl = null;
+  function busy(text) {
+    if (!text) { if (busyEl) busyEl.remove(); busyEl = null; return; }
+    busyEl = busyEl || Object.assign(document.createElement('div'), { className: 'msg busy' });
+    if (busyEl.textContent !== text) busyEl.textContent = text;
+    if (busyEl.parentNode !== nowEl || busyEl !== nowEl.lastChild) { nowEl.append(busyEl); box.scrollTop = box.scrollHeight; }
+  }
   /* New session: the current one goes into the history and the chat starts empty (or with the welcome). */
   function newSession(welcome) {
     archive();
@@ -181,5 +190,5 @@
   save(); render();
 
   /* firstVisit: nothing was saved yet, so this is a new install; main.js then starts the tour once. */
-  Object.assign(G, { chatRecord: record, firstVisit, chatShow: show, newChatSession: newSession, clearChat: clearNow });
+  Object.assign(G, { chatRecord: record, firstVisit, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
 })();
