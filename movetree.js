@@ -41,7 +41,7 @@
   function render() {
     const P = G.Play, s = P && P.s;
     if (!s || !P.tree) { box.hidden = true; return; }
-    box.hidden = $('#controls').hidden;
+    box.hidden = $('#controls').hidden || !P.tree.k.length; /* nothing to show until the first move is played */
     if (box.hidden) return;
     const L = layout(P.tree), x = d => 10 + d * STEP, y = r => TOP + 8 + r * ROW;
     items = L.items;

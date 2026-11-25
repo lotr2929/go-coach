@@ -77,12 +77,6 @@ Pass
 ## pass.text
 Skip your turn. When both players pass one after the other, the game ends and is counted.
 
-## undo.title
-Undo and Redo
-
-## undo.text
-The same as the arrows under the board: take back your last move, or play it again.
-
 ## analyse.title
 Analyse
 

@@ -8,17 +8,11 @@ How to edit: change the words under a "## name" heading, but leave the heading i
 ## settings.aria
 Settings
 
-## undo-arrow
-← Undo
-
 ## undo-arrow.aria
 Undo
 
 ## undo-arrow.tip
 Take back your last move
-
-## redo-arrow
-Redo →
 
 ## redo-arrow.aria
 Redo
@@ -204,10 +198,10 @@ Close
 New game
 
 ## back-arrow
-← Back
+Back
 
 ## next-arrow
-Next →
+Next
 
 ## move-tree.aria
 Moves of this game
