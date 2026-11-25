@@ -10,7 +10,9 @@
   const { $, KEY, load, store } = G;
   const T = k => window.GoText.T('chat.' + k); /* wording: docs/text/en/chat.md */
   const C = window.GoCoach;
-  const KEEP = 30, MAX = 120, PULL = 70;
+  /* Sessions kept in the history: 100 on the free tier (Boon, 25 Nov 2026). A paid tier would keep them all; there is no
+     paid tier yet. */
+  const KEEP = 100, MAX = 120, PULL = 70;
   const box = $('#chat .chatLog');
   const isIntro = text => text === C.INTRO;
   /* A welcome saved by an older version (its wording has changed since) becomes today's, so it shows its buttons. */
@@ -33,7 +35,11 @@
     if (!cur.log.some(m => !isIntro(m.text))) return;
     past.push({ start: cur.start, log: cur.log });
     if (past.length > KEEP) past = past.slice(-KEEP);
-    store(KEY.past, past);
+    /* The phone's storage for the app is limited (a few megabytes): if the history does not fit, the oldest sessions go first. */
+    for (;;) {
+      try { localStorage.setItem(KEY.past, JSON.stringify(past)); return; }
+      catch (e) { if (past.length <= 1) return; past.shift(); }
+    }
   }
 
   /* ---------- drawing ---------- */

@@ -250,11 +250,9 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
    tap it to open or close. Each session starts with its date and time; earlier sessions appear when you pull down. */
 .chatLog .stamp { text-align: center; color: var(--mute); font-size: .78rem; margin: 10px 0 4px; }
 .chatLog .q { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; padding: 6px 0; color: var(--mute); }
-.chatLog .q::before { content: ""; flex: none; width: 8px; height: 9px; background: currentColor; clip-path: polygon(0 0, 100% 50%, 0 100%); transition: transform .15s; }
-.chatLog .ex:not(.shut) > .q::before { transform: rotate(90deg); }
+.chatLog .q::before { content: "•"; flex: none; }
 .chatLog .ex:not(.shut) > .q { color: var(--ink); }
 .chatLog .ex.shut > .ans { display: none; }
 .chatLog .ans > .msg { margin-top: 2px; }
 .chatLog .past { padding-bottom: 6px; }
 .chatLog .pullHint { display: block; width: 100%; text-align: center; color: var(--mute); font-size: .78rem; padding: 2px 0 6px; }
-@media (prefers-reduced-motion: reduce) { .chatLog .q::before { transition: none; } }
