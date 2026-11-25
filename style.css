@@ -160,11 +160,12 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 #lessonBar { margin-top: 0; }
 #kifuBar { margin-top: 0; }
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
-.msg.menu { display: grid; gap: 6px; width: 92%; padding: 0; background: none; }
-.msg.menu .lcard { padding: 5px 8px; }
+/* Lists in the chat sit close together, with no extra space between lines (Boon's choice). */
+.msg.menu { display: grid; gap: 0; width: 92%; padding: 0; background: none; }
+.msg.menu .lcard { padding: 1px 8px; }
 /* The welcome's five choices, as buttons inside the welcome message. */
-.welcomeChoices { display: grid; gap: 6px; margin: 10px 0; white-space: normal; }
-.welcomeChoices .lcard { padding: 5px 8px; }
+.welcomeChoices { display: grid; gap: 0; margin: 6px 0; white-space: normal; }
+.welcomeChoices .lcard { padding: 1px 8px; }
 
 .chat { flex: 1 1 auto; min-height: 150px; display: flex; flex-direction: column; background: var(--surface); border: 0; border-radius: 0; overflow: hidden; position: relative; }
 /* The enlarge/shrink button at the top right of the chat; when enlarged the chat covers the screen until tapped again. */
@@ -252,7 +253,7 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 /* The chat as exchanges (chatlog.js): your question, then the coach's answer. A folded exchange shows only the question;
    tap it to open or close. Each session starts with its date and time; earlier sessions appear when you pull down. */
 .chatLog .stamp { text-align: center; color: var(--mute); font-size: .78rem; margin: 10px 0 4px; }
-.chatLog .q { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; padding: 6px 0; }
+.chatLog .q { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; padding: 1px 0; }
 .chatLog .q::before { content: "•"; flex: none; }
 .chatLog .ex.shut > .ans { display: none; }
 .chatLog .ans > .msg { margin-top: 2px; }
@@ -260,7 +261,7 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .chatLog .pullHint { display: block; width: 100%; text-align: center; color: var(--mute); font-size: .78rem; padding: 2px 0 6px; }
 
 /* The history's days and sessions (chatlog.js): a day folds its sessions, a session folds its questions. */
-.chatLog .fh { display: block; width: 100%; text-align: left; padding: 6px 0; }
+.chatLog .fh { display: block; width: 100%; text-align: left; padding: 1px 0; }
 .chatLog .day .sess { padding-left: 16px; }
 .chatLog .sess > .fb { padding-left: 16px; }
 .chatLog .day.shut > .fb, .chatLog .sess.shut > .fb { display: none; }
