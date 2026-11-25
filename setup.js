@@ -1,8 +1,9 @@
 /* Go Coach — Set up: change the stones on the board by hand, then play on from that position. It starts from the board as it
    is; a new, empty board comes from New (Boon, 25 Nov 2026).
-   Choose Black or White and tap empty points to place stones. Tap a stone to select it (a ring shows it), tap it again to remove
-   it; a tap anywhere else only deselects it. The stones are placed on a copy of the board: Done starts a game from that position
-   (who plays next is chosen on the bar), Cancel goes back to the game as it was. Wording: docs/text/en/setup.md. */
+   While setting up, the Set up button reads Done and a Cancel button appears beside it; the other buttons wait. Tap an empty
+   point to place a stone of the colour shown at the top of the board (tap it there to switch). Tap a stone to select it (a ring
+   shows it), tap it again to remove it; a tap anywhere else only deselects it. The stones are placed on a copy of the board:
+   Done plays on from that position with the same side to move, Cancel goes back to the game as it was. Wording: setup.md. */
 (() => {
   'use strict';
   const G = window.GC;
@@ -25,19 +26,19 @@
   }
 
   function render() {
-    for (const id of ['#controls', '#lessonBar', '#quizOptions', '#scorePanel', '#kifuBar']) $(id).hidden = true;
-    $('#setupBar').hidden = false; $('#chat').hidden = false; $('#posInfo').hidden = true;
+    for (const id of ['#lessonBar', '#quizOptions', '#scorePanel', '#kifuBar', '#posInfo']) $(id).hidden = true;
+    $('#controls').hidden = false; $('#chat').hidden = false;
+    for (const b of $('#controls').querySelectorAll('button')) b.disabled = b.id !== 'btnSetup' && b.id !== 'btnSCancel';
+    $('#btnSetup').textContent = T('done-button'); $('#btnSetup').classList.add('primary'); $('#btnSCancel').hidden = false;
     playView.set({
       n: S.n, board: S.board, last: -1, ko: -1, coords: settings.coords, libs: false, marks: {}, markColor: 0, hint: S.sel >= 0 ? [S.sel] : [],
       ghost: -1, ghostColor: S.colour, hoverColor: S.sel >= 0 ? 0 : S.colour, terr: null, dead: null, own: null, shapes: null
     });
     let nb = 0, nw = 0;
     for (const v of S.board) { if (v === 1) nb++; else if (v === 2) nw++; }
-    $('#whoTurn').textContent = T('status', { colour: colourName(S.colour) }) + `  ● ${nb}  ○ ${nw}`;
-    $('#capsInfo').textContent = '';
-    $('#btnSBlack').classList.toggle('primary', S.colour === 1);
-    $('#btnSWhite').classList.toggle('primary', S.colour === 2);
-    $('#btnSTurn').textContent = T(S.turn === 1 ? 'black-plays' : 'white-plays');
+    $('#whoTurn').textContent = T('status', { stone: S.colour === 1 ? '●' : '○', colour: colourName(S.colour) });
+    $('#whoTurn').classList.add('pick');
+    $('#capsInfo').textContent = `● ${nb}  ○ ${nw}`;
   }
 
   function tap(i) {
@@ -49,7 +50,9 @@
 
   function close() {
     S.on = false; S.sel = -1;
-    $('#setupBar').hidden = true;
+    for (const b of $('#controls').querySelectorAll('button')) b.disabled = false; /* renderPlay then disables what the game needs */
+    $('#btnSetup').textContent = window.GoText.T('screen.setup'); $('#btnSetup').classList.remove('primary'); $('#btnSCancel').hidden = true;
+    $('#whoTurn').classList.remove('pick');
   }
   /* Cancel: back to the game exactly as it was. */
   function cancel() {
@@ -60,7 +63,7 @@
     G.renderPlay();
     if (Play.phase === 'play') G.resumeTurn();
   }
-  /* Done: a new game from the position on the board. Stones left with no liberties are taken off first, as they could not stand. */
+  /* Done: play on from the position on the board, with the same side to move (the move list starts again from here). Stones left with no liberties are taken off first, as they could not stand. */
   function done() {
     if (!S.on) return;
     const board = Int8Array.from(S.board);
@@ -76,12 +79,9 @@
     G.resumeTurn();
   }
 
-  $('#btnSetup').onclick = start;
-  $('#btnSBlack').onclick = () => { S.colour = 1; S.sel = -1; render(); };
-  $('#btnSWhite').onclick = () => { S.colour = 2; S.sel = -1; render(); };
-  $('#btnSTurn').onclick = () => { S.turn = 3 - S.turn; render(); };
+  $('#btnSetup').onclick = () => (S.on ? done() : start());
   $('#btnSCancel').onclick = cancel;
-  $('#btnSDone').onclick = done;
+  $('#whoTurn').addEventListener('click', () => { if (S.on) { S.colour = 3 - S.colour; S.sel = -1; render(); } });
 
   Object.assign(G, { setupOn: on, startSetup: start, renderSetup: render, setupTap: tap, leaveSetup: cancel });
 })();

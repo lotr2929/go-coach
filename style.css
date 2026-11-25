@@ -161,7 +161,7 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 
 #lessonBar { margin-top: 0; }
 #kifuBar { margin-top: 0; }
-#setupBar { margin-top: 0; }
+#whoTurn.pick { cursor: pointer; text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; } /* Set up: tap to switch colour */
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
 /* Lists in the chat sit close together, with no extra space between lines (Boon's choice). */
 .msg.menu { display: grid; gap: 0; width: 92%; padding: 0; background: none; }

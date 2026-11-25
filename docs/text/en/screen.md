@@ -50,17 +50,8 @@ New
 ## setup
 Set up
 
-## setup-black
-● Black
-
-## setup-white
-○ White
-
 ## setup-cancel
 Cancel
-
-## setup-done
-Done
 
 ## save
 Save
