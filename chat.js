@@ -59,7 +59,7 @@
       }
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'lcard' + (it.done ? ' done' : '');
-      b.textContent = it.label;
+      G.choiceLabel(b, it.label);
       b.addEventListener('click', it.run);
       d.append(b);
     }

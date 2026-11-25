@@ -33,7 +33,7 @@
     for (const o of W.OPTIONS) {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'lcard';
-      b.textContent = o.label;
+      G.choiceLabel(b, o.label);
       b.addEventListener('click', () => choose(o.key));
       list.append(b);
     }

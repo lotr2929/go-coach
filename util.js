@@ -40,5 +40,13 @@ window.GC = {};
   const colourName = c => T(c === 1 ? 'app.black' : 'app.white');
   const REASONS = { occupied: T('app.reason.occupied'), ko: T('app.reason.ko'), suicide: T('app.reason.suicide') };
 
-  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS });
+  /* The words of a clickable choice in the coach's messages (the welcome's options, the lessons menu), with a leading number
+     or tick kept apart so only the words are underlined. */
+  function choiceLabel(b, text) {
+    const m = /^(\d+[.)]?|✓)\s+([\s\S]+)$/.exec(text);
+    if (m) { b.append(Object.assign(document.createElement('span'), { className: 'n', textContent: m[1] })); text = m[2]; }
+    b.append(Object.assign(document.createElement('span'), { className: 'lt', textContent: text }));
+  }
+
+  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS, choiceLabel });
 })();

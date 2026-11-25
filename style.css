@@ -47,13 +47,13 @@ button.icon:hover:not(:disabled) { color: var(--ink); }
 
 main { flex: 1; min-height: 0; display: flex; justify-content: center; padding: 4px 12px 12px; }
 
-/* Buttons look like clickable text: italics with a dotted underline, no border or fill. The highlighted ones (the main action,
-   a tab that is on, a chosen option) are in the accent colour and bold. */
-button { font: inherit; font-style: italic; color: var(--ink); background: none; border: 0; border-radius: 0; padding: 3px 4px; line-height: 1.3; cursor: pointer;
-  text-decoration: underline dotted; text-decoration-color: var(--mute); text-decoration-thickness: 1.5px; text-underline-offset: 4px; transition: color .15s; }
-button:hover:not(:disabled) { color: var(--accent); text-decoration-color: var(--accent); }
+/* Buttons are plain words: no border, fill, italics or underline. A highlighted one (the main action, a tab that is on,
+   a chosen option) is bold, in the same colour. Only the clickable words inside the coach's messages are in italics with
+   a thin dotted underline (below, .msg .lcard). */
+button { font: inherit; color: var(--ink); background: none; border: 0; border-radius: 0; padding: 3px 4px; line-height: 1.3; cursor: pointer; transition: color .15s; }
+button:hover:not(:disabled) { color: var(--accent); }
 button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-button.primary { color: var(--accent); text-decoration-color: var(--accent); font-weight: 700; }
+button.primary { font-weight: 700; }
 button:disabled { opacity: .38; cursor: default; }
 
 .row { display: flex; gap: 8px; margin-top: 10px; }
@@ -90,7 +90,7 @@ button:disabled { opacity: .38; cursor: default; }
 }
 canvas { display: block; width: 100%; height: 100%; touch-action: manipulation; border-radius: 0; box-shadow: var(--board-shadow); }
 
-.note { background: var(--surface); border: 1px solid var(--line); border-radius: 0; padding: 8px 12px; margin-top: 12px; font-size: .95rem; white-space: pre-line; }
+.note { background: var(--surface); border: 0; border-radius: 0; padding: 8px 12px; margin-top: 12px; font-size: .95rem; white-space: pre-line; }
 .note p { margin: 0; }
 .small { color: var(--mute); font-size: .85rem; }
 
@@ -101,7 +101,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: manipulation; 
 .boardBar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 10px auto 0; }
 .barSide { display: flex; gap: 6px; }
 button.tab { padding: 3px 8px; font-size: .85rem; border-radius: 0; white-space: nowrap; }
-button.tab[aria-pressed="true"] { color: var(--accent); text-decoration-color: var(--accent); font-weight: 700; }
+button.tab[aria-pressed="true"] { font-weight: 700; }
 button.tab.busy { animation: tabPulse 1.2s ease-in-out infinite; }
 @keyframes tabPulse { 50% { opacity: .6; } }
 input[type="range"] { width: 100%; accent-color: var(--accent); }
@@ -119,7 +119,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .pageBody li { margin: .25rem 0; }
 .pageBody .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: .6rem 0 1rem; font: .9rem var(--sans); }
 .pageBody .cards { display: grid; gap: 8px; margin: .6rem 0; }
-.pageBody button.card { font-style: normal; text-decoration: none; display: grid; gap: 2px; width: 100%; text-align: left; padding: 9px 12px; background: #fbf8f0; color: #1d2422; border: 1px solid #cfc7b2; border-radius: 0; font-family: var(--sans); }
+.pageBody button.card { display: grid; gap: 2px; width: 100%; text-align: left; padding: 9px 12px; background: #fbf8f0; color: #1d2422; border: 1px solid #cfc7b2; border-radius: 0; font-family: var(--sans); }
 .pageBody button.card:hover { border-color: #1a5f8a; background: #fff; }
 .pageBody .cardTitle { font: 600 1rem var(--serif); }
 .pageBody .cardMeta { font-size: .8rem; color: #5a6560; }
@@ -138,15 +138,15 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .lcard.done .num { background: var(--good); border-color: var(--good); color: var(--accent-ink); }
 .lcard .t { flex: 1; font-weight: 600; }
 
-dialog { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 0; padding: 18px 20px; width: min(92vw, 420px); box-shadow: 0 20px 60px rgba(0, 0, 0, .25); }
+dialog { background: var(--surface); color: var(--ink); border: 0; border-radius: 0; padding: 18px 20px; width: min(92vw, 420px); box-shadow: 0 20px 60px rgba(0, 0, 0, .25); }
 dialog::backdrop { background: rgba(20, 24, 23, .45); }
 .opt { margin: 10px 0; }
 .opt .lbl { display: block; font-size: .85rem; color: var(--mute); margin-bottom: 4px; }
 .chips { display: flex; flex-wrap: wrap; gap: 4px 12px; }
 .chips label { position: relative; }
 .chips input { position: absolute; opacity: 0; inset: 0; }
-.chips span { display: block; padding: 3px 4px; cursor: pointer; font-style: italic; text-decoration: underline dotted; text-decoration-color: var(--mute); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
-.chips input:checked + span { color: var(--accent); text-decoration-color: var(--accent); font-weight: 700; }
+.chips span { display: block; padding: 3px 4px; cursor: pointer; }
+.chips input:checked + span { font-weight: 700; }
 .chips input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
 .switch { display: flex; gap: 10px; align-items: center; margin: 10px 0; }
 .switch input { width: 20px; height: 20px; accent-color: var(--accent); }
@@ -166,9 +166,9 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 .welcomeChoices { display: grid; gap: 6px; margin: 10px 0; white-space: normal; }
 .welcomeChoices .lcard { padding: 5px 8px; }
 
-.chat { flex: 1 1 auto; min-height: 150px; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 0; overflow: hidden; position: relative; }
+.chat { flex: 1 1 auto; min-height: 150px; display: flex; flex-direction: column; background: var(--surface); border: 0; border-radius: 0; overflow: hidden; position: relative; }
 /* The enlarge/shrink button at the top right of the chat; when enlarged the chat covers the screen until tapped again. */
-.chatSize { font-style: normal; text-decoration: none; position: absolute; top: 6px; right: 6px; z-index: 1; width: 34px; height: 34px; padding: 6px; border-radius: 0; background: var(--surface); display: grid; place-items: center; }
+.chatSize { position: absolute; top: 6px; right: 6px; z-index: 1; width: 34px; height: 34px; padding: 6px; border-radius: 0; background: var(--surface); display: grid; place-items: center; }
 .chatSize svg { width: 18px; height: 18px; fill: none; stroke: var(--mute); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 body.chatBig #chat { position: fixed; z-index: 30; top: calc(env(safe-area-inset-top) + 8px); bottom: calc(env(safe-area-inset-bottom) + 8px); left: calc(env(safe-area-inset-left) + 8px); right: calc(env(safe-area-inset-right) + 8px); min-height: 0; box-shadow: 0 8px 30px rgba(0,0,0,.5); }
 .chatLog { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 12px; }
@@ -179,8 +179,8 @@ body.chatBig #chat { position: fixed; z-index: 30; top: calc(env(safe-area-inset
 .quick button { padding: 3px 4px; font-size: .85rem; white-space: nowrap; }
 .quick:empty { display: none; }
 .chatForm { flex: none; display: flex; gap: 6px; padding: 8px 10px 10px; }
-.chatInput { flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 0; padding: 8px 12px; }
-.chatInput::placeholder { color: var(--mute); }
+.chatInput { flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--surface); border: 0; border-radius: 0; padding: 8px 2px; }
+.chatInput::placeholder { color: var(--mute); font-style: italic; }
 
 /* Phone in landscape (short screen): the title bar sits over the top of the chat panel, so the board can use almost the full height. The chips scroll in one row so the chat gets more room. */
 @media (orientation: landscape) and (max-height: 560px) {
@@ -203,7 +203,7 @@ body.chatBig #chat { position: fixed; z-index: 30; top: calc(env(safe-area-inset
 body:not(.touring) .tourShade, body:not(.touring) .tourRing, body:not(.touring) .tourTip { display: none; }
 .tourShade { position: fixed; inset: 0; z-index: 40; }
 .tourRing { position: fixed; z-index: 41; pointer-events: none; border: 3px solid var(--accent); border-radius: 0; box-shadow: 0 0 0 9999px rgba(0,0,0,.55); transition: all .35s ease; }
-.tourTip, .tourHint { position: fixed; z-index: 42; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 0; padding: 10px 14px; box-shadow: 0 8px 30px rgba(0,0,0,.25); font-size: .95rem; line-height: 1.45; }
+.tourTip, .tourHint { position: fixed; z-index: 42; background: var(--surface); color: var(--ink); border: 0; border-radius: 0; padding: 10px 14px; box-shadow: 0 8px 30px rgba(0,0,0,.25); font-size: .95rem; line-height: 1.45; }
 .tourHint { z-index: 50; pointer-events: none; font-size: .88rem; padding: 8px 12px; }
 .tourTitle { display: block; margin-bottom: 2px; }
 .tourText { margin: 0; }
@@ -219,7 +219,7 @@ button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: no
 .msg.menu .menuHead span { color: var(--mute); font-size: .88rem; }
 
 /* The move tree (movetree.js): every move of your game as a dot, with tried lines branching below. Tap a dot to go back to it. */
-.moveTree { overflow: auto; max-height: 7.5rem; background: var(--surface); border: 1px solid var(--line); border-radius: 0; padding: 4px 6px; }
+.moveTree { overflow: auto; max-height: 7.5rem; background: var(--surface); border: 0; border-radius: 0; padding: 4px 0; }
 .moveTree svg { display: block; }
 .moveTree text { fill: var(--mute); font-size: 9px; font-family: var(--sans); }
 .moveTree .ln { stroke: var(--mute); stroke-width: 1.5; fill: none; }
@@ -231,3 +231,11 @@ button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: no
 .moveTree .start { fill: var(--mute); }
 .moveTree .cur { stroke: var(--accent); stroke-width: 3; }
 .moveTree.idle { opacity: .6; pointer-events: none; }
+
+/* The clickable words inside the coach's messages (welcome choices, the lessons menu): italics with a thin dotted underline.
+   A leading number or tick (.n) is not underlined. */
+.msg .lcard { font-style: italic; }
+.msg .lcard .lt { text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
+.msg .lcard .n { font-style: normal; color: var(--mute); min-width: 1.2em; }
+.msg .lcard:hover .lt { text-decoration-color: var(--accent); }
+.chatInput:focus-visible { outline: none; } /* the chat box stays borderless while you type */
