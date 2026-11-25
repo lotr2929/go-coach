@@ -221,6 +221,7 @@
     if (verdict) say(verdict);
     if (Play.guided) say(window.GoGuide.afterHuman(E, s, i, r, Play.seen));
     maybeAI();
+    if (Play.both && s.turn === Play.human) G.coachAuto(); /* Play both sides: you chose the other side's move; the bar and the coach catch up */
   }
 
   async function maybeAI() {
