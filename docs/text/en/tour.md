@@ -89,6 +89,12 @@ Resign
 ## resign.text
 Give up this game.
 
+## save.title
+Save
+
+## save.text
+Keep this game in the cloud. Press it again to save your latest moves over the same game. Find your saved games under New, on the Saved games tab.
+
 ## new.title
 New game
 
