@@ -2,7 +2,7 @@
 
 A summary of Boon's decisions and the reasoning behind them, so any session (phone, cloud or laptop) can pick up where the last one stopped. The code changes themselves are in `docs/phone-notes/`. Update this file when a decision changes.
 
-Last updated: 24 November 2026.
+Last updated: 25 November 2026.
 
 ## Product
 - **Go Coach first.** Develop it until Boon is satisfied before approaching anyone. World of Go (neural network, subscription) comes later, funded by traction.
@@ -53,9 +53,22 @@ Last updated: 24 November 2026.
 - **Make Go Coach free for the pilot:** traction first.
 - Research notes: the IGF has no app that we could find, publishes no budget, and is closely tied to the Nihon Ki-in. Comparable learning apps charge about US$5–7 a month or US$40–50 a year (BadukPop). No app we found marks shapes on the player's own board. Competitors (SmartGo first) are summarised in `docs/competitor-apps.md`.
 
+## Go Coach grade (Boon, 25 Nov 2026; planned, not built)
+- **Goal:** a subscriber builds a grade in Go Coach from the problems they solve, the lessons they do and the games they play, and it becomes fairly accurate over time.
+- **Go Coach's own scale, not an official rank.** Shown as "Go Coach grade", in kyu, with a short note that it is Go Coach's own scale (do not suggest it is official or endorsed; Australian consumer law forbids misleading claims).
+- **Display only the grade, with two decimals** (e.g. 10.63 kyu), so it moves after every game, problem session or lesson, up or down. Boon prefers the excitement of it moving to a steadier one-decimal figure. Kyu counts down as the player improves; after 1.00 kyu comes 1 dan.
+- **How it works:** a rating like the European Go Federation's (100 points per grade). Every problem, every lesson exercise and every computer level has a fixed place on the scale; results against them move the rating. New players move faster at first. Games with undo, hints or Coach mode, the guided first game and problems solved after seeing the answer count less or not at all.
+- **Problems:** built with KataGo outside the app (answers checked, difficulty set by KataGo's human-style model: the rank that finds the answer about half the time), sorted by topic and linked to the lessons. Start with about 100 from 30 to 15 kyu, then grow to 300 to 500 up to about 5 kyu. Simple ones are also checked exhaustively by our own code.
+- **Computer ladder:** more levels between Easy, Medium and Hard (e.g. 25, 20, 15, 12, 10, 8 kyu), tuned by thinking time and the kind of mistakes made, each checked against KataGo. Go Coach's engine tops out around 5 to 10 kyu; dan grades belong to World of Go.
+- **KataGo is a measuring and building tool only.** It never goes into Go Coach's code (no neural network in the app); only its results (problems, difficulty levels, level settings) do. Its tools should live outside this repository (suggested: World of Go's repository; not decided).
+- **World of Go** would later give a more accurate, KataGo-based grade on the same scale, carrying over the Go Coach grade.
+- **Privacy:** grading on the device needs no permission. Sending players' games away for analysis needs a privacy note, anonymised data and a switch to turn it off; anything personal (e.g. problems from your own games) is opt-in. Lawyer check before charging.
+- **Accounts** are needed for the grade to follow a subscriber across devices; until then it stays on one device.
+
 ## Engine (search.js)
 - Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.
 - Measured: beat the old engine 20–0 (9×9) and 4–0 (13×13); against GNU Go 3.8 on 9×9 at Hard, 9 wins and 7 losses (about 5–10 kyu). Wins are close; losses are large, from misjudging whether a big group lives.
+- **Measured against KataGo (25 Nov 2026),** imitating human ranks with its human-style model, 9×9, 8 games each: Easy lost 0/8 to 20 kyu even and won 3/8 taking 5 stones; Medium won 3/8 against 20 kyu and 4/8 against 15 kyu; Hard won 7/8 against 15 kyu and 10 kyu, 2/8 against 5 kyu. Rough reading: Easy well below 20 kyu (about 25 to 30 kyu or weaker), Medium about 15 to 20 kyu, Hard about 6 to 8 kyu. Few games, so each could be off by a few grades; KataGo's rank imitation is less reliable on 9×9. More games are being played.
 - Next engine work, if wanted: life and death in the play-outs, ladders, not collapsing when behind.
 
 ## Open items (Boon to choose)
