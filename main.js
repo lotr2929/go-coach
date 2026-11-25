@@ -46,6 +46,8 @@
   /* ---------- start ---------- */
   playView.resize();
   if (!restoreGame()) startNewGame();
+  /* A new install starts the tour of the app once, after the screen has settled (Boon, 25 Nov 2026). */
+  if (G.firstVisit && G.startTour) setTimeout(() => G.startTour(), 800);
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('sw.js').catch(() => { /* offline mode unavailable */ });
   }
