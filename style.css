@@ -256,3 +256,10 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .chatLog .ans > .msg { margin-top: 2px; }
 .chatLog .past { padding-bottom: 6px; }
 .chatLog .pullHint { display: block; width: 100%; text-align: center; color: var(--mute); font-size: .78rem; padding: 2px 0 6px; }
+
+/* The history's days and sessions (chatlog.js): a day folds its sessions, a session folds its questions. */
+.chatLog .fh { display: block; width: 100%; text-align: left; padding: 6px 0; }
+.chatLog .day > .fh { font-weight: 600; }
+.chatLog .sess > .fh { color: var(--mute); padding-left: 14px; }
+.chatLog .sess > .fb { padding-left: 28px; }
+.chatLog .day.shut > .fb, .chatLog .sess.shut > .fb { display: none; }

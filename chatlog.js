@@ -76,9 +76,37 @@
     return ex;
   }
   const stampEl = ms => Object.assign(document.createElement('div'), { className: 'stamp', textContent: stamp(ms) });
+  const dayKey = ms => new Date(ms).toDateString(); /* the day on the device's own clock and time zone */
+  const dayName = ms => new Date(ms).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const timeName = ms => new Date(ms).toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true });
+  /* A heading that opens and closes what is under it (a day, or a session within a day). */
+  function fold(cls, label) {
+    const box = document.createElement('div');
+    box.className = cls + ' shut';
+    const h = document.createElement('button');
+    h.type = 'button'; h.className = 'fh'; h.textContent = label;
+    h.addEventListener('click', () => box.classList.toggle('shut'));
+    const inner = document.createElement('div');
+    inner.className = 'fb';
+    box.append(h, inner);
+    return box;
+  }
+  /* The history. Sessions from earlier days fold into their day: tap the day for its sessions (by time), tap a session for its
+     questions, tap a question for the answer. Earlier sessions from today show with their date and time, questions folded. */
+  function drawPast() {
+    const today = dayKey(Date.now());
+    let day = null, key = null;
+    for (const s of past) {
+      if (dayKey(s.start) === today) { drawSession(pastEl, s, true); continue; }
+      if (dayKey(s.start) !== key) { key = dayKey(s.start); day = fold('day', dayName(s.start)); pastEl.append(day); }
+      const sess = fold('sess', timeName(s.start));
+      drawSession(sess.lastChild, s, true, false);
+      day.lastChild.append(sess);
+    }
+  }
   /* A whole session's messages as exchanges. In the history every exchange is folded and the welcome is left out. */
-  function drawSession(into, s, folded) {
-    into.append(stampEl(s.start));
+  function drawSession(into, s, folded, stamped = true) {
+    if (stamped) into.append(stampEl(s.start));
     let ex = null;
     for (const m of s.log) {
       if (m.who === 'user') { ex = exchange(m.text, folded); into.append(ex); continue; }
@@ -102,7 +130,7 @@
     box.append(hintEl, pastEl, nowEl);
     pastEl.hidden = !revealed;
     hintEl.hidden = revealed || !past.length;
-    if (revealed) for (const s of past) drawSession(pastEl, s, true);
+    if (revealed) drawPast();
     openEx = drawSession(nowEl, cur, false);
     box.scrollTop = box.scrollHeight;
   }
@@ -111,7 +139,7 @@
     if (revealed || !past.length) return;
     revealed = true;
     const before = box.scrollHeight - box.scrollTop;
-    for (const s of past) drawSession(pastEl, s, true);
+    drawPast();
     pastEl.hidden = false; hintEl.hidden = true;
     box.scrollTop = Math.max(0, box.scrollHeight - before - box.clientHeight * .6);
   }
