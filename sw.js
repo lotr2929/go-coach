@@ -1,5 +1,5 @@
 /* Go Coach service worker: loads the newest files when online and falls back to its saved copy when offline. Bump VERSION when files change. */
-const VERSION = 'gocoach-1795598403225';
+const VERSION = 'gocoach-1795601770640';
 const FILES = ['./', 'index.html', 'style.css', 'text-data.js', 'text.js', 'pagetext.js', 'engine.js', 'search.js', 'proverbs.js', 'explain.js', 'shapes.js', 'lessons.js', 'util.js', 'board.js', 'play.js', 'movetree.js', 'coaching.js', 'learn.js', 'main.js', 'update.js', 'coach.js', 'commentary.js', 'curriculum.js', 'teach.js', 'teachui.js', 'explore.js', 'exploreui.js', 'welcome.js', 'welcomeui.js', 'tour.js', 'docs/text/en/pages/whatisgo.md', 'history.js', 'docs/text/en/pages/history.md', 'guide.js', 'page.js', 'sgf.js', 'kifu.js', 'kifuui.js', 'setup.js', 'terr.js', 'shapesui.js', 'boardbar.js', 'chatlog.js', 'chat.js', 'cloudsave.js', 'telemetry.js', 'fontsize.js', 'manifest.webmanifest'];
 const ICONS = ['icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 

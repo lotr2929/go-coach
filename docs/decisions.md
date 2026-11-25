@@ -68,3 +68,4 @@ Last updated: 24 November 2026.
 - **Cloud sessions** (phone, or the Desktop app set to cloud) clone GitHub fresh and work through pull requests; Boon says "merge it" to put a change live.
 - **Laptop (local) sessions** start with `git pull` on `main` in `C:\_Personal\_myApps\myGoCoach`, then read this file and the newest `docs/phone-notes/`.
 - GitHub is the meeting point; avoid changing the same thing on two devices at once.
+- **Logo and app icon (Boon, 25 Nov 2026):** two realistic stones, black behind and white in front, overlapping, with shine and a soft shadow, resting on one grid point (a cross) on the app's light grey. It replaces the board picture as the app icon (make-icons.js draws it; docs/logo.svg is the same design).
