@@ -20,7 +20,7 @@
   /* Which request does a message mean? A key from OPTIONS, 'help', or null when it is something else. */
   function match(raw) {
     const t = String(raw).toLowerCase().replace(/[^a-z0-9'\s]/g, ' ').replace(/\s+/g, ' ').trim();
-    if (/^(help|menu|start|home)$/.test(t)) return 'help';
+    if (/^(help|menu|start|home)$/.test(t) || /^((please )?(show|open|give|take|bring|go|get)( me)?( back)?( to)? )?(the )?(welcome|main menu|start (message|screen|page))( message| screen| page| menu)?( again)?( please)?$/.test(t)) return 'help';
     const num = t.match(/^(?:option |number |choice )?([1-5])$/);
     if (num) return OPTIONS[+num[1] - 1].key;
     const o = OPTIONS.find(x => x.words.test(t));

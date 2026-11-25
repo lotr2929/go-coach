@@ -1,4 +1,4 @@
-# The teacher ("Teach me")
+# The teacher ("basic rules")
 
 What the teacher says around the steps in curriculum.md: prompts, replies when you tap the board, and the outline.
 Words in curly brackets, such as {count}, are filled in by the app: keep them.
@@ -101,4 +101,4 @@ Welcome back: we are at step {count}. Say "from the beginning" to restart.
 Prisoners: ● {black}  ○ {white}
 
 ## back
-Back to your game. Say "teach me" whenever you want to carry on with the lessons.
+Back to your game. Say "basic rules" whenever you want to carry on.

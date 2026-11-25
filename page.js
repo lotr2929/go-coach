@@ -124,5 +124,21 @@
   }, true);
   document.addEventListener('keydown', e => { if (open && e.key === 'Escape') closePage(); });
 
-  Object.assign(G, { showPage, closePage, pageOpen: () => open });
+  /* An article kept whole in a Markdown file in docs/text/<language>/pages (so it can be edited without touching the code),
+     such as 'history' or 'whatisgo'. It opens in the board window and the chat only says so (docs/text/en/pages.md). */
+  async function openDoc(name) {
+    const { T, page: where } = window.GoText;
+    let page;
+    try {
+      const res = await fetch(where(name), { cache: 'no-cache' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      page = window.GoHistory.parse(await res.text());
+    } catch (e) {
+      page = { title: T(`pages.${name}-title`), blocks: [{ t: 'p', text: T('pages.failed') }] };
+    }
+    showPage(page);
+    G.say(T(`pages.${name}-opened`));
+  }
+
+  Object.assign(G, { showPage, closePage, pageOpen: () => open, openDoc, openHistory: () => openDoc('history') });
 })();

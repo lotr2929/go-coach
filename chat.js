@@ -81,6 +81,8 @@
     menu: () => G.showMenu(),
     lesson: arg => { const i = lessonIndex(arg); if (i >= 0) G.openLesson(i); else G.showMenu(); },
     teach: () => G.showMenu(), /* "Teach me" goes straight to the lessons (Boon, 25 Nov 2026) */
+    rules: () => G.startTeaching(),
+    guided: () => G.startGuidedGame(),
     history: () => G.openHistory(),
     kifu: () => G.openKifuList(),
     explore: idx => G.startExploring(idx),
@@ -101,6 +103,9 @@
     menu: () => G.showMenu(),
     lesson: arg => { const i = lessonIndex(arg); if (i >= 0) G.openLesson(i); else G.showMenu(); },
     exit: () => G.exitLesson(),
+    teach: () => G.showMenu(),
+    rules: () => G.startTeaching(),
+    guided: () => { G.exitLesson(); G.startGuidedGame(); },
     history: () => G.openHistory()
   };
 
@@ -108,6 +113,8 @@
   const TEACH_ACTIONS = {
     exit: () => (G.kifu && G.kifu.on ? G.exitKifu() : G.exploring && G.exploring.on ? G.exitExploring() : G.exitTeaching()),
     teach: () => say(T('busy')),
+    rules: () => say(T('busy')),
+    guided: () => say(T('busy')),
     history: () => G.openHistory(),
     kifu: () => G.openKifuList(),
     set: arg => { Object.assign(settings, arg); saveSettings(); }
@@ -124,7 +131,6 @@
     if (exploring && G.exploring.ask(q)) return;
     if (kifu && G.kifu.ask(q)) return;
     const held = teaching || exploring || kifu;
-    if (!info && !held && G.introAsk && G.introAsk(q)) return;
     if (!info && !held && G.welcomeAsk && G.welcomeAsk(q)) return; /* 1 to 5, help, and the welcome's requests in words */
     if (!info && !held && G.askCoach && G.askCoach(q)) return;
     if (!info && !held && G.focus === 'move' && G.lastExplain && MORE_RE.test(q)) return say(deepDive(G.lastExplain));

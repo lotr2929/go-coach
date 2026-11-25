@@ -6,8 +6,8 @@ const C = require('./coach.js');
 const CM = require('./commentary.js');
 const CUR = require('./curriculum.js');
 const TEACH = require('./teach.js');
+const WELCOME = require('./welcome.js');
 const EXPLORE = require('./explore.js');
-const INTRO = require('./intro.js');
 const HISTORY = require('./history.js');
 const GUIDE = require('./guide.js');
 const SGF = require('./sgf.js');
@@ -176,7 +176,7 @@ async function t(name, fn) {
     assert(/one liberty/.test(ask('what is atari').text));
     assert(/rule-based/.test(ask('blah blah').text));
     assert.strictEqual(ask('Teach me').action, 'teach');
-    assert.strictEqual(ask('teach me the basics of go').action, 'teach');
+    assert.strictEqual(ask('teach me the basics of go').action, 'rules');
     assert.strictEqual(ask('I am a beginner').action, 'teach');
     assert.strictEqual(ask('what happens if I play D4?').action, 'explore');
     assert.strictEqual(ask('explore D4').arg, 48);
@@ -231,24 +231,12 @@ async function t(name, fn) {
     assert.strictEqual(C.reply('explain the position', { n: 9 }).action, 'summary');
     assert.strictEqual(C.reply('what should I be thinking about?', { n: 9 }).action, 'think');
   });
-  await t('the teach-me introduction offers its choices and reads typed answers', () => {
-    assert(/weiqi/.test(INTRO.WELCOME) && /igo/.test(INTRO.WELCOME) && /baduk/.test(INTRO.WELCOME));
-    assert.deepStrictEqual(INTRO.OPTIONS.map(o => o.key), ['rules', 'history', 'play', 'lessons', 'kifu']);
-    const keys = ['rules', 'history', 'play', 'lessons', 'kifu'];
-    keys.forEach((k, i) => assert.strictEqual(INTRO.match(String(i + 1)), k, 'number ' + (i + 1)));
-    assert.strictEqual(INTRO.match('History of Go'), 'history');
-    assert.strictEqual(INTRO.match('basic rules'), 'rules');
-    assert.strictEqual(INTRO.match('Play a game'), 'play');
-    assert.strictEqual(INTRO.match('lessons and puzzles'), 'lessons');
-    assert.strictEqual(INTRO.match('famous games'), 'kifu'); assert.strictEqual(INTRO.match('game records'), 'kifu'); assert.strictEqual(INTRO.match('Kifu'), 'kifu');
-    assert.strictEqual(INTRO.match('6'), null);
-    assert.strictEqual(INTRO.match('play e5'), null);
-    assert.strictEqual(INTRO.match('what is ko?'), null);
-    assert.strictEqual(INTRO.match(''), null);
-  });
-  await t('teach me phrases open the introduction', () => {
+  await t('teach me opens the lessons; basic rules, guided game and the welcome are understood in words', () => {
     const ask = q => C.reply(q, { n: 9 });
-    for (const q of ['teach me', 'Can you teach me?', 'please teach me', 'I want to learn Go', 'Could you teach me the basics of Go?']) assert.strictEqual(ask(q).action, 'teach', q);
+    for (const q of ['teach me', 'Can you teach me?', 'please teach me', 'I want to learn Go']) assert.strictEqual(ask(q).action, 'teach', q);
+    for (const q of ['basic rules', 'Basic rules of Go', 'take me to the basic rules', 'Could you teach me the basics of Go?', 'learn the rules']) assert.strictEqual(ask(q).action, 'rules', q);
+    for (const q of ['guided game', 'play my first game', 'play with your help']) assert.strictEqual(ask(q).action, 'guided', q);
+    for (const q of ['help', 'show me the welcome message', 'welcome', 'take me back to the welcome', 'main menu']) assert.strictEqual(WELCOME.match(q), 'help', q);
     assert.strictEqual(ask('teach me').text, '');
     assert.strictEqual(ask('teach me about ko').arg.id, 'ko');
   });

@@ -141,7 +141,10 @@
       return out(T('coach.new-game'), { action: 'new', arg });
     }
     if (has(/\b(back to (the )?game|exit (the )?lesson|leave (the )?lesson|stop (the )?lesson|end (the )?lesson|return to (the )?game|resume (the )?game)\b/)) return out('', { action: 'exit' });
-    if (has(/^((can|could|would) you |please )*(teach me|teach me (the )?(basics|rules|game|go|how to play( go)?)( of go)?|teach me something( about go)?|teaching mode|start (the )?(teaching|tutorial|lessons?)( mode)?|learn go|learn (the )?(basics|game|rules)( of go)?|(the )?basics( of go)?|(i am|i'?m) (a )?beginner|new to go|(i want|i would like|i'?d like) to learn( go| how to play( go)?)?)( please)?$/)) return out('', { action: 'teach' });
+    /* The step-by-step teacher (teachui.js) and the guided first game (play.js), asked for in your own words. */
+    if (has(/\bbasic rules\b/) || has(/^((can|could|would) you |please )*(teach me (the )?(basics|rules|game|how to play( go)?)( of go)?|(the )?basics( of go)?|learn (the )?(basics|game|rules)( of go)?)( please)?$/)) return out('', { action: 'rules' });
+    if (has(/\b(guided (first )?game|(my |a )?first game|play (a game )?with (your |the )?(help|guidance))\b/)) return out('', { action: 'guided' });
+    if (has(/^((can|could|would) you |please )*(teach me|teach me (go|something)( about go)?|teaching mode|start (the )?(teaching|tutorial|lessons?)( mode)?|learn go|(i am|i'?m) (a )?beginner|new to go|(i want|i would like|i'?d like) to learn( go| how to play( go)?)?)( please)?$/)) return out('', { action: 'teach' });
     if (has(/\b(teach|lessons?|tutorial|beginner|learn( go)?|how (do|to) (i )?play|how does go work|rules( of go)?|basics)\b/)) {
       let id = null;
       const num = t.match(/lesson\s*(\d+)/);
