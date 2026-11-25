@@ -83,7 +83,7 @@
     $('#controls').hidden = true; $('#lessonBar').hidden = true; $('#quizOptions').hidden = true; $('#scorePanel').hidden = true;
     $('#kifuBar').hidden = false; $('#chat').hidden = false;
     playView.set({
-      n: v.n, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: settings.libs, marks: v.marks, hint: [],
+      n: v.n, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: settings.libs, marks: v.marks, markColor: v.turn, hint: [],
       ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: G.terrOwn(), shapes: G.shapeMarks()
     });
     $('#whoTurn').textContent = session.status();

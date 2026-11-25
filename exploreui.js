@@ -19,7 +19,7 @@
     $('#controls').hidden = true; $('#chat').hidden = false; $('#scorePanel').hidden = true;
     $('#lessonBar').hidden = true; $('#quizOptions').hidden = true;
     playView.set({
-      n: v.n, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: settings.libs, marks: {}, hint: [],
+      n: v.n, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: settings.libs, marks: {}, markColor: 0, hint: [],
       ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: null, dead: null, own: null, shapes: null
     });
     $('#whoTurn').textContent = session.status();
