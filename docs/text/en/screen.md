@@ -47,6 +47,12 @@ Resign
 ## new
 New
 
+## setup
+Set up
+
+## setup-cancel
+Cancel
+
 ## save
 Save
 

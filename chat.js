@@ -13,10 +13,13 @@
   let topic = null;
 
   const say = text => G.chatRecord('coach', text); /* chatlog.js keeps and shows the chat */
-  /* A list of tappable choices inside the chat (used for the lessons). */
-  function menu(items) {
+  /* A list of tappable choices inside the chat (used for the lessons), headed by its title. Like a coach's message, it folds to
+     its title once a newer message comes (chatlog.js); tap the title to open or fold it again. */
+  function menu(items, title) {
     const d = document.createElement('div');
     d.className = 'msg coach menu';
+    d.append(Object.assign(document.createElement('strong'), { className: 'menuTitle', textContent: title }));
+    d.addEventListener('click', e => { if (!e.target.closest('button')) d.classList.toggle('clip'); });
     for (const it of items) {
       if (it.head) { /* a heading between groups of choices, such as a chapter of the lessons */
         const h = document.createElement('div');
@@ -83,6 +86,7 @@
     teach: () => G.showMenu(), /* "Teach me" goes straight to the lessons (Boon, 25 Nov 2026) */
     rules: () => G.startTeaching(),
     guided: () => G.startGuidedGame(),
+    setup: () => G.startSetup(),
     history: () => G.openHistory(),
     kifu: () => G.openKifuList(),
     explore: idx => G.startExploring(idx),
@@ -111,7 +115,7 @@
 
   /* What each request does while the teaching mode is on: only the ones that make sense inside a lesson. */
   const TEACH_ACTIONS = {
-    exit: () => (G.kifu && G.kifu.on ? G.exitKifu() : G.exploring && G.exploring.on ? G.exitExploring() : G.exitTeaching()),
+    exit: () => (G.setupOn && G.setupOn() ? G.leaveSetup() : G.kifu && G.kifu.on ? G.exitKifu() : G.exploring && G.exploring.on ? G.exitExploring() : G.exitTeaching()),
     teach: () => say(T('busy')),
     rules: () => say(T('busy')),
     guided: () => say(T('busy')),
@@ -125,12 +129,12 @@
     if (!q) return;
     G.chatRecord('user', q); /* your question heads the exchange; the coach's answers go under it */
     const info = G.lessonInfo();
-    const teaching = !!(G.teaching && G.teaching.on), exploring = !!(G.exploring && G.exploring.on), kifu = !!(G.kifu && G.kifu.on);
+    const teaching = !!(G.teaching && G.teaching.on), exploring = !!(G.exploring && G.exploring.on), kifu = !!(G.kifu && G.kifu.on), setup = !!(G.setupOn && G.setupOn());
     if (teaching && G.teaching.ask(q)) return;
     if (exploring && G.stopShowMe) G.stopShowMe(); /* typing while "show me" plays stops it */
     if (exploring && G.exploring.ask(q)) return;
     if (kifu && G.kifu.ask(q)) return;
-    const held = teaching || exploring || kifu;
+    const held = teaching || exploring || kifu || setup;
     if (!info && !held && G.welcomeAsk && G.welcomeAsk(q)) return; /* 1 to 5, help, and the welcome's requests in words */
     if (!info && !held && G.askCoach && G.askCoach(q)) return;
     if (!info && !held && G.focus === 'move' && G.lastExplain && MORE_RE.test(q)) return say(deepDive(G.lastExplain));

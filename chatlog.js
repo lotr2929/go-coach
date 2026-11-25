@@ -71,7 +71,7 @@
   /* A folded "Position" or "Your move" message is not listed at all (Boon, 25 Nov 2026). */
   const tidy = m => m.classList.toggle('skip', m.classList.contains('clip') && m.dataset.head === '1');
   /* Fold every coach's message in the chat except the newest. */
-  const clipOlder = () => { const all = box.querySelectorAll('.msg.coach:not(.menu)'); all.forEach((m, i) => { m.classList.toggle('clip', i < all.length - 1); tidy(m); }); };
+  const clipOlder = () => { const all = box.querySelectorAll('.msg.coach'); all.forEach((m, i) => { m.classList.toggle('clip', i < all.length - 1); tidy(m); }); };
   /* What you typed: one line, starting with a dash (the dash is drawn by style.css). */
   const userLine = text => Object.assign(document.createElement('div'), { className: 'msg user line', textContent: text });
   const stampEl = ms => Object.assign(document.createElement('div'), { className: 'stamp', textContent: stamp(ms) });
@@ -163,6 +163,7 @@
   /* Something that is not kept, such as the lessons menu, shown under the current question. */
   function show(el) {
     nowEl.append(el);
+    clipOlder();
     box.scrollTop = box.scrollHeight;
   }
   /* New session: the current one goes into the history and the chat starts empty (or with the welcome). */

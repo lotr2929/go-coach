@@ -161,6 +161,14 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 
 #lessonBar { margin-top: 0; }
 #kifuBar { margin-top: 0; }
+#whoTurn.pick { cursor: pointer; } /* Set up: tap the counts to switch colour */
+/* The stone counts at the top of the board (util.js stoneCounts): stones as tall as the letters; your colour underlined. */
+#whoTurn .cnt { display: inline-block; margin-right: .9em; padding-bottom: 1px; border-bottom: 2px solid transparent; white-space: nowrap; }
+#whoTurn .cnt.mine { border-bottom-color: currentColor; }
+#whoTurn .stone, #capsInfo .stone { display: inline-block; width: .85em; height: .85em; border-radius: 50%; margin-right: .3em; vertical-align: -.08em; box-sizing: border-box; border: 1px solid currentColor; }
+#whoTurn .stone.b, #capsInfo .stone.b { background: #111; }
+#whoTurn .stone.w, #capsInfo .stone.w { background: #fff; }
+#capsInfo .stone { margin: 0 .25em 0 .4em; }
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
 /* Lists in the chat sit close together, with no extra space between lines (Boon's choice). */
 .msg.menu { display: grid; gap: 0; width: 92%; padding: 0; background: none; }
@@ -265,10 +273,12 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .chatLog .day.shut > .fb, .chatLog .sess.shut > .fb { display: none; }
 
 /* A folded coach's message: its first line only, as clickable text (italics, thin dotted underline). Tap to read it all. */
-.chatLog .msg.coach:not(.menu) { cursor: pointer; }
+.chatLog .msg.coach { cursor: pointer; }
 .chatLog .msg.clip { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; padding-top: 0; padding-bottom: 0; margin: 2px 0; font-style: italic;
   text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
-.chatLog .msg.clip .welcomeChoices { display: none; }
+.chatLog .msg.clip .welcomeChoices, .chatLog .msg.menu.clip > :not(.menuTitle) { display: none; }
+.msg.menu .menuTitle { margin: 0 2px 4px; }
+.chatLog .msg.menu.clip .menuTitle { font-weight: normal; margin: 0; }
 /* Every earlier line of the chat (a folded coach's message, or what you typed) starts with a dash. The dash hangs in the margin,
    so it is not underlined and the text keeps its single line. A folded "Position" or "Your move" message is not listed. */
 .chatLog .msg.clip, .chatLog .msg.user.line { position: relative; padding-left: 12px; }

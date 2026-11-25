@@ -27,7 +27,7 @@ Coordinates, liberties, tap twice to place, stone sound, how long the territory 
 Whose move
 
 ## whoturn.text
-Whose turn it is, and how many stones each side has on the board.
+How many stones each side has on the board. Your colour is underlined.
 
 ## ahead.title
 Who is ahead

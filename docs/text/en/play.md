@@ -80,15 +80,6 @@ Scoring: tap groups to mark them dead or alive
 ## game-over
 Game over
 
-## thinking
-Computer is thinking…
-
-## your-move
-Your move ({colour})
-
-## to-play
-{colour} to play
-
 ## prisoners
 Prisoners ● {black}  ○ {white}
 

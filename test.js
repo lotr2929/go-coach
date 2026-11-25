@@ -236,6 +236,7 @@ async function t(name, fn) {
     for (const q of ['teach me', 'Can you teach me?', 'please teach me', 'I want to learn Go']) assert.strictEqual(ask(q).action, 'teach', q);
     for (const q of ['basic rules', 'Basic rules of Go', 'take me to the basic rules', 'Could you teach me the basics of Go?', 'learn the rules']) assert.strictEqual(ask(q).action, 'rules', q);
     for (const q of ['guided game', 'play my first game', 'play with your help']) assert.strictEqual(ask(q).action, 'guided', q);
+    for (const q of ['set up', 'setup', 'set up the board', 'let me arrange the stones', 'set up a position']) assert.strictEqual(ask(q).action, 'setup', q);
     for (const q of ['help', 'show me the welcome message', 'welcome', 'take me back to the welcome', 'main menu']) assert.strictEqual(WELCOME.match(q), 'help', q);
     assert.strictEqual(ask('teach me').text, '');
     assert.strictEqual(ask('teach me about ko').arg.id, 'ko');

@@ -140,6 +140,7 @@
       const side = t.match(/\bas (black|white)\b/); if (side) arg.colour = side[1];
       return out(T('coach.new-game'), { action: 'new', arg });
     }
+    if (has(/\b(set ?up|arrange|place) (the |a |my )?(board|position|stones)\b|^(set ?up|setup)( mode)?$/)) return out('', { action: 'setup' });
     if (has(/\b(back to (the )?game|exit (the )?lesson|leave (the )?lesson|stop (the )?lesson|end (the )?lesson|return to (the )?game|resume (the )?game)\b/)) return out('', { action: 'exit' });
     /* The step-by-step teacher (teachui.js) and the guided first game (play.js), asked for in your own words. */
     if (has(/\bbasic rules\b/) || has(/^((can|could|would) you |please )*(teach me (the )?(basics|rules|game|how to play( go)?)( of go)?|(the )?basics( of go)?|learn (the )?(basics|game|rules)( of go)?)( please)?$/)) return out('', { action: 'rules' });
