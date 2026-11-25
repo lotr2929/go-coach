@@ -173,7 +173,7 @@
     let nb = 0, nw = 0;
     for (let k = 0; k < s.board.length; k++) { if (s.board[k] === 1) nb++; else if (s.board[k] === 2) nw++; }
     if (who) $('#whoTurn').textContent = who;
-    else G.stoneCounts($('#whoTurn'), nb, nw, Play.both ? 0 : Play.human);
+    else G.stoneCounts($('#whoTurn'), nb, nw, Play.both ? s.turn : Play.human); /* in Play both sides, the side to move */
     G.stoneText($('#capsInfo'), T('prisoners', { black: s.caps[1], white: s.caps[2] }));
     const playing = Play.phase === 'play';
     const mine = playing && myTurn(s);

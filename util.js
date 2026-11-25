@@ -41,7 +41,7 @@ window.GC = {};
   const REASONS = { occupied: T('app.reason.occupied'), ko: T('app.reason.ko'), suicide: T('app.reason.suicide') };
 
   /* The stone counts at the top of the board, "○ 3  ● 4", each with a drawn stone as tall as the letters. `mine` (1 Black,
-     2 White) is the colour you are playing, underlined; 0 underlines neither (Play both sides). Boon, 25 Nov 2026. */
+     2 White) is the colour you are playing, underlined (in Play both sides, the side to move). Boon, 25 Nov 2026. */
   function stoneCounts(el, nb, nw, mine) {
     el.textContent = '';
     for (const [c, n] of [[2, nw], [1, nb]]) {
