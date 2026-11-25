@@ -28,7 +28,7 @@
     $('#controls').hidden = true; $('#chat').hidden = false; $('#scorePanel').hidden = true;
     $('#lessonBar').hidden = true; $('#quizOptions').hidden = true;
     playView.set({
-      n: 9, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: v.libs, marks: v.marks, markColor: 0, hint: v.hint,
+      n: 9, board: v.board, last: v.last, ko: v.ko, coords: settings.coords, libs: v.libs, marks: v.marks, markColor: v.turn, hint: v.hint,
       ghost: -1, ghostColor: v.turn, hoverColor: v.turn, terr: v.terr, dead: null, own: v.own, shapes: null
     });
     $('#whoTurn').textContent = session.status();

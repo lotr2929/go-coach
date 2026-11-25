@@ -177,7 +177,7 @@
       for (const k of Object.keys(this.marks)) {
         const i = +k, x = px(i % n), y = px((i / n) | 0);
         /* A suggested move (A to E) on an empty point looks like the stone it would be: white letter on black for Black, and the
-           other way round for White. markColor is the side the suggestions are for (0: the plain light disc, as in the lessons). */
+           other way round for White. markColor is the side to move (0: the plain light disc). */
         const as = !this.board[i] && /^[A-E]$/.test(this.marks[k]) ? this.markColor : 0;
         if (!this.board[i]) {
           ctx.fillStyle = as === 1 ? '#111' : as === 2 ? '#fff' : 'rgba(255,255,255,.8)';
