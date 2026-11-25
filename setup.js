@@ -1,4 +1,5 @@
-/* Go Coach — Set up: arrange the stones by hand, then play on from that position.
+/* Go Coach — Set up: change the stones on the board by hand, then play on from that position. It starts from the board as it
+   is; a new, empty board comes from New (Boon, 25 Nov 2026).
    Choose Black or White and tap empty points to place stones. Tap a stone to select it (a ring shows it), tap it again to remove
    it; a tap anywhere else only deselects it. The stones are placed on a copy of the board: Done starts a game from that position
    (who plays next is chosen on the bar), Cancel goes back to the game as it was. Wording: docs/text/en/setup.md. */
@@ -79,7 +80,6 @@
   $('#btnSBlack').onclick = () => { S.colour = 1; S.sel = -1; render(); };
   $('#btnSWhite').onclick = () => { S.colour = 2; S.sel = -1; render(); };
   $('#btnSTurn').onclick = () => { S.turn = 3 - S.turn; render(); };
-  $('#btnSClear').onclick = () => { S.board.fill(0); S.sel = -1; render(); };
   $('#btnSCancel').onclick = cancel;
   $('#btnSDone').onclick = done;
 

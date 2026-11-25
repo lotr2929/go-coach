@@ -56,9 +56,6 @@ Set up
 ## setup-white
 ○ White
 
-## setup-clear
-Clear
-
 ## setup-cancel
 Cancel
 

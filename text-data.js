@@ -859,7 +859,6 @@
   "screen.setup": "Set up",
   "screen.setup-black": "● Black",
   "screen.setup-white": "○ White",
-  "screen.setup-clear": "Clear",
   "screen.setup-cancel": "Cancel",
   "screen.setup-done": "Done",
   "screen.save": "Save",
