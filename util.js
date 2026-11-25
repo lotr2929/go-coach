@@ -5,7 +5,7 @@ window.GC = {};
   const E = GoEngine, LS = GoLessons;
   const $ = s => document.querySelector(s);
   const LETTERS = 'ABCDEFGHJKLMNOPQRST';
-  const KEY = { set: 'gocoach.settings', game: 'gocoach.game', done: 'gocoach.done', chat: 'gocoach.chat' };
+  const KEY = { set: 'gocoach.settings', game: 'gocoach.game', done: 'gocoach.done', chat: 'gocoach.chat', past: 'gocoach.chatPast' };
   const load = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } };
   const store = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
 
@@ -42,11 +42,13 @@ window.GC = {};
 
   /* The words of a clickable choice in the coach's messages (the welcome's options, the lessons menu), with a leading number
      or tick kept apart so only the words are underlined. */
+  const CHOICE_RE = /^(\d+[.)]?|✓)\s+([\s\S]+)$/;
+  const choiceWords = text => { const m = CHOICE_RE.exec(text); return m ? m[2] : text; };
   function choiceLabel(b, text) {
-    const m = /^(\d+[.)]?|✓)\s+([\s\S]+)$/.exec(text);
+    const m = CHOICE_RE.exec(text);
     if (m) { b.append(Object.assign(document.createElement('span'), { className: 'n', textContent: m[1] })); text = m[2]; }
     b.append(Object.assign(document.createElement('span'), { className: 'lt', textContent: text }));
   }
 
-  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS, choiceLabel });
+  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS, choiceLabel, choiceWords });
 })();

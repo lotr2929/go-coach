@@ -160,11 +160,12 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 #lessonBar { margin-top: 0; }
 #kifuBar { margin-top: 0; }
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
-.msg.menu { display: grid; gap: 6px; width: 92%; padding: 0; background: none; }
-.msg.menu .lcard { padding: 5px 8px; }
+/* Lists in the chat sit close together, with no extra space between lines (Boon's choice). */
+.msg.menu { display: grid; gap: 0; width: 92%; padding: 0; background: none; }
+.msg.menu .lcard { padding: 1px 8px; }
 /* The welcome's five choices, as buttons inside the welcome message. */
-.welcomeChoices { display: grid; gap: 6px; margin: 10px 0; white-space: normal; }
-.welcomeChoices .lcard { padding: 5px 8px; }
+.welcomeChoices { display: grid; gap: 0; margin: 6px 0; white-space: normal; }
+.welcomeChoices .lcard { padding: 1px 8px; }
 
 .chat { flex: 1 1 auto; min-height: 150px; display: flex; flex-direction: column; background: var(--surface); border: 0; border-radius: 0; overflow: hidden; position: relative; }
 /* The enlarge/shrink button at the top right of the chat; when enlarged the chat covers the screen until tapped again. */
@@ -173,8 +174,8 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 body.chatBig #chat { position: fixed; z-index: 30; top: calc(env(safe-area-inset-top) + 8px); bottom: calc(env(safe-area-inset-bottom) + 8px); left: calc(env(safe-area-inset-left) + 8px); right: calc(env(safe-area-inset-right) + 8px); min-height: 0; box-shadow: 0 8px 30px rgba(0,0,0,.5); }
 .chatLog { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 12px; }
 .msg { max-width: 92%; width: fit-content; margin: 8px 0; padding: 9px 13px; border-radius: 0; font-size: .95rem; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
-.msg.coach { background: var(--surface-2); border-bottom-left-radius: 0; }
-.msg.user { background: var(--accent); color: var(--accent-ink); margin-left: auto; border-bottom-right-radius: 0; }
+.msg.coach { padding-left: 0; padding-right: 0; } /* no tint: the coach's words sit on the page (Boon's choice) */
+.msg.user { color: var(--mute); margin-left: auto; text-align: right; padding-right: 0; } /* what you typed: plain grey words on the right, no box */
 .quick { flex: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; }
 .quick button { padding: 3px 4px; font-size: .85rem; white-space: nowrap; }
 .quick:empty { display: none; }
@@ -235,7 +236,10 @@ button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: no
 /* The clickable words inside the coach's messages (welcome choices, the lessons menu): italics with a thin dotted underline.
    A leading number or tick (.n) is not underlined. */
 .msg .lcard { font-style: italic; }
-.msg .lcard .lt { text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
+/* Clickable words: italics with a thin dotted underline. The same look for the coach's choices and for every heading that opens
+   and closes in the chat (a day, a session, a question). */
+.msg .lcard .lt, .chatLog .link { font-style: italic; text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
+.chatLog .q:hover .link, .chatLog .fh:hover .link { text-decoration-color: var(--accent); }
 .msg .lcard .n { font-style: normal; color: var(--mute); min-width: 1.2em; }
 .msg .lcard:hover .lt { text-decoration-color: var(--accent); }
 .chatInput:focus-visible { outline: none; border-bottom-color: var(--ink); } /* the chat box keeps only its bottom line while you type, a shade darker */
@@ -245,3 +249,19 @@ button.tri { width: 36px; height: 30px; padding: 0; display: grid; place-items: 
 button.tri::before { content: ""; width: 14px; height: 16px; background: currentColor; }
 button.tri.back::before { clip-path: polygon(100% 0, 100% 100%, 0 50%); }
 button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
+
+/* The chat as exchanges (chatlog.js): your question, then the coach's answer. A folded exchange shows only the question;
+   tap it to open or close. Each session starts with its date and time; earlier sessions appear when you pull down. */
+.chatLog .stamp { text-align: center; color: var(--mute); font-size: .78rem; margin: 10px 0 4px; }
+.chatLog .q { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; padding: 1px 0; }
+.chatLog .q::before { content: "•"; flex: none; }
+.chatLog .ex.shut > .ans { display: none; }
+.chatLog .ans > .msg { margin-top: 2px; }
+.chatLog .past { padding-bottom: 6px; }
+.chatLog .pullHint { display: block; width: 100%; text-align: center; color: var(--mute); font-size: .78rem; padding: 2px 0 6px; }
+
+/* The history's days and sessions (chatlog.js): a day folds its sessions, a session folds its questions. */
+.chatLog .fh { display: block; width: 100%; text-align: left; padding: 1px 0; }
+.chatLog .day .sess { padding-left: 16px; }
+.chatLog .sess > .fb { padding-left: 16px; }
+.chatLog .day.shut > .fb, .chatLog .sess.shut > .fb { display: none; }
