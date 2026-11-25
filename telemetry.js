@@ -93,14 +93,14 @@
   /* ---------- what the chat says ---------- */
   const chatBox = document.querySelector('#chat .chatLog');
   if (chatBox) {
-    /* chatlog.js nests messages inside exchanges: a question (.q) and the coach's messages (.msg). The history (.past) is
+    /* chatlog.js lists what you typed (.msg.user) and the coach's messages (.msg.coach) one after another. The history (.past) is
        only earlier sessions shown again, so it is not logged twice. */
-    const parts = n => (n.matches('.q, .msg') ? [n] : [...n.querySelectorAll('.q, .msg')]);
+    const parts = n => (n.matches('.msg') ? [n] : [...n.querySelectorAll('.msg')]);
     new MutationObserver(list => {
       for (const m of list) for (const node of m.addedNodes) {
         if (!node.classList || node.closest('.past') || node.classList.contains('past')) continue;
         for (const n of parts(node)) {
-          const who = n.classList.contains('q') ? 'user' : 'coach';
+          const who = n.classList.contains('user') ? 'user' : 'coach';
           log('chat', { who, menu: n.classList.contains('menu'), text: (n.textContent || '').trim().slice(0, 700) });
         }
       }

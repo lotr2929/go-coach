@@ -82,6 +82,12 @@ You ({colour}) {mine}, {other} {theirs}. Prisoners: you {mycaps}, {other} {their
 ## after-move
 After move {count} ({player} {point})
 
+## options-first
+The board currently shows {count} options for {player}'s first move, marked {letters}.
+
+## options
+The board currently shows {count} options for {player}'s move, marked {letters}.
+
 ## start
 Start of the game
 

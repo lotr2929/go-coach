@@ -1,6 +1,7 @@
 /* Go Coach — how the chat is kept and laid out (Boon's design, 25 Nov 2026).
-   The chat is a list of exchanges: your question, then the coach's answer. The newest exchange is open; when you ask the next
-   question the earlier ones fold up to just the question, and tapping a question opens or closes its answer.
+   The chat is one list, oldest first: what you typed and what the coach said. Only the newest coach's message shows in full; every
+   earlier item is one line starting with a dash (tap a coach's line to read it all). The coach's "Position" and "Your move"
+   messages are left out of that list once they are no longer the newest.
    A session starts with a date and time. Only pressing New starts a new session (Boon's choice: leaving or reopening the app
    always returns you to where you were); the old one moves into the history, which you see by pulling the chat down from the top.
    chat.js decides what the coach says; this file only stores and shows it. */
@@ -55,32 +56,24 @@
   }
   /* A coach's message. Only the newest one shows in full; the others fold to their first line (Boon's choice), shown as clickable
      text: tap to read it all, tap the text again to fold it. Buttons inside a message (the welcome's choices) still work. */
+  const HEADS = ['coaching.h.position', 'coaching.h.your-move'].map(k => '**' + window.GoText.T(k) + ':**');
   function message(text) {
     const d = document.createElement('div');
     d.className = 'msg coach';
-    if (isIntro(text) && G.fillWelcome) G.fillWelcome(d, fill); /* the welcome, with its choices as buttons */
-    else fill(d, text);
-    d.addEventListener('click', e => { if (!e.target.closest('button')) d.classList.toggle('clip'); });
+    d.dataset.head = HEADS.some(h => String(text).startsWith(h)) ? '1' : '';
+    if (isIntro(text) && G.fillWelcome) { /* the welcome, headed "Welcome", with its choices as buttons */
+      d.append(Object.assign(document.createElement('strong'), { textContent: T('welcome-head') }), document.createTextNode('\n'));
+      G.fillWelcome(d, fill);
+    } else fill(d, text);
+    d.addEventListener('click', e => { if (!e.target.closest('button')) { d.classList.toggle('clip'); tidy(d); } });
     return d;
   }
+  /* A folded "Position" or "Your move" message is not listed at all (Boon, 25 Nov 2026). */
+  const tidy = m => m.classList.toggle('skip', m.classList.contains('clip') && m.dataset.head === '1');
   /* Fold every coach's message in the chat except the newest. */
-  const clipOlder = () => { const all = box.querySelectorAll('.msg.coach:not(.menu)'); all.forEach((m, i) => m.classList.toggle('clip', i < all.length - 1)); };
-  /* One exchange: the question (a button that opens and closes it) and the answers under it. The coach's words before any
-     question get a heading of their own: "Welcome" for the welcome, otherwise "Coach's notes". */
-  const heading = text => T(isIntro(text) ? 'welcome-head' : 'notes');
-  function exchange(question, shut) {
-    const ex = document.createElement('div');
-    ex.className = 'ex' + (shut ? ' shut' : '');
-    const q = document.createElement('button');
-    q.type = 'button'; q.className = 'q';
-    q.append(Object.assign(document.createElement('span'), { className: 'link', textContent: question }));
-    q.addEventListener('click', () => ex.classList.toggle('shut'));
-    ex.append(q);
-    const ans = document.createElement('div');
-    ans.className = 'ans';
-    ex.append(ans);
-    return ex;
-  }
+  const clipOlder = () => { const all = box.querySelectorAll('.msg.coach:not(.menu)'); all.forEach((m, i) => { m.classList.toggle('clip', i < all.length - 1); tidy(m); }); };
+  /* What you typed: one line, starting with a dash (the dash is drawn by style.css). */
+  const userLine = text => Object.assign(document.createElement('div'), { className: 'msg user line', textContent: text });
   const stampEl = ms => Object.assign(document.createElement('div'), { className: 'stamp', textContent: stamp(ms) });
   const dayKey = ms => new Date(ms).toDateString(); /* the day on the device's own clock and time zone */
   const dayName = ms => new Date(ms).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -99,33 +92,28 @@
     return box;
   }
   /* The history. Earlier sessions from today show only their date and time; sessions from earlier days fold into their day
-     (tap the day for its sessions by time). Tap a session for its questions, a question for its answer. */
+     (tap the day for its sessions by time). Tap a session to see its lines, a coach's line to read it all. */
   function drawPast() {
     const today = dayKey(Date.now());
     let day = null, key = null;
     for (const s of past) {
-      if (dayKey(s.start) === today) { const sess = fold('sess', stamp(s.start)); drawSession(sess.lastChild, s, true, false); pastEl.append(sess); continue; }
+      if (dayKey(s.start) === today) { const sess = fold('sess', stamp(s.start)); drawSession(sess.lastChild, s, true); pastEl.append(sess); continue; }
       if (dayKey(s.start) !== key) { key = dayKey(s.start); day = fold('day', dayName(s.start)); pastEl.append(day); }
       const sess = fold('sess', timeName(s.start));
-      drawSession(sess.lastChild, s, true, false);
+      drawSession(sess.lastChild, s, true);
       day.lastChild.append(sess);
     }
   }
-  /* A whole session's messages as exchanges. In the history every exchange is folded and the welcome is left out. */
-  function drawSession(into, s, folded, stamped = true) {
-    if (stamped) into.append(stampEl(s.start));
-    let ex = null;
+  /* A whole session's messages in order. In the history the welcome is left out. */
+  function drawSession(into, s, history) {
+    if (!history) into.append(stampEl(s.start));
     for (const m of s.log) {
-      if (m.who === 'user') { ex = exchange(m.text, folded); into.append(ex); continue; }
-      if (folded && isIntro(m.text)) continue;
-      if (!ex) { ex = exchange(heading(m.text), folded); into.append(ex); }
-      ex.lastChild.append(message(m.text));
+      if (m.who === 'user') into.append(userLine(m.text));
+      else if (!(history && isIntro(m.text))) into.append(message(m.text));
     }
-    if (!folded) [...into.querySelectorAll('.ex')].slice(0, -1).forEach(e => e.classList.add('shut'));
-    return ex;
   }
 
-  let pastEl, hintEl, nowEl, openEx;
+  let pastEl, hintEl, nowEl;
   function render() {
     box.textContent = '';
     hintEl = Object.assign(document.createElement('button'), { type: 'button', className: 'pullHint', textContent: T('history-hint') });
@@ -138,7 +126,7 @@
     pastEl.hidden = !revealed;
     hintEl.hidden = revealed || !past.length;
     if (revealed) drawPast();
-    openEx = drawSession(nowEl, cur, false);
+    drawSession(nowEl, cur, false);
     clipOlder();
     box.scrollTop = box.scrollHeight;
   }
@@ -168,20 +156,13 @@
     if (cur.log.length > MAX) cur.log.shift();
     cur.last = Date.now();
     save();
-    if (who === 'user') {
-      for (const e of nowEl.querySelectorAll('.ex')) e.classList.add('shut');
-      openEx = exchange(text, false); nowEl.append(openEx);
-    } else {
-      if (!openEx) { openEx = exchange(heading(text), false); nowEl.append(openEx); }
-      openEx.lastChild.append(message(text));
-      clipOlder();
-    }
+    nowEl.append(who === 'user' ? userLine(text) : message(text));
+    if (who === 'coach') clipOlder();
     box.scrollTop = box.scrollHeight;
   }
   /* Something that is not kept, such as the lessons menu, shown under the current question. */
   function show(el) {
-    if (!openEx) { openEx = exchange(T('notes'), false); nowEl.append(openEx); }
-    openEx.lastChild.append(el);
+    nowEl.append(el);
     box.scrollTop = box.scrollHeight;
   }
   /* New session: the current one goes into the history and the chat starts empty (or with the welcome). */
