@@ -165,15 +165,15 @@
       dead: Play.phase === 'scoring' || Play.phase === 'done' ? Play.dead : null, marks: G.anaMarks(), markColor: s.turn, own: G.terrOwn(), shapes: G.shapeMarks()
     });
     /* During a game the top of the board shows the stone counts, with your colour underlined (Boon, 25 Nov 2026); words appear
-       only for scoring, the result, and the coach's analysis or review in progress. */
+       only for scoring and the result. */
     let who = '';
     if (Play.phase === 'scoring') who = T('scoring');
     else if (Play.phase === 'done') who = Play.resultText || T('game-over');
-    else if (Play.thinking && Play.note && Play.note.tok === Play.token) who = Play.note.text;
     let nb = 0, nw = 0;
     for (let k = 0; k < s.board.length; k++) { if (s.board[k] === 1) nb++; else if (s.board[k] === 2) nw++; }
     if (who) $('#whoTurn').textContent = who;
     else G.stoneCounts($('#whoTurn'), nb, nw, Play.both ? s.turn : Play.human); /* in Play both sides, the side to move */
+    G.chatBusy(Play.thinking && Play.note && Play.note.tok === Play.token ? Play.note.text : ''); /* "Coach is analysing…" sits in the chat */
     G.stoneText($('#capsInfo'), T('prisoners', { black: s.caps[1], white: s.caps[2] }));
     const playing = Play.phase === 'play';
     const mine = playing && myTurn(s);
