@@ -155,6 +155,7 @@
     if (G.teaching && G.teaching.on) return G.renderTeach();
     if (G.exploring && G.exploring.on) return G.renderExplore();
     if (G.kifu && G.kifu.on) return G.renderKifu();
+    if (G.setupOn && G.setupOn()) return G.renderSetup();
     $('#controls').hidden = false; $('#chat').hidden = false;
     $('#lessonBar').hidden = true; $('#quizOptions').hidden = true;
     playView.set({
@@ -194,6 +195,7 @@
     const s = Play.s;
     if (!s) return;
     if (G.Lesson.on) return G.onLessonTap(i);
+    if (G.setupOn && G.setupOn()) return G.setupTap(i);
     if (G.teaching && G.teaching.on) return G.teachTap(i);
     if (G.exploring && G.exploring.on) return G.exploreTap(i);
     if (G.shapeTap && G.shapeTap(i)) return; /* a tap on a marked shape's stone explains it */
@@ -379,5 +381,5 @@
   }
 
 
-  Object.assign(G, { Play, gameRecord, saveGame, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, jumpTo, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
+  Object.assign(G, { Play, gameRecord, saveGame, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, jumpTo, giveHint, resign, confirmResult, resumePlay, startGuidedGame, resumeTurn: () => { maybeAI(); G.coachAuto(); } });
 })();

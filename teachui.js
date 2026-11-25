@@ -39,6 +39,7 @@
     if (Play.thinking) { G.say(window.GoText.T('app.busy-thinking')); return; }
     if (G.Lesson && G.Lesson.on) G.exitLesson();
     if (G.kifu && G.kifu.on) G.exitKifu(true);
+    if (G.setupOn && G.setupOn()) G.leaveSetup();
     G.setChips(CHIPS);
     session.start();
   }

@@ -47,6 +47,24 @@ Resign
 ## new
 New
 
+## setup
+Set up
+
+## setup-black
+● Black
+
+## setup-white
+○ White
+
+## setup-clear
+Clear
+
+## setup-cancel
+Cancel
+
+## setup-done
+Done
+
 ## save
 Save
 

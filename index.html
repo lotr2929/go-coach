@@ -42,10 +42,19 @@
         <button data-t="screen.redo" id="btnRedo" hidden>Redo</button>
         <button data-t="screen.analyse" id="btnAnalyse">Analyse</button>
         <button data-t="screen.resign" id="btnResign">Resign</button>
+        <button data-t="screen.setup" id="btnSetup">Set up</button>
         <button data-t="screen.save" id="btnSave">Save</button>
         <button data-t="screen.new" id="btnNew" class="primary">New</button>
       </div>
       <div data-t-aria="screen.move-tree.aria" data-t-title="screen.move-tree.tip" id="moveTree" class="moveTree" role="group" aria-label="Moves of this game" title="Every move of this game. Tap one to go back to it; moves you tried before stay as branches."></div>
+      <div class="row controls" id="setupBar" hidden>
+        <button data-t="screen.setup-black" id="btnSBlack">● Black</button>
+        <button data-t="screen.setup-white" id="btnSWhite">○ White</button>
+        <button id="btnSTurn">Black to play</button>
+        <button data-t="screen.setup-clear" id="btnSClear">Clear</button>
+        <button data-t="screen.setup-cancel" id="btnSCancel">Cancel</button>
+        <button data-t="screen.setup-done" id="btnSDone" class="primary">Done</button>
+      </div>
       <div class="row controls" id="lessonBar" hidden>
         <button data-t="screen.lesson-hint" id="btnLHint">Hint</button>
         <button data-t="screen.lesson-reset" id="btnLReset">Reset</button>
@@ -177,6 +186,7 @@
 <script src="exploreui.js"></script>
 <script src="page.js"></script>
 <script src="kifuui.js"></script>
+<script src="setup.js"></script>
 <script src="welcomeui.js"></script>
 <script src="tour.js"></script>
 <script src="chatlog.js"></script>

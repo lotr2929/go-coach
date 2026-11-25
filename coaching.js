@@ -152,7 +152,7 @@
 
   async function review() {
     const full = Play.s;
-    if (!full || Play.thinking || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on)) return;
+    if (!full || Play.thinking || Play.phase === 'setup' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on)) return;
     const tot = full.moves.length, n = full.n;
     if (!tot) return say(T('nothing-to-review'));
     const tok = ++Play.token, cancelled = () => tok !== Play.token, ms = Math.round(E.analysisMs(coachLevel(), n) / 3);

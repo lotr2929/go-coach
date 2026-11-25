@@ -48,6 +48,7 @@
     if (G.Lesson && G.Lesson.on) G.exitLesson();
     if (G.teaching && G.teaching.on) G.exitTeaching();
     if (G.exploring && G.exploring.on) G.exitExploring();
+    if (G.setupOn && G.setupOn()) G.leaveSetup();
   }
   async function openKifuGame(entry) {
     if (Play.thinking && !session.on) { G.say(window.GoText.T('app.busy-thinking')); return; }

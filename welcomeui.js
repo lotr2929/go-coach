@@ -5,7 +5,7 @@
   const G = window.GC;
   const { $, settings } = G;
   const C = window.GoCoach, W = window.GoWelcome, { T } = window.GoText;
-  const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on);
+  const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on) || (G.setupOn && G.setupOn());
 
   const ACTIONS = {
     whatisgo: () => G.openDoc('whatisgo'),

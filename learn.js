@@ -24,6 +24,7 @@
   function openLesson(i) {
     if (Play.thinking) return say(window.GoText.T('app.busy-thinking'));
     if (G.kifu && G.kifu.on) G.exitKifu(true);
+    if (G.setupOn && G.setupOn()) G.leaveSetup();
     const L = LS.list[i];
     Lesson.on = true; Lesson.idx = i; Lesson.s = LS.setup(L); Lesson.status = null; Lesson.answered = false; Lesson.hintPts = [];
     const q = $('#quizOptions'); q.innerHTML = '';

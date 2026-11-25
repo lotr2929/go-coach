@@ -10,7 +10,7 @@
   const btn = $('#btnUpdate'), ver = $('#verText'), stamp = $('#verStamp');
   if (!('serviceWorker' in navigator) || location.protocol === 'file:') { if (btn) btn.hidden = true; return; }
 
-  const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on);
+  const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on) || (G.setupOn && G.setupOn());
   let hadController = !!navigator.serviceWorker.controller, reloading = false;
   const reload = () => { if (!reloading) { reloading = true; location.reload(); } };
 
