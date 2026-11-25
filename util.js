@@ -40,11 +40,11 @@ window.GC = {};
   const colourName = c => T(c === 1 ? 'app.black' : 'app.white');
   const REASONS = { occupied: T('app.reason.occupied'), ko: T('app.reason.ko'), suicide: T('app.reason.suicide') };
 
-  /* The stone counts at the top of the board, "○ 3  ● 4", each with a drawn stone as tall as the letters. `mine` (1 Black,
+  /* The stone counts at the top of the board, "● 4  ○ 3" (Black first, Boon 25 Nov 2026), each with a drawn stone as tall as the letters. `mine` (1 Black,
      2 White) is the colour you are playing, underlined (in Play both sides, the side to move). Boon, 25 Nov 2026. */
   function stoneCounts(el, nb, nw, mine) {
     el.textContent = '';
-    for (const [c, n] of [[2, nw], [1, nb]]) {
+    for (const [c, n] of [[1, nb], [2, nw]]) {
       const s = document.createElement('span');
       s.className = 'cnt' + (c === mine ? ' mine' : '');
       s.setAttribute('role', 'img'); s.setAttribute('aria-label', T('app.count-' + (c === 1 ? 'black' : 'white'), { count: n }));
