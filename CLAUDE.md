@@ -3,7 +3,7 @@
 Owner: Boon Ong. Not a programmer: he judges the work by trying it, never by reading code. Use British English. Explain changes in plain English, briefly, and say honestly what you did not or could not check.
 
 ## What this is
-Go Coach is the beginner's version of Boon's Go app: a PWA (plain JavaScript, no build step) with a computer opponent, coach tips, a guided first game, step-by-step 9x9 lessons, a History of Go page, 100 famous games (Kifu) and local analysis (alternative moves, territory map, game review). It runs on Vercel (project go-coach) from this GitHub repository. A separate copy, World of Go, will become the version with a neural network; do not put neural-network, ONNX or TensorFlow code here.
+Go Coach is the beginner's version of Boon's Go app: a PWA (plain JavaScript, no build step) with a computer opponent, coach tips, a guided first game, step-by-step 9x9 lessons, a History of Go page, 100 famous games (Kifu) and local analysis (alternative moves, territory map, game review). It runs on Vercel (project go-coach) from this GitHub repository. A separate copy, World of Go, will become the version with a neural network; do not put neural-network, ONNX or TensorFlow code here. The one exception is `tools/katago/` (Boon, 25 Nov 2026): measuring and problem-building programs that call KataGo on a developer's or cloud computer. They are never loaded by the app or published (the folder is in .vercelignore); only their results go into the app. See tools/katago/README.md.
 
 ## Rules (set by Boon)
 1. Plain JavaScript files loaded by script tags in index.html. No dependencies, no build step. Every file stays under 500 lines: check a file's length before adding to it, and put new code in new files.
