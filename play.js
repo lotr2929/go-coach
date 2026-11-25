@@ -174,7 +174,7 @@
     if (who) $('#whoTurn').textContent = who;
     else G.stoneCounts($('#whoTurn'), nb, nw, Play.both ? s.turn : Play.human); /* in Play both sides, the side to move */
     G.chatBusy(Play.thinking && Play.note && Play.note.tok === Play.token ? Play.note.text : ''); /* "Coach is analysing…" sits in the chat */
-    G.stoneText($('#capsInfo'), T('prisoners', { black: s.caps[1], white: s.caps[2] }));
+    G.stoneText($('#capsInfo'), G.lostText('play.prisoners', s));
     const playing = Play.phase === 'play';
     const mine = playing && myTurn(s);
     $('#btnPass').disabled = !mine;

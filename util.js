@@ -60,6 +60,9 @@ window.GC = {};
       else if (part) el.append(document.createTextNode(part));
     }
   }
+  /* Prisoners as stones lost by each colour (Boon, 25 Nov 2026): "●−2 ○0". s.caps[c] counts the stones colour c took. */
+  const lostText = (key, s) => window.GoText.T(key, { black: lost(s.caps[2]), white: lost(s.caps[1]) });
+  const lost = n => n ? '\u2212' + n : '0';
   /* The words of a clickable choice in the coach's messages (the welcome's options, the lessons menu), with a leading number
      or tick kept apart so only the words are underlined. */
   const CHOICE_RE = /^(\d+[.)]?|✓)\s+([\s\S]+)$/;
@@ -70,5 +73,5 @@ window.GC = {};
     b.append(Object.assign(document.createElement('span'), { className: 'lt', textContent: text }));
   }
 
-  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS, choiceLabel, choiceWords, stoneCounts, stoneText });
+  Object.assign(window.GC, { E, LS, $, LETTERS, KEY, load, store, settings, saveSettings, toast, click, colourName, REASONS, choiceLabel, choiceWords, stoneCounts, stoneText, lostText });
 })();

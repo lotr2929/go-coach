@@ -98,7 +98,7 @@ We will learn the basics of Go on a 9×9 board, a little at a time. Tap the boar
 Welcome back: we are at step {count}. Say "from the beginning" to restart.
 
 ## prisoners
-Prisoners: ●{black} ○{white}
+●{black} ○{white}
 
 ## back
 Back to your game. Say "basic rules" whenever you want to carry on.
