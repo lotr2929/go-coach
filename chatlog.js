@@ -1,8 +1,8 @@
 /* Go Coach — how the chat is kept and laid out (Boon's design, 25 Nov 2026).
    The chat is a list of exchanges: your question, then the coach's answer. The newest exchange is open; when you ask the next
    question the earlier ones fold up to just the question, and tapping a question opens or closes its answer.
-   A session starts with a date and time. Pressing New, or opening the app after more than an hour away, starts a new session:
-   the old one moves into the history, which you see by pulling the chat down from the top.
+   A session starts with a date and time. Only pressing New starts a new session (Boon's choice: leaving or reopening the app
+   always returns you to where you were); the old one moves into the history, which you see by pulling the chat down from the top.
    chat.js decides what the coach says; this file only stores and shows it. */
 (() => {
   'use strict';
@@ -10,7 +10,7 @@
   const { $, KEY, load, store } = G;
   const T = k => window.GoText.T('chat.' + k); /* wording: docs/text/en/chat.md */
   const C = window.GoCoach;
-  const HOUR = 3600e3, KEEP = 30, MAX = 120, PULL = 70;
+  const KEEP = 30, MAX = 120, PULL = 70;
   const box = $('#chat .chatLog');
   const isIntro = text => text === C.INTRO;
   /* A welcome saved by an older version (its wording has changed since) becomes today's, so it shows its buttons. */
@@ -151,10 +151,8 @@
   function clearNow() { cur.log = []; save(); render(); }
 
   /* ---------- start ---------- */
-  const away = !firstVisit && Date.now() - (cur.last || 0) > HOUR;
   if (firstVisit) cur.log = [{ who: 'coach', text: C.INTRO }];
-  if (away) newSession(true); else { save(); render(); }
+  save(); render();
 
-  /* G.awayStart tells main.js to start a new game rather than restore the old one. */
-  Object.assign(G, { chatRecord: record, chatShow: show, newChatSession: newSession, clearChat: clearNow, awayStart: away });
+  Object.assign(G, { chatRecord: record, chatShow: show, newChatSession: newSession, clearChat: clearNow });
 })();

@@ -45,7 +45,7 @@
 
   /* ---------- start ---------- */
   playView.resize();
-  if (G.awayStart || !restoreGame()) startNewGame(); /* back after more than an hour: a new session starts with a new game */
+  if (!restoreGame()) startNewGame();
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('sw.js').catch(() => { /* offline mode unavailable */ });
   }
