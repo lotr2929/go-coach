@@ -66,7 +66,7 @@ button:disabled { opacity: .38; cursor: default; }
 .controls { margin-top: 0; flex-wrap: wrap; gap: 4px 10px; }
 .controls button { flex: 0 1 auto; min-width: 0; padding: 3px 4px; font-size: .85rem; white-space: nowrap; }
 
-#statusBar { display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 4px 18px; font-size: .9rem; padding: 0 4px 8px; }
+#statusBar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px 8px; font-size: .9rem; padding: 0 4px 8px; }
 #whoTurn { font-weight: 600; }
 #capsInfo { color: var(--mute); }
 .pos { position: relative; flex: none; width: 92px; height: 18px; background: #f1eee6; border: 1px solid var(--line); border-radius: 0; overflow: hidden; }
@@ -163,12 +163,14 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 #kifuBar { margin-top: 0; }
 #whoTurn.pick { cursor: pointer; } /* Set up: tap the counts to switch colour */
 /* The stone counts at the top of the board (util.js stoneCounts): stones as tall as the letters; your colour underlined. */
-#whoTurn .cnt { display: inline-block; margin-right: .7em; padding-bottom: 1px; border-bottom: 2px solid transparent; white-space: nowrap; }
+#whoTurn .cnt { display: inline-block; font-weight: 400; margin-right: .7em; padding-bottom: 1px; border-bottom: 2px solid transparent; white-space: nowrap; }
 #whoTurn .cnt.mine { border-bottom-color: currentColor; }
+#whoTurn .cnt:last-child { margin-right: 0; }
 #whoTurn .stone, #capsInfo .stone { display: inline-block; width: 1.15em; height: 1.15em; border-radius: 50%; margin-right: .25em; vertical-align: -.22em; box-sizing: border-box; border: 1px solid currentColor; }
 #whoTurn .stone.b, #capsInfo .stone.b { background: #111; }
 #whoTurn .stone.w, #capsInfo .stone.w { background: #fff; }
-#capsInfo .stone { margin: 0 .2em 0 .3em; }
+#capsInfo { white-space: nowrap; }
+#capsInfo .stone { margin: 0 .1em 0 .2em; }
 .chatLog .msg.busy { color: var(--mute); font-style: italic; padding-left: 0; } /* "Coach is analysing…" while it works */
 #kifuSlider { flex: 1 1 100%; margin: 6px 0 0; }
 /* Lists in the chat sit close together, with no extra space between lines (Boon's choice). */

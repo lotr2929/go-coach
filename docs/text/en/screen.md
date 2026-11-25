@@ -220,3 +220,6 @@ Moves of this game
 
 ## move-tree.tip
 Every move of this game. Tap one to go back to it; moves you tried before stay as branches.
+
+## prisoners.tip
+Prisoners: stones each colour has lost
