@@ -20,6 +20,9 @@ Last updated: 24 November 2026.
 - **Only the newest coach's message shows in full:** every earlier message folds to its first line, shown as clickable text (italics, thin dotted underline); tap it to read it all, tap the text again to fold it (Boon chose this over hiding earlier messages behind a count).
 - **Lists are tight:** items in any list (the welcome's choices, the lessons menu, the chat's days, sessions and questions) sit close together, with no extra space between lines. Keep this for future lists.
 
+## First install
+- **The tour starts by itself** the first time the app is opened (nothing saved yet), after the welcome appears. It runs once; later it starts from "How to use the app" or by typing Tour.
+
 ## The coach's voice
 - **Realistic, not idealistic or moralistic.** Never "you should be nice"; always "here is what each move costs or gains". Ethics are justified by better outcomes, as in Sun Tzu.
 - **Evidence first, saying last.** The "Why X beats Y" message plays both moves out and reports points, which groups live or die and where. One fitting principle or proverb comes at the end, tied back to the position (`proverbs.js`).

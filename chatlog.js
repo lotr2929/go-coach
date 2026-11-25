@@ -198,5 +198,6 @@
   if (firstVisit) cur.log = [{ who: 'coach', text: C.INTRO }];
   save(); render();
 
-  Object.assign(G, { chatRecord: record, chatShow: show, newChatSession: newSession, clearChat: clearNow });
+  /* firstVisit: nothing was saved yet, so this is a new install; main.js then starts the tour once. */
+  Object.assign(G, { chatRecord: record, firstVisit, chatShow: show, newChatSession: newSession, clearChat: clearNow });
 })();
