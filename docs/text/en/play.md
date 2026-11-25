@@ -81,7 +81,7 @@ Scoring: tap groups to mark them dead or alive
 Game over
 
 ## prisoners
-Prisoners ● {black}  ○ {white}
+Prisoners ●{black} ○{white}
 
 ## coach-mode
 Coach mode
