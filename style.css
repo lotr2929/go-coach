@@ -285,7 +285,7 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .chatLog .msg.clip, .chatLog .msg.user.line { position: relative; padding-left: 12px; }
 .chatLog .msg.clip::before, .chatLog .msg.user.line::before { content: "-"; position: absolute; left: 0; font-style: normal; text-decoration: none; }
 .chatLog .msg.user.line { max-width: 100%; width: auto; margin: 2px 0; padding-top: 0; padding-bottom: 0; text-align: left; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-.chatLog .msg.clip.skip { display: none; }
+.chatLog .msg.clip.skip, .chatLog .msg.user.skip { display: none; }
 
 /* The New game box has two tabs (cloudsave.js): New game and Saved games. */
 .dlgTabs { display: flex; gap: 18px; margin: 0 0 12px; border-bottom: 1px solid var(--line); }

@@ -93,6 +93,9 @@
     if (tok !== Play.token || !res) return;
     Play.thinking = false;
     last = { s, res, sig: sigOf(s) };
+    /* The analysis also measures who is ahead, so the score bar takes its estimate from it: while the coach works out the
+       choices it cannot run its own estimate (Play both sides would otherwise leave the bar empty). */
+    if (res.moves.length) est = { sig: last.sig, p: Math.round((s.turn === 1 ? res.moves[0].wr : 1 - res.moves[0].wr) * 100) };
     store(SAVED, { sig: last.sig, moves: res.moves.map(m => ({ move: m.move, wr: m.wr })), own: res.own ? Array.from(res.own, x => +x.toFixed(2)) : null, diff: res.diff, sims: res.sims });
     say(analysisText(s, res, !!auto));
     renderPlay();

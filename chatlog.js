@@ -1,7 +1,8 @@
 /* Go Coach — how the chat is kept and laid out (Boon's design, 25 Nov 2026).
    The chat is one list, oldest first: what you typed and what the coach said. Only the newest coach's message shows in full; every
    earlier item is one line starting with a dash (tap a coach's line to read it all). The coach's "Position" and "Your move"
-   messages are left out of that list once they are no longer the newest.
+   messages are left out of that list once they are no longer the newest, and so is everything said inside a lesson except the
+   lesson's heading ("Lesson 1 of 23 …"), once the chat has moved on (Boon, 25 Nov 2026).
    A session starts with a date and time. Only pressing New starts a new session (Boon's choice: leaving or reopening the app
    always returns you to where you were); the old one moves into the history, which you see by pulling the chat down from the top.
    chat.js decides what the coach says; this file only stores and shows it. */
@@ -57,9 +58,9 @@
   /* A coach's message. Only the newest one shows in full; the others fold to their first line (Boon's choice), shown as clickable
      text: tap to read it all, tap the text again to fold it. Buttons inside a message (the welcome's choices) still work. */
   const HEADS = ['coaching.h.position', 'coaching.h.your-move'].map(k => '**' + window.GoText.T(k) + ':**');
-  function message(text) {
+  function message(text, tag) {
     const d = document.createElement('div');
-    d.className = 'msg coach';
+    d.className = 'msg coach' + (tag === 'in' ? ' inner' : '');
     d.dataset.head = HEADS.some(h => String(text).startsWith(h)) ? '1' : '';
     if (isIntro(text) && G.fillWelcome) { /* the welcome, headed "Welcome", with its choices as buttons */
       d.append(Object.assign(document.createElement('strong'), { textContent: T('welcome-head') }), document.createTextNode('\n'));
@@ -69,11 +70,16 @@
     return d;
   }
   /* A folded "Position" or "Your move" message is not listed at all (Boon, 25 Nov 2026). */
-  const tidy = m => m.classList.toggle('skip', m.classList.contains('clip') && m.dataset.head === '1');
+  const tidy = m => m.classList.toggle('skip', m.classList.contains('clip') && (m.dataset.head === '1' || m.classList.contains('inner')));
   /* Fold every coach's message in the chat except the newest. */
-  const clipOlder = () => { const all = box.querySelectorAll('.msg.coach'); all.forEach((m, i) => { m.classList.toggle('clip', i < all.length - 1); tidy(m); }); };
+  /* What you typed inside a lesson ("Next lesson") goes from the list too, once a later coach's message has come. */
+  const clipOlder = () => {
+    const all = box.querySelectorAll('.msg.coach'), newest = all[all.length - 1];
+    all.forEach((m, i) => { m.classList.toggle('clip', i < all.length - 1); tidy(m); });
+    box.querySelectorAll('.msg.user.inner').forEach(u => u.classList.toggle('skip', !!newest && !!(u.compareDocumentPosition(newest) & Node.DOCUMENT_POSITION_FOLLOWING)));
+  };
   /* What you typed: one line, starting with a dash (the dash is drawn by style.css). */
-  const userLine = text => Object.assign(document.createElement('div'), { className: 'msg user line', textContent: text });
+  const userLine = (text, tag) => Object.assign(document.createElement('div'), { className: 'msg user line' + (tag === 'in' ? ' inner' : ''), textContent: text });
   const stampEl = ms => Object.assign(document.createElement('div'), { className: 'stamp', textContent: stamp(ms) });
   const dayKey = ms => new Date(ms).toDateString(); /* the day on the device's own clock and time zone */
   const dayName = ms => new Date(ms).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -108,8 +114,8 @@
   function drawSession(into, s, history) {
     if (!history) into.append(stampEl(s.start));
     for (const m of s.log) {
-      if (m.who === 'user') into.append(userLine(m.text));
-      else if (!(history && isIntro(m.text))) into.append(message(m.text));
+      if (m.who === 'user') into.append(userLine(m.text, m.tag));
+      else if (!(history && isIntro(m.text))) into.append(message(m.text, m.tag));
     }
   }
 
@@ -148,15 +154,17 @@
   box.addEventListener('wheel', e => { if (box.scrollTop <= 0 && e.deltaY < 0) reveal(); }, { passive: true });
 
   /* ---------- adding to the chat ---------- */
-  function record(who, text) {
+  /* `head` marks a lesson's heading (learn.js); anything else said while a lesson is open is tagged 'in', to be left out later. */
+  function record(who, text, head) {
     if (!text) return;
     const last = cur.log[cur.log.length - 1];
     if (who === 'coach' && last && last.who === 'coach' && last.text === text) return;
-    cur.log.push({ who, text });
+    const tag = !head && G.Lesson && G.Lesson.on ? 'in' : undefined;
+    cur.log.push(tag ? { who, text, tag } : { who, text });
     if (cur.log.length > MAX) cur.log.shift();
     cur.last = Date.now();
     save();
-    nowEl.append(who === 'user' ? userLine(text) : message(text));
+    nowEl.append(who === 'user' ? userLine(text, tag) : message(text, tag));
     if (who === 'coach') clipOlder();
     box.scrollTop = box.scrollHeight;
   }
