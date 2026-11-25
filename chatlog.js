@@ -67,7 +67,8 @@
     const ex = document.createElement('div');
     ex.className = 'ex' + (shut ? ' shut' : '');
     const q = document.createElement('button');
-    q.type = 'button'; q.className = 'q'; q.textContent = question;
+    q.type = 'button'; q.className = 'q';
+    q.append(Object.assign(document.createElement('span'), { className: 'link', textContent: question }));
     q.addEventListener('click', () => ex.classList.toggle('shut'));
     ex.append(q);
     const ans = document.createElement('div');
@@ -84,20 +85,21 @@
     const box = document.createElement('div');
     box.className = cls + ' shut';
     const h = document.createElement('button');
-    h.type = 'button'; h.className = 'fh'; h.textContent = label;
+    h.type = 'button'; h.className = 'fh';
+    h.append(Object.assign(document.createElement('span'), { className: 'link', textContent: label }));
     h.addEventListener('click', () => box.classList.toggle('shut'));
     const inner = document.createElement('div');
     inner.className = 'fb';
     box.append(h, inner);
     return box;
   }
-  /* The history. Sessions from earlier days fold into their day: tap the day for its sessions (by time), tap a session for its
-     questions, tap a question for the answer. Earlier sessions from today show with their date and time, questions folded. */
+  /* The history. Earlier sessions from today show only their date and time; sessions from earlier days fold into their day
+     (tap the day for its sessions by time). Tap a session for its questions, a question for its answer. */
   function drawPast() {
     const today = dayKey(Date.now());
     let day = null, key = null;
     for (const s of past) {
-      if (dayKey(s.start) === today) { drawSession(pastEl, s, true); continue; }
+      if (dayKey(s.start) === today) { const sess = fold('sess', stamp(s.start)); drawSession(sess.lastChild, s, true, false); pastEl.append(sess); continue; }
       if (dayKey(s.start) !== key) { key = dayKey(s.start); day = fold('day', dayName(s.start)); pastEl.append(day); }
       const sess = fold('sess', timeName(s.start));
       drawSession(sess.lastChild, s, true, false);

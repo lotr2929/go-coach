@@ -235,7 +235,10 @@ button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: no
 /* The clickable words inside the coach's messages (welcome choices, the lessons menu): italics with a thin dotted underline.
    A leading number or tick (.n) is not underlined. */
 .msg .lcard { font-style: italic; }
-.msg .lcard .lt { text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
+/* Clickable words: italics with a thin dotted underline. The same look for the coach's choices and for every heading that opens
+   and closes in the chat (a day, a session, a question). */
+.msg .lcard .lt, .chatLog .link { font-style: italic; text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
+.chatLog .q:hover .link, .chatLog .fh:hover .link { text-decoration-color: var(--accent); }
 .msg .lcard .n { font-style: normal; color: var(--mute); min-width: 1.2em; }
 .msg .lcard:hover .lt { text-decoration-color: var(--accent); }
 .chatInput:focus-visible { outline: none; border-bottom-color: var(--ink); } /* the chat box keeps only its bottom line while you type, a shade darker */
@@ -249,9 +252,8 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 /* The chat as exchanges (chatlog.js): your question, then the coach's answer. A folded exchange shows only the question;
    tap it to open or close. Each session starts with its date and time; earlier sessions appear when you pull down. */
 .chatLog .stamp { text-align: center; color: var(--mute); font-size: .78rem; margin: 10px 0 4px; }
-.chatLog .q { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; padding: 6px 0; color: var(--mute); }
+.chatLog .q { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; padding: 6px 0; }
 .chatLog .q::before { content: "•"; flex: none; }
-.chatLog .ex:not(.shut) > .q { color: var(--ink); }
 .chatLog .ex.shut > .ans { display: none; }
 .chatLog .ans > .msg { margin-top: 2px; }
 .chatLog .past { padding-bottom: 6px; }
@@ -259,7 +261,6 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 
 /* The history's days and sessions (chatlog.js): a day folds its sessions, a session folds its questions. */
 .chatLog .fh { display: block; width: 100%; text-align: left; padding: 6px 0; }
-.chatLog .day > .fh { font-weight: 600; }
-.chatLog .sess > .fh { color: var(--mute); padding-left: 14px; }
-.chatLog .sess > .fb { padding-left: 28px; }
+.chatLog .day .sess { padding-left: 16px; }
+.chatLog .sess > .fb { padding-left: 16px; }
 .chatLog .day.shut > .fb, .chatLog .sess.shut > .fb { display: none; }
