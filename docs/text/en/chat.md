@@ -42,9 +42,3 @@ Enlarge the chat
 
 ## history-hint
 Pull down to see earlier sessions
-
-## notes
-Coach's notes
-
-## welcome-head
-Welcome

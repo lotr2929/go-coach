@@ -61,8 +61,6 @@
   "chat.shrink": "Shrink the chat",
   "chat.enlarge": "Enlarge the chat",
   "chat.history-hint": "Pull down to see earlier sessions",
-  "chat.notes": "Coach's notes",
-  "chat.welcome-head": "Welcome",
   "coach.empty": "Type a question, or tap one of the suggestions below.",
   "coach.hello": "Hello! Ask for a hint, an analysis, a review of your moves, or what a Go term means.",
   "coach.thanks": "You are welcome. Ask me anything else about the position or the rules.",
