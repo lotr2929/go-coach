@@ -10,7 +10,7 @@
       this.n = 9; this.board = new Int8Array(81);
       this.coords = true; this.libs = false;
       this.last = -1; this.ko = -1; this.own = null; this.marks = {}; this.hint = []; this.terr = null; this.dead = null;
-      this.ghost = -1; this.ghostColor = 1; this.hover = -1; this.hoverColor = 0; this.shapes = null;
+      this.ghost = -1; this.ghostColor = 1; this.hover = -1; this.hoverColor = 0; this.shapes = null; this.markColor = 0;
       this.W = 0; this.dpr = 1; this.cell = 1; this.pad = 1;
       canvas.addEventListener('click', e => { const i = this.pointAt(e); if (i >= 0 && this.onTap) this.onTap(i); });
       canvas.addEventListener('pointermove', e => {
@@ -176,8 +176,15 @@
       // marks
       for (const k of Object.keys(this.marks)) {
         const i = +k, x = px(i % n), y = px((i / n) | 0);
-        if (!this.board[i]) { ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.beginPath(); ctx.arc(x, y, cell * .3, 0, 7); ctx.fill(); }
-        ctx.fillStyle = this.board[i] === 1 ? '#fff' : '#33220c';
+        /* A suggested move (A to E) on an empty point looks like the stone it would be: white letter on black for Black, and the
+           other way round for White. markColor is the side to move (0: the plain light disc). */
+        const as = !this.board[i] && /^[A-E]$/.test(this.marks[k]) ? this.markColor : 0;
+        if (!this.board[i]) {
+          ctx.fillStyle = as === 1 ? '#111' : as === 2 ? '#fff' : 'rgba(255,255,255,.8)';
+          ctx.beginPath(); ctx.arc(x, y, cell * .3, 0, 7); ctx.fill();
+          if (as === 2) { ctx.strokeStyle = '#111'; ctx.lineWidth = Math.max(1, cell * .03); ctx.stroke(); }
+        }
+        ctx.fillStyle = as === 1 || this.board[i] === 1 ? '#fff' : as === 2 ? '#111' : '#33220c';
         ctx.font = 'bold ' + Math.round(cell * .42) + 'px system-ui, sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(this.marks[k], x, y + 1);

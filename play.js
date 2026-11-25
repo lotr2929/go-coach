@@ -161,7 +161,7 @@
       n: s.n, board: s.board, last: s.last, ko: s.ko, coords: settings.coords, libs: settings.libs,
       hint: Play.hint, ghost: Play.pending, ghostColor: Play.both ? s.turn : Play.human, hoverColor: myTurn(s) ? s.turn : 0,
       terr: Play.phase === 'scoring' || Play.phase === 'done' ? Play.terr || null : null,
-      dead: Play.phase === 'scoring' || Play.phase === 'done' ? Play.dead : null, marks: G.anaMarks(), own: G.terrOwn(), shapes: G.shapeMarks()
+      dead: Play.phase === 'scoring' || Play.phase === 'done' ? Play.dead : null, marks: G.anaMarks(), markColor: s.turn, own: G.terrOwn(), shapes: G.shapeMarks()
     });
     let who;
     if (Play.phase === 'scoring') who = T('scoring');

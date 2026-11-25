@@ -55,7 +55,7 @@
     $('#lessonBar').hidden = false; $('#quizOptions').hidden = L.type !== 'quiz';
     playView.set({
       n: s.n, board: s.board, last: s.last, ko: s.ko, coords: false, libs: !!L.libs,
-      marks: LS.marksFor(L, s), hint: Lesson.hintPts, ghost: -1, hoverColor: 0, terr, dead: null, own: null, shapes: null
+      marks: LS.marksFor(L, s), markColor: s.turn, hint: Lesson.hintPts, ghost: -1, hoverColor: 0, terr, dead: null, own: null, shapes: null
     });
     $('#whoTurn').textContent = T('heading', { count: Lesson.idx + 1, total: LS.list.length, title: L.title });
     $('#capsInfo').textContent = '';
