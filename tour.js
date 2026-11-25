@@ -23,7 +23,6 @@
     { key: 'territory', sel: '#btnTerr' },
     { key: 'mode', sel: '#btnMode' },
     { key: 'pass', sel: '#btnPass' },
-    { key: 'undo', sel: ['#btnUndo', '#btnRedo'] },
     { key: 'analyse', sel: '#btnAnalyse' },
     { key: 'resign', sel: '#btnResign' },
     { key: 'new', sel: '#btnNew' },

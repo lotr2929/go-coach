@@ -1,4 +1,4 @@
-/* World of Go — the bar under the board: undo and redo arrows on the left (the Territory tab, terr.js, is on the right).
+/* World of Go — the bar under the board: undo and redo triangles on the left (the Territory tab, terr.js, is on the right).
    The arrows follow the side panel: they are enabled when its Undo and Redo are, and the whole bar hides when the panel's game buttons do
    (during lessons and the teacher). In a famous game and while exploring they step back and forward instead. */
 (() => {
@@ -15,7 +15,8 @@
     const kifu = kifuOn(), ex = exploringOn(), stepping = kifu || ex, undo = $('#btnUndoArrow'), redo = $('#btnRedoArrow');
     bar.hidden = $('#controls').hidden && !stepping;
     bar.querySelector('.barSide:last-child').hidden = ex; /* Shapes and Territory have nothing to show on the exploring copy */
-    undo.textContent = T(stepping ? 'screen.back-arrow' : 'screen.undo-arrow'); redo.textContent = T(stepping ? 'screen.next-arrow' : 'screen.redo-arrow');
+    /* The arrows are triangles drawn in CSS (.tri); their words are the spoken labels. */
+    undo.setAttribute('aria-label', T(stepping ? 'screen.back-arrow' : 'screen.undo-arrow.aria')); redo.setAttribute('aria-label', T(stepping ? 'screen.next-arrow' : 'screen.redo-arrow.aria'));
     undo.title = T(ex ? 'app.explore-back-tip' : kifu ? 'app.back-tip' : 'app.undo-tip'); redo.title = T(ex ? 'app.explore-next-tip' : kifu ? 'app.forward-tip' : 'app.redo-tip');
     if (kifu) { undo.disabled = !G.kifu.canBack(); redo.disabled = !G.kifu.canNext(); }
     else if (ex) { undo.disabled = G.exploring.T.pos <= 1; redo.disabled = false; }

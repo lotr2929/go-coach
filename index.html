@@ -24,8 +24,8 @@
       <div class="boardWrap"><canvas id="playBoard"></canvas></div>
       <div id="boardBar" class="boardBar">
         <div class="barSide">
-          <button data-t="screen.undo-arrow" data-t-aria="screen.undo-arrow.aria" data-t-title="screen.undo-arrow.tip" type="button" id="btnUndoArrow" class="tab" aria-label="Undo" title="Take back your last move">← Undo</button>
-          <button data-t="screen.redo-arrow" data-t-aria="screen.redo-arrow.aria" data-t-title="screen.redo-arrow.tip" type="button" id="btnRedoArrow" class="tab" aria-label="Redo" title="Play again the move you took back">Redo →</button>
+          <button data-t-aria="screen.undo-arrow.aria" data-t-title="screen.undo-arrow.tip" type="button" id="btnUndoArrow" class="tab tri back" aria-label="Undo" title="Take back your last move"></button>
+          <button data-t-aria="screen.redo-arrow.aria" data-t-title="screen.redo-arrow.tip" type="button" id="btnRedoArrow" class="tab tri fwd" aria-label="Redo" title="Play again the move you took back"></button>
         </div>
         <div class="barSide">
           <button data-t="screen.shapes" type="button" id="btnShapes" class="tab" aria-pressed="false">Shapes</button>
@@ -37,8 +37,9 @@
       <div class="row controls" id="controls">
         <button data-t="screen.mode" id="btnMode">Play mode</button>
         <button data-t="screen.pass" id="btnPass">Pass</button>
-        <button data-t="screen.undo" id="btnUndo">Undo</button>
-        <button data-t="screen.redo" id="btnRedo">Redo</button>
+        <!-- Undo and Redo are the triangles under the board; these hidden buttons hold their state (boardbar.js) and serve the chat's "undo". -->
+        <button data-t="screen.undo" id="btnUndo" hidden>Undo</button>
+        <button data-t="screen.redo" id="btnRedo" hidden>Redo</button>
         <button data-t="screen.analyse" id="btnAnalyse">Analyse</button>
         <button data-t="screen.resign" id="btnResign">Resign</button>
         <button data-t="screen.new" id="btnNew" class="primary">New</button>

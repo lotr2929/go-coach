@@ -51,7 +51,7 @@ main { flex: 1; min-height: 0; display: flex; justify-content: center; padding: 
    a chosen option) is bold, in the same colour. Only the clickable words inside the coach's messages are in italics with
    a thin dotted underline (below, .msg .lcard). */
 button { font: inherit; color: var(--ink); background: none; border: 0; border-radius: 0; padding: 3px 4px; line-height: 1.3; cursor: pointer; transition: color .15s; }
-button:hover:not(:disabled) { color: var(--accent); }
+@media (hover: hover) { button:hover:not(:disabled) { color: var(--accent); } } /* only with a mouse: on a phone a tapped button would stay green */
 button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 button.primary { font-weight: 700; }
 button:disabled { opacity: .38; cursor: default; }
@@ -239,3 +239,9 @@ button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: no
 .msg .lcard .n { font-style: normal; color: var(--mute); min-width: 1.2em; }
 .msg .lcard:hover .lt { text-decoration-color: var(--accent); }
 .chatInput:focus-visible { outline: none; border-bottom-color: var(--ink); } /* the chat box keeps only its bottom line while you type, a shade darker */
+
+/* The undo/back and redo/next buttons under the board: plain triangles, pointing left and right. */
+button.tri { width: 36px; height: 30px; padding: 0; display: grid; place-items: center; }
+button.tri::before { content: ""; width: 14px; height: 16px; background: currentColor; }
+button.tri.back::before { clip-path: polygon(100% 0, 100% 100%, 0 50%); }
+button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
