@@ -10,7 +10,7 @@
   const ACTIONS = {
     whatisgo: () => G.openDoc('whatisgo'),
     history: () => G.openHistory(),
-    teach: () => G.teachIntro(),
+    teach: () => G.showMenu(), /* "Teach me" goes straight to the lessons (Boon, 25 Nov 2026) */
     coach: () => {
       if (busy()) return G.say(T('welcome.coach-busy'));
       if (settings.mode === 'coach') return G.say(T('welcome.coach-already'));

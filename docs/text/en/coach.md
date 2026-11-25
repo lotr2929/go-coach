@@ -48,7 +48,7 @@ The rules in brief:
 3. You may not play a stone with no liberties unless it captures.
 4. Ko: you may not recreate the previous position.
 5. When both players pass, the game ends. Score = stones plus surrounded empty points; White adds komi.
-Say "teach me" and I will open the lessons.
+Say "basic rules" and I will teach them step by step on the board, or "teach me" for the lessons.
 
 ## more.liberty
 Liberties are the lifeblood of a group. Count them by looking at the empty points next to every stone of the group: a group on the edge has fewer, so it is easier to capture. Fighting in Go is mostly a race to take away the opponent's liberties while keeping your own.

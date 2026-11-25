@@ -1,6 +1,6 @@
 # The guided first game
 
-What the coach says during the guided first game (Teach me, then "Play a Game"). ".def" lines explain a term the first time it comes up;
+What the coach says during the guided first game (say "guided game", or finish the last lesson). ".def" lines explain a term the first time it comes up;
 "tip-" lines are shown one per turn. The rest are the pieces of the coach's messages. Lines starting ** are headings.
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.

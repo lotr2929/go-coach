@@ -1,6 +1,6 @@
-# Teach me
+# Basic rules
 
-The guided teaching (say "teach me"): steps, each with one or more scenes. Names are step.scene.part, so "space.2.text" is
+The guided teaching (say "basic rules"): steps, each with one or more scenes. Names are step.scene.part, so "space.2.text" is
 the explanation in the second scene of the step "A game about space". Parts: ".text" (one paragraph per blank line), ".goal" (the task),
 ".praise" (extra praise for a strong point), ".after", ".ok" (task solved), ".wrong", ".hint", ".ko-note" and ".more" (said when the learner asks for more).
 Scenes that end by inviting the learner to go on show the text under "next" after their own text.

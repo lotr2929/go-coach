@@ -28,8 +28,9 @@ Type in the box at the bottom and press Send (or Enter). I understand short requ
 "explore D4" or "explore A": follow a move a few steps ahead on a copy of the board. Then "next", "back", "another" (a different reply) and "back to game".
 
 **Learning**
-"teach me": step-by-step teaching on a 9×9 board.
-"lessons" or "lesson 3": short lessons with a task each.
+"teach me", "lessons" or "lesson 3": short lessons with a task each.
+"basic rules": step-by-step teaching on a 9×9 board.
+"guided game": a first game with the coach explaining each move.
 "what is ko?": the meaning of a Go term (also liberty, atari, eye, ponnuki, tiger's mouth and many more).
 "rules", "first move", "checklist": the rules in brief, where to start, and five questions to ask before every move.
 "famous games" and "history of Go".
