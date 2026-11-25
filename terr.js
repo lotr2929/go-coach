@@ -10,7 +10,7 @@
   const STEPS = [1, 2, 3, 5, 8, 12, 20, 30, 45, 60]; /* seconds the slider can pick */
   const sigOf = s => Array.from(s.board).join('') + s.turn;
   let map = null; /* { n, moves, sig, own, sims, done, secs } for one position */
-  let tok = 0, working = false;
+  let tok = 0, working = false, retry = 0;
 
   const secs = () => (STEPS.includes(+settings.terrSecs) ? +settings.terrSecs : 2);
   /* The map belongs to the game board, so it waits while a lesson, the teacher or an exploration has the board, and during scoring.
@@ -43,7 +43,11 @@
   async function update() {
     const mine = ++tok;
     working = false;
-    if (!settings.terr || idle() || (!kifuOn() && Play.thinking)) { syncButton(); return; }
+    clearTimeout(retry);
+    if (!settings.terr || idle()) { syncButton(); return; }
+    /* The computer or the coach is busy with its own search: try again soon. Without this, switching Territory on during the
+       coach's analysis left the map off until a few moves later (Boon, 25 Nov 2026). */
+    if (!kifuOn() && Play.thinking) { retry = setTimeout(update, 500); syncButton(); return; }
     const s = E.clone(live()), sig = sigOf(s);
     if (map && (map.n !== s.n || Math.abs(s.moves.length - map.moves) > 2)) map = null; /* a new game: start clean */
     if (map && map.sig === sig && map.done && map.secs === secs()) { syncButton(); return; }
@@ -65,7 +69,7 @@
   $('#btnTerr').addEventListener('click', () => {
     settings.terr = !settings.terr; saveSettings();
     if (settings.terr) { toast(window.GoText.T('app.terr-on')); update(); }
-    else { tok++; working = false; map = null; G.renderPlay(); toast(window.GoText.T('app.terr-off')); }
+    else { tok++; working = false; clearTimeout(retry); map = null; G.renderPlay(); toast(window.GoText.T('app.terr-off')); }
     syncButton();
   });
 

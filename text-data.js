@@ -126,7 +126,7 @@
   "coaching.options": "The board currently shows {count} options for {player}'s move, marked {letters}.",
   "coaching.start": "Start of the game",
   "coaching.to-play": "{after}: {player} to play.",
-  "coaching.end-brief": "Tap a lettered point to play it, or ask \"why A?\".",
+  "coaching.end-brief": "Tap a lettered point to play it, or ask \"why A?\". You can also compare the different options.",
   "coaching.end-full": "Tap a lettered point on the board to play it, or ask \"why A?\", \"compare A and B\" or \"explore A\". Win rates come from random playouts, so gaps under 5% are equal.",
   "coaching.analysing": "Coach is analysing…",
   "coaching.not-top": "{point} was not among my top ideas. My favourite was {best} ({pct}%).",
