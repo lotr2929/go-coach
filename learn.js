@@ -37,7 +37,7 @@
     }
     G.setChips(CHIPS);
     const ch = LS.chapterOf(L.id);
-    say(T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.list.length, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'));
+    G.chatRecord('coach', T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.list.length, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'), true); /* the heading stays in the folded chat */
     say((L.task ? T('task', { task: L.task }) + '\n' : '') + T('ask-me'));
     renderLesson();
   }
