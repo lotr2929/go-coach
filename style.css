@@ -265,3 +265,9 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .chatLog .day .sess { padding-left: 16px; }
 .chatLog .sess > .fb { padding-left: 16px; }
 .chatLog .day.shut > .fb, .chatLog .sess.shut > .fb { display: none; }
+
+/* A folded coach's message: its first line only, as clickable text (italics, thin dotted underline). Tap to read it all. */
+.chatLog .msg.coach:not(.menu) { cursor: pointer; }
+.chatLog .msg.clip { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; padding-top: 0; padding-bottom: 0; margin: 2px 0; font-style: italic;
+  text-decoration: underline dotted; text-decoration-thickness: 1px; text-decoration-color: var(--mute); text-underline-offset: 3px; }
+.chatLog .msg.clip .welcomeChoices { display: none; }

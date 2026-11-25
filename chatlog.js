@@ -53,13 +53,18 @@
       if (i < lines.length - 1) el.append(document.createTextNode('\n'));
     });
   }
+  /* A coach's message. Only the newest one shows in full; the others fold to their first line (Boon's choice), shown as clickable
+     text: tap to read it all, tap the text again to fold it. Buttons inside a message (the welcome's choices) still work. */
   function message(text) {
     const d = document.createElement('div');
     d.className = 'msg coach';
     if (isIntro(text) && G.fillWelcome) G.fillWelcome(d, fill); /* the welcome, with its choices as buttons */
     else fill(d, text);
+    d.addEventListener('click', e => { if (!e.target.closest('button')) d.classList.toggle('clip'); });
     return d;
   }
+  /* Fold every coach's message in the chat except the newest. */
+  const clipOlder = () => { const all = box.querySelectorAll('.msg.coach:not(.menu)'); all.forEach((m, i) => m.classList.toggle('clip', i < all.length - 1)); };
   /* One exchange: the question (a button that opens and closes it) and the answers under it. The coach's words before any
      question get a heading of their own: "Welcome" for the welcome, otherwise "Coach's notes". */
   const heading = text => T(isIntro(text) ? 'welcome-head' : 'notes');
@@ -134,6 +139,7 @@
     hintEl.hidden = revealed || !past.length;
     if (revealed) drawPast();
     openEx = drawSession(nowEl, cur, false);
+    clipOlder();
     box.scrollTop = box.scrollHeight;
   }
   /* Show the earlier sessions above this one, keeping today's chat where it was on the screen. */
@@ -143,6 +149,7 @@
     const before = box.scrollHeight - box.scrollTop;
     drawPast();
     pastEl.hidden = false; hintEl.hidden = true;
+    clipOlder();
     box.scrollTop = Math.max(0, box.scrollHeight - before - box.clientHeight * .6);
   }
 
@@ -167,6 +174,7 @@
     } else {
       if (!openEx) { openEx = exchange(heading(text), false); nowEl.append(openEx); }
       openEx.lastChild.append(message(text));
+      clipOlder();
     }
     box.scrollTop = box.scrollHeight;
   }
