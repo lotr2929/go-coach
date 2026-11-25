@@ -2,48 +2,17 @@
 (() => {
   'use strict';
   const G = window.GC;
-  const { E, LS, $, KEY, load, store, settings, saveSettings, Play } = G;
+  const { E, LS, $, settings, saveSettings, Play } = G;
   const C = window.GoCoach;
   const CM = window.GoCommentary;
   const T = k => window.GoText.T('chat.' + k); /* wording: docs/text/en/chat.md */
-  const MAX = 80;
   const PLAY_CHIPS = []; /* no suggestion buttons while playing: you just ask */
 
   const root = $('#chat'), box = root.querySelector('.chatLog'), form = root.querySelector('.chatForm');
   const input = root.querySelector('.chatInput'), quick = root.querySelector('.quick');
-  let log = load(KEY.chat, null);
-  const firstVisit = !Array.isArray(log); /* nothing saved yet: the welcome is shown once */
-  if (firstVisit) log = [];
   let topic = null;
 
-  /* Lines written as **Heading:** appear in bold. Everything else is plain text. */
-  function fill(el, text) {
-    const lines = String(text).split('\n');
-    lines.forEach((ln, i) => {
-      const m = ln.match(/^\*\*(.+?)\*\*$/);
-      if (m) { const b = document.createElement('strong'); b.textContent = m[1]; el.append(b); }
-      else el.append(document.createTextNode(ln));
-      if (i < lines.length - 1) el.append(document.createTextNode('\n'));
-    });
-  }
-  function append(who, text) {
-    const d = document.createElement('div');
-    d.className = 'msg ' + who;
-    if (who === 'coach' && text === C.INTRO && G.fillWelcome) G.fillWelcome(d, fill); /* the welcome, with its choices as buttons */
-    else fill(d, text);
-    box.append(d);
-    box.scrollTop = box.scrollHeight;
-  }
-  function add(who, text) {
-    if (!text) return;
-    const last = log[log.length - 1];
-    if (who === 'coach' && last && last.who === 'coach' && last.text === text) return;
-    log.push({ who, text });
-    if (log.length > MAX) log.shift();
-    store(KEY.chat, log);
-    append(who, text);
-  }
-  const say = text => add('coach', text);
+  const say = text => G.chatRecord('coach', text); /* chatlog.js keeps and shows the chat */
   /* A list of tappable choices inside the chat (used for the lessons). */
   function menu(items) {
     const d = document.createElement('div');
@@ -60,18 +29,17 @@
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'lcard' + (it.done ? ' done' : '');
       G.choiceLabel(b, it.label);
-      b.addEventListener('click', it.run);
+      b.addEventListener('click', () => { G.chatRecord('user', G.choiceWords(it.label)); it.run(); }); /* the choice heads the exchange it starts */
       d.append(b);
     }
-    box.append(d);
-    box.scrollTop = box.scrollHeight;
+    G.chatShow(d);
   }
   function setChips(labels) {
     quick.textContent = '';
     for (const label of labels) {
       const b = document.createElement('button');
       b.type = 'button'; b.textContent = label;
-      b.addEventListener('click', () => ask(label, true)); /* a tapped reply is not repeated in the chat: the coach's answer says what happened */
+      b.addEventListener('click', () => ask(label));
       quick.append(b);
     }
   }
@@ -145,10 +113,10 @@
     set: arg => { Object.assign(settings, arg); saveSettings(); }
   };
 
-  function ask(text, tapped) {
+  function ask(text) {
     const q = text.trim();
     if (!q) return;
-    if (!tapped) add('user', q);
+    G.chatRecord('user', q); /* your question heads the exchange; the coach's answers go under it */
     const info = G.lessonInfo();
     const teaching = !!(G.teaching && G.teaching.on), exploring = !!(G.exploring && G.exploring.on), kifu = !!(G.kifu && G.kifu.on);
     if (teaching && G.teaching.ask(q)) return;
@@ -175,9 +143,8 @@
     input.value = '';
     ask(v);
   });
-  /* New and Clear empty the chat and leave it empty; typing Help brings back the welcome. */
-  function clearChat() { log = []; store(KEY.chat, log); box.textContent = ''; }
-  $('#btnClear').addEventListener('click', () => { clearChat(); input.focus(); });
+  /* Clear empties this session's chat (chatlog.js); typing Help brings back the welcome. */
+  $('#btnClear').addEventListener('click', () => { G.clearChat(); input.focus(); });
 
   /* Enlarge / shrink: the chat can cover the screen for easier reading, then go back to its usual place. */
   const sizeBtn = $('#btnChatSize');
@@ -194,11 +161,6 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('chatBig')) setBig(false); });
   setBig(false);
   setChips(PLAY_CHIPS);
-  /* The first visit starts with the welcome. A welcome saved by an older version (its wording has changed since) becomes today's, so it shows its buttons. */
-  if (firstVisit) log = [{ who: 'coach', text: C.INTRO }];
-  else log = log.map(m => (m.who === 'coach' && m.text !== C.INTRO && /^Hello, I am your Go coach\. I am not an AI model[.:] /.test(m.text) ? { who: 'coach', text: C.INTRO } : m));
-  store(KEY.chat, log);
-  for (const m of log) append(m.who, m.text);
 
-  Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS, clearChat });
+  Object.assign(G, { say, setChips, chatMenu: menu, PLAY_CHIPS });
 })();

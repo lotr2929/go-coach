@@ -93,13 +93,18 @@
   /* ---------- what the chat says ---------- */
   const chatBox = document.querySelector('#chat .chatLog');
   if (chatBox) {
+    /* chatlog.js nests messages inside exchanges: a question (.q) and the coach's messages (.msg). The history (.past) is
+       only earlier sessions shown again, so it is not logged twice. */
+    const parts = n => (n.matches('.q, .msg') ? [n] : [...n.querySelectorAll('.q, .msg')]);
     new MutationObserver(list => {
-      for (const m of list) for (const n of m.addedNodes) {
-        if (!n.classList) continue;
-        const who = n.classList.contains('user') ? 'user' : 'coach';
-        log('chat', { who, menu: n.classList.contains('menu'), text: (n.textContent || '').trim().slice(0, 700) });
+      for (const m of list) for (const node of m.addedNodes) {
+        if (!node.classList || node.closest('.past') || node.classList.contains('past')) continue;
+        for (const n of parts(node)) {
+          const who = n.classList.contains('q') ? 'user' : 'coach';
+          log('chat', { who, menu: n.classList.contains('menu'), text: (n.textContent || '').trim().slice(0, 700) });
+        }
       }
-    }).observe(chatBox, { childList: true });
+    }).observe(chatBox, { childList: true, subtree: true });
   }
 
   /* ---------- errors ---------- */
@@ -118,7 +123,7 @@
       const note = prompt(window.GoText.T('app.flag-ask'), '');
       if (note === null) return;
       const p = snap('flag', true);
-      const lines = chatBox ? Array.from(chatBox.children).slice(-8).map(n => (n.classList.contains('user') ? 'You: ' : 'Coach: ') + (n.textContent || '').trim().slice(0, 300)) : [];
+      const lines = chatBox ? Array.from(chatBox.querySelectorAll('.now .q, .now .msg')).slice(-8).map(n => (n.classList.contains('q') ? 'You: ' : 'Coach: ') + (n.textContent || '').trim().slice(0, 300)) : [];
       log('flag', { note, sgf: p ? p.sgf : null, chat: lines });
       flush();
       toast(window.GoText.T(isOn() ? 'app.flagged' : 'app.flag-off'));

@@ -34,7 +34,7 @@
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'lcard';
       G.choiceLabel(b, o.label);
-      b.addEventListener('click', () => choose(o.key));
+      b.addEventListener('click', () => { G.chatRecord('user', G.choiceWords(o.label)); choose(o.key); }); /* the choice heads the exchange it starts */
       list.append(b);
     }
     el.append(list);

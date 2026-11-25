@@ -21,7 +21,7 @@
     if (e.submitter && e.submitter.value === 'start') {
       settings.size = +chosen('size'); settings.colour = chosen('colour'); settings.level = chosen('level'); settings.coachLevel = chosen('coachlevel') || settings.coachLevel; settings.handicap = +chosen('handicap');
       saveSettings();
-      if (G.clearChat) G.clearChat(); /* a new game starts with an empty chat */
+      G.newChatSession(); /* a new game is a new session: the chat so far moves into the history (chatlog.js) */
       setTimeout(startNewGame, 0);
     }
   });
@@ -45,7 +45,7 @@
 
   /* ---------- start ---------- */
   playView.resize();
-  if (!restoreGame()) startNewGame();
+  if (G.awayStart || !restoreGame()) startNewGame(); /* back after more than an hour: a new session starts with a new game */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('sw.js').catch(() => { /* offline mode unavailable */ });
   }
