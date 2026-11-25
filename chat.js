@@ -71,7 +71,7 @@
     for (const label of labels) {
       const b = document.createElement('button');
       b.type = 'button'; b.textContent = label;
-      b.addEventListener('click', () => ask(label));
+      b.addEventListener('click', () => ask(label, true)); /* a tapped reply is not repeated in the chat: the coach's answer says what happened */
       quick.append(b);
     }
   }
@@ -145,10 +145,10 @@
     set: arg => { Object.assign(settings, arg); saveSettings(); }
   };
 
-  function ask(text) {
+  function ask(text, tapped) {
     const q = text.trim();
     if (!q) return;
-    add('user', q);
+    if (!tapped) add('user', q);
     const info = G.lessonInfo();
     const teaching = !!(G.teaching && G.teaching.on), exploring = !!(G.exploring && G.exploring.on), kifu = !!(G.kifu && G.kifu.on);
     if (teaching && G.teaching.ask(q)) return;
