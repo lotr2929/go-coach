@@ -42,6 +42,7 @@
       $('#newHelp').textContent = T('new-help', { level: E.coachLevel(chosen('level'), chosen('coachlevel')) });
     };
     $('#newForm').onchange = help; help();
+    if (G.newTabs) G.newTabs.show('new'); /* the box always opens on its first tab (cloudsave.js adds the second, Saved games) */
     $('#newDlg').showModal();
   }
 
@@ -79,10 +80,12 @@
   }
   playView.onHover = showTip;
 
+  /* The game as it is kept on this device (and, with the Save button, in the cloud: cloudsave.js). */
+  const gameRecord = () => ({ human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, both: !!Play.both, s: E.serialize(Play.s), tree: Play.tree, cloudId: Play.cloudId || null });
   function saveGame() {
     if (!Play.s) return;
     if (G.Tree) Play.tree = G.Tree.add(Play.tree || G.Tree.fresh(), Play.s.moves); /* the move tree (movetree.js) keeps every line tried */
-    store(KEY.game, { human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, both: !!Play.both, s: E.serialize(Play.s), tree: Play.tree });
+    store(KEY.game, gameRecord());
     if (G.renderTree) G.renderTree();
   }
   function startNewGame(opts) {
@@ -93,7 +96,7 @@
     Play.human = settings.colour === 'random' ? (Math.random() < .5 ? 1 : 2) : (settings.colour === 'white' ? 2 : 1);
     Play.level = settings.level;
     Play.both = settings.colour === 'both' && !Play.guided; /* you play Black; the coach suggests White's moves and you choose */
-    Play.phase = 'play'; Play.dead = null; Play.pending = -1; Play.hint = []; Play.over = false; Play.thinking = false; Play.lastAI = null; Play.redo = []; Play.tree = null; G.explained = null; G.lastExplain = null;
+    Play.phase = 'play'; Play.dead = null; Play.pending = -1; Play.hint = []; Play.over = false; Play.thinking = false; Play.lastAI = null; Play.redo = []; Play.tree = null; Play.cloudId = null; G.explained = null; G.lastExplain = null;
     renderPlay(); saveGame();
     /* An ordinary new game says nothing in the chat (New brings back the welcome); the guided first game explains itself. */
     if (Play.guided) say(window.GoGuide.opening({ handicap: settings.handicap, human: Play.human, computerFirst: Play.s.turn !== Play.human }));
@@ -111,9 +114,10 @@
     const g = load(KEY.game, null);
     if (!g) return false;
     try {
-      Play.s = E.deserialize(g.s); Play.human = g.human; Play.level = g.level; Play.over = !!g.over; Play.guided = !!g.guided; Play.both = !!g.both; Play.seen = {};
+      Play.s = E.deserialize(g.s); Play.human = g.human; Play.level = g.level; Play.over = !!g.over; Play.guided = !!g.guided; Play.both = !!g.both; Play.seen = {}; Play.cloudId = g.cloudId || null;
       Play.tree = g.tree && g.tree.k ? g.tree : null;
     } catch (e) { return false; }
+    Play.token++; Play.redo = []; Play.lastAI = null; G.explained = null; G.lastExplain = null; /* a game opened over another one (from the saved games) drops the old game's leftovers */
     Play.phase = 'play'; Play.dead = null; Play.hint = []; Play.pending = -1; Play.thinking = false;
     renderPlay();
     if (Play.over) { Play.phase = 'done'; renderPlay(); }
@@ -375,5 +379,5 @@
   }
 
 
-  Object.assign(G, { Play, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, jumpTo, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
+  Object.assign(G, { Play, gameRecord, saveGame, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, jumpTo, giveHint, resign, confirmResult, resumePlay, startGuidedGame });
 })();

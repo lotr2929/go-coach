@@ -20,6 +20,11 @@ Last updated: 24 November 2026.
 - **Only the newest coach's message shows in full:** every earlier message folds to its first line, shown as clickable text (italics, thin dotted underline) with a dash in front; tap it to read it all, tap the text again to fold it (Boon chose this over hiding earlier messages behind a count).
 - **Lists are tight:** items in any list (the welcome's choices, the lessons menu, the chat's days, sessions and questions) sit close together, with no extra space between lines. Keep this for future lists.
 
+## Saving games (25 Nov 2026)
+- **Save button** (between Resign and New): keeps the game in the cloud (Supabase, the shared `dlbs` project, Boon's choice). Pressing it again overwrites the same saved game. **New game box has two tabs:** "New game" (the options) and "Saved games" (every saved game, named by its date and time until Boon renames it; tap to open, Rename, Delete).
+- **No sign-in yet (Boon: "don't worry about that for now").** Until accounts exist each device holds a private random key (`gocoach.owner` in localStorage) and the table `gocoach_saves` is reachable only through five functions (`gocoach_save/list/load/rename/delete`) that check the key; row level security with no policies blocks direct access. So saves are private to the device and do not follow Boon to another device or survive clearing the browser's data. When accounts are built (email code, password or Google: undecided), link saves through the table's `user_id` column. Anonymous sign-in is switched off in the project and email sign-in needs confirmation.
+- The code is in `cloudsave.js` only; wording in `docs/text/en/save.md`. Open question for Boon: Go Coach's public users would share the `dlbs` project with his private Mobius data; a separate project was recommended before the public release.
+
 ## First install
 - **The tour starts by itself** the first time the app is opened (nothing saved yet), after the welcome appears. It runs once; later it starts from "How to use the app" or by typing Tour.
 

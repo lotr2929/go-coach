@@ -47,6 +47,12 @@ Resign
 ## new
 New
 
+## save
+Save
+
+## saved-games
+Saved games
+
 ## lesson-hint
 Hint
 

@@ -25,6 +25,7 @@
     { key: 'pass', sel: '#btnPass' },
     { key: 'analyse', sel: '#btnAnalyse' },
     { key: 'resign', sel: '#btnResign' },
+    { key: 'save', sel: '#btnSave' },
     { key: 'new', sel: '#btnNew' },
     { key: 'chat', sel: '.chatLog', hover: false },
     { key: 'chatsize', sel: '#btnChatSize' },

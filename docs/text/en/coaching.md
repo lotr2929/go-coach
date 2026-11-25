@@ -95,7 +95,7 @@ Start of the game
 {after}: {player} to play.
 
 ## end-brief
-Tap a lettered point to play it, or ask "why A?".
+Tap a lettered point to play it, or ask "why A?". You can also compare the different options.
 
 ## end-full
 Tap a lettered point on the board to play it, or ask "why A?", "compare A and B" or "explore A". Win rates come from random playouts, so gaps under 5% are equal.

@@ -42,6 +42,7 @@
         <button data-t="screen.redo" id="btnRedo" hidden>Redo</button>
         <button data-t="screen.analyse" id="btnAnalyse">Analyse</button>
         <button data-t="screen.resign" id="btnResign">Resign</button>
+        <button data-t="screen.save" id="btnSave">Save</button>
         <button data-t="screen.new" id="btnNew" class="primary">New</button>
       </div>
       <div data-t-aria="screen.move-tree.aria" data-t-title="screen.move-tree.tip" id="moveTree" class="moveTree" role="group" aria-label="Moves of this game" title="Every move of this game. Tap one to go back to it; moves you tried before stay as branches."></div>
@@ -86,8 +87,11 @@
 </main>
 
 <dialog id="newDlg">
+  <div class="dlgTabs" role="tablist">
+    <button type="button" role="tab" id="tabNewGame" class="dlgTab" aria-selected="true" data-t="screen.new-game">New game</button>
+    <button type="button" role="tab" id="tabSavedGames" class="dlgTab" aria-selected="false" data-t="screen.saved-games">Saved games</button>
+  </div>
   <form method="dialog" id="newForm">
-    <h2 data-t="screen.new-game">New game</h2>
     <div id="optSize" class="opt"></div>
     <div id="optColour" class="opt"></div>
     <div id="optLevel" class="opt"></div>
@@ -99,6 +103,11 @@
       <button data-t="screen.start" value="start" class="primary" id="btnStart">Start</button>
     </div>
   </form>
+  <div id="savedPane" hidden>
+    <div id="savedList" class="saves"></div>
+    <p class="small" id="savedMsg"></p>
+    <div class="row end"><button type="button" data-t="screen.close" id="btnSavedClose">Close</button></div>
+  </div>
 </dialog>
 
 <dialog id="setDlg">
@@ -174,6 +183,7 @@
 <script src="tour.js"></script>
 <script src="chatlog.js"></script>
 <script src="chat.js"></script>
+<script src="cloudsave.js"></script>
 <script src="telemetry.js"></script>
 <script src="fontsize.js"></script>
 <script src="main.js"></script>
