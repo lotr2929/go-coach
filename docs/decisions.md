@@ -78,6 +78,7 @@ Last updated: 25 November 2026.
 - Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.
 - Measured: beat the old engine 20–0 (9×9) and 4–0 (13×13); against GNU Go 3.8 on 9×9 at Hard, 9 wins and 7 losses (about 5–10 kyu). Wins are close; losses are large, from misjudging whether a big group lives.
 - **Measured against KataGo (25 Nov 2026),** imitating human ranks with its human-style model, 9×9, 8 games each: Easy lost 0/8 to 20 kyu even and won 3/8 taking 5 stones; Medium won 3/8 against 20 kyu and 4/8 against 15 kyu; Hard won 7/8 against 15 kyu and 10 kyu, 2/8 against 5 kyu. Rough reading: Easy well below 20 kyu (about 25 to 30 kyu or weaker), Medium about 15 to 20 kyu, Hard about 6 to 8 kyu. Few games, so each could be off by a few grades; KataGo's rank imitation is less reliable on 9×9. More games are being played.
+- **A stronger engine can wait (Boon, 25 Nov 2026)** until there are enough subscribers; until then players above the engine's ceiling get handicap games. Realistic without a neural network: perhaps 1 to 4 kyu on 9×9. Pattern tables learned from KataGo's games would need Boon's approval first.
 - Next engine work, if wanted: life and death in the play-outs, ladders, not collapsing when behind.
 
 ## Open items (Boon to choose)
