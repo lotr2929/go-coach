@@ -1081,7 +1081,7 @@
   "tour.end-mouse": "That was the tour. Rest the mouse on any button to see its explanation again, or type 5 to replay the tour.",
   "tour.end-touch": "That was the tour. Press and hold any button to see its explanation again, or type 5 to replay the tour.",
   "welcome.top": "Hello, I am your Go coach. I am not an AI model. I answer from the rules of Go and by analysing the board on your device. You can ask me to do the following:",
-  "welcome.end": "Type your request by typing one of the numbers above or by clicking on one of the options. You can also make your own request simply by asking in your own words. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt.",
+  "welcome.end": "Type your request by typing one of the numbers above or by clicking on one of the options. You can also make your own request simply by asking in your own words. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt. Type Tour to start a tour of the app.",
   "welcome.whatisgo": "What is Go?",
   "welcome.history": "A Short History of Go",
   "welcome.teach": "Teach me",
