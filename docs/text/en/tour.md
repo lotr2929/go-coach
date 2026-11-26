@@ -12,7 +12,7 @@ Go Coach
 The date under the title is the version you are using. If it looks old, open Settings (⚙) and tap Check for updates.
 
 ## flag.title
-Flag
+Messages
 
 ## flag.text
 If something looks wrong, tap here and type a few words. The position and the last messages are sent to the developer, as long as usage logging is on in Settings.

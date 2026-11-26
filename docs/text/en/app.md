@@ -90,13 +90,13 @@ Text size
 Text size: {percent}%
 
 ## flag
-Flag this position for Claude
+Send a message about this position
 
 ## flag-ask
 What should Claude look at? (a few words)
 
 ## flagged
-Flagged. Tell Claude to look.
+Message sent.
 
 ## flag-off
 Logging is off in Settings, so Claude cannot see this.
