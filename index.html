@@ -106,9 +106,11 @@
     </div>
   </form>
   <div id="savedPane" hidden>
+    <p class="small" data-t="screen.saved-note">Saved games are kept on this device only. Clearing your browser's data or removing the app deletes them, and they do not appear on your other devices. To keep a copy, Export a game as a file.</p>
     <div id="savedList" class="saves"></div>
     <p class="small" id="savedMsg"></p>
-    <div class="row end"><button type="button" data-t="screen.close" id="btnSavedClose">Close</button></div>
+    <input type="file" id="importFile" accept=".sgf,application/x-go-sgf,text/plain" hidden>
+    <div class="row end"><button type="button" data-t="screen.import" id="btnImport">Import a game</button><button type="button" data-t="screen.close" id="btnSavedClose">Close</button></div>
   </div>
 </dialog>
 
@@ -184,7 +186,7 @@
 <script src="tour.js"></script>
 <script src="chatlog.js"></script>
 <script src="chat.js"></script>
-<script src="cloudsave.js"></script>
+<script src="savegames.js"></script>
 <script src="telemetry.js"></script>
 <script src="fontsize.js"></script>
 <script src="main.js"></script>

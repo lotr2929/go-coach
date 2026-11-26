@@ -59,6 +59,12 @@ Save
 ## saved-games
 Saved games
 
+## saved-note
+Saved games are kept on this device only. Clearing your browser's data or removing the app deletes them, and they do not appear on your other devices. To keep a copy, Export a game as a file.
+
+## import
+Import a game
+
 ## lesson-hint
 Hint
 
