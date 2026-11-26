@@ -9,6 +9,10 @@
   const { E, $, settings, saveSettings, toast, Play } = G;
   const SH = window.GoShapes, T = (k, v) => window.GoText.T('shapes.' + k, v); /* wording: docs/text/en/shapes.md */
   const RGB = { good: '46,160,80', bad: '215,60,45', neutral: '40,110,205', weak: '230,140,20' };
+  /* The order of the numbers (Boon, 27 Nov 2026): Black's shapes, then White's, each good first and bad last; then the shapes
+     that could be made next. */
+  const TONE_ORDER = { good: 0, neutral: 1, weak: 2, bad: 3 };
+  const rank = sh => sh.color * 10 + TONE_ORDER[SH.KINDS[sh.kind].tone];
   const sigOf = s => Array.from(s.board).join('') + s.turn;
   let cache = null; /* { sig, list, keys, moves } for one position */
   let focus = null;  /* after a tap: { sig, keys } of the shapes being explained; only they are drawn until the board changes */
@@ -28,7 +32,7 @@
     const sig = sigOf(s) + (showPossible(s) ? '+' : '');
     if (cache && cache.sig === sig) return cache;
     const made = SH.scan(s.n, s.board), could = showPossible(s) ? SH.possible(E, s, s.turn, 3) : [];
-    const list = made.concat(could).map((sh, k) => Object.assign(sh, { label: k + 1 }));
+    const list = made.slice().sort((a, b) => rank(a) - rank(b)).concat(could).map((sh, k) => Object.assign(sh, { label: k + 1 }));
     const prev = cache;
     cache = { sig, list, keys: new Set(made.map(x => x.key)), moves: s.moves.length, n: s.n };
     /* One move later: name the shapes that move made. */
@@ -53,7 +57,11 @@
     if (!c || !s) return;
     const made = c.list.filter(x => !x.potential), could = c.list.filter(x => x.potential);
     const line = x => `${x.label}. ${SH.describe(s.n, x, viewer(), true)}`;
-    const parts = [T('list'), made.length ? made.map(line).join('\n') : T('none')];
+    const parts = made.length ? [] : [T('list'), T('none')];
+    for (const c2 of [1, 2]) {
+      const mine = made.filter(x => x.color === c2);
+      if (mine.length) parts.push((parts.length ? '\n' : '') + T(c2 === 1 ? 'list-black' : 'list-white'), mine.map(line).join('\n'));
+    }
     if (could.length) parts.push('', T('could', { who: T(viewer() === s.turn ? 'you' : s.turn === 1 ? 'black' : 'white') }), could.map(line).join('\n'));
     /* Each kind of shape is explained once. */
     const kinds = [...new Set(c.list.map(x => x.kind))];
@@ -99,6 +107,12 @@
     if (settings.shapes) listAll(); else toast(T('toast-hidden'));
   });
   syncButton();
+
+  /* Hovering over a shape's number on the board (board.js) pops up what that shape is and what it means. */
+  G.playView.onShapeHover = (label, x, y) => {
+    const c = cache, s = live(), sh = label && c && c.list.find(z => z.label === label);
+    G.placeTip(sh && s ? `${sh.label}. ${SH.describe(s.n, sh, viewer(), true)}\n${SH.KINDS[sh.kind].text}` : '', x, y);
+  };
 
   Object.assign(G, { shapeMarks: marks, shapeTap: tap, syncShapesTab: syncButton });
 })();

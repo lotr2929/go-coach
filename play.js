@@ -70,8 +70,9 @@
     const note = d.ok ? `${E.coord(s.n, i)}: ${CM.headline(E, s, i, s.turn, who)}` : d.points[0];
     return square ? note + '\n' + square : note;
   }
-  function showTip(i, x, y) {
-    const text = i >= 0 ? moveTip(i) : '';
+  function showTip(i, x, y) { placeTip(i >= 0 ? moveTip(i) : '', x, y); }
+  /* The small note beside the mouse; also used for the explanation of a shape's number (shapesui.js). */
+  function placeTip(text, x, y) {
     if (!text) { tipEl.hidden = true; return; }
     tipEl.textContent = text; tipEl.hidden = false;
     const w = tipEl.offsetWidth, h = tipEl.offsetHeight;
@@ -382,5 +383,5 @@
   }
 
 
-  Object.assign(G, { Play, gameRecord, saveGame, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, jumpTo, giveHint, resign, confirmResult, resumePlay, startGuidedGame, resumeTurn: () => { maybeAI(); G.coachAuto(); } });
+  Object.assign(G, { Play, placeTip, gameRecord, saveGame, playView, playSilent, myTurn, setBoth, onPlayTap, renderPlay, chips, chosen, openNewDialog, startNewGame, restoreGame, humanPass, undoMove, redoMove, jumpTo, giveHint, resign, confirmResult, resumePlay, startGuidedGame, resumeTurn: () => { maybeAI(); G.coachAuto(); } });
 })();
