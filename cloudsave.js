@@ -144,4 +144,5 @@
   }
 
   G.newTabs = { show };
+  G.ownerKey = owner; /* messages.js uses the same private key */
 })();

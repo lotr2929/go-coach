@@ -111,25 +111,6 @@
   addEventListener('error', e => log('error', { msg: String(e.message), src: String(e.filename || '').split('/').pop(), line: e.lineno }));
   addEventListener('unhandledrejection', e => log('error', { msg: 'promise: ' + String(e.reason) }));
 
-  /* ---------- the Flag button ---------- */
-  const head = document.querySelector('header');
-  const settingsBtn = $('#btnSettings');
-  if (head && settingsBtn) {
-    const f = document.createElement('button');
-    f.id = 'btnFlag'; f.className = 'icon'; f.type = 'button';
-    f.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12"/><path d="M3 6l9 7 9-7"/></svg>'; f.setAttribute('aria-label', window.GoText.T('app.flag'));
-    f.onclick = () => {
-      const note = prompt(window.GoText.T('app.flag-ask'), '');
-      if (note === null) return;
-      const p = snap('flag', true);
-      const lines = chatBox ? Array.from(chatBox.querySelectorAll('.now .q, .now .msg')).slice(-8).map(n => (n.classList.contains('q') ? 'You: ' : 'Coach: ') + (n.textContent || '').trim().slice(0, 300)) : [];
-      log('flag', { note, sgf: p ? p.sgf : null, chat: lines });
-      flush();
-      toast(window.GoText.T(isOn() ? 'app.flagged' : 'app.flag-off'));
-    };
-    head.insertBefore(f, settingsBtn);
-  }
-
   /* ---------- the Settings switch ---------- */
   const sgfBtn = $('#btnSGF');
   if (sgfBtn && sgfBtn.parentElement) {
@@ -141,7 +122,8 @@
     lab.append(cb, ' ' + window.GoText.T('app.share-log'));
     row.parentElement.insertBefore(lab, row);
     cb.addEventListener('change', () => { setOn(cb.checked); if (cb.checked) log('log-on'); });
-    settingsBtn.addEventListener('click', () => { cb.checked = isOn(); });
+    const settingsBtn = $('#btnSettings');
+    if (settingsBtn) settingsBtn.addEventListener('click', () => { cb.checked = isOn(); });
   }
 
   log('start', {

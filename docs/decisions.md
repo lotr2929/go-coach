@@ -92,8 +92,9 @@ Last updated: 25 November 2026.
 - **A stronger engine can wait (Boon, 25 Nov 2026)** until there are enough subscribers; until then players above the engine's ceiling get handicap games. Realistic without a neural network: perhaps 1 to 4 kyu on 9×9. Pattern tables learned from KataGo's games would need Boon's approval first.
 - Next engine work, if wanted: life and death in the play-outs, ladders, not collapsing when behind.
 
-## Flag messages (Boon, 26 Nov 2026; planned, not built)
-- **No email address.** Players' flags (⚑) become messages that Claude reads and answers for Boon; anything that needs Boon's decision Claude brings to him in the chat. Replies appear in the app (a Messages area, private to the device by the same key as Saved games). Needs a session with access to the Supabase project, and a new exception to rule 2 for fetching replies.
+## Messages (Boon, 26 Nov 2026)
+- **No email address.** The envelope (it replaced the Flag, 26 Nov 2026) opens Messages: players write to Go Coach, with the board position and last chat lines if ticked. Claude reads and answers them once a day for Boon, and brings anything that needs Boon's decision to him. Replies appear in the Messages box; the envelope shows how many are unopened. Built 26 Nov 2026: messages.js, table gocoach_messages with four functions (docs/supabase/gocoach_messages.sql, run by Boon in the SQL Editor), private to the device by the same key as Saved games; at most 20 messages a day per device. The fourth exception to rule 2.
+- **Claude's access:** a Supabase secret key saved as a network secret on the go-coach cloud environment (host dlbstuzzfmjawffzhdys.supabase.co, header apikey); never in code. Supabase refuses it from a browser, so in-browser tests in cloud sessions see 401s that real players do not.
 
 ## Open items (Boon to choose)
 - Analyse and hints still use the older, weaker method.

@@ -311,3 +311,14 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 #btnFlag + #btnSettings { width: auto; padding: 0 6px 0 0; margin-left: -2px; } /* envelope and Settings sit close together */
 .userName:not(:empty) + #btnFlag { margin-left: 0; }
 .nameInput { width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--mute); border-radius: 0; padding: 6px 2px; }
+
+/* Messages (messages.js): the number on the envelope and the Messages box. */
+#btnFlag { position: relative; }
+.msgBadge { position: absolute; top: 4px; right: -2px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font-size: .65rem; font-weight: 700; line-height: 16px; text-align: center; }
+.msgBadge:empty { display: none; }
+.msgList { max-height: 45vh; overflow-y: auto; margin: 8px 0; }
+.msgItem { margin: 10px 0; }
+.msgItem.player { text-align: right; color: var(--mute); }
+.msgWho { font-size: .72rem; color: var(--mute); }
+.msgBody { white-space: pre-line; overflow-wrap: anywhere; }
+.msgWrite { width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--mute); border-radius: 0; padding: 6px 2px; resize: vertical; }

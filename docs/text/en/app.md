@@ -89,17 +89,9 @@ Text size
 ## text-size-value
 Text size: {percent}%
 
-## flag
-Send a message about this position
 
-## flag-ask
-What should Claude look at? (a few words)
 
-## flagged
-Message sent.
 
-## flag-off
-Logging is off in Settings, so Claude cannot see this.
 
 ## share-log
 Share usage log with Claude

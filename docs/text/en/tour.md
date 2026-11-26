@@ -15,7 +15,7 @@ The date under the title is the version you are using. If it looks old, open Set
 Messages
 
 ## flag.text
-If something looks wrong, tap here and type a few words. The position and the last messages are sent to the developer, as long as usage logging is on in Settings.
+Write to Go Coach here: a question, or something that looks wrong. The board position can go with it. Replies come within a day; the number on the envelope shows how many are waiting.
 
 ## settings.title
 Settings
