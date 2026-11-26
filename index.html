@@ -80,7 +80,6 @@
         <div class="quick"></div>
         <form class="chatForm" autocomplete="off">
           <input data-t-placeholder="screen.chat-input.hint" data-t-aria="screen.chat-input.aria" class="chatInput" type="text" placeholder="Ask your coach…" aria-label="Message to the coach" enterkeyhint="send">
-          <button data-t="screen.clear" data-t-aria="screen.clear.aria" type="button" id="btnClear" aria-label="Clear the chat">Clear</button>
           <button data-t="screen.send" type="submit" class="primary">Send</button>
         </form>
       </div>
@@ -106,15 +105,20 @@
     </div>
   </form>
   <div id="savedPane" hidden>
+    <p class="small" data-t="screen.saved-note">Saved games are kept on this device only. Clearing your browser's data or removing the app deletes them, and they do not appear on your other devices. To keep a copy, Export a game as a file.</p>
     <div id="savedList" class="saves"></div>
     <p class="small" id="savedMsg"></p>
-    <div class="row end"><button type="button" data-t="screen.close" id="btnSavedClose">Close</button></div>
+    <input type="file" id="importFile" accept=".sgf,application/x-go-sgf,text/plain" hidden>
+    <div class="row end"><button type="button" data-t="screen.import" id="btnImport">Import a game</button><button type="button" data-t="screen.close" id="btnSavedClose">Close</button></div>
   </div>
 </dialog>
 
-<dialog id="setDlg">
+<dialog id="setDlg" class="sheet">
   <form method="dialog">
-    <h2 data-t="screen.settings">Settings</h2>
+    <div class="dlgHead">
+      <h2 data-t="screen.settings">Settings</h2>
+      <button data-t-aria="screen.settings-close.aria" value="close" class="icon dlgX" aria-label="Close the settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    </div>
     <label class="switch"><input type="checkbox" id="setCoords"> <span data-t="screen.coords">Show coordinates</span></label>
     <label class="switch"><input type="checkbox" id="setLibs"> <span data-t="screen.libs">Show liberties (green dots, red when in atari)</span></label>
     <label class="switch"><input type="checkbox" id="setCoach"> <span data-t="screen.coach-tips">Coach tips</span></label>
@@ -184,7 +188,7 @@
 <script src="tour.js"></script>
 <script src="chatlog.js"></script>
 <script src="chat.js"></script>
-<script src="cloudsave.js"></script>
+<script src="savegames.js"></script>
 <script src="telemetry.js"></script>
 <script src="fontsize.js"></script>
 <script src="main.js"></script>

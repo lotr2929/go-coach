@@ -3,7 +3,10 @@
    earlier item is one line starting with a dash (tap a coach's line to read it all). The coach's "Position" and "Your move"
    messages are left out of that list once they are no longer the newest.
    A session starts with a date and time. Only pressing New starts a new session (Boon's choice: leaving or reopening the app
-   always returns you to where you were); the old one moves into the history, which you see by pulling the chat down from the top.
+   always returns you to where you were). The history sits above, in the same list (Boon, 26 Nov 2026): today's earlier sessions in
+   full, earlier days folded under their date. When the app opens and after New, the newest message is scrolled to the top of the
+   chat, so only it shows; each new coach's message then moves to the top in the same way, with the line just above it (usually
+   your question) still in view. Scroll up for everything before it. There is no Clear.
    chat.js decides what the coach says; this file only stores and shows it. */
 (() => {
   'use strict';
@@ -13,7 +16,7 @@
   const C = window.GoCoach;
   /* Sessions kept in the history: 100 on the free tier (Boon, 25 Nov 2026). A paid tier would keep them all; there is no
      paid tier yet. */
-  const KEEP = 100, MAX = 120, PULL = 70;
+  const KEEP = 100, MAX = 120;
   const box = $('#chat .chatLog');
   const isIntro = text => text === C.INTRO;
   /* A welcome saved by an older version (its wording has changed since) becomes today's, so it shows its buttons. */
@@ -28,7 +31,6 @@
   cur.log = cur.log.map(freshen);
   let past = load(KEY.past, []);
   if (!Array.isArray(past)) past = [];
-  let revealed = false;
 
   const save = () => store(KEY.chat, cur);
   /* A session worth keeping has something besides the welcome. */
@@ -91,13 +93,13 @@
     box.append(h, inner);
     return box;
   }
-  /* The history. Earlier sessions from today show only their date and time; sessions from earlier days fold into their day
-     (tap the day for its sessions by time). Tap a session to see its lines, a coach's line to read it all. */
+  /* The history. Earlier sessions from today show in full under their date and time; sessions from earlier days fold into their
+     day (tap the day for its sessions by time, a session for its lines). Tap a coach's line to read it all. */
   function drawPast() {
     const today = dayKey(Date.now());
     let day = null, key = null;
     for (const s of past) {
-      if (dayKey(s.start) === today) { const sess = fold('sess', stamp(s.start)); drawSession(sess.lastChild, s, true); pastEl.append(sess); continue; }
+      if (dayKey(s.start) === today) { pastEl.append(stampEl(s.start)); drawSession(pastEl, s, true); continue; }
       if (dayKey(s.start) !== key) { key = dayKey(s.start); day = fold('day', dayName(s.start)); pastEl.append(day); }
       const sess = fold('sess', timeName(s.start));
       drawSession(sess.lastChild, s, true);
@@ -113,39 +115,42 @@
     }
   }
 
-  let pastEl, hintEl, nowEl;
+  let pastEl, nowEl, tail;
   function render() {
     box.textContent = '';
-    hintEl = Object.assign(document.createElement('button'), { type: 'button', className: 'pullHint', textContent: T('history-hint') });
-    hintEl.addEventListener('click', reveal);
     pastEl = document.createElement('div');
     pastEl.className = 'past';
     nowEl = document.createElement('div');
     nowEl.className = 'now';
-    box.append(hintEl, pastEl, nowEl);
-    pastEl.hidden = !revealed;
-    hintEl.hidden = revealed || !past.length;
-    if (revealed) drawPast();
+    tail = document.createElement('div'); /* empty room under the newest message, so it can be scrolled to the top */
+    box.append(pastEl, nowEl, tail);
+    drawPast();
     drawSession(nowEl, cur, false);
     clipOlder();
-    box.scrollTop = box.scrollHeight;
+    toTop();
   }
-  /* Show the earlier sessions above this one, keeping today's chat where it was on the screen. */
-  function reveal() {
-    if (revealed || !past.length) return;
-    revealed = true;
-    const before = box.scrollHeight - box.scrollTop;
-    drawPast();
-    pastEl.hidden = false; hintEl.hidden = true;
-    clipOlder();
-    box.scrollTop = Math.max(0, box.scrollHeight - before - box.clientHeight * .6);
+  /* Scrolls a message to the top of the chat, with empty room below it, so it shows on its own (with the line above it if withPrev).
+     With no message given: the newest one (after New, the newest of the last session). */
+  let pinned = null;
+  function toTop(target, withPrev) {
+    const shown = [...box.querySelectorAll('.msg')].filter(m => m.offsetParent !== null);
+    const last = target || shown[shown.length - 1];
+    pinned = { target: last, withPrev };
+    tail.style.height = '0px';
+    if (!last) { box.scrollTop = 0; return; }
+    const prev = withPrev ? shown[shown.indexOf(last) - 1] : null;
+    const top = Math.max(0, (prev || last).offsetTop - 8), pad = parseFloat(getComputedStyle(box).paddingBottom) || 0;
+    tail.style.height = Math.max(0, top + box.clientHeight - tail.offsetTop - pad) + 'px'; /* tail.offsetTop: where the messages end */
+    box.scrollTop = top;
   }
-
-  /* ---------- pulling down from the top ---------- */
-  let y0 = null;
-  box.addEventListener('touchstart', e => { y0 = box.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true });
-  box.addEventListener('touchmove', e => { if (y0 !== null && e.touches[0].clientY - y0 > PULL) { y0 = null; reveal(); } }, { passive: true });
-  box.addEventListener('wheel', e => { if (box.scrollTop <= 0 && e.deltaY < 0) reveal(); }, { passive: true });
+  /* A line added under the pinned message (what you typed, "Coach is analysing…"): scrolled into view if it is below the chat's edge. */
+  function inView(el) {
+    const over = el.offsetTop + el.offsetHeight + 8 - (box.scrollTop + box.clientHeight);
+    if (over > 0) box.scrollTop += over;
+  }
+  /* The chat is drawn before the page has its final size (and it changes when the screen turns or the chat is enlarged):
+     keep the pinned message at the top. */
+  if (window.ResizeObserver) new ResizeObserver(() => { if (pinned && pinned.target && pinned.target.isConnected) toTop(pinned.target, pinned.withPrev); }).observe(box);
 
   /* ---------- adding to the chat ---------- */
   function record(who, text) {
@@ -156,15 +161,16 @@
     if (cur.log.length > MAX) cur.log.shift();
     cur.last = Date.now();
     save();
-    nowEl.append(who === 'user' ? userLine(text) : message(text));
-    if (who === 'coach') clipOlder();
-    box.scrollTop = box.scrollHeight;
+    const el = who === 'user' ? userLine(text) : message(text);
+    nowEl.append(el);
+    if (who === 'coach') { clipOlder(); toTop(el, true); } /* the new message moves to the top (Boon, 26 Nov 2026) */
+    else inView(el);
   }
   /* Something that is not kept, such as the lessons menu, shown under the current question. */
   function show(el) {
     nowEl.append(el);
     clipOlder();
-    box.scrollTop = box.scrollHeight;
+    toTop(el, true);
   }
   /* A passing notice, such as "Coach is analysing…": shown at the end of the chat while the work goes on and taken away when it
      is done (Boon, 25 Nov 2026). It is not kept in the session. An empty text takes it away. */
@@ -173,22 +179,19 @@
     if (!text) { if (busyEl) busyEl.remove(); busyEl = null; return; }
     busyEl = busyEl || Object.assign(document.createElement('div'), { className: 'msg busy' });
     if (busyEl.textContent !== text) busyEl.textContent = text;
-    if (busyEl.parentNode !== nowEl || busyEl !== nowEl.lastChild) { nowEl.append(busyEl); box.scrollTop = box.scrollHeight; }
+    if (busyEl.parentNode !== nowEl || busyEl !== nowEl.lastChild) { nowEl.append(busyEl); inView(busyEl); }
   }
-  /* New session: the current one goes into the history and the chat starts empty (or with the welcome). */
+  /* New session: the current one goes into the history (above) and a new one starts under it, with the welcome if asked for. */
   function newSession(welcome) {
     archive();
     cur = { start: Date.now(), last: Date.now(), log: welcome ? [{ who: 'coach', text: C.INTRO }] : [] };
-    revealed = false;
     save(); render();
   }
-  /* Clear: empties this session's chat without keeping it. */
-  function clearNow() { cur.log = []; save(); render(); }
 
   /* ---------- start ---------- */
   if (firstVisit) cur.log = [{ who: 'coach', text: C.INTRO }];
   save(); render();
 
   /* firstVisit: nothing was saved yet, so this is a new install; main.js then starts the tour once. */
-  Object.assign(G, { chatRecord: record, firstVisit, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
+  Object.assign(G, { chatRecord: record, firstVisit, chatShow: show, chatBusy: busy, newChatSession: newSession });
 })();

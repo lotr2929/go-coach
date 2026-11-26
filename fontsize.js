@@ -48,6 +48,6 @@
   reset.addEventListener('click', () => set(1));
   row.append(slider, reset);
   wrap.append(lbl, row);
-  heading.after(wrap);
+  (heading.closest('.dlgHead') || heading).after(wrap); /* under the Settings title bar */
   show();
 })();

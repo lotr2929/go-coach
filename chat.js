@@ -153,13 +153,12 @@
     input.value = '';
     ask(v);
   });
-  /* Clear empties this session's chat (chatlog.js); typing Help brings back the welcome. */
-  $('#btnClear').addEventListener('click', () => { G.clearChat(); input.focus(); });
 
   /* Enlarge / shrink: the chat can cover the screen for easier reading, then go back to its usual place. */
   const sizeBtn = $('#btnChatSize');
-  const ICON_BIG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
-  const ICON_SMALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>';
+  /* Thin lines, long arms (Boon, 26 Nov 2026): outward corners to enlarge, inward corners to shrink. */
+  const ICON_BIG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2.5h8.5V11M11 21.5H2.5V13M21.5 2.5l-8 8M2.5 21.5l8-8"/></svg>';
+  const ICON_SMALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 13.5h8v8M21.5 10.5h-8v-8M13.5 10.5l8-8M2.5 21.5l8-8"/></svg>';
   function setBig(big) {
     document.body.classList.toggle('chatBig', big);
     sizeBtn.innerHTML = big ? ICON_SMALL : ICON_BIG;

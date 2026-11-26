@@ -104,6 +104,7 @@ async function t(name, fn) {
   });
   await t('the coach explains shape names when asked', () => {
     assert(/^A ponnuki is/.test(C.reply('what is a ponnuki?', { n: 9 }).text));
+    for (const k of ['keywords', 'Keywords', 'key words', 'commands']) assert(/How the chat box works/.test(C.reply(k, { n: 9 }).text), k);
     assert(/^A knight’s move/.test(C.reply("what's a knight's move", { n: 9 }).text));
     assert(/^A false eye/.test(C.reply('what is a false eye', { n: 9 }).text));
     assert(/^An eye is/.test(C.reply('what is an eye', { n: 9 }).text));
@@ -481,6 +482,7 @@ async function t(name, fn) {
   });
   await require('./test-text.js')(t); /* the app's wording in docs/text */
   await require('./test-lessons.js')(t); /* the lesson diagrams do what their words say */
+  await require('./test-saves.js')(t); /* saved games reopen as they were, and export and import as SGF */
   console.log(failed ? failed + ' FAILED, ' + passed + ' passed' : 'all ' + passed + ' tests passed');
   process.exit(failed ? 1 : 0);
 })();

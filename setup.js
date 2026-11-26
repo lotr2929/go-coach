@@ -72,7 +72,7 @@
     close();
     const s = E.newState(S.n, 0);
     s.board = board; s.turn = S.turn;
-    Object.assign(Play, { s, phase: 'play', over: false, dead: null, terr: null, redo: [], tree: null, cloudId: null, lastAI: null, guided: false, seen: {} });
+    Object.assign(Play, { s, phase: 'play', over: false, dead: null, terr: null, redo: [], tree: null, savedId: null, lastAI: null, guided: false, seen: {} });
     G.explained = null; G.lastExplain = null;
     G.say(T('done', { colour: colourName(S.turn) }) + (gone ? ' ' + T('removed', { count: gone }) : ''));
     G.renderPlay(); G.saveGame();

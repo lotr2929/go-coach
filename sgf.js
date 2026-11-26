@@ -133,5 +133,21 @@
     return { s, applied: k, ok: k === lim };
   }
 
-  return { parse, toSGF, startState, playMove, replay };
+  /* An engine state as a game record (for saving and exporting): the position before the first move, then the moves.
+     turn keeps the side to move when there are no moves yet (startState would guess it from the stones). */
+  function fromState(s) {
+    const start = s.hist.length ? s.hist[0] : s;
+    const g = { n: s.n, komi: s.komi, handicap: s.handicap || 0, setupB: [], setupW: [], moves: [], info: {}, turn: start.turn };
+    for (let i = 0; i < start.board.length; i++) { if (start.board[i] === 1) g.setupB.push(i); else if (start.board[i] === 2) g.setupW.push(i); }
+    for (const m of s.moves) g.moves.push({ c: m.c, i: m.i });
+    return g;
+  }
+  /* The record back on the engine, as replay, keeping the side to move of a record with no moves. */
+  function toState(E, g) {
+    const r = replay(E, g);
+    if (!g.moves.length && g.turn) r.s.turn = g.turn;
+    return r;
+  }
+
+  return { parse, toSGF, startState, playMove, replay, fromState, toState };
 });

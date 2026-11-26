@@ -1,6 +1,6 @@
 # Text commands
 
-What the coach shows when someone types "commands": how the chat box works, then the most useful things to type.
+What the coach shows when someone types "keywords" (or "commands"): how the chat box works, then the most useful things to type.
 Lines that start and end with ** show as bold headings in the chat. Keep each example in quotation marks, so people can see exactly what to type.
 The words the coach recognises are in the code; if you change an example, it must still be something the coach understands.
 
@@ -39,4 +39,4 @@ Type in the box at the bottom and press Send (or Enter). I understand short requ
 **Settings**
 "show liberties" or "hide liberties", "show coordinates" or "hide coordinates", "turn on sound" or "turn off sound".
 
-Type "help" to see the welcome again, or "commands" to see this list.
+Type "help" to see the welcome again, "keywords" to see this list, or "tour" for a tour of the app.
