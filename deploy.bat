@@ -13,11 +13,11 @@ if /i not "%~2"=="/copy" (
 cd /d "%~3"
 
 REM ============================================================
-REM Deploys Go Coach from the laptop: deploy.bat - git push - Vercel.
+REM Deploys Go Coach from the laptop: deploy.bat - git push - Cloudflare.
 REM 1. Copies the wording from docs/text into the app (make-text.js) and runs the tests.
 REM 2. Sets a new version number, so installed copies update.
 REM 3. Merges the current branch into main and pushes main to GitHub.
-REM Vercel then puts GitHub's main live by itself.
+REM Cloudflare then puts GitHub's main live by itself.
 REM Run it from the branch that holds the work (or from main).
 REM Add /nopause when it is run by Claude, so the window does not wait.
 REM ============================================================
@@ -108,7 +108,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo Done. GitHub has the new version and Vercel is putting it live.
+echo Done. GitHub has the new version and Cloudflare is putting it live.
 echo It takes a minute or two. Then press Ctrl+Shift+R in the app.
 if /i not "%~1"=="/nopause" pause
 exit /b 0
