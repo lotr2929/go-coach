@@ -74,6 +74,10 @@
   }
   function analysisText(s, res, brief) {
     const parts = [section(T('h.position'), positionLine(s)), section(T('h.territory'), standing(s, res))];
+    /* When stones are short of liberties, the coach reads the fight (reading.js): weak stones, your safety, why the best move
+       works and what is wrong with the others. Otherwise the usual summary and suggestions follow. */
+    const rd = window.GoReading.read(E, s, res.moves.slice(0, 5).map(m => m.move), colourName);
+    if (rd) return parts.concat(rd.sections.map(x => section(x.head, x.text)), [rd.answer, T(brief ? 'end-brief' : 'end-full')]).join('\n\n');
     if (!brief) {
       const p = summaryParts(s);
       parts.push(section(T('h.stones'), stonesText(s)));
