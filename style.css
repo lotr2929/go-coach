@@ -308,6 +308,6 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .userName { margin-left: auto; color: var(--mute); font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw; }
 .userName:empty { display: none; }
 #btnFlag { margin-left: auto; width: 30px; }
-#btnFlag + #btnSettings { width: 30px; } /* envelope and Settings sit close together */
+#btnFlag + #btnSettings { width: auto; padding: 0 6px 0 0; margin-left: -2px; } /* envelope and Settings sit close together */
 .userName:not(:empty) + #btnFlag { margin-left: 0; }
 .nameInput { width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--mute); border-radius: 0; padding: 6px 2px; }
