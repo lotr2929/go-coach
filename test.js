@@ -147,17 +147,9 @@ async function t(name, fn) {
     const f = await E.territory(s, 30);
     assert.strictEqual(f.sims, 30);
   });
-  await t('the coach is always at least one level above the computer', async () => {
-    assert.strictEqual(E.coachLevel('easy', 'medium'), 'medium');
-    assert.strictEqual(E.coachLevel('medium', 'medium'), 'hard');
-    assert.strictEqual(E.coachLevel('hard', 'medium'), 'expert');
-    assert.strictEqual(E.coachLevel('hard', 'hard'), 'expert');
-    assert.strictEqual(E.coachLevel('easy', 'expert'), 'expert');
-    assert.strictEqual(E.coachLevel('medium', 'easy'), 'hard');
-    assert.strictEqual(E.coachLevel(undefined, undefined), 'medium');
-    for (const c of ['easy', 'medium', 'hard']) for (const k of ['medium', 'hard', 'expert']) {
-      assert(E.LEVELS.indexOf(E.coachLevel(c, k)) >= Math.min(E.LEVELS.indexOf(c) + 1, 3), `coach ${k} against computer ${c}`);
-    }
+  await t('the coach always plays at the strongest level', async () => {
+    assert.strictEqual(E.coachLevel(), 'expert');
+    assert.strictEqual(E.LEVELS[E.LEVELS.length - 1], 'expert');
     assert(E.analysisMs('hard', 9) > E.analysisMs('medium', 9) && E.analysisMs('expert', 9) > E.analysisMs('hard', 9));
     assert(E.analysisMs('medium', 19) > E.analysisMs('medium', 9));
     assert.strictEqual(E.analysisMs('medium', 9), 1500);

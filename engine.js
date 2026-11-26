@@ -304,14 +304,11 @@
   }
 
   /* ---------- levels ---------- */
-  /* Weakest first. The computer plays easy, medium or hard; the coach plays medium, hard or expert.
-     The coach is always at least one level above the computer (and never above expert). */
+  /* Weakest first. The computer plays easy, medium or hard. The coach always plays expert, the strongest level, whatever the
+     computer's level (Boon, 27 Nov 2026: the coach must be much stronger than the computer; there is no coach setting). */
   const LEVELS = ['easy', 'medium', 'hard', 'expert'];
   const LEVEL_MS = { medium: 1200, hard: 3500, expert: 8000 }; /* thinking time per move for the levels that search */
-  function coachLevel(computer, chosen) {
-    const floor = Math.min(Math.max(LEVELS.indexOf(computer), 0) + 1, LEVELS.length - 1);
-    return LEVELS[Math.max(floor, LEVELS.indexOf(chosen), 1)];
-  }
+  const coachLevel = () => 'expert';
   /* How long the coach looks at one position at a given level (larger boards need longer). */
   function analysisMs(level, n) {
     return Math.round((n <= 9 ? 1500 : 2500) * ({ hard: 2, expert: 4 }[level] || 1));
@@ -337,7 +334,9 @@
 
     const ms = opts.ms || LEVEL_MS[level] || 1200;
     if (level === 'hard' || level === 'expert') { /* tree search in search.js */
-      const r = await (typeof GoSearch !== 'undefined' ? GoSearch : require('./search.js')).search(s, color, { ms, oppPassed, cancelled: opts.cancelled });
+      /* The coach (expert) searches on every core of the device (parallel.js); the computer (hard) on one. */
+      const S = level === 'expert' && typeof GoParallel !== 'undefined' ? GoParallel : typeof GoSearch !== 'undefined' ? GoSearch : require('./search.js');
+      const r = await S.search(s, color, { ms, oppPassed, cancelled: opts.cancelled });
       const c = r && cands.find(q => q.move === r.move);
       return r && (r.move < 0 ? { move: -1, note: TX.T('engine.nothing-left'), winrate: r.winrate } : { move: r.move, note: c ? describe(c) : TX.T('engine.reading-ahead'), winrate: r.winrate });
     }

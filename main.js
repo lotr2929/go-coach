@@ -19,7 +19,7 @@
 
   $('#newForm').addEventListener('submit', e => {
     if (e.submitter && e.submitter.value === 'start') {
-      settings.size = +chosen('size'); settings.colour = chosen('colour'); settings.level = chosen('level'); settings.coachLevel = chosen('coachlevel') || settings.coachLevel; settings.handicap = +chosen('handicap');
+      settings.size = +chosen('size'); settings.colour = chosen('colour'); settings.level = chosen('level'); settings.handicap = +chosen('handicap');
       saveSettings();
       G.newChatSession(); /* a new game is a new session: the chat so far moves into the history (chatlog.js) */
       setTimeout(startNewGame, 0);

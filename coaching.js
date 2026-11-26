@@ -15,8 +15,8 @@
   const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
   const section = (h, t) => `**${h}:**\n${cap(t)}`;
   const sigOf = s => Array.from(s.board).join('') + s.turn;
-  /* How hard the coach thinks: the level chosen for it, but always at least one above the computer's level. */
-  const coachLevel = () => E.coachLevel(Play.level, settings.coachLevel);
+  /* The coach always thinks at the strongest level (engine.js coachLevel). */
+  const coachLevel = () => E.coachLevel();
   const kindOf = loss => (loss < .02 ? 'good' : loss < .06 ? 'slight' : loss < .12 ? 'mistake' : 'blunder'); /* coaching.kind.… */
   const kindName = k => T('kind.' + k);
 
@@ -88,12 +88,26 @@
     return parts.join('\n\n');
   }
 
+  /* The coach's analysis uses the tree search (search.js), the same method as the Hard computer but with more time and on every
+     core of the device (parallel.js), so the coach is much the stronger player. The suggestions are the moves the search looked at most; the territory map and lead
+     come from play-outs of the position (search.js ownership). */
+  async function strongAnalysis(s, ms, cancelled) {
+    const S = window.GoSearch;
+    const r = await (window.GoParallel || S).search(E.clone(s), s.turn, { ms, cancelled }); /* every core: parallel.js */
+    if (!r || cancelled()) return null;
+    const o = await S.ownership(E.clone(s), { ms: s.n <= 9 ? 300 : 500, cancelled });
+    if (!o) return null;
+    const top = r.moves.filter(m => m.move >= 0), most = top.length ? top[0].visits : 0;
+    const moves = top.filter(m => m.visits >= Math.max(10, most * 0.02)).slice(0, 5).map(m => ({ move: m.move, wr: m.winrate, v: m.visits }));
+    return { moves, own: o.own, diff: o.diff, sims: r.sims };
+  }
+
   async function analyse(auto) {
     const s0 = Play.s;
     if (!s0 || Play.thinking || Play.phase !== 'play' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on)) return;
     const s = E.clone(s0), tok = ++Play.token;
     Play.thinking = true; Play.note = { tok, text: T('analysing') }; renderPlay();
-    const res = await E.analyse(s, s.turn, { ms: E.analysisMs(coachLevel(), s.n), cancelled: () => tok !== Play.token });
+    const res = await strongAnalysis(s, E.analysisMs(coachLevel(), s.n), () => tok !== Play.token);
     if (tok !== Play.token || !res) return;
     Play.thinking = false;
     last = { s, res, sig: sigOf(s) };

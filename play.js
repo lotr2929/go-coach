@@ -36,10 +36,9 @@
     chips($('#optSize'), 'size', T('opt.size'), [[9, '9×9'], [13, '13×13'], [19, '19×19']], settings.size);
     chips($('#optColour'), 'colour', T('opt.colour'), [['black', T('opt.black')], ['white', T('opt.white')], ['random', T('opt.random')], ['both', T('opt.both')]], settings.colour);
     chips($('#optLevel'), 'level', T('opt.level'), [['easy', T('opt.easy')], ['medium', T('opt.medium')], ['hard', T('opt.hard')]], settings.level);
-    chips($('#optCoach'), 'coachlevel', T('opt.coach'), [['medium', T('opt.medium')], ['hard', T('opt.hard')], ['expert', T('opt.expert')]], settings.coachLevel);
     chips($('#optHandicap'), 'handicap', T('opt.handicap'), [[0, T('opt.none')], [2, '2'], [3, '3'], [4, '4'], [5, '5']], settings.handicap);
     const help = () => {
-      $('#newHelp').textContent = T('new-help', { level: E.coachLevel(chosen('level'), chosen('coachlevel')) });
+      $('#newHelp').textContent = T('new-help');
     };
     $('#newForm').onchange = help; help();
     if (G.newTabs) G.newTabs.show('new'); /* the box always opens on its first tab (cloudsave.js adds the second, Saved games) */

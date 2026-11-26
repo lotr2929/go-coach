@@ -41,12 +41,6 @@ Medium
 ## opt.hard
 Hard
 
-## opt.coach
-Coach level
-
-## opt.expert
-Expert (slowest)
-
 ## opt.handicap
 Handicap stones
 
@@ -54,7 +48,7 @@ Handicap stones
 None
 
 ## new-help
-9×9 is best for learning; the computer plays most strongly there. Handicap stones go to Black. The coach is always at least one level above the computer: with these choices it plays at {level} level.
+9×9 is best for learning; the computer plays most strongly there. Handicap stones go to Black. The coach always thinks at its strongest level, well above the computer, so it can take a few seconds.
 
 ## guided-confirm
 Start the guided game? Your current game will be replaced.

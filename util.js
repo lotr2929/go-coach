@@ -10,7 +10,7 @@ window.GC = {};
   const store = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
 
   const settings = Object.assign({
-    size: 9, colour: 'black', level: 'medium', coachLevel: 'medium', handicap: 0,
+    size: 9, colour: 'black', level: 'medium', handicap: 0,
     coords: true, libs: false, coach: true, mode: 'play', terr: false, terrSecs: 2,
     confirm: window.matchMedia && matchMedia('(pointer:coarse)').matches, sound: true
   }, load(KEY.set, {}));
