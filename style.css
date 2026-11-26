@@ -223,6 +223,7 @@ body.chatBig #chat { position: fixed; z-index: 30; top: calc(env(safe-area-inset
 body:not(.touring) .tourShade, body:not(.touring) .tourRing, body:not(.touring) .tourTip { display: none; }
 .tourShade { position: fixed; inset: 0; z-index: 40; }
 .tourRing { position: fixed; z-index: 41; pointer-events: none; border: 3px solid var(--accent); border-radius: 0; box-shadow: 0 0 0 9999px rgba(0,0,0,.55); transition: all .35s ease; }
+.tourRing.blank { border-width: 0; } /* a card in the middle of the screen: everything darkened, nothing ringed */
 .tourTip, .tourHint { position: fixed; z-index: 42; background: var(--surface); color: var(--ink); border: 0; border-radius: 0; padding: 10px 14px; box-shadow: 0 8px 30px rgba(0,0,0,.25); font-size: .95rem; line-height: 1.45; }
 .tourHint { z-index: 50; pointer-events: none; font-size: .88rem; padding: 8px 12px; }
 .tourTitle { display: block; margin-bottom: 2px; }
@@ -263,7 +264,8 @@ button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: no
 .chatInput:focus-visible { outline: none; border-bottom-color: var(--ink); } /* the chat box keeps only its bottom line while you type, a shade darker */
 
 /* The undo/back and redo/next buttons under the board: plain triangles, pointing left and right. */
-button.tri { width: 36px; height: 30px; padding: 0; display: grid; place-items: center; }
+button.tri { width: 26px; height: 30px; padding: 0; display: grid; place-items: center; }
+.barSide:has(> button.tri) { gap: 0; } /* the undo and redo arrows sit close together (Boon, 26 Nov 2026) */
 button.tri::before { content: ""; width: 14px; height: 16px; background: currentColor; }
 button.tri.back::before { clip-path: polygon(100% 0, 100% 100%, 0 50%); }
 button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }

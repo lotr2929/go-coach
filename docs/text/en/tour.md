@@ -5,6 +5,12 @@ or a finger presses and holds it. Each part has a title (".title") and an explan
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 
+## intro.title
+Welcome to Go Coach
+
+## intro.text
+The app has two parts: the board, where you play, and the chat, where you chat with your coach. This short tour shows you how to use both. Tap Next (or anywhere) to go on; ✕ ends the tour.
+
 ## title.title
 Go Coach
 
@@ -89,35 +95,47 @@ Resign
 ## resign.text
 Give up this game.
 
+## setup.title
+Set up
+
+## setup.text
+Place and remove stones by hand, for example to copy a position from a book, then play on from there.
+
 ## save.title
 Save
 
 ## save.text
-Keep this game in the cloud. Press it again to save your latest moves over the same game. Find your saved games under New, on the Saved games tab.
+Keep this game on this device. Press it again to save your latest moves over the same game. Find your saved games under New, on the Saved games tab.
 
 ## new.title
 New game
 
 ## new.text
-Choose the board size (9 × 9 is quick, 13 × 13 is medium, 19 × 19 is the full game), your colour, the computer’s level (Easy, Medium or Hard), the coach’s level and any handicap stones. Starting a new game also clears the chat.
+Start a new game. Choose the board size (9 × 9 is quick, 19 × 19 is the full game), your colour or "Play both sides" (you choose the moves for both colours, with the coach suggesting moves for the other side), the computer’s level and any handicap stones. The Saved games tab keeps the games you saved, and lets you export a game as a file or import one.
 
 ## chat.title
 The chat
 
 ## chat.text
-The coach’s messages appear here. Bold headings mark analyses, reviews and explanations.
+Here you chat with your coach. Each new message from the coach moves to the top, so you read one thing at a time. Earlier messages fold to one line above: scroll up to see them, and tap a line to read it in full. Words in italics are choices you can tap.
 
 ## chatsize.title
 Enlarge the chat
 
 ## chatsize.text
-Makes the chat fill the screen for easier reading. Tap it again to go back to the board.
+Tap here to make the chat fill the screen, for longer explanations and easier reading.
+
+## chatbig.title
+The chat, enlarged
+
+## chatbig.text
+Now the chat fills the screen. Tap the same button again to go back to the board. You can switch like this at any time.
 
 ## ask.title
 Ask the coach
 
 ## ask.text
-Type anything here: "hint", "why?", "what is a ponnuki?", a point such as "D4", or a number from the welcome. Type "commands" to see everything you can type, and Help to see the welcome again.
+Type here, in a few plain words. The main keywords: "hint" (a good move), "why?" (the idea behind it), "analyse", a point such as "D4", "what is ko?" (any Go term), "teach me" (lessons) and "help" (the welcome). Type "keywords" any time to see everything the coach understands.
 
 ## send.title
 Send
@@ -125,14 +143,14 @@ Send
 ## send.text
 Sends your message. Pressing Enter does the same.
 
+## finish.title
+Three words to remember
+
+## finish.text
+Type "help" to see the welcome, "keywords" to see everything the coach understands, and "tour" to see this tour again. Enjoy your games!
+
 ## back
 Back
-
-## pause
-Pause
-
-## play
-Play
 
 ## next
 Next
@@ -141,7 +159,7 @@ Next
 End the tour
 
 ## end-mouse
-That was the tour. Rest the mouse on any button to see its explanation again, or type 5 to replay the tour.
+That was the tour. Rest the mouse on any button to see its explanation again. Type "help", "keywords" or "tour" at any time.
 
 ## end-touch
-That was the tour. Press and hold any button to see its explanation again, or type 5 to replay the tour.
+That was the tour. Press and hold any button to see its explanation again. Type "help", "keywords" or "tour" at any time.

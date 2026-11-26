@@ -5,7 +5,8 @@
    A session starts with a date and time. Only pressing New starts a new session (Boon's choice: leaving or reopening the app
    always returns you to where you were). The history sits above, in the same list (Boon, 26 Nov 2026): today's earlier sessions in
    full, earlier days folded under their date. When the app opens and after New, the newest message is scrolled to the top of the
-   chat, so only it shows; scroll up for everything before it. There is no Clear.
+   chat, so only it shows; each new coach's message then moves to the top in the same way, with the line just above it (usually
+   your question) still in view. Scroll up for everything before it. There is no Clear.
    chat.js decides what the coach says; this file only stores and shows it. */
 (() => {
   'use strict';
@@ -128,23 +129,28 @@
     clipOlder();
     toTop();
   }
-  /* Scrolls the newest message (or, after New, the newest of the last session) to the top of the chat, so only it shows. */
-  let pinned = false;
-  function toTop() {
-    pinned = true;
+  /* Scrolls a message to the top of the chat, with empty room below it, so it shows on its own (with the line above it if withPrev).
+     With no message given: the newest one (after New, the newest of the last session). */
+  let pinned = null;
+  function toTop(target, withPrev) {
     const shown = [...box.querySelectorAll('.msg')].filter(m => m.offsetParent !== null);
-    const last = shown[shown.length - 1];
+    const last = target || shown[shown.length - 1];
+    pinned = { target: last, withPrev };
     tail.style.height = '0px';
     if (!last) { box.scrollTop = 0; return; }
-    const top = Math.max(0, last.offsetTop - 8), pad = parseFloat(getComputedStyle(box).paddingBottom) || 0;
+    const prev = withPrev ? shown[shown.indexOf(last) - 1] : null;
+    const top = Math.max(0, (prev || last).offsetTop - 8), pad = parseFloat(getComputedStyle(box).paddingBottom) || 0;
     tail.style.height = Math.max(0, top + box.clientHeight - tail.offsetTop - pad) + 'px'; /* tail.offsetTop: where the messages end */
     box.scrollTop = top;
   }
-  /* New lines go at the bottom, as in any chat: the empty room is no longer needed. */
-  function toBottom() { pinned = false; tail.style.height = '0px'; box.scrollTop = box.scrollHeight; }
+  /* A line added under the pinned message (what you typed, "Coach is analysing…"): scrolled into view if it is below the chat's edge. */
+  function inView(el) {
+    const over = el.offsetTop + el.offsetHeight + 8 - (box.scrollTop + box.clientHeight);
+    if (over > 0) box.scrollTop += over;
+  }
   /* The chat is drawn before the page has its final size (and it changes when the screen turns or the chat is enlarged):
-     while nothing new has been added, keep the newest message at the top. */
-  if (window.ResizeObserver) new ResizeObserver(() => { if (pinned) toTop(); }).observe(box);
+     keep the pinned message at the top. */
+  if (window.ResizeObserver) new ResizeObserver(() => { if (pinned && pinned.target && pinned.target.isConnected) toTop(pinned.target, pinned.withPrev); }).observe(box);
 
   /* ---------- adding to the chat ---------- */
   function record(who, text) {
@@ -155,15 +161,16 @@
     if (cur.log.length > MAX) cur.log.shift();
     cur.last = Date.now();
     save();
-    nowEl.append(who === 'user' ? userLine(text) : message(text));
-    if (who === 'coach') clipOlder();
-    toBottom();
+    const el = who === 'user' ? userLine(text) : message(text);
+    nowEl.append(el);
+    if (who === 'coach') { clipOlder(); toTop(el, true); } /* the new message moves to the top (Boon, 26 Nov 2026) */
+    else inView(el);
   }
   /* Something that is not kept, such as the lessons menu, shown under the current question. */
   function show(el) {
     nowEl.append(el);
     clipOlder();
-    toBottom();
+    toTop(el, true);
   }
   /* A passing notice, such as "Coach is analysing…": shown at the end of the chat while the work goes on and taken away when it
      is done (Boon, 25 Nov 2026). It is not kept in the session. An empty text takes it away. */
@@ -172,7 +179,7 @@
     if (!text) { if (busyEl) busyEl.remove(); busyEl = null; return; }
     busyEl = busyEl || Object.assign(document.createElement('div'), { className: 'msg busy' });
     if (busyEl.textContent !== text) busyEl.textContent = text;
-    if (busyEl.parentNode !== nowEl || busyEl !== nowEl.lastChild) { nowEl.append(busyEl); toBottom(); }
+    if (busyEl.parentNode !== nowEl || busyEl !== nowEl.lastChild) { nowEl.append(busyEl); inView(busyEl); }
   }
   /* New session: the current one goes into the history (above) and a new one starts under it, with the welcome if asked for. */
   function newSession(welcome) {

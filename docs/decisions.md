@@ -36,6 +36,11 @@ Last updated: 25 November 2026.
 - Stored compactly as game records (position before the first move, then the moves; sgf.js `fromState`/`toState`) and replayed when opened; test-saves.js checks they reopen exactly. Code in `savegames.js`; wording in `docs/text/en/save.md` and screen.md (`saved-note`, `import`).
 - **Cloud saves retired** (`_retired/cloudsave.js`, Supabase project `dlbs`): to come back for subscribers with accounts ("your games on all your devices"). Games Boon saved to the cloud on 25 Nov are still in Supabase.
 
+## The tour (Boon, 26 Nov 2026)
+- Order: a card in the middle ("two parts: the board, where you play, and the chat, where you chat with your coach": the player takes the lead), then the chat first (how messages move to the top and fold, enlarging the chat and going back to the board, the typing box with the main keywords), then the board, then the game buttons (New explains Play both sides and the Saved games tab), then Settings and the flag, and a closing card: "help", "keywords", "tour". It waits for the player (no moving on by itself).
+- **"keywords"** (also "commands") shows everything the coach understands (commands.md), so players are not left guessing.
+- Each new coach's message moves to the top of the chat with the line above it (usually the question) in view.
+
 ## First install
 - **The tour starts by itself** the first time the app is opened (nothing saved yet), after the welcome appears. It runs once; later it starts from "How to use the app" or by typing Tour.
 

@@ -1,6 +1,8 @@
-/* Go Coach — "How to use the app": a moving tour that highlights each part of the screen in turn with a short explanation,
+/* Go Coach — "How to use the app": a tour that highlights each part of the screen in turn with a short explanation,
    and afterwards the same explanation as a small tip when a mouse rests on that button, or a finger presses and holds it.
-   The tour moves on by itself every few seconds; Back, Pause and Next steer it, and Esc or ✕ ends it.
+   The order (Boon, 26 Nov 2026): what the app is (the board and the chat), then the chat first, as it is what makes Go Coach
+   different (enlarging it and going back to the board, what to type, "keywords"), then the board, then the game buttons, then
+   the three words to remember. The tour waits for you: Next or a tap moves on, Back goes back, Esc or ✕ ends it.
    Parts that are hidden at the moment (such as the win-chance bar before it has a reading) are skipped. */
 (() => {
   'use strict';
@@ -8,34 +10,38 @@
   const { $ } = G;
   const { T } = window.GoText;
 
-  /* sel: one selector, or several to highlight together. hover: false where a tip would get in the way.
+  /* sel: one selector, or several to highlight together; center: a card in the middle of the screen instead. big: the chat is
+     enlarged during this step. hover: false where a tip would get in the way. tour: false for a tip that is not in the tour.
      key: the step's name in docs/text/en/tour.md, which holds its title (key.title) and explanation (key.text). */
   const STEPS = [
-    { key: 'title', sel: '.titleBox' },
-    { key: 'flag', sel: '#btnFlag' },
-    { key: 'settings', sel: '#btnSettings' },
-    { key: 'whoturn', sel: '#whoTurn' },
-    { key: 'ahead', sel: '#posInfo' },
-    { key: 'prisoners', sel: '#capsInfo' },
+    { key: 'intro', center: true },
+    { key: 'chat', sel: '.chatLog', hover: false },
+    { key: 'chatsize', sel: '#btnChatSize' },
+    { key: 'chatbig', sel: '#btnChatSize', big: true, hover: false },
+    { key: 'ask', sel: '.chatInput', hover: 'mouse' }, /* a tip when the mouse rests on it; on a phone, holding the box is for typing */
+    { key: 'send', sel: '.chatForm button[type="submit"]' },
     { key: 'board', sel: '.boardWrap', hover: false },
     { key: 'arrows', sel: ['#btnUndoArrow', '#btnRedoArrow'] },
+    { key: 'whoturn', sel: '#whoTurn' },
+    { key: 'prisoners', sel: '#capsInfo' },
+    { key: 'ahead', sel: '#posInfo' },
     { key: 'shapes', sel: '#btnShapes' },
     { key: 'territory', sel: '#btnTerr' },
     { key: 'mode', sel: '#btnMode' },
     { key: 'pass', sel: '#btnPass' },
     { key: 'analyse', sel: '#btnAnalyse' },
     { key: 'resign', sel: '#btnResign' },
+    { key: 'setup', sel: '#btnSetup' },
     { key: 'save', sel: '#btnSave' },
     { key: 'new', sel: '#btnNew' },
-    { key: 'chat', sel: '.chatLog', hover: false },
-    { key: 'chatsize', sel: '#btnChatSize' },
-    { key: 'ask', sel: '.chatInput', hover: 'mouse' }, /* a tip when the mouse rests on it; on a phone, holding the box is for typing */
-    { key: 'send', sel: '.chatForm button[type="submit"]' }
+    { key: 'settings', sel: '#btnSettings' },
+    { key: 'flag', sel: '#btnFlag' },
+    { key: 'title', sel: '.titleBox', tour: false },
+    { key: 'finish', center: true }
   ];
   for (const s of STEPS) { s.title = T(`tour.${s.key}.title`); s.text = T(`tour.${s.key}.text`); }
-  const MS = 7000; /* how long each step stays when the tour moves on by itself */
 
-  const list = s => (Array.isArray(s.sel) ? s.sel : [s.sel]);
+  const list = s => (!s.sel ? [] : Array.isArray(s.sel) ? s.sel : [s.sel]);
   const elems = s => list(s).map(q => document.querySelector(q)).filter(e => e && e.offsetParent !== null && e.getBoundingClientRect().width > 0);
   /* The rectangle around all of a step's parts. */
   function rectOf(es) {
@@ -57,51 +63,71 @@
   }
 
   /* ---------- the tour ---------- */
-  let shade = null, ring = null, tip = null, steps = [], idx = 0, timer = 0, paused = false;
+  let shade = null, ring = null, tip = null, steps = [], idx = 0;
   function build() {
     shade = mk('div', 'tourShade'); ring = mk('div', 'tourRing'); tip = mk('div', 'tourTip');
     tip.setAttribute('role', 'dialog'); tip.setAttribute('aria-live', 'polite');
     shade.addEventListener('click', () => go(idx + 1));
     document.body.append(shade, ring, tip);
   }
+  /* The chat is enlarged only during the step that shows it enlarged. */
+  function chatBig(on) { if (document.body.classList.contains('chatBig') !== on) $('#btnChatSize').click(); }
   function show() {
-    clearTimeout(timer);
-    const s = steps[idx], es = elems(s);
-    if (!es.length) return go(idx + 1);
-    es[0].scrollIntoView({ block: 'nearest' });
-    const r = rectOf(es), pad = 6;
-    Object.assign(ring.style, { left: r.left - pad + 'px', top: r.top - pad + 'px', width: r.right - r.left + 2 * pad + 'px', height: r.bottom - r.top + 2 * pad + 'px' });
+    const s = steps[idx];
+    chatBig(!!s.big);
+    const vw = window.innerWidth, vh = window.innerHeight;
+    let r;
+    if (s.center) { /* a card in the middle; the whole screen is darkened */
+      r = null;
+      ring.classList.add('blank');
+      Object.assign(ring.style, { left: vw / 2 + 'px', top: vh / 2 + 'px', width: '0px', height: '0px' });
+    } else {
+      const es = elems(s);
+      if (!es.length) return go(idx + (dir || 1));
+      es[0].scrollIntoView({ block: 'nearest' });
+      r = rectOf(es);
+      const pad = 6;
+      ring.classList.remove('blank');
+      Object.assign(ring.style, { left: r.left - pad + 'px', top: r.top - pad + 'px', width: r.right - r.left + 2 * pad + 'px', height: r.bottom - r.top + 2 * pad + 'px' });
+    }
     tip.innerHTML = '';
     const h = mk('strong', 'tourTitle'); h.textContent = s.title;
     const p = mk('p', 'tourText'); p.textContent = s.text;
     const bar = mk('div', 'tourBar');
-    const count = mk('span', 'tourCount'); count.textContent = `${idx + 1} / ${steps.length}`;
+    const live = steps.filter(x => x.center || x === s || elems(x).length); /* only the steps that will show (hidden parts are skipped) */
+    const count = mk('span', 'tourCount'); count.textContent = `${live.indexOf(s) + 1} / ${live.length}`;
     const btn = (label, aria, f) => { const b = mk('button', ''); b.type = 'button'; b.textContent = label; b.setAttribute('aria-label', aria); b.onclick = e => { e.stopPropagation(); f(); }; return b; };
-    bar.append(count,
-      btn('‹', T('tour.back'), () => { paused = true; go(idx - 1); }),
-      btn(paused ? '▶' : '❚❚', T(paused ? 'tour.play' : 'tour.pause'), () => { paused = !paused; show(); }),
-      btn('›', T('tour.next'), () => go(idx + 1)),
-      btn('✕', T('tour.close'), end));
+    bar.append(count);
+    if (idx > 0) bar.append(btn('‹', T('tour.back'), () => go(idx - 1)));
+    bar.append(btn('›', T('tour.next'), () => go(idx + 1)), btn('✕', T('tour.close'), end));
     tip.append(h, p, bar);
-    placeTip(tip, r);
-    if (!paused) timer = setTimeout(() => go(idx + 1), MS);
+    if (r) placeTip(tip, r);
+    else {
+      const w = Math.min(380, vw - 24);
+      tip.style.width = w + 'px';
+      tip.style.left = (vw - w) / 2 + 'px';
+      tip.style.top = Math.max(12, (vh - tip.offsetHeight) / 2) + 'px';
+    }
   }
+  let dir = 1;
   function go(i) {
     if (i >= steps.length) return end();
+    dir = i < idx ? -1 : 1;
     idx = Math.max(0, i);
     show();
   }
   function start() {
     if (G.pageOpen && G.pageOpen()) G.closePage();
-    if (document.body.classList.contains('chatBig')) $('#btnChatSize').click();
+    chatBig(false);
     if (!shade) build();
-    steps = STEPS.slice(); idx = 0; paused = false;
+    steps = STEPS.filter(s => s.tour !== false); idx = 0; dir = 1;
     document.body.classList.add('touring');
     show();
   }
   function end() {
-    clearTimeout(timer);
+    if (!document.body.classList.contains('touring')) return;
     document.body.classList.remove('touring');
+    chatBig(false);
     const mouse = window.matchMedia && window.matchMedia('(hover: hover)').matches;
     G.say(T(mouse ? 'tour.end-mouse' : 'tour.end-touch'));
   }
@@ -109,7 +135,7 @@
     if (!document.body.classList.contains('touring')) return;
     if (e.key === 'Escape') end();
     else if (e.key === 'ArrowRight') go(idx + 1);
-    else if (e.key === 'ArrowLeft') { paused = true; go(idx - 1); }
+    else if (e.key === 'ArrowLeft') go(idx - 1);
   });
   window.addEventListener('resize', () => { if (document.body.classList.contains('touring')) show(); });
 
@@ -117,7 +143,7 @@
   let hint = null, hintFor = null, hintTimer = 0, savedTitle = null;
   const stepFor = (target, touch) => {
     for (const s of STEPS) {
-      if (s.hover === false || (touch && s.hover === 'mouse')) continue;
+      if (!s.sel || s.hover === false || (touch && s.hover === 'mouse')) continue;
       for (const q of list(s)) { const e = target.closest && target.closest(q); if (e) return { s, e }; }
     }
     return null;
