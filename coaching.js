@@ -241,13 +241,17 @@
   }
 
   /* ---------- Play mode and Coach mode ---------- */
-  /* A small bar above the board: Black's chance of winning, from a short read with the tree search in search.js
-     (which, unlike plain random games, values having the move, so komi does not make White look far ahead at the start).
-     Dimmed while one move out of date. */
-  let est = null, estTok = 0;
+  /* A small bar above the board: who is ahead and by about how many points (komi included), e.g. "● +8.5".
+     It comes from random games played out from the position (search.js ownership), averaged with the estimate for the position
+     one move earlier. Checked on Boon's game of 27 Nov 2026: the old bar (a short win-chance search) jumped by up to 35 points
+     depending on whose turn it was and showed 50/50 at the end; this one moves smoothly and ended at the real result.
+     The bar's fill is Black's share, from the lead (about 4 points on 9×9 counts as a clear edge). Dimmed while out of date. */
+  let est = null, estTok = 0, prevLead = null;
   function blackPct() {
-    if (est) return { p: Math.max(2, Math.min(98, est.p)), fresh: !!Play.s && est.sig === sigOf(Play.s) };
-    return null;
+    if (!est) return null;
+    const scale = est.n <= 9 ? 4 : est.n <= 13 ? 7 : 10;
+    const p = Math.round(100 / (1 + Math.exp(-est.lead / scale)));
+    return { p: Math.max(3, Math.min(97, p)), lead: est.lead, fresh: !!Play.s && est.sig === sigOf(Play.s) };
   }
   function paintPos() {
     /* Silent Play mode (play.js playSilent) shows no estimate, as in a normal game of Go. */
@@ -255,16 +259,19 @@
     const v = busy ? null : blackPct();
     if (!v) { el.hidden = true; return; }
     el.hidden = false; el.style.opacity = v.fresh ? '1' : '.55';
-    $('#posB').style.width = v.p + '%'; $('#posL').textContent = '● ' + v.p; $('#posR').textContent = (100 - v.p) + ' ○';
-    el.title = T('estimate', { black: v.p, white: 100 - v.p });
+    const pts = Math.abs(v.lead).toFixed(1), black = v.lead >= 0;
+    $('#posB').style.width = v.p + '%'; $('#posL').textContent = black ? '● +' + pts : '●'; $('#posR').textContent = black ? '○' : '+' + pts + ' ○';
+    el.title = T('estimate', { side: colourName(black ? 1 : 2), points: pts });
   }
   async function refreshEstimate() {
     const s = Play.s;
     if (!s || Play.thinking || Play.phase !== 'play') return;
     const sig = sigOf(s), tok = ++estTok;
-    const r = await window.GoSearch.search(E.clone(s), s.turn, { ms: s.n <= 9 ? 400 : s.n <= 13 ? 600 : 800, cancelled: () => tok !== estTok });
-    if (!r || tok !== estTok) return;
-    est = { sig, p: Math.round((s.turn === 1 ? r.winrate : 1 - r.winrate) * 100) };
+    const o = await window.GoSearch.ownership(E.clone(s), { ms: s.n <= 9 ? 700 : s.n <= 13 ? 1000 : 1400, cancelled: () => tok !== estTok });
+    if (!o || tok !== estTok) return;
+    const before = prevLead && prevLead.n === s.n && prevLead.moves === s.moves.length - 1 ? prevLead.lead : null;
+    prevLead = { n: s.n, moves: s.moves.length, lead: o.diff };
+    est = { sig, n: s.n, lead: before === null ? o.diff : (o.diff + before) / 2 };
     paintPos();
   }
 
