@@ -33,6 +33,7 @@ Type in the box at the bottom and press Send (or Enter). I understand short requ
 "guided game": a first game with the coach explaining each move.
 "set up the board": place and remove stones by hand (also the Set up button), then play on from that position.
 "what is ko?" or "what does kifu mean?": the meaning of a Go term (also liberty, atari, eye, joseki, kyu and dan, hane, tsumego, moyo, ponnuki, tiger's mouth and many more).
+"Go terms" or "glossary": the list of all the Go terms I can explain.
 "rules", "first move", "checklist": the rules in brief, where to start, and five questions to ask before every move.
 "famous games" and "history of Go".
 

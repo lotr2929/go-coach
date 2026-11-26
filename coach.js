@@ -119,6 +119,8 @@
 
     /* "commands": how the chat works and what to type (commands.md). */
     if (has(/\b(commands?|command list)\b|^((please )?(show|list|give) me )?(the |a |all )?(list of )?(text |chat )?prompts( please)?$|\bwhat (can|should) i (type|say|ask)\b|\b(text|chat) (prompts|hints)\b/)) return out(TX.T('commands.list'));
+    /* "Go terms" or "glossary": the list of every term the coach can explain (terms.md, "list"). */
+    if (has(/\b(glossary|terms|vocabulary|jargon|go words)\b/)) return out(T('terms.list'));
     /* "What does kifu mean?" or "what is joseki?": the meaning of a Go term, before any request the same word would start
        (so "what is kifu?" explains the word, while "kifu" alone still opens the famous games). Only clear questions about a
        word count: "what does X mean", "meaning of X", "define X", or "what is" followed by a single word. */

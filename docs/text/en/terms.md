@@ -5,6 +5,32 @@ The words the coach listens for stay in the code; only the answers are here. Sha
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 
+"list" is what the coach shows for "Go terms" or "glossary". Lines that start and end with ** show as bold headings. Keep each term in quotation marks: a test checks that the coach can explain every quoted term, so a new word must also be added to the code.
+
+## list
+**Go terms I can explain**
+Ask "what is …?" or "what does … mean?" with any of these, for example "what is atari?".
+
+**The basics**
+"goban", "star points", "liberty", "atari", "capture", "group", "eye", "alive" and "dead", "suicide", "ko", "pass".
+
+**Scoring**
+"territory", "scoring", "komi", "handicap", "seki".
+
+**Fighting**
+"ladder", "snapback", "connect" and "cut", "hane", "sente" and "gote", "tenuki".
+
+**Shapes**
+"ponnuki", "tiger's mouth", "bamboo joint", "diagonal", "one point jump", "knight's move", "empty triangle", "dumpling", "cutting point", "crosscut", "false eye".
+
+**Strategy**
+"opening", "third line", "joseki", "moyo", "influence", "aji".
+
+**Players and games**
+"kyu" and "dan", "kifu", "tsumego", "nigiri", "byoyomi".
+
+Type "Go terms" to see this list again, or "commands" for the things you can ask me to do.
+
 ## liberty
 A liberty is an empty point directly beside a stone: up, down, left or right. A stone or group with no liberties is captured. Say "show liberties" and I will mark them on the board.
 

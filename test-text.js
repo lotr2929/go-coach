@@ -75,6 +75,10 @@ module.exports = async function (t) {
     for (const q of ['commands', 'text commands', 'show me the commands', 'What can I type?', 'list of commands', 'What are Go commands?', 'Go commands']) assert.strictEqual(r(q).text, TX.T('commands.list'), q);
     for (const [q, id] of [['what does kifu mean?', 'kifu'], ['What is kifu?', 'kifu'], ['what is joseki', 'joseki'], ['what is a kyu?', 'rank'], ['meaning of tsumego', 'tsumego'], ['define moyo', 'moyo']]) assert.strictEqual(r(q).text, TX.T('terms.' + id), q);
     assert.strictEqual(r('kifu').action, 'kifu'); /* the word alone still opens the famous games */
+    for (const q of ['What are the various Go terms?', 'Go terms', 'glossary', 'list of Go terms']) assert.strictEqual(r(q).text, TX.T('terms.list'), q);
+    for (const w of TX.T('terms.list').match(/"[^"]+"/g).map(x => x.slice(1, -1)).filter(w => !/^(what|go terms|commands)\b/i.test(w))) {
+      assert.notStrictEqual(r('what is ' + w + '?').text, TX.T('coach.fallback'), 'terms.md lists "' + w + '" but the coach cannot explain it');
+    }
     assert.strictEqual(r('help').text, C.INTRO);
     assert.strictEqual(r('show me').action, 'showme');
     for (const q of ['play both sides', 'let me choose White\'s moves', 'both sides']) assert.deepStrictEqual([r(q).action, r(q).arg], ['both', true], q);
