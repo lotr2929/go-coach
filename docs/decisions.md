@@ -4,6 +4,11 @@ A summary of Boon's decisions and the reasoning behind them, so any session (pho
 
 Last updated: 25 November 2026.
 
+## Hosting and business (Boon, 26 Nov 2026)
+- **Moving from Vercel to Cloudflare Pages** (free plan allows commercial use; Vercel's free plan does not). Free address on pages.dev (e.g. go-coach.pages.dev); no domain name until subscribers reach the hundreds. Cloudflare publishes the repository as it is (no build step; the repository is public anyway); `_headers` does what `vercel.json` did. Vercel stays until the Cloudflare site is checked, then is switched off.
+- Boon has checked with Curtin. ABN first (sole trader); payments to PayPal to start (a free PayPal Business account recommended, as subscriptions need one).
+- Note: what a device stores (the device key for cloud saves, chat history, settings) belongs to the web address, so it does not carry over from the Vercel address to the Cloudflare one.
+
 ## Product
 - **Go Coach first.** Develop it until Boon is satisfied before approaching anyone. World of Go (neural network, subscription) comes later, funded by traction.
 - **Go Coach stays local:** rules and random play-outs, no neural network, no network calls except the optional usage logging.
