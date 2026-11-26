@@ -89,17 +89,9 @@ Text size
 ## text-size-value
 Text size: {percent}%
 
-## flag
-Flag this position for Claude
 
-## flag-ask
-What should Claude look at? (a few words)
 
-## flagged
-Flagged. Tell Claude to look.
 
-## flag-off
-Logging is off in Settings, so Claude cannot see this.
 
 ## share-log
 Share usage log with Claude
@@ -142,3 +134,9 @@ One move back
 
 ## explore-next-tip
 One move forward, or the next reply
+
+## name-label
+Your name (shown at the top right)
+
+## name-hint
+For example, your Go server name

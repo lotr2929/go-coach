@@ -158,8 +158,8 @@
 
   /* Enlarge / shrink: the chat can cover the screen for easier reading, then go back to its usual place. */
   const sizeBtn = $('#btnChatSize');
-  const ICON_BIG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
-  const ICON_SMALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>';
+  const ICON_BIG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h10v10M13 21H3V11M21 3l-8 8M3 21l8-8"/></svg>';
+  const ICON_SMALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 13h10v10M23 11H13V1M13 11l8-8M3 21l8-8"/></svg>';
   function setBig(big) {
     document.body.classList.toggle('chatBig', big);
     sizeBtn.innerHTML = big ? ICON_SMALL : ICON_BIG;
