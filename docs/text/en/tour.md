@@ -119,12 +119,6 @@ Ask the coach
 ## ask.text
 Type anything here: "hint", "why?", "what is a ponnuki?", a point such as "D4", or a number from the welcome. Type "commands" to see everything you can type, and Help to see the welcome again.
 
-## clear.title
-Clear
-
-## clear.text
-Empties the chat. Type Help at any time to see the welcome again.
-
 ## send.title
 Send
 

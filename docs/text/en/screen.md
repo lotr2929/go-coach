@@ -149,12 +149,6 @@ Ask your coach…
 ## chat-input.aria
 Message to the coach
 
-## clear
-Clear
-
-## clear.aria
-Clear the chat
-
 ## send
 Send
 
@@ -169,6 +163,9 @@ Start
 
 ## settings
 Settings
+
+## settings-close.aria
+Close the settings
 
 ## coords
 Show coordinates

@@ -30,7 +30,6 @@
     { key: 'chat', sel: '.chatLog', hover: false },
     { key: 'chatsize', sel: '#btnChatSize' },
     { key: 'ask', sel: '.chatInput', hover: 'mouse' }, /* a tip when the mouse rests on it; on a phone, holding the box is for typing */
-    { key: 'clear', sel: '#btnClear' },
     { key: 'send', sel: '.chatForm button[type="submit"]' }
   ];
   for (const s of STEPS) { s.title = T(`tour.${s.key}.title`); s.text = T(`tour.${s.key}.text`); }

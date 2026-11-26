@@ -40,8 +40,5 @@ Shrink the chat
 ## enlarge
 Enlarge the chat
 
-## history-hint
-Pull down to see earlier sessions
-
 ## welcome-head
 Welcome
