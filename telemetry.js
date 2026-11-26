@@ -118,7 +118,6 @@
     const f = document.createElement('button');
     f.id = 'btnFlag'; f.className = 'icon'; f.type = 'button';
     f.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12"/><path d="M3 6l9 7 9-7"/></svg>'; f.setAttribute('aria-label', window.GoText.T('app.flag'));
-    f.style.marginLeft = 'auto'; f.style.marginRight = '.4rem';
     f.onclick = () => {
       const note = prompt(window.GoText.T('app.flag-ask'), '');
       if (note === null) return;

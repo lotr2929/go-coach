@@ -103,6 +103,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: manipulation; 
 /* The bar under the board: undo and redo on the left, the Territory tab on the right. */
 .boardBar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 10px auto 0; }
 .barSide { display: flex; gap: 6px; }
+.barSide:has(.tri) { gap: 0; } /* undo and redo sit close together */
 button.tab { padding: 3px 8px; font-size: .85rem; border-radius: 0; white-space: nowrap; }
 button.tab[aria-pressed="true"] { font-weight: 700; }
 button.tab.busy { animation: tabPulse 1.2s ease-in-out infinite; }
@@ -258,7 +259,7 @@ button { -webkit-touch-callout: none; -webkit-user-select: none; user-select: no
 .chatInput:focus-visible { outline: none; border-bottom-color: var(--ink); } /* the chat box keeps only its bottom line while you type, a shade darker */
 
 /* The undo/back and redo/next buttons under the board: plain triangles, pointing left and right. */
-button.tri { width: 36px; height: 30px; padding: 0; display: grid; place-items: center; }
+button.tri { width: 30px; height: 30px; padding: 0; display: grid; place-items: center; }
 button.tri::before { content: ""; width: 14px; height: 16px; background: currentColor; }
 button.tri.back::before { clip-path: polygon(100% 0, 100% 100%, 0 50%); }
 button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
@@ -302,3 +303,10 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .saveRow .nm:hover .link { text-decoration-color: var(--accent); }
 .saveRow input { flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--mute); border-radius: 0; padding: 3px 2px; }
 .saveRow button.act { font-size: .85rem; color: var(--mute); }
+
+/* The player's name at the top right (username.js) and its box in Settings. */
+.userName { margin-left: auto; color: var(--mute); font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw; }
+.userName:empty { display: none; }
+#btnFlag { margin-left: auto; }
+.userName:not(:empty) + #btnFlag { margin-left: 0; }
+.nameInput { width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--mute); border-radius: 0; padding: 6px 2px; }

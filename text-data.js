@@ -50,6 +50,8 @@
   "app.that-has": "That {colour} {what} has {libs}.",
   "app.explore-back-tip": "One move back",
   "app.explore-next-tip": "One move forward, or the next reply",
+  "app.name-label": "Your name (shown at the top right)",
+  "app.name-hint": "For example, your Go server name",
   "chat.cannot": "I cannot do that right now.",
   "chat.not-your-turn": "It is not your turn.",
   "chat.hints-on-turn": "Hints are available on your turn.",

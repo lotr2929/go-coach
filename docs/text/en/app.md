@@ -142,3 +142,9 @@ One move back
 
 ## explore-next-tip
 One move forward, or the next reply
+
+## name-label
+Your name (shown at the top right)
+
+## name-hint
+For example, your Go server name
