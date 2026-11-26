@@ -207,6 +207,12 @@ weak point
 ## list
 **Shapes on the board:**
 
+## list-black
+**Black’s shapes on the board:**
+
+## list-white
+**White’s shapes on the board:**
+
 ## none
 None yet.
 
@@ -220,7 +226,7 @@ None yet.
 {name}: {text}
 
 ## colours
-Colours: green good shape, red bad shape, blue neutral, orange weak point.
+Colours: green good shape, red bad shape, blue neutral, orange weak point. Rest the mouse on a number on the board (or tap it) to bring that shape forward and see what it is.
 
 ## tap-tone.good
 a good shape

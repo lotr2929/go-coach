@@ -11,14 +11,31 @@
       this.coords = true; this.libs = false;
       this.last = -1; this.ko = -1; this.own = null; this.marks = {}; this.hint = []; this.terr = null; this.dead = null;
       this.ghost = -1; this.ghostColor = 1; this.hover = -1; this.hoverColor = 0; this.shapes = null; this.markColor = 0;
+      this.shapeHover = 0; this.badges = []; /* the shape whose number the mouse is over, and where the numbers are drawn */
       this.W = 0; this.dpr = 1; this.cell = 1; this.pad = 1;
-      canvas.addEventListener('click', e => { const i = this.pointAt(e); if (i >= 0 && this.onTap) this.onTap(i); });
-      canvas.addEventListener('pointermove', e => {
-        if (e.pointerType !== 'mouse' || !(this.hoverColor || this.own)) return;
-        const i = this.pointAt(e);
-        if (i !== this.hover) { this.hover = i; this.draw(); if (this.onHover) this.onHover(i, e.clientX, e.clientY); }
+      canvas.addEventListener('click', e => {
+        /* A tap on a shape's number shows (or hides) that shape's explanation instead of playing a move: for phones, which have no hover. */
+        const label = this.badgeAt(e);
+        if (label) { this.shapeHover = this.shapeHover === label ? 0 : label; this.draw(); if (this.onShapeHover) this.onShapeHover(this.shapeHover, e.clientX, e.clientY); return; }
+        const i = this.pointAt(e); if (i >= 0 && this.onTap) this.onTap(i);
       });
-      canvas.addEventListener('pointerleave', () => { if (this.hover >= 0) { this.hover = -1; this.draw(); } if (this.onHover) this.onHover(-1); });
+      canvas.addEventListener('pointermove', e => {
+        if (e.pointerType !== 'mouse' || !(this.hoverColor || this.own || this.shapes)) return;
+        const i = this.pointAt(e), label = this.badgeAt(e);
+        /* Over a shape's number: that shape is drawn strongly and its explanation pops up (shapesui.js). */
+        if (label !== this.shapeHover) {
+          this.shapeHover = label; this.draw();
+          if (this.onShapeHover) this.onShapeHover(label, e.clientX, e.clientY);
+          if (!label && this.onHover) this.onHover(i, e.clientX, e.clientY); /* back to the note about the point */
+        }
+        if (label) { if (this.hover >= 0) { this.hover = -1; this.draw(); } return; } /* no ghost stone under a number */
+        if (i !== this.hover && (this.hoverColor || this.own)) { this.hover = i; this.draw(); if (this.onHover) this.onHover(i, e.clientX, e.clientY); }
+      });
+      canvas.addEventListener('pointerleave', () => {
+        if (this.hover >= 0 || this.shapeHover) { this.hover = -1; this.shapeHover = 0; this.draw(); }
+        if (this.onShapeHover) this.onShapeHover(0);
+        if (this.onHover) this.onHover(-1);
+      });
       if (window.ResizeObserver) new ResizeObserver(() => this.resize()).observe(canvas.parentElement);
       window.addEventListener('resize', () => this.resize());
     }
@@ -30,6 +47,14 @@
       this.W = w;
       this.cv.width = Math.round(w * this.dpr); this.cv.height = Math.round(w * this.dpr);
       this.draw();
+    }
+    /* The number of the shape whose numbered circle is under the mouse, or 0. */
+    badgeAt(e) {
+      const r = this.cv.getBoundingClientRect();
+      if (!r.width || !this.shapes) return 0;
+      const k = this.W / r.width, x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k;
+      for (let j = this.badges.length - 1; j >= 0; j--) { const b = this.badges[j]; if (Math.hypot(x - b.x, y - b.y) <= b.r * 1.15) return b.label; }
+      return 0;
     }
     pointAt(e) {
       const r = this.cv.getBoundingClientRect();
@@ -65,25 +90,32 @@
     }
     /* Each shape: { pts, rgb, dashed, label, move }. A rounded box around its points, filled lightly (top = false) or
        outlined and numbered (top = true). A shape that could be made is dashed, with a dashed ring on the move that makes it. */
+    /* Shapes are drawn light, with a border clear of the stones (stones have radius .47 of a cell), so overlapping shapes stay
+       readable. The shape whose number the mouse is over is drawn strongly, on top, and the others fade further. */
     drawShapes(px, cell, top) {
-      const ctx = this.ctx, n = this.n;
-      this.shapes.forEach((sh, k) => {
-        const xs = sh.pts.map(p => p % n), ys = sh.pts.map(p => (p / n) | 0), m = cell * (.42 - (k % 3) * .04);
+      const ctx = this.ctx, n = this.n, hov = this.shapeHover;
+      if (top) this.badges = [];
+      const order = this.shapes.map((sh, k) => [sh, k]).sort((a, b) => (a[0].label === hov) - (b[0].label === hov));
+      for (const [sh, k] of order) {
+        const on = !!hov && sh.label === hov, dim = !!hov && !on;
+        const xs = sh.pts.map(p => p % n), ys = sh.pts.map(p => (p / n) | 0), m = cell * (.62 - (k % 3) * .05);
         const x0 = px(Math.min(...xs)) - m, y0 = px(Math.min(...ys)) - m, w = px(Math.max(...xs)) + m - x0, h = px(Math.max(...ys)) + m - y0;
         ctx.save();
-        ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x0, y0, w, h, cell * .25) : ctx.rect(x0, y0, w, h);
-        if (!top) { ctx.fillStyle = `rgba(${sh.rgb},${sh.dashed ? .14 : .26})`; ctx.fill(); ctx.restore(); return; }
-        ctx.strokeStyle = `rgba(${sh.rgb},.95)`; ctx.lineWidth = Math.max(2, cell * .06);
+        ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x0, y0, w, h, cell * .3) : ctx.rect(x0, y0, w, h);
+        if (!top) { ctx.fillStyle = `rgba(${sh.rgb},${on ? .3 : dim ? .03 : sh.dashed ? .05 : .09})`; ctx.fill(); ctx.restore(); continue; }
+        ctx.strokeStyle = `rgba(${sh.rgb},${on ? .95 : dim ? .12 : .4})`; ctx.lineWidth = on ? Math.max(2.5, cell * .07) : Math.max(1.5, cell * .035);
         if (sh.dashed) ctx.setLineDash([cell * .16, cell * .12]);
         ctx.stroke();
         if (sh.move >= 0) { ctx.beginPath(); ctx.arc(px(sh.move % n), px((sh.move / n) | 0), cell * .3, 0, 7); ctx.stroke(); }
         ctx.setLineDash([]);
-        const r = cell * .2;
-        ctx.fillStyle = `rgb(${sh.rgb})`; ctx.beginPath(); ctx.arc(x0 + r * .6, y0 + r * .6, r, 0, 7); ctx.fill();
+        const r = cell * .2, bx = x0 + r * .6, by = y0 + r * .6;
+        ctx.globalAlpha = dim ? .35 : 1;
+        ctx.fillStyle = `rgb(${sh.rgb})`; ctx.beginPath(); ctx.arc(bx, by, r, 0, 7); ctx.fill();
         ctx.fillStyle = '#fff'; ctx.font = 'bold ' + Math.round(cell * .26) + 'px system-ui, sans-serif';
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(sh.label), x0 + r * .6, y0 + r * .6 + 1);
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(sh.label), bx, by + 1);
         ctx.restore();
-      });
+        this.badges.push({ x: bx, y: by, r, label: sh.label });
+      }
     }
     draw() {
       const W = this.W;

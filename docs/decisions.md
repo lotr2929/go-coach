@@ -48,6 +48,10 @@ Last updated: 25 November 2026.
 - Four skills: reading the terrain (territory), judging formations (shape), calculating the engagement (reading), commanding the campaign (strategy).
 - Winning without destroying: restraint wins in a contest where almost anything goes.
 
+## Shapes tab (Boon, 27 Nov 2026)
+- Shapes are drawn light, with borders clear of the stones, so overlapping shapes stay readable. Resting the mouse on a shape's number (or tapping it on a phone) draws that shape strongly, fades the others and pops up what it is; a tap on a number never plays a move.
+- The numbers follow the list: Black's shapes (good first, bad last), then White's, then the shapes that could be made next.
+
 ## Lessons
 - The lessons are organised in chapters that follow the skills in "What is Go?", from simple to complex: Basic training, Tactics, Formations, Reading the terrain, Calculating the engagement, Developing strategies. New lessons go into the chapter of the skill they teach. Chapters 4 and 5 now have four and three lessons. New lesson diagrams are checked by test-lessons.js, which reads ladders and nets out move by move.
 
