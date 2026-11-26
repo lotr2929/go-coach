@@ -70,3 +70,36 @@ In the opening, take the corners first, then the sides, then the centre: corners
 
 ## connect
 Connecting joins your stones into one group that shares liberties; cutting separates the opponent's stones so each part is weaker. Most fights are about one or the other.
+
+## kifu
+Kifu (Japanese for "game record") is the written record of a game: every move in order, so the game can be replayed. Go Coach has 100 famous kifu to study: type "famous games" to open them.
+
+## joseki
+A joseki is a well-known sequence of moves in a corner that experts agree is fair to both sides. Learn the ideas behind them rather than memorising them: a joseki that does not suit the rest of the board can still be a poor choice.
+
+## rank
+Go players are ranked in kyu and dan. Beginners start at about 30 kyu, and the number goes down as they improve, to 1 kyu. After 1 kyu comes 1 dan, and dan numbers go up as players get stronger. Professionals have their own dan ranks.
+
+## hane
+A hane is a move that bends around the end of the opponent's stones, diagonally from your own stone. It blocks their path and is one of the most common moves in a fight.
+
+## goban
+The goban is the Go board. A full board has 19×19 lines; beginners often start on 9×9 or 13×13. Stones are played on the points where the lines cross, not in the squares.
+
+## tsumego
+Tsumego are Go problems: a small position where you must find the move that kills or saves a group. Solving them is one of the best ways to get stronger.
+
+## moyo
+A moyo is a large framework: an area you have started to surround but not yet secured. It may become territory, but the opponent can still try to invade or reduce it.
+
+## influence
+Influence (or thickness) is the power of strong stones facing the centre. They are not territory yet, but they help you attack, fight and build territory later.
+
+## aji
+Aji (Japanese for "taste") means hidden possibilities left in a position, such as a weakness the opponent might use later. Bad aji means you have left something behind that could cause trouble.
+
+## nigiri
+Nigiri is how players decide who takes Black. One player takes a handful of white stones, the other guesses odd or even by showing one or two black stones.
+
+## byoyomi
+Byoyomi is overtime. When a player's main time runs out, they must play each move within a set period, such as 30 seconds, or lose on time.

@@ -72,7 +72,9 @@ module.exports = async function (t) {
   });
   await t('"commands", "show me" and "play both sides" are understood, and each example in commands.md is', () => {
     const r = q => C.reply(q, { n: 9 });
-    for (const q of ['commands', 'text commands', 'show me the commands', 'What can I type?', 'list of commands']) assert.strictEqual(r(q).text, TX.T('commands.list'), q);
+    for (const q of ['commands', 'text commands', 'show me the commands', 'What can I type?', 'list of commands', 'What are Go commands?', 'Go commands']) assert.strictEqual(r(q).text, TX.T('commands.list'), q);
+    for (const [q, id] of [['what does kifu mean?', 'kifu'], ['What is kifu?', 'kifu'], ['what is joseki', 'joseki'], ['what is a kyu?', 'rank'], ['meaning of tsumego', 'tsumego'], ['define moyo', 'moyo']]) assert.strictEqual(r(q).text, TX.T('terms.' + id), q);
+    assert.strictEqual(r('kifu').action, 'kifu'); /* the word alone still opens the famous games */
     assert.strictEqual(r('help').text, C.INTRO);
     assert.strictEqual(r('show me').action, 'showme');
     for (const q of ['play both sides', 'let me choose White\'s moves', 'both sides']) assert.deepStrictEqual([r(q).action, r(q).arg], ['both', true], q);

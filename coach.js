@@ -53,7 +53,7 @@
     { id: 'komi', w: ['komi'] },
     { id: 'handicap', w: ['handicap'] },
     { id: 'pass', w: ['pass', 'passing'] },
-    { id: 'ladder', w: ['ladder'] },
+    { id: 'ladder', w: ['ladder', 'shicho'] },
     { id: 'snapback', w: ['snapback'] },
     { id: 'seki', w: ['seki'] },
     { id: 'sente', w: ['sente', 'gote'] },
@@ -61,7 +61,18 @@
     { id: 'star-points', w: ['hoshi', 'star point', 'star points'] },
     { id: 'lines', w: ['third line', 'fourth line', '3rd line', '4th line', 'first line'] },
     { id: 'opening', w: ['opening', 'fuseki', 'strategy'] },
-    { id: 'connect', w: ['connect', 'connection', 'cut'] }
+    { id: 'connect', w: ['connect', 'connection', 'cut'] },
+    { id: 'kifu', w: ['kifu', 'game record', 'game records'] },
+    { id: 'joseki', w: ['joseki'] },
+    { id: 'rank', w: ['kyu', 'dan', 'rank', 'ranks', 'ranking'] },
+    { id: 'hane', w: ['hane'] },
+    { id: 'goban', w: ['goban', 'go board'] },
+    { id: 'tsumego', w: ['tsumego', 'go problem', 'go problems', 'puzzle', 'puzzles'] },
+    { id: 'moyo', w: ['moyo', 'framework'] },
+    { id: 'influence', w: ['influence', 'thickness', 'thick'] },
+    { id: 'aji', w: ['aji'] },
+    { id: 'nigiri', w: ['nigiri'] },
+    { id: 'byoyomi', w: ['byoyomi', 'byo yomi', 'overtime'] }
   ];
   for (const term of TERMS) term.t = T('terms.' + term.id);
 
@@ -91,6 +102,7 @@
     if (col < 0 || col >= n || row < 1 || row > n) return -1;
     return (n - row) * n + col;
   }
+  const DEFINE_RE = /\b(what (does|do) .+ mean|what is meant by|meaning of|definition of|define)\b|^(what('s| is| are)|whats) (a |an |the )?[a-z']+$/;
   const coordName = (n, i) => LETTERS[i % n] + (n - ((i / n) | 0));
   const out = (text, extra) => Object.assign({ text }, extra || {});
 
@@ -106,7 +118,11 @@
     const isWhat = has(/\b(what('s| is| are| does)?|explain|define|meaning|mean|tell me about|describe)\b/);
 
     /* "commands": how the chat works and what to type (commands.md). */
-    if (has(/^((please )?(show|list|give) me )?(the |a |all )?(list of )?(text |chat )?(commands?|command list|prompts)( please)?$|\bwhat (can|should) i (type|say|ask)\b|\b(text|chat) (commands|prompts|hints)\b|\blist of commands\b/)) return out(TX.T('commands.list'));
+    if (has(/\b(commands?|command list)\b|^((please )?(show|list|give) me )?(the |a |all )?(list of )?(text |chat )?prompts( please)?$|\bwhat (can|should) i (type|say|ask)\b|\b(text|chat) (prompts|hints)\b/)) return out(TX.T('commands.list'));
+    /* "What does kifu mean?" or "what is joseki?": the meaning of a Go term, before any request the same word would start
+       (so "what is kifu?" explains the word, while "kifu" alone still opens the famous games). Only clear questions about a
+       word count: "what does X mean", "meaning of X", "define X", or "what is" followed by a single word. */
+    if (has(DEFINE_RE)) { const term = findTerm(t); if (term) return out(term.t, { topic: term.w[0] }); }
     /* Play both sides: on the other side's turn the coach marks its best moves and you choose (play.js). */
     if (has(/\b(play (both|two) sides|both sides|let me (choose|pick|play) (the )?(computer'?s|white'?s|black'?s|opponent'?s|other side'?s|its|both) moves?)\b/)) return out('', { action: 'both', arg: true });
     if (has(/^(the )?computer plays?( again)?$|\blet the computer play\b|\bstop (playing )?both sides\b/)) return out('', { action: 'both', arg: false });
