@@ -1,0 +1,177 @@
+{
+ "id": "k004-a-young-iyama-yuta-plays-black",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 53,
+ "picks": [
+  {
+   "turn": 51,
+   "of": 53,
+   "colour": "B",
+   "played": "E5",
+   "best": "E5",
+   "isBest": true,
+   "gap": 37.3,
+   "second": "A7",
+   "prior": 0.999,
+   "near": 1,
+   "lead": 34.9,
+   "pv": [
+    "E5",
+    "E6",
+    "B6",
+    "A3",
+    "A7",
+    "A5"
+   ]
+  },
+  {
+   "turn": 49,
+   "of": 53,
+   "colour": "B",
+   "played": "A2",
+   "best": "A2",
+   "isBest": true,
+   "gap": 18.3,
+   "second": "F1",
+   "prior": 0.734,
+   "near": 1,
+   "lead": 30.3,
+   "pv": [
+    "A2",
+    "B6",
+    "E4",
+    "E6",
+    "F9",
+    "E8"
+   ]
+  },
+  {
+   "turn": 41,
+   "of": 53,
+   "colour": "B",
+   "played": "H2",
+   "best": "H2",
+   "isBest": true,
+   "gap": 13.4,
+   "second": "E6",
+   "prior": 0.618,
+   "near": 1,
+   "lead": 27,
+   "pv": [
+    "H2",
+    "H3",
+    "H4",
+    "H1",
+    "J3",
+    "E4"
+   ]
+  },
+  {
+   "turn": 43,
+   "of": 53,
+   "colour": "B",
+   "played": "C3",
+   "best": "C3",
+   "isBest": true,
+   "gap": 11.1,
+   "second": "E4",
+   "prior": 0.556,
+   "near": 1,
+   "lead": 29.2,
+   "pv": [
+    "C3",
+    "H1",
+    "H3",
+    "B1",
+    "B3",
+    "E4"
+   ]
+  },
+  {
+   "turn": 11,
+   "of": 53,
+   "colour": "B",
+   "played": "H7",
+   "best": "H7",
+   "isBest": true,
+   "gap": 9.3,
+   "second": "C4",
+   "prior": 0.996,
+   "near": 1,
+   "lead": 0,
+   "pv": [
+    "H7",
+    "F8",
+    "C4",
+    "C3",
+    "D3",
+    "E3"
+   ]
+  },
+  {
+   "turn": 45,
+   "of": 53,
+   "colour": "B",
+   "played": "B3",
+   "best": "B3",
+   "isBest": true,
+   "gap": 6.8,
+   "second": "G1",
+   "prior": 0.757,
+   "near": 1,
+   "lead": 29.3,
+   "pv": [
+    "B3",
+    "B6",
+    "B5",
+    "A7",
+    "E4",
+    "E6"
+   ]
+  },
+  {
+   "turn": 33,
+   "of": 53,
+   "colour": "B",
+   "played": "F4",
+   "best": "F4",
+   "isBest": true,
+   "gap": 5.5,
+   "second": "E2",
+   "prior": 0.763,
+   "near": 1,
+   "lead": 13.1,
+   "pv": [
+    "F4",
+    "E3",
+    "D2",
+    "H3",
+    "E4"
+   ]
+  },
+  {
+   "turn": 37,
+   "of": 53,
+   "colour": "B",
+   "played": "D2",
+   "best": "D2",
+   "isBest": true,
+   "gap": 4.3,
+   "second": "E6",
+   "prior": 0.544,
+   "near": 1,
+   "lead": 17.9,
+   "pv": [
+    "D2",
+    "H3",
+    "H4",
+    "D1",
+    "H2",
+    "H1"
+   ]
+  }
+ ]
+}

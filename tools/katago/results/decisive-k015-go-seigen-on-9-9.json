@@ -1,0 +1,52 @@
+{
+ "id": "k015-go-seigen-on-9-9",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 53,
+ "picks": [
+  {
+   "turn": 35,
+   "of": 53,
+   "colour": "B",
+   "played": "H5",
+   "best": "H5",
+   "isBest": true,
+   "gap": 10.9,
+   "second": "B9",
+   "prior": 0.802,
+   "near": 1,
+   "lead": -2.6,
+   "pv": [
+    "H5",
+    "G6",
+    "E8",
+    "E7",
+    "G9",
+    "H6"
+   ]
+  },
+  {
+   "turn": 51,
+   "of": 53,
+   "colour": "B",
+   "played": "A5",
+   "best": "A5",
+   "isBest": true,
+   "gap": 5.6,
+   "second": "C9",
+   "prior": 0.373,
+   "near": 1,
+   "lead": -2.4,
+   "pv": [
+    "A5",
+    "C9",
+    "J2",
+    "G1",
+    "J1",
+    "F5"
+   ]
+  }
+ ]
+}

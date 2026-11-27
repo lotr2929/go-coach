@@ -1,0 +1,31 @@
+{
+ "id": "k013-a-celebration-game",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 54,
+ "picks": [
+  {
+   "turn": 51,
+   "of": 54,
+   "colour": "B",
+   "played": "G1",
+   "best": "G1",
+   "isBest": true,
+   "gap": 6.2,
+   "second": "B2",
+   "prior": 0.882,
+   "near": 1,
+   "lead": -4.7,
+   "pv": [
+    "G1",
+    "D1",
+    "D3",
+    "B2",
+    "J1",
+    "F8"
+   ]
+  }
+ ]
+}

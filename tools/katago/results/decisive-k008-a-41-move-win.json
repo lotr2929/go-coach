@@ -1,0 +1,94 @@
+{
+ "id": "k008-a-41-move-win",
+ "size": 9,
+ "komi": 5.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 41,
+ "picks": [
+  {
+   "turn": 37,
+   "of": 41,
+   "colour": "B",
+   "played": "B3",
+   "best": "B3",
+   "isBest": true,
+   "gap": 8.7,
+   "second": "F1",
+   "prior": 0.997,
+   "near": 1,
+   "lead": 6.9,
+   "pv": [
+    "B3",
+    "B1",
+    "E1",
+    "C1",
+    "E2",
+    "A1"
+   ]
+  },
+  {
+   "turn": 23,
+   "of": 41,
+   "colour": "B",
+   "played": "E7",
+   "best": "E7",
+   "isBest": true,
+   "gap": 6.1,
+   "second": "F3",
+   "prior": 0.938,
+   "near": 1,
+   "lead": -3.1,
+   "pv": [
+    "E7",
+    "D8",
+    "E8",
+    "C9",
+    "F3",
+    "A2"
+   ]
+  },
+  {
+   "turn": 31,
+   "of": 41,
+   "colour": "B",
+   "played": "G2",
+   "best": "G2",
+   "isBest": true,
+   "gap": 3.8,
+   "second": "E3",
+   "prior": 0.934,
+   "near": 1,
+   "lead": 3,
+   "pv": [
+    "G2",
+    "G4",
+    "F4",
+    "E2",
+    "G3",
+    "B1"
+   ]
+  },
+  {
+   "turn": 35,
+   "of": 41,
+   "colour": "B",
+   "played": "H1",
+   "best": "H1",
+   "isBest": true,
+   "gap": 3.2,
+   "second": "H2",
+   "prior": 0.463,
+   "near": 1,
+   "lead": 4.7,
+   "pv": [
+    "H1",
+    "E1",
+    "F1",
+    "E6",
+    "E5",
+    "G1"
+   ]
+  }
+ ]
+}

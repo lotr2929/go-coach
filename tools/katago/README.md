@@ -21,3 +21,6 @@ To run many games, three at a time (a four-core computer), from a list with one 
 
 ## results/
 Raw results, one game per line. What they mean is written up in `docs/decisions.md` (Engine).
+
+## On the laptop (27 Nov 2026)
+KataGo v1.18.1 (OpenCL build, runs on the Intel Arc graphics), the b11c768 transformer net and the human-style model are in tools/katago/bin (ignored by git, never published). On this laptop KataGo needs -override-config homeDataDir=<tools/katago/bin/data> or it cannot create its tuning folder. The first run tunes the graphics for several minutes.

@@ -1,0 +1,31 @@
+{
+ "id": "k009-half-a-point-decides-it",
+ "size": 9,
+ "komi": 5.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 39,
+ "picks": [
+  {
+   "turn": 31,
+   "of": 39,
+   "colour": "B",
+   "played": "D3",
+   "best": "D3",
+   "isBest": true,
+   "gap": 14.1,
+   "second": "B7",
+   "prior": 0.982,
+   "near": 1,
+   "lead": 1.8,
+   "pv": [
+    "D3",
+    "D2",
+    "B7",
+    "B6",
+    "B8",
+    "D8"
+   ]
+  }
+ ]
+}

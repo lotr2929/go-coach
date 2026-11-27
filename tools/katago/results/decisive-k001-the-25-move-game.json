@@ -1,0 +1,31 @@
+{
+ "id": "k001-the-25-move-game",
+ "size": 9,
+ "komi": 5.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 25,
+ "picks": [
+  {
+   "turn": 25,
+   "of": 25,
+   "colour": "B",
+   "played": "C3",
+   "best": "C3",
+   "isBest": true,
+   "gap": 8.4,
+   "second": "E8",
+   "prior": 0.877,
+   "near": 1,
+   "lead": 9,
+   "pv": [
+    "C3",
+    "B6",
+    "A4",
+    "B3",
+    "B2",
+    "C2"
+   ]
+  }
+ ]
+}
