@@ -140,3 +140,21 @@ Your name (shown at the top right)
 
 ## name-hint
 For example, your Go server name
+
+## sign-in
+Sign in
+
+## sign-in-title
+Sign in
+
+## sign-in-note
+Type your name to sign in. Until accounts are built, your name and games stay on this device.
+
+## signed-in-as
+Signed in as
+
+## sign-out
+Sign out
+
+## cancel
+Cancel

@@ -71,9 +71,6 @@ Next
 ## lesson-menu
 Lessons
 
-## lesson-exit
-Game
-
 ## kifu-first
 « First
 
