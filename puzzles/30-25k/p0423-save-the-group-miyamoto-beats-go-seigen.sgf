@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: Miyamoto beats Go Seigen, move 52]DI[26k]PL[W]PB[Miyamoto Naoki]PW[Go Seigen]
+AB[ea][fa][eb][gb][bc][fc][gc][hc][bd][cd][ed][de][ee][cf][df][ef][ff][eg][ch][dh][eh]
+AW[ca][da][bb][db][cc][dc][ec][fd][gd][hd][be][fe][ie][bf][gf][hf][cg][dg][fg][ig][bh][fh][gh][hh]
+C[In the middle of the game: Miyamoto Naoki (Black) against Go Seigen (White), 9x9 game, 1968. White to play.
+
+Task: One of White's groups is in atari. Find it and save it.]
+(;W[bg]C[RIGHT B3 gives your group 6 liberties, and it can no longer be caught.])
+)

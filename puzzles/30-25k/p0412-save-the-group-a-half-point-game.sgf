@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: A half-point game, move 38]DI[26k]PL[W]PB[Ishikura Noboru]PW[Koyama Shizuo]
+AB[ea][db][fb][cc][ec][bd][cd][dd][de][ee][ge][he][ef][eg][hg][eh][ih]
+AW[gb][hb][fc][gc][hd][id][be][ce][ie][af][df][bg][cg][dg][ig][dh]
+C[Near the end of the game: Ishikura Noboru (Black) against Koyama Shizuo (White), NHK TV 9x9, 1989. White to play.
+
+Task: One of White's groups is in atari. Find it and save it.]
+(;W[if]C[RIGHT J4 gives your group 4 liberties, and it can no longer be caught.])
+)

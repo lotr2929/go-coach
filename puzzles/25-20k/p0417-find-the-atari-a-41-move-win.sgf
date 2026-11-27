@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Find the atari: A 41-move win, move 41]DI[23k]PL[B]PB[Kamimura Kunio]PW[Abe Yoshiteru]
+AB[eb][ec][dd][ae][de][fe][af][bf][cf][ff][bg][cg][fg][ah][bh][gh][fi][hi]
+AW[ca][bb][db][bc][dc][ad][bd][cd][be][ce][df][dg][eg][ch][dh][fh][bi][ci]
+C[Near the end of the game: Kamimura Kunio (Black) against Abe Yoshiteru (White), NHK TV 9x9, 1989. Black to play.
+
+Task: One of the opponent's groups is in atari. Find it and capture it.]
+(;B[eh]C[RIGHT E2 takes the last liberty and captures the stone.])
+)

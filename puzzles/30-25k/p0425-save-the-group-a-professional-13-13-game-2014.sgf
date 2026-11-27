@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[13]GN[Save the group: A professional 13×13 game (2014), move 56]DI[26k]PL[W]PB[Cho Chikun]PW[O Meien]
+AB[ib][gc][hc][ic][lc][ed][gd][jd][kd][ld][fe][ie][ke][me][ef][jf][kf][lg][kh][lh][ii][dj][ij][jk][lk][il][kl][ll]
+AW[ja][jb][lb][mb][ec][jc][kc][cd][dd][hd][id][ge][ff][hf][if][fg][jg][kg][ih][jh][ji][mi][jj][kj][lj][kk]
+C[In the middle of the game: Cho Chikun (Black) against O Meien (White), Pro 13x13 tournament, 2014-08-31. White to play.
+
+Task: One of White's groups is in atari. Find it and save it.]
+(;W[he]C[RIGHT H9 gives your group 3 liberties, and it can no longer be caught.])
+)

@@ -62,3 +62,11 @@ escapes by a check that reads six White moves ahead; eyes by `tools/lessons/eyes
 eye space (up to 5 points). Each position is written once for the bottom left and can be flipped to another corner or side.
 
 Later, lessons will also be checked with KataGo (that the right answer is really the best move, and how hard it is).
+
+## Busy-board puzzles from famous games, ranked by KataGo
+
+`tools/katago/find-atari.js` finds moments in the famous games where one group is in atari, `tools/katago/rank-puzzles.js`
+checks each with KataGo (the answer must be within 1.5 points of its best move) and ranks it with KataGo's human-style model
+(how often a player of each rank plays the answer), and `tools/katago/make-atari-puzzles.js` writes the 30-25k and 25-20k
+ones as puzzles (p0401 to p0426, 27 Nov 2026). Below 20 kyu the model has no weaker player, so those two bands are split by
+how often its 20-kyu player finds the answer: a first estimate, to be checked against beta players' results.

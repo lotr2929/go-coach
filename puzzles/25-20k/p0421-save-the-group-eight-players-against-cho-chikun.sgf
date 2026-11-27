@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: Eight players against Cho Chikun, move 35]DI[22k]PL[B]PB[Kim Sujun & Kobayashi Izumi & Inori Yoko & Umezawa Yukari & Hosaka Mayu & Hans Pietsch & Takemiya Yoko & Kono Rin]PW[Cho Chikun]
+AB[bb][gb][cc][gc][dd][fd][ce][de][fe][cf][gf][fg][gg][ch][dh][fh][fi]
+AW[cb][bc][dc][ec][fc][hc][gd][ge][df][ef][ff][hf][dg][hg][eh][gh][hh]
+C[Near the end of the game: Kim Sujun & Kobayashi Izumi & Inori Yoko & Umezawa Yukari & Hosaka Mayu & Hans Pietsch & Takemiya Yoko & Kono Rin (Black) against Cho Chikun (White), Kitani school 500 dan celebration, 2000-03-28. Black to play.
+
+Task: One of Black's groups is in atari. Find it and save it.]
+(;B[cd]C[RIGHT C6 gives your group 6 liberties, and it can no longer be caught.])
+)

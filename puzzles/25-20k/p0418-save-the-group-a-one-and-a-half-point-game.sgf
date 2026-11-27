@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: A one-and-a-half point game, move 32]DI[22k]PL[W]PB[Kato Keiko]PW[Mannami Kana]
+AB[cb][dc][ec][gc][fd][de][ee][fe][ge][he][cf][gf][if][cg][dg][eh]
+AW[fb][gb][cc][fc][cd][dd][ed][ce][df][ef][ff][hf][gg][fh][hh]
+C[In the middle of the game: Kato Keiko (Black) against Mannami Kana (White), Women's 9x9 Match, 2008-11-03. White to play.
+
+Task: One of White's groups is in atari. Find it and save it.]
+(;W[hg]C[RIGHT H3 gives your group 5 liberties, and it can no longer be caught.])
+)

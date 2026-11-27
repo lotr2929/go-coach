@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: A 41-move win, move 24]DI[27k]PL[W]PB[Kamimura Kunio]PW[Abe Yoshiteru]
+AB[cb][cc][ec][dd][ae][de][fe][af][bf][cf][cg][bh]
+AW[bb][bc][dc][bd][cd][be][ce][df][dg][ch][dh]
+C[In the middle of the game: Kamimura Kunio (Black) against Abe Yoshiteru (White), NHK TV 9x9, 1989. White to play.
+
+Task: One of White's groups is in atari. Find it and save it.]
+(;W[db]C[RIGHT D8 gives your group 2 liberties, and it can no longer be caught.])
+)
