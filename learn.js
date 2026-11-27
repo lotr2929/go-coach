@@ -7,7 +7,7 @@
   const T = (k, v) => window.GoText.T('learn.' + k, v); /* wording: docs/text/en/learn.md */
   const CHIPS = ['Explain more', 'Hint', 'Why is that?', 'Next lesson', 'Lessons', 'Back to game'];
 
-  const Lesson = { on: false, idx: -1, s: null, status: null, answered: false, hintPts: [], hist: [], fwd: [], done: new Set(load(KEY.done, [])) };
+  const Lesson = { on: false, idx: -1, s: null, status: null, answered: false, hintPts: [], hist: [], fwd: [], line: [], ahead: [], done: new Set(load(KEY.done, [])) };
   const isPuzzle = () => Lesson.on && !!(LS.list[Lesson.idx] && LS.list[Lesson.idx].puzzle);
   /* Puzzle mode's suggestion buttons run their action directly (chat.js setChips accepts { label, run }). */
   const puzzleChips = () => [
@@ -19,8 +19,28 @@
   /* Undo and redo in a puzzle: the position, the file's place and the result are kept before each move. */
   const snap = () => { const s = Lesson.s; return { s: E.clone(s), at: s.data && s.data.at, tried: s.data && s.data.tried ? s.data.tried.slice() : [], status: Lesson.status }; };
   const apply = sn => { const s = E.clone(sn.s); s.data = Object.assign({}, sn.s.data, { at: sn.at, tried: sn.tried.slice() }); Lesson.s = s; Lesson.status = sn.status; Lesson.hintPts = []; renderLesson(); };
-  function puzzleUndo() { if (!isPuzzle() || !Lesson.hist.length) return; Lesson.fwd.push(snap()); apply(Lesson.hist.pop()); }
-  function puzzleRedo() { if (!isPuzzle() || !Lesson.fwd.length) return; Lesson.hist.push(snap()); apply(Lesson.fwd.pop()); }
+  /* line: the points the player has tapped in this puzzle (one per undo step); ahead: the ones undone, for redo. Puzzle mode keeps
+     them (gcmode.js moved), so a signed-in player comes back to the same moves on the next visit. */
+  const moved = () => { if (isPuzzle() && G.gcMode) G.gcMode.moved(LS.list[Lesson.idx].id.replace(/^file:/, ''), Lesson.line.slice()); };
+  function puzzleUndo() { if (!isPuzzle() || !Lesson.hist.length) return; Lesson.fwd.push(snap()); apply(Lesson.hist.pop()); Lesson.ahead.push(Lesson.line.pop()); moved(); }
+  function puzzleRedo() { if (!isPuzzle() || !Lesson.fwd.length) return; Lesson.hist.push(snap()); apply(Lesson.fwd.pop()); Lesson.line.push(Lesson.ahead.pop()); moved(); }
+  /* Every puzzle keeps its moves for the visit, undo and redo included: leaving it and coming back finds it as it was (Boon, 27 Nov 2026). */
+  const kept = new Map();
+  const keepPuzzle = () => { if (isPuzzle()) kept.set(LS.list[Lesson.idx].id, { now: snap(), hist: Lesson.hist.slice(), fwd: Lesson.fwd.slice(), hinted: Lesson.hinted, line: Lesson.line.slice(), ahead: Lesson.ahead.slice() }); };
+  /* A signed-in player's moves from an earlier visit (gcmode.js): played again quietly, with no messages and nothing counted twice. */
+  function puzzleReplay(line) {
+    const L = LS.list[Lesson.idx];
+    if (!isPuzzle() || Lesson.line.length) return;
+    for (const i of line || []) {
+      if (Lesson.status === 'win' || Lesson.status === 'fail') break;
+      Lesson.hist.push(snap());
+      const r = LS.handle(L, Lesson.s, i);
+      if (r.ev.type === 'illegal') { Lesson.hist.pop(); break; }
+      Lesson.line.push(i);
+      if (r.status) Lesson.status = r.status;
+    }
+    renderLesson(); moved();
+  }
   function puzzleFirst() { while (isPuzzle() && Lesson.hist.length) puzzleUndo(); }
   function puzzleLast() { while (isPuzzle() && Lesson.fwd.length) puzzleRedo(); }
 
@@ -42,8 +62,11 @@
     if (Play.thinking) return say(window.GoText.T('app.busy-thinking'));
     if (G.kifu && G.kifu.on) G.exitKifu(true);
     if (G.setupOn && G.setupOn()) G.leaveSetup();
+    keepPuzzle();
     const L = LS.list[i];
-    Lesson.on = true; Lesson.idx = i; Lesson.s = LS.setup(L); Lesson.status = null; Lesson.answered = false; Lesson.hintPts = []; Lesson.hinted = false; Lesson.hist = []; Lesson.fwd = [];
+    Lesson.on = true; Lesson.idx = i; Lesson.s = LS.setup(L); Lesson.status = null; Lesson.answered = false; Lesson.hintPts = []; Lesson.hinted = false; Lesson.hist = []; Lesson.fwd = []; Lesson.line = []; Lesson.ahead = [];
+    const k = L.puzzle && kept.get(L.id);
+    if (k) { apply(k.now); Object.assign(Lesson, { hist: k.hist, fwd: k.fwd, hinted: k.hinted, line: k.line, ahead: k.ahead }); }
     const q = $('#quizOptions'); q.innerHTML = '';
     if (L.type === 'quiz') {
       L.options.forEach((o, k) => {
@@ -62,6 +85,7 @@
   }
   function exitLesson() {
     if (!Lesson.on) return;
+    keepPuzzle();
     Lesson.on = false; Lesson.hintPts = [];
     $('#puzzleBar').hidden = true; $('#btnLBack').hidden = true;
     if (G.gcMode) G.gcMode.left(); /* leaving the lessons also leaves Go Coach mode */
@@ -110,7 +134,7 @@
     Lesson.hintPts = [];
     if (L.puzzle) { Lesson.hist.push(snap()); Lesson.fwd = []; }
     const r = LS.handle(L, Lesson.s, i);
-    if (L.puzzle && r.ev.type === 'illegal') Lesson.hist.pop();
+    if (L.puzzle) { if (r.ev.type === 'illegal') Lesson.hist.pop(); else { Lesson.line.push(i); Lesson.ahead = []; } }
     if (r.ev.type === 'move') click();
     if (r.status) Lesson.status = r.status;
     if (r.status === 'win') markDone(L);
@@ -118,7 +142,7 @@
     if (r.status === 'win' && G.gcMode) G.gcMode.solved(L); /* Go Coach mode: today's lesson and the streak (gcmode.js) */
     /* The first try at each exercise counts towards the Go Coach grade (grade.js), unless a hint was used; said after the lesson's own words. */
     if (r.status && !Lesson.hinted && G.grade) G.grade.lesson(L.id, kyuOf(L), r.status === 'win');
-    renderLesson();
+    renderLesson(); moved();
   }
   function answerQuiz(k, btn) {
     const L = LS.list[Lesson.idx];
@@ -165,5 +189,5 @@
     return { id: L.id, n: s.n, s, marks, task: L.task, hasHint: !L.type && LS.hintPoints(L, s).length > 0 };
   }
 
-  Object.assign(G, { Lesson, renderLesson, showMenu, openLesson, exitLesson, onLessonTap, lessonInfo, lessonHint, lessonReset, lessonNext, isPuzzle, puzzleUndo, puzzleRedo, puzzleFirst, puzzleLast });
+  Object.assign(G, { Lesson, renderLesson, showMenu, openLesson, exitLesson, onLessonTap, lessonInfo, lessonHint, lessonReset, lessonNext, isPuzzle, puzzleUndo, puzzleRedo, puzzleFirst, puzzleLast, puzzleReplay });
 })();
