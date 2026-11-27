@@ -475,6 +475,7 @@ async function t(name, fn) {
   await require('./test-lessons.js')(t); /* the lesson diagrams do what their words say */
   await require('./test-reading.js')(t); /* reading the fight */
   await require('./test-grade.js')(t); /* the Go Coach grade */
+  await require('./test-endgame.js')(t); /* when the computer passes first or resigns */
   await require('./test-problems.js')(t); /* lessons from the lessons/ folder */
   console.log(failed ? failed + ' FAILED, ' + passed + ' passed' : 'all ' + passed + ' tests passed');
   process.exit(failed ? 1 : 0);

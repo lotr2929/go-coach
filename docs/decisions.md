@@ -131,6 +131,9 @@ Last updated: 27 November 2026.
 - **Usernames and storage (Boon, 27 Nov 2026):** renaming adds a username; every username an account has had signs in to it, and once signed in the sign-in box lists "Other usernames used in this account" (never shown before signing in). A new username on a device that already has an account warns that accounts share the device's storage and asks to confirm. Storage (about 5 MB per site in a browser, shared by all accounts): at 80% the coach warns once a visit; at 95% Go Coach stops keeping progress and asks: clear my chat history, delete my account (signed in; players can delete only their own account, never another's), or carry on without saving (storagewarn.js, wording in storage.md).
 - **Settings in groups:** Board, Coach, General; "Level of Puzzle mode:" sits on one line just before Check for updates.
 
+## The computer resigns and passes first (Boon, 27 Nov 2026)
+- It resigns when clearly lost (playouts give it under 3% and it is well behind, three turns in a row, after half the board's worth of moves), and passes first when nothing is left worth playing (no atari, every empty area surrounded by one colour). Before, it never resigned and passed only after the player. endgame.js; not in the guided first game.
+
 ## Engine (search.js)
 - Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.
 - Measured: beat the old engine 20–0 (9×9) and 4–0 (13×13); against GNU Go 3.8 on 9×9 at Hard, 9 wins and 7 losses (about 5–10 kyu). Wins are close; losses are large, from misjudging whether a big group lives.

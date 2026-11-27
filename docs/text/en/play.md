@@ -95,6 +95,12 @@ Computer passes
 ## nothing-urgent
 Nothing urgent. Passing is reasonable if you think the game is settled.
 
+## computer-resigned
+The computer resigns: it can no longer win this game. {winner} wins.
+
+## computer-resigned-title
+The computer resigned
+
 ## resign-confirm
 Resign this game?
 
