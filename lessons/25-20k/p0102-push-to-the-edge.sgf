@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Push it to the edge]DI[20k]PL[B]
+AB[bg][ch]
+AW[bh]
+C[The white stone at B2 has two liberties, A2 and B1. If you give atari from the wrong side, it can run out into the open.
+
+Task: Capture the white stone, however it runs.]
+(;B[ah];W[bi]C[White runs along the edge to B1.];B[ci]C[RIGHT Now White's two stones have only A1 left, and White cannot play there: it would have no liberties at all. They are captured next move.])
+(;B[bi];W[ah]C[White runs to A2.];B[ag]C[RIGHT Now White's two stones have only A1 left, and White cannot play there. They are captured next move.])
+)

@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Run to safety]DI[28k]PL[B]
+AB[ee]
+AW[de][ef][fe]
+C[Your stone at E5 is in atari: White can capture it next move by playing E6.
+
+Task: Save your stone.]
+(;B[ed]C[RIGHT Extending to E6 joins the two stones. Together they have three liberties (D6, F6 and E7), so they are safe for now.])
+)

@@ -40,3 +40,48 @@ Lesson reset. Have another go.
 
 ## ready
 Ready for your first game? I will set it up for you and explain every move.
+
+## files-head
+Lessons by grade
+
+## files-note
+Short lessons ordered from the easiest. Each one you solve first time builds your Go Coach grade.
+
+## band-head
+{band}
+
+## file-kyu
+{n} kyu
+
+## file-dan
+{n} dan
+
+## file-label
+{mark} {grade} · {title}
+
+## heading-file
+Lesson by grade: {title} ({grade})
+
+## problem-right
+Right!
+
+## problem-wrong
+That is not the move this lesson is looking for. Tap Reset to try again, or Hint for a clue.
+
+## problem-again
+Tap Reset to try again.
+
+## problem-your-move
+Your move.
+
+## problem-reply
+Your opponent answers at {point}. Your move.
+
+## files-failed
+That lesson could not be loaded. Check your connection and try again.
+
+## files-end
+That was the last lesson by grade for now. More are on the way.
+
+## who-file
+{title} ({grade})

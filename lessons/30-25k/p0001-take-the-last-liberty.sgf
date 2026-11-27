@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Take the last liberty]DI[30k]PL[B]
+AB[de][ef][fe]
+AW[ee]
+C[The white stone at E5 has only one liberty left.
+
+Task: Capture it.]
+(;B[ed]C[RIGHT E6 takes White's last liberty, so the stone is captured and comes off the board.])
+)

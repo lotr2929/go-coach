@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two stones on the edge]DI[26k]PL[B]
+AB[ci][dh][eh]
+AW[di][ei]
+C[Stones on the edge have fewer liberties. White's two stones at D1 and E1 are short of breath.
+
+Task: Capture both white stones.]
+(;B[fi]C[RIGHT F1 takes the last liberty of both stones at once: two prisoners for you.])
+)

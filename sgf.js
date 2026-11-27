@@ -133,5 +133,11 @@
     return { s, applied: k, ok: k === lim };
   }
 
-  return { parse, toSGF, startState, playMove, replay };
+  /* The raw tree with all its branches (problems.js reads lessons with it), or null. */
+  function tree(text) {
+    const s = String(text).replace(/^\uFEFF/, ''), at = s.indexOf('(');
+    return at < 0 ? null : readTree(s, at).tree;
+  }
+
+  return { parse, toSGF, startState, playMove, replay, tree, point, points };
 });

@@ -316,5 +316,6 @@
     return out;
   }
 
-  return { list, CHAPTERS, chapterOf, setup, handle, hintPoints, marksFor, P };
+  /* CORE: how many lessons are built in; lessons from the lessons/ folder are added after them when opened (lessonfiles.js). */
+  return { list, CORE: list.length, CHAPTERS, chapterOf, setup, handle, hintPoints, marksFor, P };
 });

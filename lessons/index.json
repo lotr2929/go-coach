@@ -1,0 +1,39 @@
+{
+ "lessons": [
+  {
+   "id": "p0001-take-the-last-liberty",
+   "file": "lessons/30-25k/p0001-take-the-last-liberty.sgf",
+   "title": "Take the last liberty",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0002-run-to-safety",
+   "file": "lessons/30-25k/p0002-run-to-safety.sgf",
+   "title": "Run to safety",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0003-two-stones-on-the-edge",
+   "file": "lessons/30-25k/p0003-two-stones-on-the-edge.sgf",
+   "title": "Two stones on the edge",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0101-mend-the-cut",
+   "file": "lessons/25-20k/p0101-mend-the-cut.sgf",
+   "title": "Mend the cut",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0102-push-to-the-edge",
+   "file": "lessons/25-20k/p0102-push-to-the-edge.sgf",
+   "title": "Push it to the edge",
+   "kyu": 20,
+   "band": "25-20k"
+  }
+ ]
+}

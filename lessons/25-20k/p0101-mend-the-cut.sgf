@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Mend the cut]DI[24k]PL[B]
+AB[de][ef]
+AW[df][fe]
+C[Your stones at D5 and E4 touch only at the corner. If White plays E5, they are cut apart.
+
+Task: Connect your stones.]
+(;B[ee]C[RIGHT E5 joins D5 and E4 into one group. Connected stones share their liberties and are much harder to attack.])
+(;B[dd];W[ee]C[White cuts at E5. Now D5 and E4 are two separate stones, and White's E5 sits between them. Try again: where do your stones need to meet?])
+)

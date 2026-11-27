@@ -19,6 +19,7 @@
         items.push({ label: `${Lesson.done.has(id) ? '✓' : i + 1}  ${L.title}`, done: Lesson.done.has(id), run: () => openLesson(i) });
       }
     });
+    if (G.lessonFiles) items.push(...G.lessonFiles.menuItems()); /* the lessons by grade, from the lessons/ folder */
     G.chatMenu(items, T('menu-title'));
   }
   function openLesson(i) {
@@ -37,7 +38,8 @@
     }
     G.setChips(CHIPS);
     const ch = LS.chapterOf(L.id);
-    say(T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.list.length, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'));
+    if (L.file) say(T('heading-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) + '\n\n' + L.text.join('\n\n'));
+    else say(T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.CORE, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'));
     say((L.task ? T('task', { task: L.task }) + '\n' : '') + T('ask-me'));
     renderLesson();
   }
@@ -58,17 +60,19 @@
       n: s.n, board: s.board, last: s.last, ko: s.ko, coords: false, libs: !!L.libs,
       marks: LS.marksFor(L, s), markColor: s.turn, hint: Lesson.hintPts, ghost: -1, hoverColor: 0, terr, dead: null, own: null, shapes: null
     });
-    $('#whoTurn').textContent = T('heading', { count: Lesson.idx + 1, total: LS.list.length, title: L.title });
+    $('#whoTurn').textContent = L.file ? T('who-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) : T('heading', { count: Lesson.idx + 1, total: LS.CORE, title: L.title });
     $('#capsInfo').textContent = '';
     $('#posInfo').hidden = true;
     const isTask = !L.type;
     $('#btnLHint').hidden = !isTask; $('#btnLReset').hidden = !isTask;
     const next = $('#btnLNext');
-    const last = Lesson.idx === LS.list.length - 1;
+    const last = !L.file && Lesson.idx === LS.CORE - 1;
     next.textContent = T(last ? 'play-a-game' : 'next');
     next.disabled = !(L.type === 'info' || Lesson.status === 'win');
     next.classList.toggle('primary', !next.disabled);
   }
+  /* A lesson's difficulty for the grade: a lesson file's own (DI), or the built-in lessons' place from 30 to 18 kyu. */
+  const kyuOf = L => (L.file ? L.kyu : window.GoGrade.lessonKyu(LS.list.indexOf(L), LS.CORE));
   function markDone(L) {
     Lesson.done.add(L.id); store(KEY.done, [...Lesson.done]);
   }
@@ -79,16 +83,15 @@
     const r = LS.handle(L, Lesson.s, i);
     if (r.ev.type === 'move') click();
     if (r.status) Lesson.status = r.status;
-    /* The first try at each exercise counts towards the Go Coach grade (grade.js), unless a hint was used. */
-    if (r.status && !Lesson.hinted && G.grade) G.grade.lesson(L.id, Lesson.idx, LS.list.length, r.status === 'win');
     if (r.status === 'win') markDone(L);
     say(r.msg);
+    /* The first try at each exercise counts towards the Go Coach grade (grade.js), unless a hint was used; said after the lesson's own words. */
+    if (r.status && !Lesson.hinted && G.grade) G.grade.lesson(L.id, kyuOf(L), r.status === 'win');
     renderLesson();
   }
   function answerQuiz(k, btn) {
     const L = LS.list[Lesson.idx];
     if (Lesson.status === 'win') return;
-    if (G.grade) G.grade.lesson(L.id, Lesson.idx, LS.list.length, k === L.answer); /* first answer only (grade.js) */
     if (k === L.answer) {
       Lesson.answered = true; Lesson.status = 'win'; markDone(L);
       say(T('correct', { explain: L.explain }));
@@ -96,12 +99,13 @@
     } else {
       say(L.wrong || T('not-quite'));
     }
+    if (G.grade) G.grade.lesson(L.id, kyuOf(L), k === L.answer); /* first answer only (grade.js) */
     renderLesson();
   }
   function lessonHint() {
     const L = LS.list[Lesson.idx];
     Lesson.hintPts = LS.hintPoints(L, Lesson.s); Lesson.hinted = true;
-    if (G.grade) G.grade.lesson(L.id, Lesson.idx, LS.list.length, null); /* a hint first: this exercise does not count */
+    if (G.grade) G.grade.lesson(L.id, kyuOf(L), null); /* a hint first: this exercise does not count */
     renderLesson();
   }
   function lessonReset() {
@@ -113,7 +117,8 @@
   function lessonNext() {
     const L = LS.list[Lesson.idx];
     if (L.type === 'info') markDone(L);
-    if (Lesson.idx === LS.list.length - 1) {
+    if (L.file) { G.lessonFiles.openNext(L.id); return; }
+    if (Lesson.idx === LS.CORE - 1) {
       exitLesson();
       say(T('ready'));
       G.startGuidedGame();

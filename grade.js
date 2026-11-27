@@ -114,12 +114,13 @@
     res.st.games++;
     report(res, 'after-game');
   }
-  function lesson(id, idx, total, solved) {
+  /* kyu: the exercise's difficulty (a lesson file's DI, or lessonKyu() for the built-in lessons). */
+  function lesson(id, kyu, solved) {
     const st = read();
     if (st.lessons.includes(id)) return; /* first try only */
     st.lessons.push(id);
     if (solved === null) { save(st); return; } /* a hint was used first: this exercise never counts */
-    report(apply(st, lessonKyu(idx, total), solved ? 1 : 0, 1), solved ? 'after-lesson' : 'after-lesson-wrong');
+    report(apply(st, kyu, solved ? 1 : 0, 1), solved ? 'after-lesson' : 'after-lesson-wrong');
   }
   paint();
   Object.assign(api, { game, lesson, read, text: () => text(read()) });
