@@ -62,18 +62,19 @@
   }
 
   /* The player's estimate in kyu (25 for a new player, as in grade.js). */
-  /* A player without a grade yet (everyone not signed in, and a new account) starts at the easiest puzzle, puzzle 1 (Boon, 27 Nov 2026). */
-  function myKyu(index) {
+  /* The player's grade in kyu, or null without one (everyone not signed in, and a new account before its first result). */
+  function myKyu() {
     const GR = window.GoGrade, st = keep() && G.grade ? G.grade.read() : null;
-    return st && st.whole !== null ? GR.toKyu(st.r) : Math.max(...index.map(e => e.kyu));
+    return st && st.whole !== null ? GR.toKyu(st.r) : null;
   }
-  /* The next puzzle: the puzzles go in order, easiest first, skipping those already solved (Boon, 27 Nov 2026: the 50 easy
-     ones come first for everyone). With a level chosen in Settings (easier or harder), the nearest puzzle to the player's
-     grade moved by that level instead, the harder one first on a tie. */
+  /* The next puzzle (Boon, 27 Nov 2026). Without a grade: in order, easiest first, from puzzle 1, skipping those solved. With a
+     grade (signed in): the nearest puzzle to the player's grade, moved by the level chosen in Settings, the harder one first
+     on a tie; to play from the start, sign out. */
   function pick(index, skip) {
     const open = index.filter(e => !solvedId(e) && e.id !== skip && !trail.includes(e.id));
-    if (!level()) return open[0] || null; /* index.json lists the puzzles easiest first */
-    const k = myKyu(index) + level();
+    const mine = myKyu();
+    if (mine === null) return open[0] || null; /* index.json lists the puzzles easiest first */
+    const k = mine + level();
     open.sort((a, b) => Math.abs(a.kyu - k) - Math.abs(b.kyu - k) || a.kyu - b.kyu);
     return open[0] || null;
   }
