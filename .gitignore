@@ -2,3 +2,5 @@
 .env*
 node_modules
 deploy.env 
+
+tools/katago/bin/
