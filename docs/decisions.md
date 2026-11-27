@@ -10,7 +10,7 @@ Last updated: 27 November 2026.
 - Note: what a device stores (the device key for cloud saves, chat history, settings) belongs to the web address, so it does not carry over from the Vercel address to the Cloudflare one.
 
 ## Beta and subscriptions (Boon, 27 Nov 2026)
-- **Free beta now, subscriptions in the new year** once we have seen how much people like it. Everything is open during the beta (the free-to-10-kyu limit is not switched on). The welcome starts with a sentence saying Go Coach is in beta; the word "beta" opens docs/text/en/pages/beta.md (what beta means, keeping progress, feedback by the envelope, what the usage log records, what happens after the beta).
+- **Free beta now, subscriptions in the new year** once we have seen how much people like it. Everything is open during the beta (the free-to-10-kyu limit is not switched on, and the 3-games-a-day limit in Puzzle mode, i.e. Go Coach mode, is off: `BETA` in gcmode.js). The welcome starts with a sentence saying Go Coach is in beta; the word "beta" opens docs/text/en/pages/beta.md (what beta means, keeping progress, feedback by the envelope, what the usage log records, what happens after the beta).
 - **How we judge the beta:** players counted by an anonymous device number in the usage log (telemetry.js `start` event, `device` and `signedIn`; only while the log is on), how often they return, and how long they stay (session times).
 - **Before charging (December):** real sign-in (Supabase Auth: email code or Google, undecided) so a subscription follows the player across devices; a member flag per account; payments (PayPal or Stripe: undecided, Stripe is usually cheaper per payment in Australia) telling Supabase who has paid; ABN; privacy policy and terms.
 
