@@ -110,7 +110,7 @@
     G.say(line + extra);
   }
   /* A guest's games and exercises are not recorded and do not move a grade: sign in first (Boon, 27 Nov 2026). */
-  const keep = () => !window.GoAccount || window.GoAccount.signedIn();
+  const keep = () => !window.GoAccount || window.GoAccount.recording(); /* signed in and storage not full */
   function game(g) {
     if (!keep()) return;
     if (!gameWeight(g)) { if (g.helped && !g.guided && !g.both && shown()) G.say(T('not-counted-help')); return; }

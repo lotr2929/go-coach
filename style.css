@@ -314,6 +314,8 @@ button.userName.out { font-style: italic; text-decoration: underline dotted; tex
 h1.gcOn::before { margin: -2px 0; }
 .signedOut .userGrade, .signedOut .userStreak { display: none; }
 #btnClearAcct { margin-right: auto; }
+.nameList { display: grid; gap: 4px; margin: 6px 0; }
+.nameList button { text-align: left; }
 button.acctOut { background: none; border: 0; padding: 0; margin-left: .8em; font: inherit; font-size: .8em; font-weight: normal; color: var(--mute); cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
 button.acctName { background: none; border: 0; padding: 0; font: inherit; cursor: pointer; font-style: italic; text-decoration: underline dotted; text-underline-offset: 3px; }
 .nameEdit { width: 10em; font: inherit; }

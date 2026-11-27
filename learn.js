@@ -126,7 +126,7 @@
   const kyuOf = L => (L.file ? L.kyu : window.GoGrade.lessonKyu(LS.list.indexOf(L), LS.CORE));
   function markDone(L) {
     Lesson.done.add(L.id); /* a guest's ticks last only for this visit (account.js) */
-    if (window.GoAccount.signedIn()) store(KEY.done, [...Lesson.done]);
+    if (window.GoAccount.recording()) store(KEY.done, [...Lesson.done]);
   }
   function onLessonTap(i) {
     const L = LS.list[Lesson.idx];

@@ -12,7 +12,7 @@
   const KEY = { pos: 'gocoach.gcpos', streak: 'gocoach.streak', level: 'gocoach.gclevel', plays: 'gocoach.gcplays' };
   const FREE = 3; /* free puzzles a day once the beta ends; subscribers have no limit (Boon, 27 Nov 2026) */
   /* Signed in, the records are kept on the device; a guest's only in memory for this visit, so nothing is recorded (Boon, 27 Nov 2026). */
-  const mem = {}, keep = () => window.GoAccount.signedIn();
+  const mem = {}, keep = () => window.GoAccount.recording(); /* signed in and storage not full (account.js) */
   const read = (k, d) => { if (!keep()) return k in mem ? JSON.parse(mem[k]) : d; try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch (e) { return d; } };
   const write = (k, v) => { if (!keep()) { mem[k] = JSON.stringify(v); return; } try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
   const dayOf = d => d.toLocaleDateString('en-CA'); /* YYYY-MM-DD in the player's own time zone */

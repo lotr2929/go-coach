@@ -29,9 +29,10 @@
   if (!Array.isArray(past)) past = [];
   let revealed = false;
 
-  const save = () => store(KEY.chat, cur);
+  const save = () => { if (!window.GoAccount.paused()) store(KEY.chat, cur); }; /* storage full: nothing more is kept (storagewarn.js) */
   /* A session worth keeping has something besides the welcome. */
   function archive() {
+    if (window.GoAccount.paused()) return;
     if (!cur.log.some(m => !isIntro(m.text))) return;
     past.push({ start: cur.start, log: cur.log });
     if (past.length > KEEP) past = past.slice(-KEEP);

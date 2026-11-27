@@ -6,7 +6,7 @@
   'use strict';
   const G = window.GC;
   const A = window.GoAccount;
-  const T = k => window.GoText.T('app.' + k);
+  const T = (k, v) => window.GoText.T('app.' + k, v);
   const name = () => A.name();
   const signed = A.signedIn();
 
@@ -59,7 +59,9 @@
   const out = document.createElement('button'); out.type = 'submit'; out.value = 'out';
   const cancel = document.createElement('button'); cancel.type = 'submit'; cancel.value = 'close';
   row.append(go, out, cancel);
-  form.append(h, note, box, row);
+  /* Signed in: the other usernames this account has had, any of which signs in to it (Boon, 27 Nov 2026). */
+  const mine = document.createElement('p'); mine.className = 'small';
+  form.append(h, note, box, mine, row);
   dlg.append(form);
   document.body.append(dlg);
 
@@ -70,13 +72,20 @@
     out.textContent = T('sign-out'); go.textContent = T('sign-in'); cancel.textContent = T('cancel');
     box.placeholder = T('name-hint');
     box.value = '';
+    const me = signed && A.accounts().find(a => a.name === name()), rest = me ? me.names.filter(x => x.toLowerCase() !== name().toLowerCase()) : [];
+    mine.textContent = rest.length ? T('other-usernames', { names: rest.join(', ') }) : ''; mine.hidden = !rest.length;
     dlg.showModal();
     if (!signed) { box.focus(); box.select(); }
   };
   tag.addEventListener('click', open);
   form.addEventListener('submit', e => {
     const how = e.submitter && e.submitter.value;
-    if (how === 'go' && box.value.trim()) A.signIn(box.value); /* the page reloads with the account's data */
+    if (how === 'go' && box.value.trim()) {
+      /* A new account on a device that already has one: they share the device's storage, so say so first (Boon, 27 Nov 2026). */
+      const others = A.accounts().length;
+      if (A.isNew(box.value) && others && !confirm(T('new-account-warn', { name: box.value.trim(), n: others }))) return;
+      A.signIn(box.value); /* the page reloads with the account's data */
+    }
     else if (how === 'out') A.signOut();
   });
   box.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go.click(); } });
