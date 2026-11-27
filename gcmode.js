@@ -37,7 +37,8 @@
   const level = () => { const v = +read(KEY.level, 0); return Number.isFinite(v) ? v : 0; };
   /* Games opened today (a game opened twice counts once). Free players have FREE a day. */
   const plays = () => { const p = read(KEY.plays, null); return p && p.date === today() ? p : { date: today(), ids: [] }; };
-  const canPlay = id => !!G.subscriber || plays().ids.includes(id) || plays().ids.length < FREE;
+  const BETA = true; /* no daily limit during the free beta (Boon, 27 Nov 2026); set to false when subscriptions start */
+  const canPlay = id => BETA || !!G.subscriber || plays().ids.includes(id) || plays().ids.length < FREE;
   function open(e) {
     if (!canPlay(e.id)) { G.say(T('limit', { n: FREE })); return null; }
     const p = plays(); if (!p.ids.includes(e.id)) { p.ids.push(e.id); write(KEY.plays, p); }

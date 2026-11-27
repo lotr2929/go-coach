@@ -27,6 +27,15 @@
   /* Fills one chat message with the welcome: its opening text, the five choices as buttons, then its closing text.
      chat.js calls this whenever it shows the welcome, so the buttons work wherever the welcome is in the chat. */
   function fillWelcome(el, fill) {
+    const beta = document.createElement('span');
+    const word = T('welcome.beta-word'), at = C.INTRO_BETA.indexOf(word);
+    if (at < 0) beta.textContent = C.INTRO_BETA;
+    else {
+      const a = Object.assign(document.createElement('button'), { type: 'button', className: 'inlineLink link', textContent: word });
+      a.addEventListener('click', () => { G.chatRecord('user', word); G.openDoc('beta'); });
+      beta.append(C.INTRO_BETA.slice(0, at), a, C.INTRO_BETA.slice(at + word.length));
+    }
+    el.append(beta, document.createTextNode('\n\n'));
     fill(el, C.INTRO_TOP);
     const list = document.createElement('div');
     list.className = 'welcomeChoices';
@@ -38,7 +47,7 @@
       list.append(b);
     }
     el.append(list);
-    fill(el, C.INTRO_END);
+    fill(el, C.INTRO_PUZZLES + '\n\n' + C.INTRO_END);
   }
   const show = () => G.say(C.INTRO);
   /* A typed message: true when it was one of the welcome's requests. */

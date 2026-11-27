@@ -19,7 +19,9 @@
   const WELCOME_KEYS = ['whatisgo', 'history', 'teach', 'coach', 'tour'];
   const INTRO_TOP = T('welcome.top');
   const INTRO_END = T('welcome.end');
-  const INTRO = INTRO_TOP + '\n\n' + WELCOME_KEYS.map((k, i) => { const w = T('welcome.' + k); return `${i + 1}. ${w}${/[.?!]$/.test(w) ? '' : '.'}`; }).join('\n') + '\n\n' + INTRO_END;
+  const INTRO_PUZZLES = T('welcome.puzzles'); /* the Puzzle mode section (Go Coach mode, gcmode.js), after the choices */
+  const INTRO_BETA = T('welcome.beta'); /* first, with the word welcome.beta-word as a link to the beta page (welcomeui.js) */
+  const INTRO = INTRO_BETA + '\n\n' + INTRO_TOP + '\n\n' + WELCOME_KEYS.map((k, i) => { const w = T('welcome.' + k); return `${i + 1}. ${w}${/[.?!]$/.test(w) ? '' : '.'}`; }).join('\n') + '\n\n' + INTRO_PUZZLES + '\n\n' + INTRO_END;
   const HELP = INTRO;
   /* The coach's answers are in docs/text/en/coach.md, Go terms in terms.md, points in point.md, lesson help in lesson-help.md. */
   const FIRST_MOVE_SHORT = T('coach.first-move');
@@ -292,5 +294,5 @@
     return null;
   }
 
-  return { reply, lessonReply, describePoint, weakReport, parseCoord, INTRO, INTRO_TOP, INTRO_END, WELCOME_KEYS, TERM_IDS: TERMS.map(x => x.id), LESSON_IDS, HELP, RULES };
+  return { reply, lessonReply, describePoint, weakReport, parseCoord, INTRO, INTRO_BETA, INTRO_TOP, INTRO_PUZZLES, INTRO_END, WELCOME_KEYS, TERM_IDS: TERMS.map(x => x.id), LESSON_IDS, HELP, RULES };
 });
