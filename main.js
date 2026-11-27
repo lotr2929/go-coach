@@ -15,7 +15,6 @@
   $('#btnLReset').onclick = lessonReset;
   $('#btnLNext').onclick = lessonNext;
   $('#btnLMenu').onclick = showMenu;
-  $('#btnLExit').onclick = exitLesson;
 
   $('#newForm').addEventListener('submit', e => {
     if (e.submitter && e.submitter.value === 'start') {
@@ -45,7 +44,8 @@
 
   /* ---------- start ---------- */
   playView.resize();
-  if (!restoreGame()) startNewGame();
+  /* Signed out, the board always starts fresh; signed in, the game you left comes back (username.js). */
+  if (!(G.signedIn && G.signedIn() && restoreGame())) startNewGame();
   /* A new install starts the tour of the app once, after the screen has settled (Boon, 25 Nov 2026). */
   if (G.firstVisit && G.startTour) setTimeout(() => G.startTour(), 800);
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
