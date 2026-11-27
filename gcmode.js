@@ -75,6 +75,10 @@
     const index = await load();
     if (!index) { G.say(T('no-puzzles')); return; }
     M.on = true; paint();
+    /* Back in Puzzle mode during the same visit: carry on with the puzzle the player was on (Boon, 27 Nov 2026). A new visit
+       starts afresh: a guest at puzzle 1, a signed-in player at today's puzzle. */
+    const was = at >= 0 && index.find(e => e.id === trail[at]);
+    if (was) { G.say(T('welcome-again')); return openEntry(was); }
     let t = read(KEY.today, null);
     if (!t || t.date !== today() || !index.some(e => e.id === t.id)) {
       const e = pick(index);

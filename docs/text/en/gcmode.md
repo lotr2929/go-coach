@@ -23,6 +23,9 @@ Your streak: {days} in a row with a puzzle solved in Puzzle mode.
 ## welcome
 Welcome to Puzzle mode! Here is today's puzzle, chosen for your level. Solve it first time to build your Go Coach grade, and come back tomorrow for the next one.
 
+## welcome-again
+Welcome back to Puzzle mode. Here is the puzzle you were on.
+
 ## welcome-streak
 Welcome back! Your streak: {days}. Here is today's puzzle, chosen for your level.
 

@@ -398,6 +398,7 @@
   "gcmode.streak-badge": "🔥 {n}",
   "gcmode.streak-about": "Your streak: {days} in a row with a puzzle solved in Puzzle mode.",
   "gcmode.welcome": "Welcome to Puzzle mode! Here is today's puzzle, chosen for your level. Solve it first time to build your Go Coach grade, and come back tomorrow for the next one.",
+  "gcmode.welcome-again": "Welcome back to Puzzle mode. Here is the puzzle you were on.",
   "gcmode.welcome-streak": "Welcome back! Your streak: {days}. Here is today's puzzle, chosen for your level.",
   "gcmode.done-today": "You have already solved today's puzzle (streak: {days}). Here is another at your level: it counts towards your grade too.",
   "gcmode.streak-started": "Today's puzzle is done: your streak has begun. Come back tomorrow to keep it going.",
