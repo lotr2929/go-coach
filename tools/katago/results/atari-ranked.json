@@ -1,0 +1,1952 @@
+[
+ {
+  "id": "k001-the-25-move-game-23",
+  "game": "k001-the-25-move-game",
+  "turn": 23,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 23,
+  "answer": [
+   "C6"
+  ],
+  "good": [
+   "C6"
+  ],
+  "best": "C6",
+  "found": {
+   "20k": 0.872,
+   "15k": 0.915,
+   "10k": 0.913,
+   "5k": 0.935,
+   "1d": 0.938
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k002-the-30-move-game-20",
+  "game": "k002-the-30-move-game",
+  "turn": 20,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 20,
+  "answer": [
+   "F6"
+  ],
+  "good": [
+   "F6"
+  ],
+  "best": "F6",
+  "found": {
+   "20k": 0.472,
+   "15k": 0.506,
+   "10k": 0.451,
+   "5k": 0.383,
+   "1d": 0.452
+  },
+  "level": "15k"
+ },
+ {
+  "id": "k002-the-30-move-game-21",
+  "game": "k002-the-30-move-game",
+  "turn": 21,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 21,
+  "answer": [
+   "F6"
+  ],
+  "good": [
+   "F6"
+  ],
+  "best": "F6",
+  "found": {
+   "20k": 0.48,
+   "15k": 0.471,
+   "10k": 0.457,
+   "5k": 0.511,
+   "1d": 0.656
+  },
+  "level": "5k"
+ },
+ {
+  "id": "k002-the-30-move-game-22",
+  "game": "k002-the-30-move-game",
+  "turn": 22,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 22,
+  "answer": [
+   "F6"
+  ],
+  "good": [],
+  "best": "G6"
+ },
+ {
+  "id": "k002-the-30-move-game-23",
+  "game": "k002-the-30-move-game",
+  "turn": 23,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 23,
+  "answer": [
+   "F6"
+  ],
+  "good": [
+   "F6"
+  ],
+  "best": "F6",
+  "found": {
+   "20k": 0.073,
+   "15k": 0.073,
+   "10k": 0.067,
+   "5k": 0.054,
+   "1d": 0.094
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k002-the-30-move-game-24",
+  "game": "k002-the-30-move-game",
+  "turn": 24,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 24,
+  "answer": [
+   "F6"
+  ],
+  "good": [],
+  "best": "G6"
+ },
+ {
+  "id": "k002-the-30-move-game-27",
+  "game": "k002-the-30-move-game",
+  "turn": 27,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 26,
+  "answer": [
+   "J4"
+  ],
+  "good": [
+   "J4"
+  ],
+  "best": "J4",
+  "found": {
+   "20k": 0.87,
+   "15k": 0.889,
+   "10k": 0.959,
+   "5k": 0.968,
+   "1d": 0.992
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k002-the-30-move-game-29",
+  "game": "k002-the-30-move-game",
+  "turn": 29,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 28,
+  "answer": [
+   "F7"
+  ],
+  "good": [],
+  "best": "B3"
+ },
+ {
+  "id": "k003-iyama-yuta-wins-in-36-moves-26",
+  "game": "k003-iyama-yuta-wins-in-36-moves",
+  "turn": 26,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 26,
+  "answer": [
+   "F2"
+  ],
+  "good": [],
+  "best": "D6"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-22",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 22,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 20,
+  "answer": [
+   "C7"
+  ],
+  "good": [],
+  "best": "G4"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-28",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 28,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 24,
+  "answer": [
+   "C7"
+  ],
+  "good": [],
+  "best": "H5"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-36",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 36,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 30,
+  "answer": [
+   "E4"
+  ],
+  "good": [],
+  "best": "D2"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-37",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 37,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 31,
+  "answer": [
+   "E4"
+  ],
+  "good": [
+   "E4"
+  ],
+  "best": "D1",
+  "found": {
+   "20k": 0.767,
+   "15k": 0.758,
+   "10k": 0.671,
+   "5k": 0.526,
+   "1d": 0.278
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-38",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 38,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 32,
+  "answer": [
+   "E4"
+  ],
+  "good": [],
+  "best": "C1"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-40",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 40,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 34,
+  "answer": [
+   "E4"
+  ],
+  "good": [],
+  "best": "H2"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-41",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 41,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 35,
+  "answer": [
+   "E4"
+  ],
+  "good": [
+   "E4"
+  ],
+  "best": "C2",
+  "found": {
+   "20k": 0.635,
+   "15k": 0.645,
+   "10k": 0.611,
+   "5k": 0.646,
+   "1d": 0.448
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-44",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 44,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 37,
+  "answer": [
+   "E4"
+  ],
+  "good": [],
+  "best": "B3"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-45",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 45,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 38,
+  "answer": [
+   "E4"
+  ],
+  "good": [],
+  "best": "H1"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-46",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 46,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 39,
+  "answer": [
+   "E4"
+  ],
+  "good": [],
+  "best": "H3"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-47",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 47,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 40,
+  "answer": [
+   "E4"
+  ],
+  "good": [
+   "E4"
+  ],
+  "best": "E4",
+  "found": {
+   "20k": 0.586,
+   "15k": 0.599,
+   "10k": 0.619,
+   "5k": 0.837,
+   "1d": 0.891
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-48",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 48,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 41,
+  "answer": [
+   "E4"
+  ],
+  "good": [],
+  "best": "A2"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-49",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 49,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 42,
+  "answer": [
+   "E4"
+  ],
+  "good": [
+   "E4"
+  ],
+  "best": "E4",
+  "found": {
+   "20k": 0.634,
+   "15k": 0.65,
+   "10k": 0.724,
+   "5k": 0.904,
+   "1d": 0.984
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k004-a-young-iyama-yuta-plays-black-51",
+  "game": "k004-a-young-iyama-yuta-plays-black",
+  "turn": 51,
+  "n": 9,
+  "kind": "save",
+  "size": 3,
+  "stones": 44,
+  "answer": [
+   "E6"
+  ],
+  "good": [
+   "E6"
+  ],
+  "best": "E6",
+  "found": {
+   "20k": 0.773,
+   "15k": 0.81,
+   "10k": 0.886,
+   "5k": 0.951,
+   "1d": 0.971
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k005-iyama-beats-murakawa-daisuke-35",
+  "game": "k005-iyama-beats-murakawa-daisuke",
+  "turn": 35,
+  "n": 9,
+  "kind": "save",
+  "size": 2,
+  "stones": 35,
+  "answer": [
+   "F2"
+  ],
+  "good": [
+   "F2"
+  ],
+  "best": "F2",
+  "found": {
+   "20k": 0.891,
+   "15k": 0.927,
+   "10k": 0.934,
+   "5k": 0.874,
+   "1d": 0.686
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k005-iyama-beats-murakawa-daisuke-40",
+  "game": "k005-iyama-beats-murakawa-daisuke",
+  "turn": 40,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 39,
+  "answer": [
+   "A3"
+  ],
+  "good": [
+   "A3"
+  ],
+  "best": "A3",
+  "found": {
+   "20k": 0.672,
+   "15k": 0.593,
+   "10k": 0.701,
+   "5k": 0.875,
+   "1d": 0.971
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k006-a-close-game-for-a-six-title-celebration-29",
+  "game": "k006-a-close-game-for-a-six-title-celebration",
+  "turn": 29,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 29,
+  "answer": [
+   "F1"
+  ],
+  "good": [
+   "F1"
+  ],
+  "best": "F1",
+  "found": {
+   "20k": 0.929,
+   "15k": 0.938,
+   "10k": 0.966,
+   "5k": 0.99,
+   "1d": 0.998
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k006-a-close-game-for-a-six-title-celebration-42",
+  "game": "k006-a-close-game-for-a-six-title-celebration",
+  "turn": 42,
+  "n": 9,
+  "kind": "save",
+  "size": 2,
+  "stones": 41,
+  "answer": [
+   "D3"
+  ],
+  "good": [
+   "D3"
+  ],
+  "best": "D3",
+  "found": {
+   "20k": 0.784,
+   "15k": 0.82,
+   "10k": 0.857,
+   "5k": 0.888,
+   "1d": 0.962
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k006-a-close-game-for-a-six-title-celebration-43",
+  "game": "k006-a-close-game-for-a-six-title-celebration",
+  "turn": 43,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 42,
+  "answer": [
+   "D1"
+  ],
+  "good": [
+   "D1"
+  ],
+  "best": "E5",
+  "found": {
+   "20k": 0.291,
+   "15k": 0.255,
+   "10k": 0.229,
+   "5k": 0.199,
+   "1d": 0.117
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k006-a-close-game-for-a-six-title-celebration-51",
+  "game": "k006-a-close-game-for-a-six-title-celebration",
+  "turn": 51,
+  "n": 9,
+  "kind": "capture",
+  "size": 3,
+  "stones": 47,
+  "answer": [
+   "G1"
+  ],
+  "good": [],
+  "best": "A6"
+ },
+ {
+  "id": "k006-a-close-game-for-a-six-title-celebration-53",
+  "game": "k006-a-close-game-for-a-six-title-celebration",
+  "turn": 53,
+  "n": 9,
+  "kind": "capture",
+  "size": 3,
+  "stones": 49,
+  "answer": [
+   "G1"
+  ],
+  "good": [],
+  "best": "B7"
+ },
+ {
+  "id": "k006-a-close-game-for-a-six-title-celebration-59",
+  "game": "k006-a-close-game-for-a-six-title-celebration",
+  "turn": 59,
+  "n": 9,
+  "kind": "capture",
+  "size": 3,
+  "stones": 54,
+  "answer": [
+   "G1"
+  ],
+  "good": [],
+  "best": "B9"
+ },
+ {
+  "id": "k006-a-close-game-for-a-six-title-celebration-61",
+  "game": "k006-a-close-game-for-a-six-title-celebration",
+  "turn": 61,
+  "n": 9,
+  "kind": "capture",
+  "size": 3,
+  "stones": 56,
+  "answer": [
+   "G1"
+  ],
+  "good": [],
+  "best": "J5"
+ },
+ {
+  "id": "k007-a-half-point-game-37",
+  "game": "k007-a-half-point-game",
+  "turn": 37,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 33,
+  "answer": [
+   "J4"
+  ],
+  "good": [
+   "J4"
+  ],
+  "best": "J4",
+  "found": {
+   "20k": 0.897,
+   "15k": 0.919,
+   "10k": 0.942,
+   "5k": 0.956,
+   "1d": 0.975
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k007-a-half-point-game-42",
+  "game": "k007-a-half-point-game",
+  "turn": 42,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 38,
+  "answer": [
+   "E1"
+  ],
+  "good": [
+   "E1"
+  ],
+  "best": "E1",
+  "found": {
+   "20k": 0.821,
+   "15k": 0.823,
+   "10k": 0.866,
+   "5k": 0.929,
+   "1d": 0.973
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k007-a-half-point-game-48",
+  "game": "k007-a-half-point-game",
+  "turn": 48,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 44,
+  "answer": [
+   "E8"
+  ],
+  "good": [
+   "E8"
+  ],
+  "best": "G6",
+  "found": {
+   "20k": 0.738,
+   "15k": 0.792,
+   "10k": 0.795,
+   "5k": 0.705,
+   "1d": 0.502
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k008-a-41-move-win-23",
+  "game": "k008-a-41-move-win",
+  "turn": 23,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 23,
+  "answer": [
+   "D8"
+  ],
+  "good": [
+   "D8"
+  ],
+  "best": "D8",
+  "found": {
+   "20k": 0.933,
+   "15k": 0.937,
+   "10k": 0.909,
+   "5k": 0.683,
+   "1d": 0.661
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k008-a-41-move-win-30",
+  "game": "k008-a-41-move-win",
+  "turn": 30,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 28,
+  "answer": [
+   "B3"
+  ],
+  "good": [],
+  "best": "G2"
+ },
+ {
+  "id": "k008-a-41-move-win-32",
+  "game": "k008-a-41-move-win",
+  "turn": 32,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 30,
+  "answer": [
+   "B3"
+  ],
+  "good": [],
+  "best": "G4"
+ },
+ {
+  "id": "k008-a-41-move-win-34",
+  "game": "k008-a-41-move-win",
+  "turn": 34,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 32,
+  "answer": [
+   "B3"
+  ],
+  "good": [],
+  "best": "H1"
+ },
+ {
+  "id": "k008-a-41-move-win-37",
+  "game": "k008-a-41-move-win",
+  "turn": 37,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 34,
+  "answer": [
+   "F1"
+  ],
+  "good": [
+   "F1"
+  ],
+  "best": "E1",
+  "found": {
+   "20k": 0.787,
+   "15k": 0.769,
+   "10k": 0.717,
+   "5k": 0.598,
+   "1d": 0.461
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k008-a-41-move-win-38",
+  "game": "k008-a-41-move-win",
+  "turn": 38,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 35,
+  "answer": [
+   "F1"
+  ],
+  "good": [],
+  "best": "E1"
+ },
+ {
+  "id": "k008-a-41-move-win-39",
+  "game": "k008-a-41-move-win",
+  "turn": 39,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 35,
+  "answer": [
+   "E2"
+  ],
+  "good": [],
+  "best": "C1"
+ },
+ {
+  "id": "k008-a-41-move-win-40",
+  "game": "k008-a-41-move-win",
+  "turn": 40,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 36,
+  "answer": [
+   "E2"
+  ],
+  "good": [
+   "E2"
+  ],
+  "best": "E2",
+  "found": {
+   "20k": 0.644,
+   "15k": 0.617,
+   "10k": 0.637,
+   "5k": 0.686,
+   "1d": 0.762
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k009-half-a-point-decides-it-20",
+  "game": "k009-half-a-point-decides-it",
+  "turn": 20,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 20,
+  "answer": [
+   "D3"
+  ],
+  "good": [],
+  "best": "H6"
+ },
+ {
+  "id": "k009-half-a-point-decides-it-24",
+  "game": "k009-half-a-point-decides-it",
+  "turn": 24,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 24,
+  "answer": [
+   "D3"
+  ],
+  "good": [],
+  "best": "H8"
+ },
+ {
+  "id": "k009-half-a-point-decides-it-31",
+  "game": "k009-half-a-point-decides-it",
+  "turn": 31,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 29,
+  "answer": [
+   "B7"
+  ],
+  "good": [
+   "B7"
+  ],
+  "best": "E8",
+  "found": {
+   "20k": 0.167,
+   "15k": 0.182,
+   "10k": 0.167,
+   "5k": 0.151,
+   "1d": 0.145
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k009-half-a-point-decides-it-33",
+  "game": "k009-half-a-point-decides-it",
+  "turn": 33,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 31,
+  "answer": [
+   "B7"
+  ],
+  "good": [],
+  "best": "C1"
+ },
+ {
+  "id": "k010-a-big-win-on-a-small-board-21",
+  "game": "k010-a-big-win-on-a-small-board",
+  "turn": 21,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 20,
+  "answer": [
+   "B3"
+  ],
+  "good": [],
+  "best": "G3"
+ },
+ {
+  "id": "k010-a-big-win-on-a-small-board-29",
+  "game": "k010-a-big-win-on-a-small-board",
+  "turn": 29,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 27,
+  "answer": [
+   "B3"
+  ],
+  "good": [],
+  "best": "H7"
+ },
+ {
+  "id": "k010-a-big-win-on-a-small-board-31",
+  "game": "k010-a-big-win-on-a-small-board",
+  "turn": 31,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 29,
+  "answer": [
+   "B3"
+  ],
+  "good": [],
+  "best": "E7"
+ },
+ {
+  "id": "k010-a-big-win-on-a-small-board-33",
+  "game": "k010-a-big-win-on-a-small-board",
+  "turn": 33,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 31,
+  "answer": [
+   "B3"
+  ],
+  "good": [],
+  "best": "H7"
+ },
+ {
+  "id": "k011-a-one-and-a-half-point-game-31",
+  "game": "k011-a-one-and-a-half-point-game",
+  "turn": 31,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 31,
+  "answer": [
+   "H3"
+  ],
+  "good": [
+   "H3"
+  ],
+  "best": "H3",
+  "found": {
+   "20k": 0.546,
+   "15k": 0.495,
+   "10k": 0.346,
+   "5k": 0.269,
+   "1d": 0.537
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k011-a-one-and-a-half-point-game-48",
+  "game": "k011-a-one-and-a-half-point-game",
+  "turn": 48,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 41,
+  "answer": [
+   "J5"
+  ],
+  "good": [
+   "J5"
+  ],
+  "best": "J5",
+  "found": {
+   "20k": 0.778,
+   "15k": 0.782,
+   "10k": 0.842,
+   "5k": 0.894,
+   "1d": 0.915
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k011-a-one-and-a-half-point-game-54",
+  "game": "k011-a-one-and-a-half-point-game",
+  "turn": 54,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 47,
+  "answer": [
+   "C9"
+  ],
+  "good": [
+   "C9"
+  ],
+  "best": "C9",
+  "found": {
+   "20k": 0.924,
+   "15k": 0.956,
+   "10k": 0.983,
+   "5k": 0.993,
+   "1d": 0.997
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k012-the-longest-9-9-game-here-21",
+  "game": "k012-the-longest-9-9-game-here",
+  "turn": 21,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 21,
+  "answer": [
+   "H7"
+  ],
+  "good": [
+   "H7"
+  ],
+  "best": "H7",
+  "found": {
+   "20k": 0.409,
+   "15k": 0.362,
+   "10k": 0.369,
+   "5k": 0.41,
+   "1d": 0.32
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k012-the-longest-9-9-game-here-30",
+  "game": "k012-the-longest-9-9-game-here",
+  "turn": 30,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 26,
+  "answer": [
+   "H9"
+  ],
+  "good": [],
+  "best": "B4"
+ },
+ {
+  "id": "k012-the-longest-9-9-game-here-44",
+  "game": "k012-the-longest-9-9-game-here",
+  "turn": 44,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 38,
+  "answer": [
+   "H9"
+  ],
+  "good": [],
+  "best": "H4"
+ },
+ {
+  "id": "k012-the-longest-9-9-game-here-88",
+  "game": "k012-the-longest-9-9-game-here",
+  "turn": 88,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 60,
+  "answer": [
+   "D6"
+  ],
+  "good": [
+   "D6"
+  ],
+  "best": "D6",
+  "found": {
+   "20k": 0.485,
+   "15k": 0.576,
+   "10k": 0.759,
+   "5k": 0.916,
+   "1d": 0.974
+  },
+  "level": "15k"
+ },
+ {
+  "id": "k013-a-celebration-game-25",
+  "game": "k013-a-celebration-game",
+  "turn": 25,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 25,
+  "answer": [
+   "D6"
+  ],
+  "good": [
+   "D6"
+  ],
+  "best": "C5",
+  "found": {
+   "20k": 0.384,
+   "15k": 0.3,
+   "10k": 0.285,
+   "5k": 0.348,
+   "1d": 0.164
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k013-a-celebration-game-26",
+  "game": "k013-a-celebration-game",
+  "turn": 26,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 26,
+  "answer": [
+   "D6"
+  ],
+  "good": [
+   "D6"
+  ],
+  "best": "G3",
+  "found": {
+   "20k": 0.131,
+   "15k": 0.115,
+   "10k": 0.098,
+   "5k": 0.144,
+   "1d": 0.094
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k013-a-celebration-game-27",
+  "game": "k013-a-celebration-game",
+  "turn": 27,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 27,
+  "answer": [
+   "D6"
+  ],
+  "good": [],
+  "best": "H6"
+ },
+ {
+  "id": "k013-a-celebration-game-28",
+  "game": "k013-a-celebration-game",
+  "turn": 28,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 28,
+  "answer": [
+   "D6"
+  ],
+  "good": [],
+  "best": "H7"
+ },
+ {
+  "id": "k013-a-celebration-game-30",
+  "game": "k013-a-celebration-game",
+  "turn": 30,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 29,
+  "answer": [
+   "D7"
+  ],
+  "good": [],
+  "best": "H7"
+ },
+ {
+  "id": "k013-a-celebration-game-32",
+  "game": "k013-a-celebration-game",
+  "turn": 32,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 31,
+  "answer": [
+   "D7"
+  ],
+  "good": [],
+  "best": "B9"
+ },
+ {
+  "id": "k013-a-celebration-game-34",
+  "game": "k013-a-celebration-game",
+  "turn": 34,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 33,
+  "answer": [
+   "D7"
+  ],
+  "good": [],
+  "best": "A8"
+ },
+ {
+  "id": "k014-eight-players-against-cho-chikun-34",
+  "game": "k014-eight-players-against-cho-chikun",
+  "turn": 34,
+  "n": 9,
+  "kind": "save",
+  "size": 1,
+  "stones": 34,
+  "answer": [
+   "C6"
+  ],
+  "good": [
+   "C6"
+  ],
+  "best": "B6",
+  "found": {
+   "20k": 0.567,
+   "15k": 0.514,
+   "10k": 0.611,
+   "5k": 0.633,
+   "1d": 0.559
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k015-go-seigen-on-9-9-50",
+  "game": "k015-go-seigen-on-9-9",
+  "turn": 50,
+  "n": 9,
+  "kind": "save",
+  "size": 2,
+  "stones": 49,
+  "answer": [
+   "A5"
+  ],
+  "good": [
+   "A5"
+  ],
+  "best": "A5",
+  "found": {
+   "20k": 0.797,
+   "15k": 0.751,
+   "10k": 0.7,
+   "5k": 0.642,
+   "1d": 0.631
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k016-miyamoto-beats-go-seigen-23",
+  "game": "k016-miyamoto-beats-go-seigen",
+  "turn": 23,
+  "n": 9,
+  "kind": "capture",
+  "size": 2,
+  "stones": 21,
+  "answer": [
+   "J5"
+  ],
+  "good": [],
+  "best": "B5"
+ },
+ {
+  "id": "k016-miyamoto-beats-go-seigen-47",
+  "game": "k016-miyamoto-beats-go-seigen",
+  "turn": 47,
+  "n": 9,
+  "kind": "capture",
+  "size": 1,
+  "stones": 42,
+  "answer": [
+   "C9"
+  ],
+  "good": [
+   "C9"
+  ],
+  "best": "D9",
+  "found": {
+   "20k": 0.45,
+   "15k": 0.439,
+   "10k": 0.434,
+   "5k": 0.502,
+   "1d": 0.587
+  },
+  "level": "5k"
+ },
+ {
+  "id": "k016-miyamoto-beats-go-seigen-51",
+  "game": "k016-miyamoto-beats-go-seigen",
+  "turn": 51,
+  "n": 9,
+  "kind": "save",
+  "size": 2,
+  "stones": 45,
+  "answer": [
+   "B3"
+  ],
+  "good": [
+   "B3"
+  ],
+  "best": "B3",
+  "found": {
+   "20k": 0.847,
+   "15k": 0.863,
+   "10k": 0.842,
+   "5k": 0.72,
+   "1d": 0.733
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-39",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 39,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 39,
+  "answer": [
+   "L4"
+  ],
+  "good": [
+   "L4"
+  ],
+  "best": "L4",
+  "found": {
+   "20k": 0.757,
+   "15k": 0.744,
+   "10k": 0.79,
+   "5k": 0.829,
+   "1d": 0.821
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-43",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 43,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 43,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "J8"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-44",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 44,
+  "n": 13,
+  "kind": "capture",
+  "size": 1,
+  "stones": 44,
+  "answer": [
+   "J9"
+  ],
+  "good": [
+   "J9"
+  ],
+  "best": "J9",
+  "found": {
+   "20k": 0.121,
+   "15k": 0.124,
+   "10k": 0.116,
+   "5k": 0.296,
+   "1d": 0.52
+  },
+  "level": "1d"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-45",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 45,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 45,
+  "answer": [
+   "J9"
+  ],
+  "good": [
+   "J9"
+  ],
+  "best": "E11",
+  "found": {
+   "20k": 0.479,
+   "15k": 0.407,
+   "10k": 0.282,
+   "5k": 0.173,
+   "1d": 0.048
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-46",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 46,
+  "n": 13,
+  "kind": "capture",
+  "size": 1,
+  "stones": 46,
+  "answer": [
+   "J9"
+  ],
+  "good": [
+   "J9"
+  ],
+  "best": "E10",
+  "found": {
+   "20k": 0.145,
+   "15k": 0.146,
+   "10k": 0.12,
+   "5k": 0.247,
+   "1d": 0.253
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-47",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 47,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 47,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "E9"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-48",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 48,
+  "n": 13,
+  "kind": "capture",
+  "size": 1,
+  "stones": 48,
+  "answer": [
+   "J9"
+  ],
+  "good": [
+   "J9"
+  ],
+  "best": "F9",
+  "found": {
+   "20k": 0.09,
+   "15k": 0.084,
+   "10k": 0.089,
+   "5k": 0.187,
+   "1d": 0.45
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-49",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 49,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 49,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "E9"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-50",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 50,
+  "n": 13,
+  "kind": "capture",
+  "size": 1,
+  "stones": 50,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "F9"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-51",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 51,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 51,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "H5"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-52",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 52,
+  "n": 13,
+  "kind": "capture",
+  "size": 1,
+  "stones": 52,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "E8"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-53",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 53,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 53,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "F7"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-54",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 54,
+  "n": 13,
+  "kind": "capture",
+  "size": 1,
+  "stones": 54,
+  "answer": [
+   "J9"
+  ],
+  "good": [
+   "J9"
+  ],
+  "best": "J9",
+  "found": {
+   "20k": 0.067,
+   "15k": 0.055,
+   "10k": 0.079,
+   "5k": 0.213,
+   "1d": 0.402
+  },
+  "level": "harder than 1d"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-55",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 55,
+  "n": 13,
+  "kind": "save",
+  "size": 2,
+  "stones": 54,
+  "answer": [
+   "H9"
+  ],
+  "good": [
+   "H9"
+  ],
+  "best": "H9",
+  "found": {
+   "20k": 0.866,
+   "15k": 0.88,
+   "10k": 0.948,
+   "5k": 0.961,
+   "1d": 0.953
+  },
+  "level": "30-25k"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-56",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 56,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 55,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "E7"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-58",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 58,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 57,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "E7"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-60",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 60,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 59,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "F11"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-64",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 64,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 62,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "C5"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-66",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 66,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 64,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "C5"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-68",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 68,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 66,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "J3"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-70",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 70,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 68,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "C6"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-72",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 72,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 70,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "D7"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-74",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 74,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 72,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "D6"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-76",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 76,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 74,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "E9"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-78",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 78,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 76,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "D7"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-80",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 80,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 78,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "F5"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-82",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 82,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 80,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "F5"
+ },
+ {
+  "id": "k070-a-professional-13-13-game-2014-84",
+  "game": "k070-a-professional-13-13-game-2014",
+  "turn": 84,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 82,
+  "answer": [
+   "K9"
+  ],
+  "good": [],
+  "best": "G7"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-24",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 24,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 23,
+  "answer": [
+   "J8"
+  ],
+  "good": [
+   "J8"
+  ],
+  "best": "G8",
+  "found": {
+   "20k": 0.649,
+   "15k": 0.624,
+   "10k": 0.602,
+   "5k": 0.626,
+   "1d": 0.539
+  },
+  "level": "25-20k"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-27",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 27,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 25,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "G9"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-29",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 29,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 27,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "F10"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-31",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 31,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 29,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "D11"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-33",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 33,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 31,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "D11"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-35",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 35,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 33,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "E12"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-37",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 37,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 35,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "E11"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-39",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 39,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 37,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "B8"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-41",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 41,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 39,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "D9"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-43",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 43,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 41,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "M8"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-45",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 45,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 43,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "G3"
+ },
+ {
+  "id": "k071-a-one-and-a-half-point-finish-on-13-13-2-47",
+  "game": "k071-a-one-and-a-half-point-finish-on-13-13-2",
+  "turn": 47,
+  "n": 13,
+  "kind": "save",
+  "size": 1,
+  "stones": 45,
+  "answer": [
+   "J9"
+  ],
+  "good": [],
+  "best": "M4"
+ }
+]
