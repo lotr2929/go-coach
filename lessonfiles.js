@@ -10,25 +10,27 @@
   const PR = window.GoProblems;
   const T = (k, v) => window.GoText.T('learn.' + k, v); /* wording: docs/text/en/learn.md */
   const XY = (n, i) => [i % n, (i / n) | 0];
-  let index = null, loading = null;
+  const cache = {}; /* kind ('lessons' or 'puzzles') -> { index, loading } */
 
-  function loadIndex() {
-    if (index) return Promise.resolve(index);
-    if (!loading) {
-      loading = fetch('lessons/index.json', { cache: 'no-cache' })
+  function loadIndex(kind = 'lessons') {
+    const c = cache[kind] || (cache[kind] = { index: null, loading: null });
+    if (c.index) return Promise.resolve(c.index);
+    if (!c.loading) {
+      c.loading = fetch(kind + '/index.json', { cache: 'no-cache' })
         .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-        .then(j => { index = j.lessons || []; return index; })
-        .catch(() => { loading = null; return null; });
+        .then(j => { c.index = j.lessons || []; return c.index; })
+        .catch(() => { c.loading = null; return null; });
     }
-    return loading;
+    return c.loading;
   }
   const gradeText = k => (k >= 1 ? T('file-kyu', { n: k }) : T('file-dan', { n: 1 - k }));
 
   /* A lesson file as a lesson for learn.js: its stones, its words, and check(), which follows the moves through the file. */
   function asLesson(P, entry) {
+    const pz = entry.file.startsWith('puzzles/'); /* a puzzle (Puzzle mode), not a lesson */
     const pairs = pts => pts.map(i => XY(P.n, i));
     return {
-      id: 'file:' + entry.id, file: true, n: P.n, turn: P.turn, kyu: P.kyu,
+      id: 'file:' + entry.id, file: true, puzzle: pz, n: P.n, turn: P.turn, kyu: P.kyu,
       black: pairs(P.black), white: pairs(P.white), title: P.title, text: P.intro, task: P.task, problem: P,
       hint: s => { const h = PR.hint((s.data && s.data.at) || P.root); return h >= 0 ? [XY(P.n, h)] : []; },
       check(s, ev) {
@@ -38,7 +40,7 @@
         if (r.reply >= 0) E.play(s, r.reply); /* the opponent's answer from the file */
         const where = r.reply >= 0 ? E.coord(P.n, r.reply) : '';
         if (r.result === 'right') return { status: 'win', msg: r.comment || T('problem-right') };
-        if (r.result === 'wrong') return { status: 'fail', msg: (r.comment ? r.comment + '\n' + T('problem-again') : T('problem-wrong')) };
+        if (r.result === 'wrong') return { status: 'fail', msg: (r.comment ? r.comment + '\n' + T(pz ? 'puzzle-again' : 'problem-again') : T(pz ? 'puzzle-wrong' : 'problem-wrong')) };
         return { msg: r.comment ? r.comment + '\n' + T('problem-your-move') : T('problem-reply', { point: where }) };
       }
     };
@@ -67,6 +69,7 @@
   }
   /* The menu lines for the lessons by grade (learn.js showMenu): a heading per grade band, then the lessons. */
   function menuItems() {
+    const index = cache.lessons && cache.lessons.index;
     if (!index || !index.length) return [];
     const done = G.Lesson.done, items = [{ head: true, label: T('files-head'), note: T('files-note') }];
     let band = null;
@@ -78,6 +81,6 @@
     return items;
   }
 
-  loadIndex();
+  loadIndex(); loadIndex('puzzles'); /* so both are kept for offline use */
   Object.assign(G, { lessonFiles: { loadIndex, openFile, openNext, menuItems, gradeText } });
 })();

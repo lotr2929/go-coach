@@ -339,3 +339,11 @@ h1.gcOn { color: #2b1d0e; line-height: 1; padding: 0 10px 0 4px; margin-left: -4
 .msgWho { font-size: .72rem; color: var(--mute); }
 .msgBody { white-space: pre-line; overflow-wrap: anywhere; }
 .msgWrite { width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 0; border-bottom: 1px solid var(--mute); border-radius: 0; padding: 6px 2px; resize: vertical; }
+/* Puzzle mode (Boon, 27 Nov 2026): four video-style buttons under the board, and Settings in groups */
+.boardBar.puzzleBar { justify-content: center; gap: 10px; }
+.puzzleBar button.ico { width: 44px; height: 34px; padding: 0; display: grid; place-items: center; }
+.puzzleBar button.ico svg { width: 20px; height: 20px; fill: currentColor; }
+.puzzleBar button.ico:disabled { opacity: .35; }
+h3.grp { font: 600 .8rem var(--sans, inherit); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); margin: 16px 0 4px; border-bottom: 1px solid var(--line, #0002); padding-bottom: 2px; }
+.opt.inline { display: flex; align-items: center; gap: 10px; }
+.opt.inline .lbl { display: inline; margin: 0; font-size: .95rem; color: inherit; }

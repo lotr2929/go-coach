@@ -13,6 +13,8 @@
   $('#btnResume').onclick = resumePlay;
   $('#btnLHint').onclick = lessonHint;
   $('#btnLReset').onclick = lessonReset;
+  $('#btnLBack').onclick = () => G.exitLesson();
+  $('#btnPFirst').onclick = G.puzzleFirst; $('#btnPUndo').onclick = G.puzzleUndo; $('#btnPRedo').onclick = G.puzzleRedo; $('#btnPLast').onclick = G.puzzleLast;
   $('#btnLNext').onclick = lessonNext;
   $('#btnLMenu').onclick = showMenu;
 
@@ -44,16 +46,12 @@
 
   /* ---------- start ---------- */
   playView.resize();
-  /* Every time the app opens it starts new: a fresh board and the welcome. The game you left is kept aside and comes back after you sign in. */
-  try { G.prevGame = localStorage.getItem('gocoach.game'); } catch (e) { G.prevGame = null; }
-  startNewGame();
-  G.resumeAfterSignIn = () => {
-    if (!G.prevGame || (G.Lesson && G.Lesson.on) || (G.kifu && G.kifu.on) || (Play.s && Play.s.moves.length)) return;
-    try { localStorage.setItem('gocoach.game', G.prevGame); } catch (e) { return; }
-    G.prevGame = null; restoreGame();
-  };
+  /* Every time the app opens it starts new: a fresh board and the welcome. Only just after signing in does the game you left come back (guard.js). */
+  if (!(window.GCguard.signed && restoreGame())) startNewGame();
   /* A new install starts the tour of the app once, after the screen has settled (Boon, 25 Nov 2026). */
-  if (G.firstVisit && G.startTour) setTimeout(() => G.startTour(), 800);
+  /* The tour runs once on a new device, not at every clean start. */
+  let toured = false; try { toured = localStorage.getItem('gocoach.toured') === '1'; } catch (e) { /* storage unavailable */ }
+  if (G.firstVisit && !toured && G.startTour) { try { localStorage.setItem('gocoach.toured', '1'); } catch (e) { /* storage unavailable */ } setTimeout(() => G.startTour(), 800); }
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('sw.js').catch(() => { /* offline mode unavailable */ });
   }

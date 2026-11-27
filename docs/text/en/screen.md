@@ -225,7 +225,7 @@ Every move of this game. Tap one to go back to it; moves you tried before stay a
 Prisoners: stones each colour has lost
 
 ## game-level
-Level of the games (Go Coach mode)
+Level of Puzzle mode:
 
 ## level-much-easier
 Much easier
@@ -241,3 +241,39 @@ Harder
 
 ## level-much-harder
 Much harder
+
+## puzzle-back
+Back to game
+
+## puzzle-first.aria
+Back to the start of the puzzle
+
+## puzzle-first.tip
+Back to the start of the puzzle
+
+## puzzle-undo.aria
+Undo
+
+## puzzle-undo.tip
+Take back your last move
+
+## puzzle-redo.aria
+Redo
+
+## puzzle-redo.tip
+Play again the move you took back
+
+## puzzle-last.aria
+Forward to the last move
+
+## puzzle-last.tip
+Forward to the last move you played
+
+## set-board
+Board
+
+## set-coach
+Coach
+
+## set-general
+General

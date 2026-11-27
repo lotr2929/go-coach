@@ -50,69 +50,6 @@
    "band": "30-25k"
   },
   {
-   "id": "p0210-the-25-move-game-move-25",
-   "file": "lessons/30-25k/p0210-the-25-move-game-move-25.sgf",
-   "title": "The 25-move game: move 25",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0215-a-young-iyama-yuta-plays-black-move-49",
-   "file": "lessons/30-25k/p0215-a-young-iyama-yuta-plays-black-move-49.sgf",
-   "title": "A young Iyama Yuta plays Black: move 49",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0216-iyama-beats-murakawa-daisuke-move-29",
-   "file": "lessons/30-25k/p0216-iyama-beats-murakawa-daisuke-move-29.sgf",
-   "title": "Iyama beats Murakawa Daisuke: move 29",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0217-iyama-beats-murakawa-daisuke-move-51",
-   "file": "lessons/30-25k/p0217-iyama-beats-murakawa-daisuke-move-51.sgf",
-   "title": "Iyama beats Murakawa Daisuke: move 51",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0218-a-close-game-for-a-six-title-celebration-move-37",
-   "file": "lessons/30-25k/p0218-a-close-game-for-a-six-title-celebration-move-37.sgf",
-   "title": "A close game for a six-title celebration: move 37",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0220-a-close-game-for-a-six-title-celebration-move-25",
-   "file": "lessons/30-25k/p0220-a-close-game-for-a-six-title-celebration-move-25.sgf",
-   "title": "A close game for a six-title celebration: move 25",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0225-a-celebration-game-move-51",
-   "file": "lessons/30-25k/p0225-a-celebration-game-move-51.sgf",
-   "title": "A celebration game: move 51",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0228-go-seigen-on-9-9-move-35",
-   "file": "lessons/30-25k/p0228-go-seigen-on-9-9-move-35.sgf",
-   "title": "Go Seigen on 9×9: move 35",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
-   "id": "p0231-miyamoto-beats-go-seigen-move-57",
-   "file": "lessons/30-25k/p0231-miyamoto-beats-go-seigen-move-57.sgf",
-   "title": "Miyamoto beats Go Seigen: move 57",
-   "kyu": 25,
-   "band": "30-25k"
-  },
-  {
    "id": "p0008-capture-to-escape",
    "file": "lessons/25-20k/p0008-capture-to-escape.sgf",
    "title": "Capture to escape",
@@ -141,102 +78,11 @@
    "band": "25-20k"
   },
   {
-   "id": "p0213-a-young-iyama-yuta-plays-black-move-41",
-   "file": "lessons/25-20k/p0213-a-young-iyama-yuta-plays-black-move-41.sgf",
-   "title": "A young Iyama Yuta plays Black: move 41",
-   "kyu": 21,
-   "band": "25-20k"
-  },
-  {
-   "id": "p0214-a-young-iyama-yuta-plays-black-move-43",
-   "file": "lessons/25-20k/p0214-a-young-iyama-yuta-plays-black-move-43.sgf",
-   "title": "A young Iyama Yuta plays Black: move 43",
-   "kyu": 21,
-   "band": "25-20k"
-  },
-  {
-   "id": "p0222-a-big-win-on-a-small-board-move-33",
-   "file": "lessons/25-20k/p0222-a-big-win-on-a-small-board-move-33.sgf",
-   "title": "A big win on a small board: move 33",
-   "kyu": 21,
-   "band": "25-20k"
-  },
-  {
-   "id": "p0226-eight-players-against-cho-chikun-move-13",
-   "file": "lessons/25-20k/p0226-eight-players-against-cho-chikun-move-13.sgf",
-   "title": "Eight players against Cho Chikun: move 13",
-   "kyu": 21,
-   "band": "25-20k"
-  },
-  {
    "id": "p0104-the-net",
    "file": "lessons/25-20k/p0104-the-net.sgf",
    "title": "The net",
    "kyu": 19,
    "band": "25-20k"
-  },
-  {
-   "id": "p0221-a-41-move-win-move-35",
-   "file": "lessons/20-15k/p0221-a-41-move-win-move-35.sgf",
-   "title": "A 41-move win: move 35",
-   "kyu": 18,
-   "band": "20-15k"
-  },
-  {
-   "id": "p0224-a-big-win-on-a-small-board-move-29",
-   "file": "lessons/20-15k/p0224-a-big-win-on-a-small-board-move-29.sgf",
-   "title": "A big win on a small board: move 29",
-   "kyu": 18,
-   "band": "20-15k"
-  },
-  {
-   "id": "p0227-go-seigen-on-9-9-move-51",
-   "file": "lessons/20-15k/p0227-go-seigen-on-9-9-move-51.sgf",
-   "title": "Go Seigen on 9×9: move 51",
-   "kyu": 18,
-   "band": "20-15k"
-  },
-  {
-   "id": "p0230-miyamoto-beats-go-seigen-move-50",
-   "file": "lessons/20-15k/p0230-miyamoto-beats-go-seigen-move-50.sgf",
-   "title": "Miyamoto beats Go Seigen: move 50",
-   "kyu": 18,
-   "band": "20-15k"
-  },
-  {
-   "id": "p0201-one-move-keeps-black-alive",
-   "file": "lessons/20-15k/p0201-one-move-keeps-black-alive.sgf",
-   "title": "One move keeps Black alive",
-   "kyu": 15,
-   "band": "20-15k"
-  },
-  {
-   "id": "p0219-a-close-game-for-a-six-title-celebration-move-29",
-   "file": "lessons/20-15k/p0219-a-close-game-for-a-six-title-celebration-move-29.sgf",
-   "title": "A close game for a six-title celebration: move 29",
-   "kyu": 15,
-   "band": "20-15k"
-  },
-  {
-   "id": "p0223-a-big-win-on-a-small-board-move-23",
-   "file": "lessons/20-15k/p0223-a-big-win-on-a-small-board-move-23.sgf",
-   "title": "A big win on a small board: move 23",
-   "kyu": 15,
-   "band": "20-15k"
-  },
-  {
-   "id": "p0211-iyama-yuta-wins-in-36-moves-move-21",
-   "file": "lessons/15-10k/p0211-iyama-yuta-wins-in-36-moves-move-21.sgf",
-   "title": "Iyama Yuta wins in 36 moves: move 21",
-   "kyu": 10,
-   "band": "15-10k"
-  },
-  {
-   "id": "p0212-iyama-yuta-wins-in-36-moves-move-17",
-   "file": "lessons/15-10k/p0212-iyama-yuta-wins-in-36-moves-move-17.sgf",
-   "title": "Iyama Yuta wins in 36 moves: move 17",
-   "kyu": 10,
-   "band": "15-10k"
   }
  ]
 }

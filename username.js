@@ -1,19 +1,16 @@
 /* Go Coach - sign in, and the player's name at the top right before the envelope.
    Until real accounts exist this device holds ONE account: its name (kept here), with the grade, streak and solved lessons.
-   Signing in is only typing the name, and it lasts until the page is closed or reloaded: every time the website or app opens,
-   you are signed out and the board and chat start new (Boon, 27 Nov 2026). Signed out, the grade and streak are hidden. */
+   Signing in is only typing the name. It lasts until the page is closed or reloaded: every time the website or app opens you are signed out,
+   and then guard.js shows none of the account's details (a clean start, as for a first visit). Signing in reloads the page once. (Boon, 27 Nov 2026) */
 (() => {
   'use strict';
-  const G = window.GC;
-  const KEY = 'gocoach.user';
-  const OLD = 'gocoach.name'; /* the name box that Settings used to have: offered as the first suggestion */
+  const G = window.GC, R = window.GCguard.raw, signed = window.GCguard.signed;
+  const KEY = 'gocoach.user', OLD = 'gocoach.name'; /* OLD: the name box that Settings used to have, offered as the first suggestion */
   /* what belongs to the account and goes with "Clear Account"; saved games in the cloud and the settings stay */
-  const OWN = [KEY, OLD, 'gocoach.grade', 'gocoach.today', 'gocoach.streak', 'gocoach.done'];
+  const OWN = [KEY, OLD, 'gocoach.grade', 'gocoach.today', 'gocoach.streak', 'gocoach.done', 'gocoach.game', 'gocoach.chat', 'gocoach.chatPast'];
   const T = k => window.GoText.T('app.' + k);
-  const get = k => { try { return (localStorage.getItem(k) || '').trim(); } catch (e) { return ''; } };
-  const put = (k, v) => { try { if (v) localStorage.setItem(k, v); else localStorage.removeItem(k); } catch (e) { /* storage unavailable */ } };
-  const name = () => get(KEY) || get(OLD);
-  let signed = false; /* in memory only: a new page load is always signed out */
+  const name = () => (R.get(KEY) || R.get(OLD) || '').trim();
+  const put = (k, v) => { if (v) R.set(k, v); else R.remove(k); };
 
   /* ---------- the header: the name once signed in, "Sign in" before ---------- */
   const head = document.querySelector('header');
@@ -21,7 +18,7 @@
   tag.type = 'button'; tag.className = 'userName';
   if (head) head.insertBefore(tag, document.getElementById('btnFlag') || document.getElementById('btnSettings'));
 
-  /* ---------- Settings (Name): the name in brackets, tap it to change it ---------- */
+  /* ---------- Settings (Name): the name in brackets, tap it to change it; signed out it says "Sign in" ---------- */
   const acct = document.getElementById('acctTag');
   const edit = document.createElement('input');
   edit.type = 'text'; edit.className = 'nameInput nameEdit'; edit.maxLength = 30; edit.autocomplete = 'nickname'; edit.hidden = true;
@@ -32,7 +29,7 @@
   const show = () => {
     tag.textContent = signed ? name() : T('sign-in');
     tag.classList.toggle('out', !signed);
-    chip.textContent = name() || T('sign-in');
+    chip.textContent = signed ? name() : T('sign-in');
     document.documentElement.classList.toggle('signedOut', !signed);
   };
   const rename = () => { /* the same account under a new name */
@@ -41,7 +38,10 @@
     if (v && v !== name()) { put(KEY, v); put(OLD, ''); }
     show();
   };
-  chip.addEventListener('click', () => { edit.value = name(); chip.hidden = true; edit.hidden = false; edit.focus(); edit.select(); });
+  chip.addEventListener('click', () => {
+    if (!signed) { const s = document.getElementById('setDlg'); if (s && s.open) s.close(); return open(); }
+    edit.value = name(); chip.hidden = true; edit.hidden = false; edit.focus(); edit.select();
+  });
   edit.addEventListener('blur', rename);
   edit.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); edit.blur(); } else if (e.key === 'Escape') { edit.value = name(); edit.blur(); } });
 
@@ -63,7 +63,7 @@
   dlg.append(form);
   document.body.append(dlg);
 
-  const open = () => {
+  function open() {
     h.textContent = signed ? T('signed-in-as') + ' ' + name() : T('sign-in-title');
     note.textContent = T('sign-in-note');
     box.hidden = signed; go.hidden = signed; out.hidden = !signed;
@@ -72,15 +72,14 @@
     box.value = name();
     dlg.showModal();
     if (!signed) { box.focus(); box.select(); }
-  };
+  }
   tag.addEventListener('click', open);
   form.addEventListener('submit', e => {
     const how = e.submitter && e.submitter.value;
     if (how === 'go' && box.value.trim()) {
-      put(KEY, box.value.trim()); put(OLD, ''); signed = true; show();
-      if (G.resumeAfterSignIn) G.resumeAfterSignIn(); /* main.js: the game you left comes back */
-      if (G.grade && G.grade.paint) G.grade.paint();
-    } else if (how === 'out') { signed = false; show(); }
+      put(KEY, box.value.trim()); put(OLD, '');
+      window.GCguard.signInNext(); location.reload(); /* reloaded with the account's details in view (guard.js) */
+    } else if (how === 'out') location.reload(); /* a page load is signed out */
   });
   box.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go.click(); } });
 
@@ -88,7 +87,7 @@
   const clear = document.getElementById('btnClearAcct');
   if (clear) clear.addEventListener('click', () => {
     if (!confirm(T('clear-confirm'))) return;
-    for (const k of OWN) put(k, '');
+    for (const k of OWN) R.remove(k);
     location.reload();
   });
 
