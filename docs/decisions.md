@@ -17,7 +17,7 @@ Last updated: 27 November 2026.
 ## Opening and signing in (Boon, 27 Nov 2026; replaces "one account per device")
 - **The app opens fresh every time, as a guest:** a new board and the welcome in the chat, no automatic tour, nothing from earlier visits.
 - **A guest's data is wiped at the next open** (account.js): everything stored under a `gocoach.` name, including settings, the game, the chat and its history, grade, streak, lessons done and the cloud-save/messages key. Kept for the device only: the usage-log switch and its anonymous device number.
-- **Signing in is typing a name** (no password yet). It brings back that name's data; a new name becomes a new account and keeps what the guest did so far. Several names can share a device. Straight after signing in, the game and chat carry on where they were. Signed-in data is put away under `gcacct/<name>/` at the next open. A reload during a signed-in visit stays signed in; closing the app or tab signs out.
+- **Signing in is typing a name** (no password yet). It brings back that name's data; a new name becomes a new account and keeps what the guest did so far. **A guest's puzzles, lesson ticks, streak and grade are not recorded at all** (Boon, 27 Nov 2026): Puzzle mode works for the visit but records only once signed in. Several names can share a device. Straight after signing in, the game and chat carry on where they were. Signed-in data is put away under `gcacct/<name>/` at the next open. A reload during a signed-in visit stays signed in; closing the app or tab signs out.
 - On upgrade, a device with a name already keeps its data under that name; a device with no name starts fresh.
 
 ## Product

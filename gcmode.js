@@ -9,8 +9,10 @@
   const T = (k, v) => window.GoText.T('gcmode.' + k, v); /* wording: docs/text/en/gcmode.md */
   const KEY = { today: 'gocoach.today', streak: 'gocoach.streak', level: 'gocoach.gclevel', plays: 'gocoach.gcplays' };
   const FREE = 3; /* free games a day; subscribers have no limit (Boon, 27 Nov 2026). Subscriptions are not built yet: G.subscriber will say. */
-  const read = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch (e) { return d; } };
-  const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
+  /* Signed in, the records are kept on the device; a guest's only in memory for this visit, so nothing is recorded (Boon, 27 Nov 2026). */
+  const mem = {}, keep = () => window.GoAccount.signedIn();
+  const read = (k, d) => { if (!keep()) return k in mem ? JSON.parse(mem[k]) : d; try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch (e) { return d; } };
+  const write = (k, v) => { if (!keep()) { mem[k] = JSON.stringify(v); return; } try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
   const dayOf = d => d.toLocaleDateString('en-CA'); /* YYYY-MM-DD in the player's own time zone */
   const today = () => dayOf(new Date());
   const yesterday = () => { const d = new Date(); d.setDate(d.getDate() - 1); return dayOf(d); };
@@ -92,6 +94,7 @@
     if (!M.on || !L.file) return;
     const t = read(KEY.today, null), id = L.id.replace(/^file:/, '');
     if (t && t.date === today() && t.id === id) { t.solved = true; write(KEY.today, t); }
+    if (!keep()) return; /* no streak for a guest */
     const st = read(KEY.streak, { last: '', days: 0 });
     if (st.last === today()) return;
     const days = st.last === yesterday() ? st.days + 1 : 1;

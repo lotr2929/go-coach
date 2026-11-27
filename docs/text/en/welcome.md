@@ -16,7 +16,7 @@ Hello, I am your Go coach. I am not an AI model. I answer from the rules of Go a
 
 ## puzzles
 **Puzzle mode**
-Tap the title Go Coach at the top to start Puzzle mode: short puzzles chosen for your level, each asking you to find the move that matters. Puzzle mode is how I coach you and rank you: every puzzle you solve at the first try moves your Go Coach grade, and solving one each day builds your streak. Sign in to keep your grade. Tap the title again to leave.
+Tap the title Go Coach at the top to start Puzzle mode: short puzzles chosen for your level, each asking you to find the move that matters. Puzzle mode is how I coach you and rank you: every puzzle you solve at the first try moves your Go Coach grade, and solving one each day builds your streak. Puzzles are recorded and your grade moves only when you are signed in. Tap the title again to leave.
 
 ## end
 Type your request by typing one of the numbers above or by clicking on one of the options. You can also make your own request simply by asking in your own words. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt. Type Tour to start a tour of the app.

@@ -3,7 +3,7 @@
    private key for cloud saves and messages) belongs to whoever is playing. The app opens fresh every time, as a guest:
    - A guest's data is wiped at the next open, so nothing is kept between visits.
    - Signing in with a name brings back that name's data. A name not used before becomes a new account and keeps what the
-     guest has done so far. Several names can share a device. There is no password: this is not yet a real account.
+     guest has done so far (not puzzles, lesson ticks or grade: those are recorded only when signed in). Several names can share a device. There is no password: this is not yet a real account.
    - While signed in, the data stays where the app reads it; at the next open it is put away under the name ('gcacct/').
    Signing in, out or clearing reloads the page, so every part of the app reads the right data. A reload after signing in
    stays signed in for that visit (sessionStorage); closing the app or tab ends it.

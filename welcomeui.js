@@ -47,7 +47,7 @@
       list.append(b);
     }
     el.append(list);
-    fill(el, C.INTRO_PUZZLES + '\n\n' + C.INTRO_END);
+    fill(el, C.INTRO_END + '\n\n' + C.INTRO_PUZZLES);
   }
   const show = () => G.say(C.INTRO);
   /* A typed message: true when it was one of the welcome's requests. */

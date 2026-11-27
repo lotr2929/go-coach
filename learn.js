@@ -75,7 +75,8 @@
   /* A lesson's difficulty for the grade: a lesson file's own (DI), or the built-in lessons' place from 30 to 18 kyu. */
   const kyuOf = L => (L.file ? L.kyu : window.GoGrade.lessonKyu(LS.list.indexOf(L), LS.CORE));
   function markDone(L) {
-    Lesson.done.add(L.id); store(KEY.done, [...Lesson.done]);
+    Lesson.done.add(L.id); /* a guest's ticks last only for this visit (account.js) */
+    if (window.GoAccount.signedIn()) store(KEY.done, [...Lesson.done]);
   }
   function onLessonTap(i) {
     const L = LS.list[Lesson.idx];
