@@ -1,19 +1,14 @@
 /* Go Coach - sign in, and the player's name at the top right before the envelope.
-   Until real accounts exist this device holds ONE account: its name (kept here), with the grade, streak and solved lessons.
-   Signing in is only typing the name, and it lasts until the page is closed or reloaded: every time the website or app opens,
-   you are signed out and the board and chat start new (Boon, 27 Nov 2026). Signed out, the grade and streak are hidden. */
+   Signing in is only typing a name; account.js keeps each name's data apart on this device and wipes a guest's at the next
+   open (Boon, 27 Nov 2026). Every time the website or app opens you are signed out and start fresh. Signed out, the grade and
+   streak are hidden. */
 (() => {
   'use strict';
   const G = window.GC;
-  const KEY = 'gocoach.user';
-  const OLD = 'gocoach.name'; /* the name box that Settings used to have: offered as the first suggestion */
-  /* what belongs to the account and goes with "Clear Account"; saved games in the cloud and the settings stay */
-  const OWN = [KEY, OLD, 'gocoach.grade', 'gocoach.today', 'gocoach.streak', 'gocoach.done'];
+  const A = window.GoAccount;
   const T = k => window.GoText.T('app.' + k);
-  const get = k => { try { return (localStorage.getItem(k) || '').trim(); } catch (e) { return ''; } };
-  const put = (k, v) => { try { if (v) localStorage.setItem(k, v); else localStorage.removeItem(k); } catch (e) { /* storage unavailable */ } };
-  const name = () => get(KEY) || get(OLD);
-  let signed = false; /* in memory only: a new page load is always signed out */
+  const name = () => A.name();
+  const signed = A.signedIn();
 
   /* ---------- the header: the name once signed in, "Sign in" before ---------- */
   const head = document.querySelector('header');
@@ -38,10 +33,10 @@
   const rename = () => { /* the same account under a new name */
     const v = edit.value.trim();
     edit.hidden = true; chip.hidden = false;
-    if (v && v !== name()) { put(KEY, v); put(OLD, ''); }
+    if (v && v !== name() && !A.rename(v)) G.toast(T('name-taken'));
     show();
   };
-  chip.addEventListener('click', () => { edit.value = name(); chip.hidden = true; edit.hidden = false; edit.focus(); edit.select(); });
+  chip.addEventListener('click', () => { if (!signed) return open(); edit.value = name(); chip.hidden = true; edit.hidden = false; edit.focus(); edit.select(); });
   edit.addEventListener('blur', rename);
   edit.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); edit.blur(); } else if (e.key === 'Escape') { edit.value = name(); edit.blur(); } });
 
@@ -69,30 +64,23 @@
     box.hidden = signed; go.hidden = signed; out.hidden = !signed;
     out.textContent = T('sign-out'); go.textContent = T('sign-in'); cancel.textContent = T('cancel');
     box.placeholder = T('name-hint');
-    box.value = name();
+    box.value = '';
     dlg.showModal();
     if (!signed) { box.focus(); box.select(); }
   };
   tag.addEventListener('click', open);
   form.addEventListener('submit', e => {
     const how = e.submitter && e.submitter.value;
-    if (how === 'go' && box.value.trim()) {
-      put(KEY, box.value.trim()); put(OLD, ''); signed = true; show();
-      if (G.resumeAfterSignIn) G.resumeAfterSignIn(); /* main.js: the game you left comes back */
-      if (G.grade && G.grade.paint) G.grade.paint();
-    } else if (how === 'out') { signed = false; show(); }
+    if (how === 'go' && box.value.trim()) A.signIn(box.value); /* the page reloads with the account's data */
+    else if (how === 'out') A.signOut();
   });
   box.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go.click(); } });
 
-  /* ---------- Clear Account (Settings): wipes this device's account, then starts again ---------- */
+  /* ---------- Clear Account (Settings): removes this account from the device, then starts again ---------- */
   const clear = document.getElementById('btnClearAcct');
-  if (clear) clear.addEventListener('click', () => {
-    if (!confirm(T('clear-confirm'))) return;
-    for (const k of OWN) put(k, '');
-    location.reload();
-  });
+  if (clear) clear.addEventListener('click', () => { if (confirm(T('clear-confirm'))) A.clear(); });
 
   show();
-  G.userName = () => (signed ? name() : '');
+  G.userName = () => name();
   G.signedIn = () => signed;
 })();

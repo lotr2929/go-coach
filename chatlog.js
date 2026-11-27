@@ -22,7 +22,6 @@
 
   /* ---------- what is kept ---------- */
   let cur = load(KEY.chat, null);
-  const firstVisit = cur === null;
   if (Array.isArray(cur)) cur = { start: Date.now(), last: Date.now(), log: cur }; /* older versions kept only the messages */
   if (!cur || !Array.isArray(cur.log)) cur = { start: Date.now(), last: Date.now(), log: [] };
   cur.log = cur.log.map(freshen);
@@ -186,11 +185,13 @@
   function clearNow() { cur.log = []; save(); render(); }
 
   /* ---------- start ---------- */
-  /* Every time the app opens the chat starts new, with the welcome; the last session goes into the history (Boon, 27 Nov 2026). */
-  archive();
-  cur = { start: Date.now(), last: Date.now(), log: [{ who: 'coach', text: C.INTRO }] };
+  /* Every time the app opens the chat starts new, with the welcome; the last session goes into the history (Boon, 27 Nov 2026).
+     Straight after signing in (account.js) the chat carries on where it was. */
+  if (!(window.GoAccount.justSignedIn() && cur.log.length)) {
+    archive();
+    cur = { start: Date.now(), last: Date.now(), log: [{ who: 'coach', text: C.INTRO }] };
+  }
   save(); render();
 
-  /* firstVisit: nothing was saved yet, so this is a new install; main.js then starts the tour once. */
-  Object.assign(G, { chatRecord: record, firstVisit, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
+  Object.assign(G, { chatRecord: record, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
 })();

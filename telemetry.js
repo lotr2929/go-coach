@@ -21,6 +21,16 @@
     return s;
   })();
 
+  /* An anonymous number for this device, so the log can count players and how often they come back (Boon, 27 Nov 2026).
+     Made only while the log is on; it is not part of any account, so account.js leaves it alone ('gcdevice', no 'gocoach.'). */
+  const device = () => {
+    try {
+      let d = localStorage.getItem('gcdevice');
+      if (!d) { d = Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); localStorage.setItem('gcdevice', d); }
+      return d;
+    } catch (e) { return ''; }
+  };
+
   /* ---------- sending ---------- */
   let q = [], seq = 0, timer = 0, failed = 0;
   function schedule(ms) { if (!timer) timer = setTimeout(flush, ms); }
@@ -129,6 +139,7 @@
   log('start', {
     w: innerWidth, h: innerHeight, dpr: devicePixelRatio,
     standalone: !!(window.matchMedia && matchMedia('(display-mode: standalone)').matches),
-    ua: navigator.userAgent.slice(0, 160), page: location.host
+    ua: navigator.userAgent.slice(0, 160), page: location.host,
+    device: isOn() ? device() : '', signedIn: !!(window.GoAccount && window.GoAccount.signedIn())
   });
 })();

@@ -271,6 +271,8 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .chatLog .pullHint { display: block; width: 100%; text-align: center; color: var(--mute); font-size: .78rem; padding: 2px 0 6px; }
 
 /* The history's days and sessions (chatlog.js): a day folds its sessions, a session folds its questions. */
+.chatLog button.inlineLink { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-style: italic; color: inherit; cursor: pointer; }
+.chatLog button.inlineLink:hover { text-decoration-color: var(--accent); }
 .chatLog .fh:hover .link { text-decoration-color: var(--accent); }
 .chatLog .fh { display: block; width: 100%; text-align: left; padding: 1px 0; }
 .chatLog .day .sess { padding-left: 16px; }

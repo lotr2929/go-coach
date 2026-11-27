@@ -9,6 +9,17 @@ Last updated: 27 November 2026.
 - Boon has checked with Curtin. ABN first (sole trader); payments to PayPal to start (a free PayPal Business account recommended, as subscriptions need one).
 - Note: what a device stores (the device key for cloud saves, chat history, settings) belongs to the web address, so it does not carry over from the Vercel address to the Cloudflare one.
 
+## Beta and subscriptions (Boon, 27 Nov 2026)
+- **Free beta now, subscriptions in the new year** once we have seen how much people like it. Everything is open during the beta (the free-to-10-kyu limit is not switched on). The welcome starts with a sentence saying Go Coach is in beta; the word "beta" opens docs/text/en/pages/beta.md (what beta means, keeping progress, feedback by the envelope, what the usage log records, what happens after the beta).
+- **How we judge the beta:** players counted by an anonymous device number in the usage log (telemetry.js `start` event, `device` and `signedIn`; only while the log is on), how often they return, and how long they stay (session times).
+- **Before charging (December):** real sign-in (Supabase Auth: email code or Google, undecided) so a subscription follows the player across devices; a member flag per account; payments (PayPal or Stripe: undecided, Stripe is usually cheaper per payment in Australia) telling Supabase who has paid; ABN; privacy policy and terms.
+
+## Opening and signing in (Boon, 27 Nov 2026; replaces "one account per device")
+- **The app opens fresh every time, as a guest:** a new board and the welcome in the chat, no automatic tour, nothing from earlier visits.
+- **A guest's data is wiped at the next open** (account.js): everything stored under a `gocoach.` name, including settings, the game, the chat and its history, grade, streak, lessons done and the cloud-save/messages key. Kept for the device only: the usage-log switch and its anonymous device number.
+- **Signing in is typing a name** (no password yet). It brings back that name's data; a new name becomes a new account and keeps what the guest did so far. Several names can share a device. Straight after signing in, the game and chat carry on where they were. Signed-in data is put away under `gcacct/<name>/` at the next open. A reload during a signed-in visit stays signed in; closing the app or tab signs out.
+- On upgrade, a device with a name already keeps its data under that name; a device with no name starts fresh.
+
 ## Product
 - **Go Coach first.** Develop it until Boon is satisfied before approaching anyone. World of Go (neural network, subscription) comes later, funded by traction.
 - **Go Coach stays local:** rules and random play-outs, no neural network, no network calls except the optional usage logging.
@@ -30,7 +41,7 @@ Last updated: 27 November 2026.
 
 ## Saving games (25 Nov 2026)
 - **Save button** (between Resign and New): keeps the game in the cloud (Supabase, the shared `dlbs` project, Boon's choice). Pressing it again overwrites the same saved game. **New game box has two tabs:** "New game" (the options) and "Saved games" (every saved game, named by its date and time until Boon renames it; tap to open, Rename, Delete).
-- **No sign-in yet (Boon: "don't worry about that for now").** Until accounts exist each device holds a private random key (`gocoach.owner` in localStorage) and the table `gocoach_saves` is reachable only through five functions (`gocoach_save/list/load/rename/delete`) that check the key; row level security with no policies blocks direct access. So saves are private to the device and do not follow Boon to another device or survive clearing the browser's data. When accounts are built (email code, password or Google: undecided), link saves through the table's `user_id` column. Anonymous sign-in is switched off in the project and email sign-in needs confirmation.
+- **No real sign-in yet (Boon: "don't worry about that for now").** Until accounts exist each device (now each name signed in on it, see "Opening and signing in") holds a private random key (`gocoach.owner` in localStorage) and the table `gocoach_saves` is reachable only through five functions (`gocoach_save/list/load/rename/delete`) that check the key; row level security with no policies blocks direct access. So saves are private to the device and do not follow Boon to another device or survive clearing the browser's data. When accounts are built (email code, password or Google: undecided), link saves through the table's `user_id` column. Anonymous sign-in is switched off in the project and email sign-in needs confirmation.
 - The code is in `cloudsave.js` only; wording in `docs/text/en/save.md`. Open question for Boon: Go Coach's public users would share the `dlbs` project with his private Mobius data; a separate project was recommended before the public release.
 
 ## First install

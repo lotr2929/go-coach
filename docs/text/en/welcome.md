@@ -5,6 +5,12 @@ The coach's first message in the chat, shown again whenever someone types Help.
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 In the app, a single line break starts a new line and a blank line starts a new paragraph.
 
+## beta
+Go Coach is in beta: it is free to use while we find out what players like and what needs fixing.
+
+## beta-word
+beta
+
 ## top
 Hello, I am your Go coach. I am not an AI model. I answer from the rules of Go and by analysing the board on your device. You can ask me to do the following:
 

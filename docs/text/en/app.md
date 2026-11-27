@@ -148,7 +148,10 @@ Sign in
 Sign in
 
 ## sign-in-note
-Type your name to sign in. This device holds one account: a different name renames it. You are signed out each time the app is opened.
+Type your name to sign in. Your grade, streak, games and chat are kept under that name on this device, and come back when you sign in again. Without signing in, nothing is kept after you close the app. You are signed out each time the app is opened. There is no password yet, so anyone using this device can sign in with your name.
+
+## name-taken
+Another account on this device already has that name.
 
 ## signed-in-as
 Signed in as
@@ -160,4 +163,4 @@ Sign out
 Cancel
 
 ## clear-confirm
-Clear your account? Your name, Go Coach grade, streak and solved lessons are removed from this device. Games saved in the cloud stay.
+Clear your account? Your name, Go Coach grade, streak, solved lessons, settings and chat are removed from this device, and you are signed out. Games saved in the cloud stay there, but this device can no longer open them.
