@@ -85,3 +85,33 @@ That was the last lesson by grade for now. More are on the way.
 
 ## who-file
 {title} ({grade})
+
+## heading-puzzle
+Puzzle: {title} ({grade})
+
+## who-puzzle
+Puzzle: {title} ({grade})
+
+## puzzle-ask
+Ask me for a hint if you are stuck, or say "back to game" to return to your game.
+
+## puzzle-wrong
+That is not the move. Take it back with Undo, or go back to the start with the first button under the board.
+
+## puzzle-again
+Take it back with Undo to try again.
+
+## chip-hint
+Hint
+
+## chip-prev
+Previous puzzle
+
+## chip-next
+Next puzzle
+
+## chip-list
+Puzzles list
+
+## no-hint
+There is no hint for this one.

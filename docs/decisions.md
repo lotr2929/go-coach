@@ -121,6 +121,12 @@ Last updated: 27 November 2026.
 - **KataGo builds it** (laptop install in tools/katago/bin: v1.18.1 OpenCL, the b10c384 net for fast screening, the b11c768 net to confirm, the human-style model to rank). tools/katago/find-decisive.js finds positions where the move played is also the best and the next best is clearly worse. Claude writes the short stories; they are checked against the kifu's own details (players, event, date), never invented.
 - **Speed on the laptop (Intel Arc graphics, OpenCL):** b11c768 about 3 visits a second on 19x19, b10c384 about 64, so the small net screens and the big net confirms.
 
+## Puzzle mode and signing in (Boon, 27 Nov 2026)
+- **"Game mode" is renamed Puzzle mode** so it is not confused with a normal game. The title tap turns it on. Puzzles (puzzles/) and lessons (lessons/) are separate lists: each lesson teaches a principle, and several puzzles can be built around the same principle (puzzles are not yet tagged by principle).
+- **Puzzle screen:** only "Back to game" at the top; Hint, Previous puzzle, Next puzzle and Puzzles list are the suggestion buttons; four video-style buttons under the board (back to start, undo, redo, forward to the last move). "Previous puzzle" shows the puzzle again before it was solved. "Puzzles list" shows only the puzzles solved, never the full list.
+- **Signed out is a clean start:** first built in guard.js on the laptop; merged on 27 Nov 2026 into account.js (see "Opening and signing in"), which does the same without changing how the browser's storage works. No daily limit during the beta; no automatic tour (Boon, 27 Nov 2026).
+- **Settings in groups:** Board, Coach, General; "Level of Puzzle mode:" sits on one line just before Check for updates.
+
 ## Engine (search.js)
 - Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.
 - Measured: beat the old engine 20–0 (9×9) and 4–0 (13×13); against GNU Go 3.8 on 9×9 at Hard, 9 wins and 7 losses (about 5–10 kyu). Wins are close; losses are large, from misjudging whether a big group lives.

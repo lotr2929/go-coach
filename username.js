@@ -36,7 +36,7 @@
     if (v && v !== name() && !A.rename(v)) G.toast(T('name-taken'));
     show();
   };
-  chip.addEventListener('click', () => { if (!signed) return open(); edit.value = name(); chip.hidden = true; edit.hidden = false; edit.focus(); edit.select(); });
+  chip.addEventListener('click', () => { if (!signed) { const s = document.getElementById('setDlg'); if (s && s.open) s.close(); return open(); } edit.value = name(); chip.hidden = true; edit.hidden = false; edit.focus(); edit.select(); });
   edit.addEventListener('blur', rename);
   edit.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); edit.blur(); } else if (e.key === 'Escape') { edit.value = name(); edit.blur(); } });
 
