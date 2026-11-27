@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[The ladder]DI[21k]PL[B]
+AB[cf][dg][eh]
+AW[df]
+C[White's stone at D4 has two liberties, D5 and E4. Give atari from the right side and White can only run in a zigzag, always left with one liberty, until the edge of the board stops it. This chase is called a ladder.
+
+Task: Capture the white stone. Keep giving atari from the same side.]
+(;B[de];W[ef]C[White runs to E4.](;B[ff];W[ee]C[White runs to E5.](;B[ed];W[fe]C[White runs to F5.](;B[ge];W[fd]C[White runs to F6.](;B[fc];W[gd]C[White runs to G6.](;B[hd];W[gc]C[White runs to G7.](;B[gb];W[hc]C[White runs to H7.](;B[ic];W[hb]C[White runs to H8.](;B[ib];W[ha]C[White runs to H9.](;B[ga];W[eg]C[White runs to E3.](;B[fg]C[RIGHT White has no way out: the stones are captured next move.]))))(;B[hb];W[ic]C[White runs to J7.](;B[id];W[eg]C[White runs to E3.](;B[fg];W[ib]C[White runs to J8.](;B[ia]C[RIGHT The ladder reached the edge and White ran out of liberties. A ladder works when nothing stands in its way: a white stone on its path would break it.])))))))))))
+(;B[ef];W[de]C[After E4, White runs to D5 and has three liberties: the chase is over. Give atari from the other side, so that White runs towards your stone at E2.])
+)

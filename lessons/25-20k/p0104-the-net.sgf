@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[The net]DI[19k]PL[B]
+AB[de][ef]
+AW[ee][gc]
+C[White's stone at E5 has two liberties. An atari will not work here: White would run towards G7 and join it, breaking the ladder.
+
+Task: Capture the white stone anyway. Think of a net, not a chase.]
+(;B[fd]C[RIGHT F6 does not touch the stone, but it closes every way out. Wherever White runs, you can give atari and the stone stays trapped. This is called a net (geta).])
+(;B[ed];W[fe]C[After the atari at E6, White runs to F5, towards the stone at G7, and gets away. A plain atari only chases White into help.])
+(;B[fe];W[ed]C[After the atari at F5, White runs to E6, towards the stone at G7, and gets away. A plain atari only chases White into help.])
+)
