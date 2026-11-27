@@ -52,6 +52,14 @@ Last updated: 27 November 2026.
 - Shapes are drawn light, with borders clear of the stones, so overlapping shapes stay readable. Resting the mouse on a shape's number (or tapping it on a phone) draws that shape strongly, fades the others and pops up what it is; a tap on a number never plays a move.
 - The numbers follow the list: Black's shapes (good first, bad last), then White's, then the shapes that could be made next.
 
+## Release and promotion (Boon, 26 Nov 2026, from a claude.ai chat)
+- **Web first, spending nothing.** Release Go Coach as an installable web app ("Add to Home Screen"); leave the Play Store until later (it costs US$25 once, needs 12 testers for 14 days on a new personal account, and shows the developer's name and, once charging, address).
+- **Move from Vercel to Cloudflare before promoting.** Vercel's free plan does not allow commercial use; Cloudflare's free plan does. Links, home-screen installs and everything saved on a device belong to the web address, so move before the address is shared. Steps in `docs/cloudflare-move.md`.
+- **Pricing idea (not built):** free core (lessons, games against the computer); later about A$12 a year for extras such as all cloud saves, a stronger coach and full analysis. Payment would be Stripe; an ABN first.
+- **Promotion (free):** r/baduk (honest "I built this, feedback welcome"), Go forums (Life In 19x19, OGS) and Discord, the Australian Go Association, Perth clubs and the Curtin board-game club, short videos (territory map, famous games), Product Hunt and Show HN on launch day.
+- **Installable today (checked 26 Nov 2026):** Chrome reports no installability errors (manifest, icons, offline service worker all present). There is no in-app "Install" button yet; iPhones always install through Share, Add to Home Screen.
+
+
 ## Lessons
 - The lessons are organised in chapters that follow the skills in "What is Go?", from simple to complex: Basic training, Tactics, Formations, Reading the terrain, Calculating the engagement, Developing strategies. New lessons go into the chapter of the skill they teach. Chapters 4 and 5 now have four and three lessons. New lesson diagrams are checked by test-lessons.js, which reads ladders and nets out move by move.
 
