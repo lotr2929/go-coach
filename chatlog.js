@@ -186,7 +186,9 @@
   function clearNow() { cur.log = []; save(); render(); }
 
   /* ---------- start ---------- */
-  if (firstVisit) cur.log = [{ who: 'coach', text: C.INTRO }];
+  /* Every time the app opens the chat starts new, with the welcome; the last session goes into the history (Boon, 27 Nov 2026). */
+  archive();
+  cur = { start: Date.now(), last: Date.now(), log: [{ who: 'coach', text: C.INTRO }] };
   save(); render();
 
   /* firstVisit: nothing was saved yet, so this is a new install; main.js then starts the tour once. */
