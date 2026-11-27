@@ -197,6 +197,9 @@ Copy game record (SGF)
 ## check-updates
 Check for updates
 
+## clear-account
+Clear Account
+
 ## done
 Done
 

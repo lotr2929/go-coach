@@ -112,7 +112,7 @@
 
 <dialog id="setDlg">
   <form method="dialog">
-    <h2 data-t="screen.settings">Settings</h2>
+    <h2><span data-t="screen.settings">Settings</span><span id="acctTag"></span></h2>
     <label class="switch"><input type="checkbox" id="setCoords"> <span data-t="screen.coords">Show coordinates</span></label>
     <label class="switch"><input type="checkbox" id="setLibs"> <span data-t="screen.libs">Show liberties (green dots, red when in atari)</span></label>
     <label class="switch"><input type="checkbox" id="setCoach"> <span data-t="screen.coach-tips">Coach tips</span></label>
@@ -127,7 +127,7 @@
     <div class="row wrap"><button data-t="screen.check-updates" type="button" id="btnUpdate">Check for updates</button></div>
     <p class="small" id="verText"></p>
     <p class="small" id="installHelp"></p>
-    <div class="row end"><button data-t="screen.done" value="close" class="primary">Done</button></div>
+    <div class="row end"><button data-t="screen.clear-account" type="button" id="btnClearAcct">Clear Account</button><button data-t="screen.done" value="close" class="primary">Done</button></div>
   </form>
 </dialog>
 

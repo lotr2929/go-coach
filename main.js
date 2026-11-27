@@ -44,8 +44,14 @@
 
   /* ---------- start ---------- */
   playView.resize();
-  /* Signed out, the board always starts fresh; signed in, the game you left comes back (username.js). */
-  if (!(G.signedIn && G.signedIn() && restoreGame())) startNewGame();
+  /* Every time the app opens it starts new: a fresh board and the welcome. The game you left is kept aside and comes back after you sign in. */
+  try { G.prevGame = localStorage.getItem('gocoach.game'); } catch (e) { G.prevGame = null; }
+  startNewGame();
+  G.resumeAfterSignIn = () => {
+    if (!G.prevGame || (G.Lesson && G.Lesson.on) || (G.kifu && G.kifu.on) || (Play.s && Play.s.moves.length)) return;
+    try { localStorage.setItem('gocoach.game', G.prevGame); } catch (e) { return; }
+    G.prevGame = null; restoreGame();
+  };
   /* A new install starts the tour of the app once, after the screen has settled (Boon, 25 Nov 2026). */
   if (G.firstVisit && G.startTour) setTimeout(() => G.startTour(), 800);
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
