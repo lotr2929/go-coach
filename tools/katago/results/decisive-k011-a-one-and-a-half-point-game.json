@@ -1,0 +1,52 @@
+{
+ "id": "k011-a-one-and-a-half-point-game",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 55,
+ "picks": [
+  {
+   "turn": 19,
+   "of": 55,
+   "colour": "B",
+   "played": "F5",
+   "best": "F5",
+   "isBest": true,
+   "gap": 14,
+   "second": "G6",
+   "prior": 0.998,
+   "near": 1,
+   "lead": 5.1,
+   "pv": [
+    "F5",
+    "F7",
+    "G4",
+    "G3",
+    "G7",
+    "F8"
+   ]
+  },
+  {
+   "turn": 29,
+   "of": 55,
+   "colour": "B",
+   "played": "H5",
+   "best": "H5",
+   "isBest": true,
+   "gap": 3.4,
+   "second": "F3",
+   "prior": 0.955,
+   "near": 1,
+   "lead": 1.8,
+   "pv": [
+    "H5",
+    "H2",
+    "F3",
+    "G1",
+    "B7",
+    "D8"
+   ]
+  }
+ ]
+}

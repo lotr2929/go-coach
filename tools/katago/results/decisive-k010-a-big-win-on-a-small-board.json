@@ -1,0 +1,178 @@
+{
+ "id": "k010-a-big-win-on-a-small-board",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 53,
+ "picks": [
+  {
+   "turn": 33,
+   "of": 54,
+   "colour": "B",
+   "played": "F6",
+   "best": "F6",
+   "isBest": true,
+   "gap": 18.5,
+   "second": "E8",
+   "prior": 0.656,
+   "near": 1,
+   "lead": 18.7,
+   "pv": [
+    "F6",
+    "H2",
+    "G4",
+    "B6",
+    "C7",
+    "G1"
+   ]
+  },
+  {
+   "turn": 25,
+   "of": 54,
+   "colour": "B",
+   "played": "F3",
+   "best": "F3",
+   "isBest": true,
+   "gap": 8.1,
+   "second": "B3",
+   "prior": 0.837,
+   "near": 1,
+   "lead": 16.3,
+   "pv": [
+    "F3",
+    "E2",
+    "F2",
+    "B3",
+    "G2",
+    "H7"
+   ]
+  },
+  {
+   "turn": 23,
+   "of": 54,
+   "colour": "B",
+   "played": "D2",
+   "best": "D2",
+   "isBest": true,
+   "gap": 8,
+   "second": "E3",
+   "prior": 0.27,
+   "near": 1,
+   "lead": 13.4,
+   "pv": [
+    "D2",
+    "B3",
+    "E2",
+    "A5",
+    "H4",
+    "F3"
+   ]
+  },
+  {
+   "turn": 29,
+   "of": 54,
+   "colour": "B",
+   "played": "G2",
+   "best": "G2",
+   "isBest": true,
+   "gap": 8,
+   "second": "H4",
+   "prior": 0.409,
+   "near": 1,
+   "lead": 18.8,
+   "pv": [
+    "G2",
+    "H7",
+    "H8",
+    "F4",
+    "H3",
+    "H4"
+   ]
+  },
+  {
+   "turn": 37,
+   "of": 54,
+   "colour": "B",
+   "played": "D8",
+   "best": "D8",
+   "isBest": true,
+   "gap": 7.3,
+   "second": "E1",
+   "prior": 0.998,
+   "near": 1,
+   "lead": 5.3,
+   "pv": [
+    "D8",
+    "B8",
+    "C6",
+    "H2",
+    "G4",
+    "C7"
+   ]
+  },
+  {
+   "turn": 17,
+   "of": 54,
+   "colour": "B",
+   "played": "B7",
+   "best": "B7",
+   "isBest": true,
+   "gap": 6.7,
+   "second": "G4",
+   "prior": 0.902,
+   "near": 1,
+   "lead": 7.1,
+   "pv": [
+    "B7",
+    "D3",
+    "E4",
+    "C2",
+    "G7",
+    "H7"
+   ]
+  },
+  {
+   "turn": 19,
+   "of": 54,
+   "colour": "B",
+   "played": "E4",
+   "best": "E4",
+   "isBest": true,
+   "gap": 6.5,
+   "second": "G4",
+   "prior": 0.964,
+   "near": 1,
+   "lead": 7.1,
+   "pv": [
+    "E4",
+    "C2",
+    "G7",
+    "H7",
+    "H4",
+    "G4"
+   ]
+  },
+  {
+   "turn": 27,
+   "of": 54,
+   "colour": "B",
+   "played": "F2",
+   "best": "F2",
+   "isBest": true,
+   "gap": 5.5,
+   "second": "B3",
+   "prior": 0.595,
+   "near": 1,
+   "lead": 16.5,
+   "pv": [
+    "F2",
+    "B3",
+    "G2",
+    "H7",
+    "H8",
+    "F4"
+   ]
+  }
+ ]
+}

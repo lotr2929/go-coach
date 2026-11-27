@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[One move keeps Black alive]DI[15k]PL[B]PB[Miyamoto Naoki]PW[Go Seigen]DT[1968]
+AB[cb][bc][fc][gc][hc][ed][de][ee][cf][ef][ff][eg][ch][dh][eh]
+AW[cc][dc][fd][gd][hd][be][fe][ie][bf][gf][hf][cg][dg][fg][ig][bh][fh][gh][hh]
+C[Miyamoto Naoki (8 dan), Black, plays Go Seigen (9 dan), one of the greatest players of the twentieth century, on the 9x9 board in 1968. Black is behind here, and only one move keeps the game alive.
+
+Task: Find Black's move.]
+(;B[bd]C[RIGHT B6 is the move. KataGo reads it as the only one that holds on: the other try, C6, is about 15 points worse. Miyamoto played it, and went on to win the game by 4 points.])
+(;B[cd]C[C6 looks natural, but KataGo reads it as about 15 points worse than B6. Try again.])
+)

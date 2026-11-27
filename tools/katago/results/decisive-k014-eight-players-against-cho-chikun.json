@@ -1,0 +1,31 @@
+{
+ "id": "k014-eight-players-against-cho-chikun",
+ "size": 9,
+ "komi": 5.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 40,
+ "picks": [
+  {
+   "turn": 13,
+   "of": 40,
+   "colour": "B",
+   "played": "G4",
+   "best": "G4",
+   "isBest": true,
+   "gap": 3.3,
+   "second": "F7",
+   "prior": 0.57,
+   "near": 1,
+   "lead": 4.7,
+   "pv": [
+    "G4",
+    "F7",
+    "G3",
+    "F2",
+    "G2",
+    "C3"
+   ]
+  }
+ ]
+}

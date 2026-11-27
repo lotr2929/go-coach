@@ -1,0 +1,94 @@
+{
+ "id": "k012-the-longest-9-9-game-here",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 89,
+ "picks": [
+  {
+   "turn": 85,
+   "of": 89,
+   "colour": "B",
+   "played": "H9",
+   "best": "H9",
+   "isBest": true,
+   "gap": 4.5,
+   "second": "G7",
+   "prior": 1,
+   "near": 1,
+   "lead": 1.3,
+   "pv": [
+    "H9",
+    "B1",
+    "A6",
+    "D6",
+    "F9",
+    "F1"
+   ]
+  },
+  {
+   "turn": 23,
+   "of": 89,
+   "colour": "B",
+   "played": "H7",
+   "best": "H7",
+   "isBest": true,
+   "gap": 3.9,
+   "second": "C3",
+   "prior": 0.965,
+   "near": 1,
+   "lead": 5.7,
+   "pv": [
+    "H7",
+    "E7",
+    "J8",
+    "D8",
+    "B4",
+    "B8"
+   ]
+  },
+  {
+   "turn": 19,
+   "of": 89,
+   "colour": "B",
+   "played": "H5",
+   "best": "H5",
+   "isBest": true,
+   "gap": 3.7,
+   "second": "C3",
+   "prior": 0.969,
+   "near": 1,
+   "lead": 3.2,
+   "pv": [
+    "H5",
+    "H8",
+    "J6",
+    "H7",
+    "B4",
+    "D8"
+   ]
+  },
+  {
+   "turn": 13,
+   "of": 89,
+   "colour": "B",
+   "played": "B6",
+   "best": "B6",
+   "isBest": true,
+   "gap": 3.1,
+   "second": "B4",
+   "prior": 0.99,
+   "near": 1,
+   "lead": -0.7,
+   "pv": [
+    "B6",
+    "B4",
+    "H5",
+    "F4",
+    "G5",
+    "G7"
+   ]
+  }
+ ]
+}

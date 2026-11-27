@@ -1,0 +1,52 @@
+{
+ "id": "k003-iyama-yuta-wins-in-36-moves",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 36,
+ "picks": [
+  {
+   "turn": 21,
+   "of": 36,
+   "colour": "B",
+   "played": "B4",
+   "best": "B4",
+   "isBest": true,
+   "gap": 4.7,
+   "second": "D6",
+   "prior": 0.023,
+   "near": 1,
+   "lead": -6.3,
+   "pv": [
+    "B4",
+    "C6",
+    "A5",
+    "C3",
+    "C4",
+    "C5"
+   ]
+  },
+  {
+   "turn": 17,
+   "of": 36,
+   "colour": "B",
+   "played": "B6",
+   "best": "B6",
+   "isBest": true,
+   "gap": 3.2,
+   "second": "D6",
+   "prior": 0.067,
+   "near": 3,
+   "lead": -4.9,
+   "pv": [
+    "B6",
+    "E6",
+    "C4",
+    "F4",
+    "G3",
+    "F3"
+   ]
+  }
+ ]
+}

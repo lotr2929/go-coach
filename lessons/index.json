@@ -34,6 +34,13 @@
    "title": "Push it to the edge",
    "kyu": 20,
    "band": "25-20k"
+  },
+  {
+   "id": "p0201-one-move-keeps-black-alive",
+   "file": "lessons/20-15k/p0201-one-move-keeps-black-alive.sgf",
+   "title": "One move keeps Black alive",
+   "kyu": 15,
+   "band": "20-15k"
   }
  ]
 }

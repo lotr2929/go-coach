@@ -2,7 +2,7 @@
 
 A summary of Boon's decisions and the reasoning behind them, so any session (phone, cloud or laptop) can pick up where the last one stopped. The code changes themselves are in `docs/phone-notes/`. Update this file when a decision changes.
 
-Last updated: 25 November 2026.
+Last updated: 27 November 2026.
 
 ## Hosting and business (Boon, 26 Nov 2026)
 - **Moving from Vercel to Cloudflare Pages** (free plan allows commercial use; Vercel's free plan does not). Free address on pages.dev (e.g. go-coach.pages.dev); no domain name until subscribers reach the hundreds. Cloudflare publishes the repository as it is (no build step; the repository is public anyway); `_headers` does what `vercel.json` did. Live at https://go-coach.pages.dev since 26 Nov 2026 (checked: same version as main). Vercel stays until Boon switches it off.
@@ -93,6 +93,14 @@ Last updated: 25 November 2026.
 - **World of Go** would later give a more accurate, KataGo-based grade on the same scale, carrying over the Go Coach grade.
 - **Privacy:** grading on the device needs no permission. Sending players' games away for analysis needs a privacy note, anonymised data and a switch to turn it off; anything personal (e.g. problems from your own games) is opt-in. Lawyer check before charging.
 - **Accounts** are needed for the grade to follow a subscriber across devices; until then it stays on one device.
+
+## Game mode: the hook (Boon, 27 Nov 2026)
+- **A game is one decisive move, like a chess puzzle** (one step, at most a few): a position cut from the opening, middle or end of a famous game (or a KataGo game), where the player finds the move that mattered. It need not be a kill or a clear win; the point is how one step can be so decisive. After it, a short, interesting explanation of what it was about (the game, the players, why the move mattered).
+- **Free players get 3 a day; subscribers have no daily limit.**
+- **The player sets the level of the games they want**, above or below their grade; the grade keeps moving fairly (a hard one solved raises it a lot, an easy one barely moves it).
+- **It must be addictive:** quick to start, finished in a minute or two, a streak, the grade moving after every game, always "one more".
+- **KataGo builds it** (laptop install in tools/katago/bin: v1.18.1 OpenCL, the b10c384 net for fast screening, the b11c768 net to confirm, the human-style model to rank). tools/katago/find-decisive.js finds positions where the move played is also the best and the next best is clearly worse. Claude writes the short stories; they are checked against the kifu's own details (players, event, date), never invented.
+- **Speed on the laptop (Intel Arc graphics, OpenCL):** b11c768 about 3 visits a second on 19x19, b10c384 about 64, so the small net screens and the big net confirms.
 
 ## Engine (search.js)
 - Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.

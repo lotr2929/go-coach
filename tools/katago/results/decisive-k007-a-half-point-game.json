@@ -1,0 +1,31 @@
+{
+ "id": "k007-a-half-point-game",
+ "size": 9,
+ "komi": 5.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 50,
+ "picks": [
+  {
+   "turn": 9,
+   "of": 51,
+   "colour": "B",
+   "played": "B4",
+   "best": "B4",
+   "isBest": true,
+   "gap": 5.7,
+   "second": "C6",
+   "prior": 0.999,
+   "near": 1,
+   "lead": 0.7,
+   "pv": [
+    "B4",
+    "B3",
+    "C7",
+    "B5",
+    "E7",
+    "D8"
+   ]
+  }
+ ]
+}

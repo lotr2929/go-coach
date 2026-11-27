@@ -1,0 +1,52 @@
+{
+ "id": "k005-iyama-beats-murakawa-daisuke",
+ "size": 9,
+ "komi": 6.5,
+ "visits": 200,
+ "net": "small",
+ "positions": 50,
+ "picks": [
+  {
+   "turn": 29,
+   "of": 52,
+   "colour": "B",
+   "played": "B2",
+   "best": "B2",
+   "isBest": true,
+   "gap": 3.2,
+   "second": "F2",
+   "prior": 0.746,
+   "near": 1,
+   "lead": -2.5,
+   "pv": [
+    "B2",
+    "G3",
+    "H3",
+    "G7",
+    "H5",
+    "A5"
+   ]
+  },
+  {
+   "turn": 51,
+   "of": 52,
+   "colour": "B",
+   "played": "H1",
+   "best": "H1",
+   "isBest": true,
+   "gap": 3.2,
+   "second": "J3",
+   "prior": 0.824,
+   "near": 1,
+   "lead": -7.3,
+   "pv": [
+    "H1",
+    "H7",
+    "G7",
+    "J1",
+    "J3",
+    "E1"
+   ]
+  }
+ ]
+}
