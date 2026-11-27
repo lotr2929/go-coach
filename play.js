@@ -93,6 +93,7 @@
     Play.token++;
     Play.guided = !!(opts && opts.guided); Play.seen = {};
     Play.helped = false; Play.edited = false; Play.graded = false; /* for the Go Coach grade (grade.js) */
+    Play.endMem = {}; /* endgame.js: turns in a row the computer has been clearly lost */
     Play.s = E.newState(settings.size, settings.handicap);
     Play.human = settings.colour === 'random' ? (Math.random() < .5 ? 1 : 2) : (settings.colour === 'white' ? 2 : 1);
     Play.level = settings.level;
@@ -233,8 +234,16 @@
     Play.thinking = true; renderPlay();
     const res = await E.chooseMove(s, s.turn, { level: Play.level, cancelled: () => tok !== Play.token });
     if (tok !== Play.token || !res) return;
+    /* Resign when clearly lost, or pass first when nothing is left worth playing (endgame.js). Not in the guided first game. */
+    const end = Play.guided ? null : window.GoEndgame.decide(E, s, s.turn, res.move, Play.endMem || (Play.endMem = {}));
+    if (tok !== Play.token) return;
     Play.thinking = false;
     Play.redo = [];
+    if (end === 'resign') {
+      saveGame();
+      return finish(T('computer-resigned', { winner: colourName(Play.human) }), T('computer-resigned-title'), true);
+    }
+    if (end === 'pass') res.move = -1, res.note = window.GoText.T('engine.nothing-left');
     if (res.move < 0) {
       E.pass(s);
       say(T('computer-passes', { reason: res.note }));

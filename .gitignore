@@ -4,3 +4,6 @@ node_modules
 deploy.env 
 
 tools/katago/bin/
+
+# Rebuilt in a second by tools/katago/find-atari.js; too large to keep
+tools/katago/results/atari-candidates.json

@@ -804,6 +804,8 @@
   "play.computer-passes": "Computer passes ({reason}).",
   "play.computer-passes-toast": "Computer passes",
   "play.nothing-urgent": "Nothing urgent. Passing is reasonable if you think the game is settled.",
+  "play.computer-resigned": "The computer resigns: it can no longer win this game. {winner} wins.",
+  "play.computer-resigned-title": "The computer resigned",
   "play.resign-confirm": "Resign this game?",
   "play.resigned": "You resigned. {winner} wins.",
   "play.resigned-title": "Resigned",
