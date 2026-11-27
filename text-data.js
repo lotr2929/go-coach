@@ -571,7 +571,7 @@
   "learn.files-failed": "That lesson could not be loaded. Check your connection and try again.",
   "learn.files-end": "That was the last lesson by grade for now. More are on the way.",
   "learn.who-file": "{title} ({grade})",
-  "learn.heading-puzzle": "Puzzle: {title} ({grade})",
+  "learn.heading-puzzle": "Puzzle: {title} ({grade}). You play {colour}.",
   "learn.who-puzzle": "Puzzle: {title} ({grade})",
   "learn.puzzle-ask": "Ask me for a hint if you are stuck, or say \"back to game\" to return to your game.",
   "learn.puzzle-wrong": "That is not the move. Take it back with Undo, or go back to the start with the first button under the board.",

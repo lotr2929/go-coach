@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two eyes on the side]DI[27k]PL[B]
 AB[ac][bc][bd][be][bf][ag][bg]
 AW[ab][bb][cc][cd][ce][cf][cg][ah][bh]
-C[Your group on the side of the board surrounds three empty points.
+C[Your black group on the side of the board is surrounded by White, and it surrounds three empty points. A group lives only if it has two eyes: two separate empty points inside it.
 
 Task: Make two eyes.]
 (;B[ae]C[RIGHT A5 makes two eyes, one above and one below. The group lives.])

@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Kill the T]DI[26k]PL[B]
 AB[da][db][ec][ic][fd][gd][hd]
 AW[ea][ia][eb][fb][hb][ib][fc][gc][hc]
-C[White's eye space has four points in the shape of a T.
+C[Your black stones surround White's group. Its eye space (the empty points inside it) has four points in the shape of a T. With two eyes, White would live.
 
 Task: Stop White making two eyes.]
 (;B[ga]C[RIGHT G9, the centre of the T, is the vital point. White cannot make two eyes.])

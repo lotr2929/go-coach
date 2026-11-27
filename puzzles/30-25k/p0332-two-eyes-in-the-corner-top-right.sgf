@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two eyes in the corner (top right)]DI[27k]PL[B]
 AB[fa][fb][gb][hb][ib]
 AW[ea][eb][fc][gc][hc][ic]
-C[Your group in the corner surrounds three empty points in a row.
+C[Your black group in the corner is surrounded by White, and it surrounds three empty points in a row. A group lives only if it has two eyes: two separate empty points inside it.
 
 Task: Make two eyes, so the group lives.]
 (;B[ha]C[RIGHT H9, in the middle, makes two separate eyes. The group lives.])

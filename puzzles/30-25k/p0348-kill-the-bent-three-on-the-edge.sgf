@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Kill the bent three on the edge]DI[26k]PL[B]
 AB[da][ia][db][ib][dc][hc][ed][fd][gd]
 AW[ea][ha][eb][gb][hb][ec][fc][gc]
-C[White's three empty points bend away from the edge.
+C[Your black stones surround White's group on the edge. Its three empty points bend away from the edge. With two eyes, White would live.
 
 Task: Stop White making two eyes.]
 (;B[fa]C[RIGHT F9, at the bend, takes away White's second eye.])
