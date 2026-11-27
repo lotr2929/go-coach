@@ -164,7 +164,7 @@ It is not your turn.
 Ask "why A?" or "compare A and B" for more.
 
 ## estimate
-Black {black}%, White {white}%. A rough estimate of who is ahead.
+{side} is ahead by about {points} points (komi included). A rough estimate from random games played out from this position.
 
 ## coach-mode
 Coach mode: after every turn I will suggest moves, and I will tell you how each of your moves went. Switch back to Play mode if you would rather play without help.
