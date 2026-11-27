@@ -26,7 +26,7 @@
     if (G.kifu && G.kifu.on) G.exitKifu(true);
     if (G.setupOn && G.setupOn()) G.leaveSetup();
     const L = LS.list[i];
-    Lesson.on = true; Lesson.idx = i; Lesson.s = LS.setup(L); Lesson.status = null; Lesson.answered = false; Lesson.hintPts = [];
+    Lesson.on = true; Lesson.idx = i; Lesson.s = LS.setup(L); Lesson.status = null; Lesson.answered = false; Lesson.hintPts = []; Lesson.hinted = false;
     const q = $('#quizOptions'); q.innerHTML = '';
     if (L.type === 'quiz') {
       L.options.forEach((o, k) => {
@@ -79,6 +79,8 @@
     const r = LS.handle(L, Lesson.s, i);
     if (r.ev.type === 'move') click();
     if (r.status) Lesson.status = r.status;
+    /* The first try at each exercise counts towards the Go Coach grade (grade.js), unless a hint was used. */
+    if (r.status && !Lesson.hinted && G.grade) G.grade.lesson(L.id, Lesson.idx, LS.list.length, r.status === 'win');
     if (r.status === 'win') markDone(L);
     say(r.msg);
     renderLesson();
@@ -86,6 +88,7 @@
   function answerQuiz(k, btn) {
     const L = LS.list[Lesson.idx];
     if (Lesson.status === 'win') return;
+    if (G.grade) G.grade.lesson(L.id, Lesson.idx, LS.list.length, k === L.answer); /* first answer only (grade.js) */
     if (k === L.answer) {
       Lesson.answered = true; Lesson.status = 'win'; markDone(L);
       say(T('correct', { explain: L.explain }));
@@ -97,7 +100,8 @@
   }
   function lessonHint() {
     const L = LS.list[Lesson.idx];
-    Lesson.hintPts = LS.hintPoints(L, Lesson.s);
+    Lesson.hintPts = LS.hintPoints(L, Lesson.s); Lesson.hinted = true;
+    if (G.grade) G.grade.lesson(L.id, Lesson.idx, LS.list.length, null); /* a hint first: this exercise does not count */
     renderLesson();
   }
   function lessonReset() {

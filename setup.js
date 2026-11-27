@@ -20,6 +20,7 @@
     Play.token++; Play.thinking = false; Play.pending = -1; Play.hint = []; /* stops the computer if it was thinking */
     Object.assign(S, { on: true, n: Play.s.n, board: Play.s.board.slice(), colour: 1, turn: Play.s.turn, sel: -1, phase: Play.phase });
     Play.phase = 'setup'; /* the game's own help, analysis and moves wait while you set up */
+    Play.edited = true; /* a position changed by hand does not count towards the grade */
     if (G.pageOpen && G.pageOpen()) G.closePage();
     G.say(T('started'));
     G.renderPlay();

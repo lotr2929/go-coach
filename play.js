@@ -81,7 +81,7 @@
   playView.onHover = showTip;
 
   /* The game as it is kept on this device (and, with the Save button, in the cloud: cloudsave.js). */
-  const gameRecord = () => ({ human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, both: !!Play.both, s: E.serialize(Play.s), tree: Play.tree, cloudId: Play.cloudId || null });
+  const gameRecord = () => ({ human: Play.human, level: Play.level, over: Play.over, guided: !!Play.guided, both: !!Play.both, helped: !!Play.helped, edited: !!Play.edited, graded: !!Play.graded, s: E.serialize(Play.s), tree: Play.tree, cloudId: Play.cloudId || null });
   function saveGame() {
     if (!Play.s) return;
     if (G.Tree) Play.tree = G.Tree.add(Play.tree || G.Tree.fresh(), Play.s.moves); /* the move tree (movetree.js) keeps every line tried */
@@ -92,6 +92,7 @@
     if (G.kifu && G.kifu.on) G.exitKifu(true);
     Play.token++;
     Play.guided = !!(opts && opts.guided); Play.seen = {};
+    Play.helped = false; Play.edited = false; Play.graded = false; /* for the Go Coach grade (grade.js) */
     Play.s = E.newState(settings.size, settings.handicap);
     Play.human = settings.colour === 'random' ? (Math.random() < .5 ? 1 : 2) : (settings.colour === 'white' ? 2 : 1);
     Play.level = settings.level;
@@ -115,6 +116,7 @@
     if (!g) return false;
     try {
       Play.s = E.deserialize(g.s); Play.human = g.human; Play.level = g.level; Play.over = !!g.over; Play.guided = !!g.guided; Play.both = !!g.both; Play.seen = {}; Play.cloudId = g.cloudId || null;
+      Play.helped = !!g.helped; Play.edited = !!g.edited; Play.graded = !!g.graded;
       Play.tree = g.tree && g.tree.k ? g.tree : null;
     } catch (e) { return false; }
     Play.token++; Play.redo = []; Play.lastAI = null; G.explained = null; G.lastExplain = null; /* a game opened over another one (from the saved games) drops the old game's leftovers */
@@ -267,6 +269,7 @@
     const s = Play.s;
     if (!s || Play.phase !== 'play' || !s.hist.length) return;
     Play.token++; Play.thinking = false; Play.pending = -1; Play.hint = [];
+    Play.helped = true; /* undo: the game counts half towards the grade */
     const before = s.moves.slice();
     do { E.undo(s); } while (!Play.both && s.turn !== Play.human && s.hist.length); /* in Play both sides, one move at a time */
     const gone = before.slice(s.moves.length);
@@ -314,6 +317,7 @@
     const s = Play.s;
     if (!s || !myTurn(s)) return;
     const tok = ++Play.token;
+    Play.helped = true; /* a hint: the game counts half towards the grade */
     Play.thinking = true; renderPlay();
     const res = await E.suggest(s, s.turn, { level: G.coachLevel(), cancelled: () => tok !== Play.token });
     if (tok !== Play.token || !res) return;
@@ -327,7 +331,7 @@
     if (!Play.s || Play.phase !== 'play') return;
     if (!confirm(T('resign-confirm'))) return;
     Play.token++; Play.thinking = false;
-    finish(T('resigned', { winner: colourName(3 - Play.human) }), T('resigned-title'));
+    finish(T('resigned', { winner: colourName(3 - Play.human) }), T('resigned-title'), false);
   }
 
   /* scoring */
@@ -362,8 +366,14 @@
     for (const st of gr.stones) { if (isDead) Play.dead.delete(st); else Play.dead.add(st); }
     renderScore();
   }
-  function finish(text, title) {
+  function finish(text, title, won) {
     Play.phase = 'done'; Play.over = true; Play.resultText = text;
+    /* The Go Coach grade (grade.js) counts each finished game once; it decides how much the game counts. */
+    if (!Play.graded && G.grade) {
+      Play.graded = true;
+      G.grade.game({ won, level: Play.level, size: Play.s.n, handicap: Play.s.handicap || 0, human: Play.human, moves: Play.s.moves.length,
+        helped: Play.helped || settings.mode === 'coach', guided: Play.guided, both: Play.both, edited: Play.edited });
+    }
     say(title + '. ' + text);
     renderPlay(); saveGame();
     $('#resultTitle').textContent = title;
@@ -373,7 +383,7 @@
   function confirmResult() {
     const r = scoreSummary();
     const human = r.winner === Play.human;
-    finish(`${r.text.replace('\n', '. ')}`, T(human ? 'you-win' : 'computer-wins'));
+    finish(`${r.text.replace('\n', '. ')}`, T(human ? 'you-win' : 'computer-wins'), human);
   }
   function resumePlay() {
     const s = Play.s;

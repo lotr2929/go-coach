@@ -474,6 +474,7 @@ async function t(name, fn) {
   await require('./test-text.js')(t); /* the app's wording in docs/text */
   await require('./test-lessons.js')(t); /* the lesson diagrams do what their words say */
   await require('./test-reading.js')(t); /* reading the fight */
+  await require('./test-grade.js')(t); /* the Go Coach grade */
   console.log(failed ? failed + ' FAILED, ' + passed + ' passed' : 'all ' + passed + ' tests passed');
   process.exit(failed ? 1 : 0);
 })();
