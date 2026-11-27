@@ -11,8 +11,7 @@ module.exports = async function (t) {
     assert.strictEqual(GR.opponentKyu({ size: 9, level: 'hard', handicap: 2, human: 1 }), 14); /* your two stones make it weaker */
     assert.strictEqual(GR.opponentKyu({ size: 9, level: 'hard', handicap: 2, human: 2 }), 2);  /* its two stones make it stronger */
     assert.strictEqual(GR.gameWeight({ moves: 40 }), 1);
-    assert.strictEqual(GR.gameWeight({ moves: 40, helped: true }), 0.5);
-    for (const g of [{ moves: 40, guided: true }, { moves: 40, both: true }, { moves: 40, edited: true }, { moves: 5 }]) assert.strictEqual(GR.gameWeight(g), 0);
+    for (const g of [{ moves: 40, helped: true }, { moves: 40, guided: true }, { moves: 40, both: true }, { moves: 40, edited: true }, { moves: 5 }]) assert.strictEqual(GR.gameWeight(g), 0);
   });
 
   await t('grade: wins against a stronger computer raise it, losses lower it, and the whole grade is steady', () => {

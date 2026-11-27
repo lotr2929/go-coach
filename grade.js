@@ -2,8 +2,9 @@
    and every lesson exercise, shown at the top beside the player's name, e.g. "18 kyu (17.62)".
    How it works (see docs/decisions.md, "Go Coach grade"): a rating like the European Go Federation's, 100 points a grade
    (r = 2100 − 100 × kyu, so 1 dan is 2100). Each computer level and each lesson exercise has a place on the scale; a result
-   moves the rating by K × weight × (result − expected). New players move faster. Games with Coach mode, Analyse, hints or undo
-   count half; the guided first game, playing both sides, games changed with Set up and very short games do not count. Lessons count half, first try only.
+   moves the rating by K × weight × (result − expected). New players move faster. Only games played without help count (Boon,
+   27 Nov 2026): not games with Coach mode, Analyse, hints or undo, nor the guided first game, playing both sides, games changed
+   with Set up or very short games. Lessons count in full, first try only, never after a hint (Boon: lessons are the heart of it).
    Kept on this device for now; it will follow the player once sign-in is built. Local only: no network.
    The rules below are plain functions (tested in test-grade.js); the part that touches the page runs only in the browser. */
 (function (root, factory) {
@@ -34,8 +35,7 @@
     return base + (g.human === 1 ? 1 : -1) * stones * STONE[size];
   }
   function gameWeight(g) {
-    if (g.guided || g.both || g.edited || g.moves < 10) return 0;
-    return g.helped ? 0.5 : 1;
+    return g.guided || g.both || g.edited || g.helped || g.moves < 10 ? 0 : 1;
   }
   /* A lesson exercise's difficulty: the lessons run from about 30 kyu (the first) to about 18 kyu (the last). */
   const lessonKyu = (idx, total) => 30 - 12 * (total > 1 ? idx / (total - 1) : 0);
@@ -109,18 +109,17 @@
     G.say(line + extra);
   }
   function game(g) {
-    const w = gameWeight(g);
-    if (!w) return;
-    const res = apply(read(), opponentKyu(g), g.won ? 1 : 0, w);
+    if (!gameWeight(g)) { if (g.helped && !g.guided && !g.both && shown()) G.say(T('not-counted-help')); return; }
+    const res = apply(read(), opponentKyu(g), g.won ? 1 : 0, 1);
     res.st.games++;
-    report(res, w < 1 ? 'after-game-helped' : 'after-game');
+    report(res, 'after-game');
   }
   function lesson(id, idx, total, solved) {
     const st = read();
     if (st.lessons.includes(id)) return; /* first try only */
     st.lessons.push(id);
     if (solved === null) { save(st); return; } /* a hint was used first: this exercise never counts */
-    report(apply(st, lessonKyu(idx, total), solved ? 1 : 0, 0.5), solved ? 'after-lesson' : 'after-lesson-wrong');
+    report(apply(st, lessonKyu(idx, total), solved ? 1 : 0, 1), solved ? 'after-lesson' : 'after-lesson-wrong');
   }
   paint();
   Object.assign(api, { game, lesson, read, text: () => text(read()) });

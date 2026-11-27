@@ -106,7 +106,7 @@
     const s0 = Play.s;
     if (!s0 || Play.thinking || Play.phase !== 'play' || (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on)) return;
     const s = E.clone(s0), tok = ++Play.token;
-    Play.helped = true; /* Analyse or Coach mode: the game counts half towards the grade (grade.js) */
+    Play.helped = true; /* Analyse or Coach mode: the game no longer counts towards the grade (grade.js) */
     Play.thinking = true; Play.note = { tok, text: T('analysing') }; renderPlay();
     const res = await strongAnalysis(s, E.analysisMs(coachLevel(), s.n), () => tok !== Play.token);
     if (tok !== Play.token || !res) return;

@@ -30,8 +30,8 @@ unchanged
 ## after-game
 Your Go Coach grade: {grade}, {move}.
 
-## after-game-helped
-Your Go Coach grade: {grade}, {move}. This game counted half, as you had help (Coach mode, Analyse, a hint or undo).
+## not-counted-help
+This game does not count towards your Go Coach grade, as you had help (Coach mode, Analyse, a hint or undo). Play without help to build your grade.
 
 ## after-lesson
 Right first time. Your Go Coach grade: {grade}, {move}.

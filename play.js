@@ -269,7 +269,7 @@
     const s = Play.s;
     if (!s || Play.phase !== 'play' || !s.hist.length) return;
     Play.token++; Play.thinking = false; Play.pending = -1; Play.hint = [];
-    Play.helped = true; /* undo: the game counts half towards the grade */
+    Play.helped = true; /* undo: the game no longer counts towards the grade */
     const before = s.moves.slice();
     do { E.undo(s); } while (!Play.both && s.turn !== Play.human && s.hist.length); /* in Play both sides, one move at a time */
     const gone = before.slice(s.moves.length);
@@ -317,7 +317,7 @@
     const s = Play.s;
     if (!s || !myTurn(s)) return;
     const tok = ++Play.token;
-    Play.helped = true; /* a hint: the game counts half towards the grade */
+    Play.helped = true; /* a hint: the game no longer counts towards the grade */
     Play.thinking = true; renderPlay();
     const res = await E.suggest(s, s.turn, { level: G.coachLevel(), cancelled: () => tok !== Play.token });
     if (tok !== Play.token || !res) return;
