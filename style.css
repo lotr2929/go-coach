@@ -309,6 +309,11 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .userName:empty { display: none; }
 .userGrade { color: var(--mute); font-size: .85rem; white-space: nowrap; margin-left: .5em; }
 .userGrade:empty { display: none; }
+.userStreak { font-size: .85rem; white-space: nowrap; margin-left: .5em; }
+.userStreak:empty { display: none; }
+.userStreak:not(:empty) + #btnFlag { margin-left: 0; }
+h1.gcOn { color: #b5651d; } /* Go Coach mode is on (gcmode.js) */
+h1.gcOn::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #b5651d; }
 .userName:empty + .userGrade:not(:empty) { margin-left: auto; }
 #btnFlag { margin-left: auto; width: 30px; }
 #btnFlag + #btnSettings { width: auto; padding: 0 6px 0 0; margin-left: -2px; } /* envelope and Settings sit close together */

@@ -58,6 +58,7 @@
   }
   /* "Next lesson" after a lesson file: the next one in the list (easiest first). */
   async function openNext(id) {
+    if (G.gcMode && G.gcMode.on) return G.gcMode.next(id); /* Go Coach mode: the next lesson at the player's grade */
     const idx = await loadIndex();
     const k = idx ? idx.findIndex(e => 'file:' + e.id === id) : -1;
     if (k >= 0 && k + 1 < idx.length) return openFile(idx[k + 1]);

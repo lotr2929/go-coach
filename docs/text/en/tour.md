@@ -9,7 +9,7 @@ How to edit: change the words under a "## name" heading, but leave the heading i
 Go Coach
 
 ## title.text
-The date under the title is the version you are using. If it looks old, open Settings (⚙) and tap Check for updates.
+Tap the title to play Go Coach: today's lesson, chosen for your grade, and a streak of days. Tap it again to stop. The date under the title is the version you are using. If it looks old, open Settings (⚙) and tap Check for updates.
 
 ## flag.title
 Messages

@@ -46,6 +46,7 @@
   function exitLesson() {
     if (!Lesson.on) return;
     Lesson.on = false; Lesson.hintPts = [];
+    if (G.gcMode) G.gcMode.left(); /* leaving the lessons also leaves Go Coach mode */
     G.setChips(G.PLAY_CHIPS);
     G.renderPlay();
     say(window.GoText.T('app.back-to-game'));
@@ -85,6 +86,7 @@
     if (r.status) Lesson.status = r.status;
     if (r.status === 'win') markDone(L);
     say(r.msg);
+    if (r.status === 'win' && G.gcMode) G.gcMode.solved(L); /* Go Coach mode: today's lesson and the streak (gcmode.js) */
     /* The first try at each exercise counts towards the Go Coach grade (grade.js), unless a hint was used; said after the lesson's own words. */
     if (r.status && !Lesson.hinted && G.grade) G.grade.lesson(L.id, kyuOf(L), r.status === 'win');
     renderLesson();
@@ -100,6 +102,7 @@
       say(L.wrong || T('not-quite'));
     }
     if (G.grade) G.grade.lesson(L.id, kyuOf(L), k === L.answer); /* first answer only (grade.js) */
+    if (k === L.answer && G.gcMode) G.gcMode.solved(L);
     renderLesson();
   }
   function lessonHint() {
