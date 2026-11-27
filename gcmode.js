@@ -7,7 +7,8 @@
   'use strict';
   const G = window.GC;
   const T = (k, v) => window.GoText.T('gcmode.' + k, v); /* wording: docs/text/en/gcmode.md */
-  const KEY = { today: 'gocoach.today', streak: 'gocoach.streak' };
+  const KEY = { today: 'gocoach.today', streak: 'gocoach.streak', level: 'gocoach.gclevel', plays: 'gocoach.gcplays' };
+  const FREE = 3; /* free games a day; subscribers have no limit (Boon, 27 Nov 2026). Subscriptions are not built yet: G.subscriber will say. */
   const read = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch (e) { return d; } };
   const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } };
   const dayOf = d => d.toLocaleDateString('en-CA'); /* YYYY-MM-DD in the player's own time zone */
@@ -32,6 +33,17 @@
   const after = document.querySelector('header .userGrade') || document.querySelector('header .userName');
   if (after) after.after(tag);
 
+  /* The level the player asked for in Settings: kyu steps from their own grade (easier is a positive number), kept on this device. */
+  const level = () => { const v = +read(KEY.level, 0); return Number.isFinite(v) ? v : 0; };
+  /* Games opened today (a game opened twice counts once). Free players have FREE a day. */
+  const plays = () => { const p = read(KEY.plays, null); return p && p.date === today() ? p : { date: today(), ids: [] }; };
+  const canPlay = id => !!G.subscriber || plays().ids.includes(id) || plays().ids.length < FREE;
+  function open(e) {
+    if (!canPlay(e.id)) { G.say(T('limit', { n: FREE })); return null; }
+    const p = plays(); if (!p.ids.includes(e.id)) { p.ids.push(e.id); write(KEY.plays, p); }
+    return G.lessonFiles.openFile(e);
+  }
+
   /* The player's estimate in kyu (25 for a new player, as in grade.js). */
   function myKyu() {
     const GR = window.GoGrade, st = G.grade ? G.grade.read() : null;
@@ -39,7 +51,7 @@
   }
   /* The best lesson at the player's grade that is not solved yet: the nearest in difficulty, the harder one first on a tie. */
   function pick(index, skip) {
-    const k = myKyu(), done = G.Lesson.done;
+    const k = myKyu() + level(), done = G.Lesson.done;
     const open = index.filter(e => !done.has('file:' + e.id) && e.id !== skip);
     open.sort((a, b) => Math.abs(a.kyu - k) - Math.abs(b.kyu - k) || a.kyu - b.kyu);
     return open[0] || null;
@@ -58,7 +70,7 @@
     const n = streak(), days = T(n === 1 ? 'day' : 'days', { n });
     if (t && !t.solved) {
       G.say(T(n ? 'welcome-streak' : 'welcome', { days }));
-      return G.lessonFiles.openFile(index.find(e => e.id === t.id));
+      return open(index.find(e => e.id === t.id));
     }
     G.say(T('done-today', { days }));
     return next();
@@ -72,7 +84,7 @@
     const index = await G.lessonFiles.loadIndex();
     const e = index && pick(index, currentId && currentId.replace(/^file:/, ''));
     if (!e) { G.say(T('all-done')); return; }
-    return G.lessonFiles.openFile(e);
+    return open(e);
   }
   /* A lesson solved in Go Coach mode (learn.js): today's lesson is ticked and the streak moves on, once a day. */
   function solved(L) {
@@ -97,6 +109,9 @@
     h1.addEventListener('click', toggle);
     h1.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
   }
+  /* Settings: the level of the games (a drop-down in index.html). */
+  const sel = document.getElementById('setGcLevel');
+  if (sel) { sel.value = String(level()); sel.addEventListener('change', () => write(KEY.level, +sel.value)); }
   paint();
   Object.assign(M, { start, stop, next, solved, left, streak });
   G.gcMode = M;

@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Go Seigen on 9×9: move 35]DI[25k]PL[B]PB[Go Seigen]PW[Miyamoto Naoki]DT[1968]
+AB[gb][dc][gc][ad][cd][dd][fd][be][ee][hf][bg][cg][gg][hg][bh][hh]
+AW[bb][db][fb][bc][cc][fc][bd][ge][gf][dg][eg][fg][ch][eh][gh][di][hi]
+C[In the middle of the game: Go Seigen (Black, 9d) against Miyamoto Naoki (White, 8d), 9x9 game, 1968. Move 35 of 53. Black to play.
+
+Task: Find Black's move.]
+(;B[he]C[RIGHT H5 is the move, and KataGo's first choice. The next best try, B9, is about 10.9 points worse for Black. Black went on to win the game by 4 points.])
+(;B[ba]C[B9 is the second best try, but KataGo reads it as about 10.9 points worse than H5. Look again.])
+)

@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[The 25-move game: move 25]DI[25k]PL[B]PB[Sakakibara Fumiko]PW[Mizuno Hiromi]
+AB[fc][fd][be][de][ee][ge][he][cf][ef][eg][fh][gh]
+AW[fb][dc][gc][cd][gd][ce][df][ff][dg][fg][dh][eh]
+C[Near the end of the game: Sakakibara Fumiko (Black, 2p) against Mizuno Hiromi (White, 2p), NHK New Year 1990. Move 25 of 25. Black to play.
+
+Task: Find Black's move.]
+(;B[cg]C[RIGHT C3 is the move, and KataGo's first choice. The next best try, E8, is about 8.4 points worse for Black. Black went on to win the game by resignation.])
+(;B[eb]C[E8 is the second best try, but KataGo reads it as about 8.4 points worse than C3. Look again.])
+)

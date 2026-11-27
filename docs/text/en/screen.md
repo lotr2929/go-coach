@@ -223,3 +223,21 @@ Every move of this game. Tap one to go back to it; moves you tried before stay a
 
 ## prisoners.tip
 Prisoners: stones each colour has lost
+
+## game-level
+Level of the games (Go Coach mode)
+
+## level-much-easier
+Much easier
+
+## level-easier
+Easier
+
+## level-grade
+At my grade
+
+## level-harder
+Harder
+
+## level-much-harder
+Much harder

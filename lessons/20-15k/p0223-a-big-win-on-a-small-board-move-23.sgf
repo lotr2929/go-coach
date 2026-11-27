@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[A big win on a small board: move 23]DI[15k]PL[B]PB[Inori Yoko]PW[Aoba Kaori]DT[2002-01-02]
+AB[cb][bc][dc][gc][cd][ed][gd][ee][df][ef][cg]
+AW[dd][hd][ce][de][ge][bf][cf][dg][gg][ch]
+C[In the middle of the game: Inori Yoko (Black, 1p) against Aoba Kaori (White, 3p), NHK New Year 2002, 2002-01-02. Move 23 of 54. Black to play.
+
+Task: Find Black's move.]
+(;B[dh]C[RIGHT D2 is the move, and KataGo's first choice. The next best try, E3, is about 8 points worse for Black. Black went on to lose the game by 7.5 points.])
+(;B[eg]C[E3 is the second best try, but KataGo reads it as about 8 points worse than D2. Look again.])
+)

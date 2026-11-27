@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Iyama beats Murakawa Daisuke: move 29]DI[25k]PL[B]PB[Murakawa Daisuke]PW[Iyama Yuta]DT[2009-01-04]
+AB[cb][cc][dc][bd][cd][gd][df][ff][gf][bg][dg][eg][ch][dh]
+AW[db][eb][ec][fc][dd][ce][de][ee][bf][cf][ef][cg][fg][eh]
+C[In the middle of the game: Murakawa Daisuke (Black, 5p) against Iyama Yuta (White, 8p), New Year 2009, 2009-01-04. Move 29 of 52. Black to play.
+
+Task: Find Black's move.]
+(;B[bh]C[RIGHT B2 is the move, and KataGo's first choice. The next best try, F2, is about 3.2 points worse for Black. Black went on to lose the game by resignation.])
+(;B[fh]C[F2 is the second best try, but KataGo reads it as about 3.2 points worse than B2. Look again.])
+)
