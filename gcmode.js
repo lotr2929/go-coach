@@ -67,10 +67,13 @@
     const GR = window.GoGrade, st = keep() && G.grade ? G.grade.read() : null;
     return st && st.whole !== null ? GR.toKyu(st.r) : Math.max(...index.map(e => e.kyu));
   }
-  /* The best puzzle at the chosen level that is not solved yet: the nearest in difficulty, the harder one first on a tie. */
+  /* The next puzzle: the puzzles go in order, easiest first, skipping those already solved (Boon, 27 Nov 2026: the 50 easy
+     ones come first for everyone). With a level chosen in Settings (easier or harder), the nearest puzzle to the player's
+     grade moved by that level instead, the harder one first on a tie. */
   function pick(index, skip) {
-    const k = myKyu(index) + level();
     const open = index.filter(e => !solvedId(e) && e.id !== skip && !trail.includes(e.id));
+    if (!level()) return open[0] || null; /* index.json lists the puzzles easiest first */
+    const k = myKyu(index) + level();
     open.sort((a, b) => Math.abs(a.kyu - k) - Math.abs(b.kyu - k) || a.kyu - b.kyu);
     return open[0] || null;
   }
