@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Bent three on the edge]DI[26k]PL[B]
 AB[cg][dg][eg][bh][ch][eh][bi][ei]
 AW[cf][df][ef][bg][fg][ah][fh][ai][fi]
-C[Your three empty points bend away from the edge.
+C[Your black group on the edge is surrounded by White. Its three empty points bend away from the edge.
 
 Task: Make two eyes.]
 (;B[di]C[RIGHT D1, at the bend, makes two eyes.])

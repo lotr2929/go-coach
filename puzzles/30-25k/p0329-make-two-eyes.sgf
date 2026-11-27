@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Make two eyes]DI[27k]PL[B]
 AB[ah][bh][ch][dh][eh][ai][ei]
 AW[ag][bg][cg][dg][eg][fh][fi]
-C[Your group is surrounded. Inside it are three empty points in a row. A group lives only if it has two eyes: two separate empty points that the opponent can never fill.
+C[Your black group is surrounded by White. Inside it are three empty points in a row. A group lives only if it has two eyes: two separate empty points that the opponent can never fill.
 
 Task: Make two eyes.]
 (;B[ci]C[RIGHT C1 splits the space into two eyes. White can never play in either of them, so your group lives.])

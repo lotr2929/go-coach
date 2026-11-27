@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: Iyama beats Murakawa Daisuke, move 41]DI[23k]PL[B]PB[Murakawa Daisuke]PW[Iyama Yuta]
+AB[cb][cc][dc][bd][cd][gd][af][df][ff][gf][hf][bg][dg][eg][hg][bh][ch][dh][ih]
+AW[db][eb][ec][fc][dd][ae][ce][de][ee][bf][cf][ef][cg][fg][gg][eh][fh][hh][fi][gi]
+C[Near the end of the game: Murakawa Daisuke (Black) against Iyama Yuta (White), New Year 2009, 2009-01-04. Black to play.
+
+Task: One of Black's groups is in atari. Find it and save it.]
+(;B[ag]C[RIGHT A3 gives your group 4 liberties, and it can no longer be caught.])
+)

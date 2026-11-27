@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: A young Iyama Yuta plays Black, move 38]DI[24k]PL[W]PB[Iyama Yuta]PW[Mochizuki Kenichi]
+AB[gb][bc][fc][gc][hc][cd][gd][ce][de][he][cf][ff][gf][dg][gg][dh]
+AW[ca][bb][db][fb][cc][ec][dd][fd][fe][ge][df][eg][fg][eh][gh]
+C[In the middle of the game: Iyama Yuta (Black) against Mochizuki Kenichi (White), 10th 9x9 tournament, 2003-01-02. White to play.
+
+Task: One of White's groups is in atari. Find it and save it.]
+(;W[ef]C[RIGHT E4 gives your group 3 liberties, and it can no longer be caught.])
+)

@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Kill in the corner (bottom left)]DI[26k]PL[B]
 AB[ag][bg][cg][dg][eh][ei]
 AW[ah][bh][ch][dh][di]
-C[White's group in the corner has three empty points in a row.
+C[Your black stones surround White's group in the corner. Inside it are three empty points in a row. With two eyes, White would live.
 
 Task: Stop White making two eyes.]
 (;B[bi]C[RIGHT B1 takes the middle point. White has only one eye, so the group is dead.])

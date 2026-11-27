@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Count the liberties]DI[29k]PL[B]
 AB[gd][fe][ah][ch][bi]
 AW[fd][bh]
-C[Two white stones again. Before you play, count the empty points next to each one.
+C[There are two white stones. Before you play, count the empty points next to each one: one has a single liberty left.
 
 Task: Capture the white stone that is in atari.]
 (;B[bg]C[RIGHT B3 was the only liberty left. Counting liberties tells you which stone you can capture.])

@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Connect along the edge (top right)]DI[28k]PL[B]
 AB[ea][ga][eb]
 AW[ha][gb]
-C[Your stone at G9 is in atari, and two of your stones are close by.
+C[Your black stone at G9 is in atari: White could capture it next move. Two of your black stones are close by.
 
 Task: Save the stone at G9.]
 (;B[fa]C[RIGHT F9 joins your two stones. Together they have 4 liberties and are safe for now.])

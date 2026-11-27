@@ -1,7 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]SZ[9]GN[The bent three (top right)]DI[27k]PL[B]
 AB[ga][gb][hb][hc][ic]
 AW[fa][fb][gc][hd][id]
-C[Here the three empty points make a bend in the corner.
+C[Your black group is surrounded by White. Inside it, three empty points make a bend in the corner. A group lives only if it has two eyes: two separate empty points inside it.
 
 Task: Make two eyes.]
 (;B[ia]C[RIGHT J9, at the bend, leaves two separate eyes. The group lives.])

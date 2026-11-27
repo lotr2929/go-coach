@@ -87,7 +87,7 @@ That was the last lesson by grade for now. More are on the way.
 {title} ({grade})
 
 ## heading-puzzle
-Puzzle: {title} ({grade})
+Puzzle: {title} ({grade}). You play {colour}.
 
 ## who-puzzle
 Puzzle: {title} ({grade})

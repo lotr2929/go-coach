@@ -20,7 +20,9 @@ const gtp = (n, i) => COLS[i % n] + (n - ((i / n) | 0));
 const p = spawn(path.join(KG, 'katago'), ['analysis', '-config', 'analysis_example.cfg', '-model', 'human.bin.gz', '-human-model', 'human.bin.gz',
   '-override-config', 'logDir=/tmp/katago-logs,numAnalysisThreads=2,numSearchThreadsPerAnalysisThread=2'],
   { cwd: KG, env: Object.assign({}, process.env, { LD_LIBRARY_PATH: KG + '/lib' }) });
-p.stderr.on('data', () => {});
+let err = '';
+p.stderr.on('data', d => { err = (err + d).slice(-2000); });
+p.on('exit', code => { if (pending.size) { console.error('\nKataGo stopped (code ' + code + '):\n' + err); process.exit(1); } });
 const pending = new Map();
 let buf = '';
 p.stdout.on('data', d => {
@@ -45,7 +47,7 @@ const ask = (c, extra) => new Promise(res => {
   const out = [];
   for (const [i, c] of cands.entries()) {
     const names = c.answer.map(a => gtp(c.n, a));
-    const s = await ask(c, { maxVisits: +visits });
+    const s = await ask(c, { maxVisits: +visits, overrideSettings: { humanSLProfile: 'rank_9d' } }); /* the human model needs a level even for its own search: the strongest */
     const infos = s.moveInfos || [], best = infos[0];
     const good = names.filter(nm => { const m = infos.find(x => x.move === nm); return m && best && best.scoreLead - m.scoreLead <= +maxLoss; });
     const rec = { id: `${c.game}-${c.turn}`, game: c.game, turn: c.turn, n: c.n, kind: c.kind, size: c.size, stones: c.stones, answer: names, good, best: best && best.move };

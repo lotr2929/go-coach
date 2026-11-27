@@ -77,7 +77,7 @@
     }
     G.setChips(L.puzzle ? puzzleChips() : CHIPS);
     const ch = LS.chapterOf(L.id);
-    if (L.puzzle) say(T('heading-puzzle', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) + '\n\n' + L.text.join('\n\n'));
+    if (L.puzzle) say(T('heading-puzzle', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu), colour: G.colourName(L.turn) }) + '\n\n' + L.text.join('\n\n'));
     else if (L.file) say(T('heading-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) + '\n\n' + L.text.join('\n\n'));
     else say(T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.CORE, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'));
     say((L.task ? T('task', { task: L.task }) + '\n' : '') + T(L.puzzle ? 'puzzle-ask' : 'ask-me'));

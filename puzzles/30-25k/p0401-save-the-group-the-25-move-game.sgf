@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: The 25-move game, move 24]DI[26k]PL[W]PB[Sakakibara Fumiko]PW[Mizuno Hiromi]
+AB[fc][fd][be][de][ee][ge][he][cf][ef][eg][fh][gh]
+AW[fb][dc][gc][gd][ce][df][ff][dg][fg][dh][eh]
+C[Near the end of the game: Sakakibara Fumiko (Black) against Mizuno Hiromi (White), NHK New Year 1990. White to play.
+
+Task: One of White's groups is in atari. Find it and save it.]
+(;W[cd]C[RIGHT C6 gives your group 3 liberties, and it can no longer be caught.])
+)

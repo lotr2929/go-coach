@@ -253,6 +253,27 @@
    "band": "30-25k"
   },
   {
+   "id": "p0410-save-the-group-a-close-game-for-a-six-title-celebratio",
+   "file": "puzzles/30-25k/p0410-save-the-group-a-close-game-for-a-six-title-celebratio.sgf",
+   "title": "Save the group: A close game for a six-title celebration, move 30",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0415-save-the-group-a-41-move-win",
+   "file": "puzzles/30-25k/p0415-save-the-group-a-41-move-win.sgf",
+   "title": "Save the group: A 41-move win, move 24",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0420-save-the-group-a-one-and-a-half-point-game",
+   "file": "puzzles/30-25k/p0420-save-the-group-a-one-and-a-half-point-game.sgf",
+   "title": "Save the group: A one-and-a-half point game, move 55",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
    "id": "p0337-take-away-an-eye",
    "file": "puzzles/30-25k/p0337-take-away-an-eye.sgf",
    "title": "Take away an eye",
@@ -351,6 +372,55 @@
    "band": "30-25k"
   },
   {
+   "id": "p0401-save-the-group-the-25-move-game",
+   "file": "puzzles/30-25k/p0401-save-the-group-the-25-move-game.sgf",
+   "title": "Save the group: The 25-move game, move 24",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0402-save-the-group-the-30-move-game",
+   "file": "puzzles/30-25k/p0402-save-the-group-the-30-move-game.sgf",
+   "title": "Save the group: The 30-move game, move 28",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0408-save-the-group-iyama-beats-murakawa-daisuke",
+   "file": "puzzles/30-25k/p0408-save-the-group-iyama-beats-murakawa-daisuke.sgf",
+   "title": "Save the group: Iyama beats Murakawa Daisuke, move 36",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0412-save-the-group-a-half-point-game",
+   "file": "puzzles/30-25k/p0412-save-the-group-a-half-point-game.sgf",
+   "title": "Save the group: A half-point game, move 38",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0413-save-the-group-a-half-point-game",
+   "file": "puzzles/30-25k/p0413-save-the-group-a-half-point-game.sgf",
+   "title": "Save the group: A half-point game, move 43",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0423-save-the-group-miyamoto-beats-go-seigen",
+   "file": "puzzles/30-25k/p0423-save-the-group-miyamoto-beats-go-seigen.sgf",
+   "title": "Save the group: Miyamoto beats Go Seigen, move 52",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0425-save-the-group-a-professional-13-13-game-2014",
+   "file": "puzzles/30-25k/p0425-save-the-group-a-professional-13-13-game-2014.sgf",
+   "title": "Save the group: A professional 13×13 game (2014), move 56",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
    "id": "p0210-the-25-move-game-move-25",
    "file": "puzzles/30-25k/p0210-the-25-move-game-move-25.sgf",
    "title": "The 25-move game: move 25",
@@ -412,6 +482,118 @@
    "title": "Miyamoto beats Go Seigen: move 57",
    "kyu": 25,
    "band": "30-25k"
+  },
+  {
+   "id": "p0403-save-the-group-a-young-iyama-yuta-plays-black",
+   "file": "puzzles/25-20k/p0403-save-the-group-a-young-iyama-yuta-plays-black.sgf",
+   "title": "Save the group: A young Iyama Yuta plays Black, move 38",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0407-save-the-group-a-young-iyama-yuta-plays-black",
+   "file": "puzzles/25-20k/p0407-save-the-group-a-young-iyama-yuta-plays-black.sgf",
+   "title": "Save the group: A young Iyama Yuta plays Black, move 52",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0411-save-the-group-a-close-game-for-a-six-title-celebratio",
+   "file": "puzzles/25-20k/p0411-save-the-group-a-close-game-for-a-six-title-celebratio.sgf",
+   "title": "Save the group: A close game for a six-title celebration, move 43",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0414-save-the-group-a-half-point-game",
+   "file": "puzzles/25-20k/p0414-save-the-group-a-half-point-game.sgf",
+   "title": "Save the group: A half-point game, move 49",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0416-save-the-group-a-41-move-win",
+   "file": "puzzles/25-20k/p0416-save-the-group-a-41-move-win.sgf",
+   "title": "Save the group: A 41-move win, move 38",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0419-save-the-group-a-one-and-a-half-point-game",
+   "file": "puzzles/25-20k/p0419-save-the-group-a-one-and-a-half-point-game.sgf",
+   "title": "Save the group: A one-and-a-half point game, move 49",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0422-save-the-group-go-seigen-on-9-9",
+   "file": "puzzles/25-20k/p0422-save-the-group-go-seigen-on-9-9.sgf",
+   "title": "Save the group: Go Seigen on 9×9, move 51",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0424-save-the-group-a-professional-13-13-game-2014",
+   "file": "puzzles/25-20k/p0424-save-the-group-a-professional-13-13-game-2014.sgf",
+   "title": "Save the group: A professional 13×13 game (2014), move 40",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0404-save-the-group-a-young-iyama-yuta-plays-black",
+   "file": "puzzles/25-20k/p0404-save-the-group-a-young-iyama-yuta-plays-black.sgf",
+   "title": "Save the group: A young Iyama Yuta plays Black, move 42",
+   "kyu": 23,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0406-save-the-group-a-young-iyama-yuta-plays-black",
+   "file": "puzzles/25-20k/p0406-save-the-group-a-young-iyama-yuta-plays-black.sgf",
+   "title": "Save the group: A young Iyama Yuta plays Black, move 50",
+   "kyu": 23,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0409-save-the-group-iyama-beats-murakawa-daisuke",
+   "file": "puzzles/25-20k/p0409-save-the-group-iyama-beats-murakawa-daisuke.sgf",
+   "title": "Save the group: Iyama beats Murakawa Daisuke, move 41",
+   "kyu": 23,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0417-find-the-atari-a-41-move-win",
+   "file": "puzzles/25-20k/p0417-find-the-atari-a-41-move-win.sgf",
+   "title": "Find the atari: A 41-move win, move 41",
+   "kyu": 23,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0426-save-the-group-a-one-and-a-half-point-finish-on-13-13",
+   "file": "puzzles/25-20k/p0426-save-the-group-a-one-and-a-half-point-finish-on-13-13.sgf",
+   "title": "Save the group: A one-and-a-half point finish on 13×13 (2014), move 25",
+   "kyu": 23,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0405-save-the-group-a-young-iyama-yuta-plays-black",
+   "file": "puzzles/25-20k/p0405-save-the-group-a-young-iyama-yuta-plays-black.sgf",
+   "title": "Save the group: A young Iyama Yuta plays Black, move 48",
+   "kyu": 22,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0418-save-the-group-a-one-and-a-half-point-game",
+   "file": "puzzles/25-20k/p0418-save-the-group-a-one-and-a-half-point-game.sgf",
+   "title": "Save the group: A one-and-a-half point game, move 32",
+   "kyu": 22,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0421-save-the-group-eight-players-against-cho-chikun",
+   "file": "puzzles/25-20k/p0421-save-the-group-eight-players-against-cho-chikun.sgf",
+   "title": "Save the group: Eight players against Cho Chikun, move 35",
+   "kyu": 22,
+   "band": "25-20k"
   },
   {
    "id": "p0213-a-young-iyama-yuta-plays-black-move-41",

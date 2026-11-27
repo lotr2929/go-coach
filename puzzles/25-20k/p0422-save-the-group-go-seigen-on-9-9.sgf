@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Save the group: Go Seigen on 9×9, move 51]DI[24k]PL[B]PB[Go Seigen]PW[Miyamoto Naoki]
+AB[ba][da][ga][gb][ac][dc][gc][ad][cd][dd][fd][hd][be][ee][he][cf][hf][bg][cg][gg][hg][bh][hh][bi]
+AW[fa][ab][bb][cb][db][eb][fb][bc][cc][fc][bd][gd][ge][df][ff][gf][dg][eg][fg][ch][eh][gh][ci][di][hi]
+C[Near the end of the game: Go Seigen (Black) against Miyamoto Naoki (White), 9x9 game, 1968. Black to play.
+
+Task: One of Black's groups is in atari. Find it and save it.]
+(;B[ae]C[RIGHT A5 gives your group 3 liberties, and it can no longer be caught.])
+)
