@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Capture in the corner]DI[30k]PL[B]
+AB[bi]
+AW[ai]
+C[A stone in the corner has only two liberties. The white stone at A1 has already lost one of them.
+
+Task: Capture it.]
+(;B[ah]C[RIGHT In the corner a stone runs out of liberties quickly. One more move and it is yours.])
+)

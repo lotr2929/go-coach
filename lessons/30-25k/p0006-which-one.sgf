@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Which one can you capture?]DI[27k]PL[B]
+AB[bc][cb][dc][fg][gh]
+AW[cc][gg]
+C[There are two white stones. Count their liberties: one has only a single liberty left, the other has two.
+
+Task: Capture a white stone now.]
+(;B[cd]C[RIGHT C7 had only one liberty, at C6. G3 still has two, so it could have run away.])
+)
