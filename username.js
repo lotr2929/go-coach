@@ -22,12 +22,17 @@
   edit.type = 'text'; edit.className = 'nameInput nameEdit'; edit.maxLength = 30; edit.autocomplete = 'nickname'; edit.hidden = true;
   const chip = document.createElement('button');
   chip.type = 'button'; chip.className = 'acctName';
-  if (acct) acct.append(document.createTextNode(' ('), chip, edit, document.createTextNode(')'));
+  /* Sign out, in Settings straight after the name (Boon, 27 Nov 2026). */
+  const outBtn = document.createElement('button');
+  outBtn.type = 'button'; outBtn.className = 'acctOut';
+  outBtn.addEventListener('click', () => A.signOut());
+  if (acct) acct.append(document.createTextNode(' ('), chip, edit, document.createTextNode(')'), outBtn);
 
   const show = () => {
     tag.textContent = signed ? name() : T('sign-in');
     tag.classList.toggle('out', !signed);
     chip.textContent = name() || T('sign-in');
+    outBtn.textContent = T('sign-out'); outBtn.hidden = !signed;
     document.documentElement.classList.toggle('signedOut', !signed);
   };
   const rename = () => { /* the same account under a new name */

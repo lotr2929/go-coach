@@ -85,7 +85,8 @@
   tag.className = 'userGrade'; tag.title = T('about');
   const name = document.querySelector('header .userName');
   if (name) name.after(tag); else { const h = document.querySelector('header'); if (h) h.append(tag); }
-  const paint = () => { tag.textContent = shown() ? text(read()) : ''; };
+  /* Signed in, the grade always shows: before the first result that counts, the starting grade (Boon, 27 Nov 2026). */
+  const paint = () => { const st = read(); tag.textContent = shown() ? text(st.whole === null ? Object.assign({}, st, { whole: START }) : st) : ''; };
 
   /* The switch in Settings, under the name box. */
   const nameBox = document.getElementById('setName');

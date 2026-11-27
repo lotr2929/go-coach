@@ -1,0 +1,11 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Four in a T]DI[26k]PL[B]
+AB[bg][cg][dg][ah][bh][dh][eh][ai][ei]
+AW[bf][cf][df][ag][eg][fh][fi]
+C[Your eye space has four points in the shape of a T.
+
+Task: Make two eyes. Find the one point that does it.]
+(;B[ci]C[RIGHT C1, in the centre of the T, leaves three separate eyes. The group lives.])
+(;B[bi];W[ci]C[White plays C1, the centre of the T, and you cannot make two eyes any more.])
+(;B[di];W[ci]C[White plays C1, the centre of the T, and you cannot make two eyes any more.])
+(;B[ch];W[ci]C[White plays C1, the centre of the T, and you cannot make two eyes any more.])
+)

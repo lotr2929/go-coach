@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Take the last liberty]DI[30k]PL[B]
+AB[ed][de][fe]
+AW[ee]
+C[The white stone at E5 has only one liberty left: one empty point next to it. A stone with one liberty left is in atari.
+
+Task: Capture it.]
+(;B[ef]C[RIGHT E4 was its last liberty, so the white stone is captured and taken off the board.])
+)

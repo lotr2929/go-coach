@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two at once]DI[29k]PL[B]
+AB[dd][fd][ce][ge][df][ff]
+AW[de][fe]
+C[Two separate white stones are both in atari, and they share the same last liberty.
+
+Task: Capture both with one move.]
+(;B[ee]C[RIGHT E5 was the last liberty of both stones, so one move captures two.])
+)

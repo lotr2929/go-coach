@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Take the last liberty again]DI[30k]PL[B]
+AB[de][cf][ef]
+AW[df]
+C[The white stone at D4 is in atari: Black stones block three of its four liberties.
+
+Task: Find the last liberty and capture the stone.]
+(;B[dg]C[RIGHT D3 fills the last liberty. A stone in the middle has four liberties; take all four and it is captured.])
+)

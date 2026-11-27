@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Connect along the edge]DI[28k]PL[B]
+AB[eh][ci][ei]
+AW[ch][bi]
+C[Your stone at C1 is in atari, and two of your stones are close by.
+
+Task: Save the stone at C1.]
+(;B[di]C[RIGHT D1 joins your two stones. Together they have 4 liberties and are safe for now.])
+)

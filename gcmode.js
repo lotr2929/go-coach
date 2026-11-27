@@ -62,13 +62,14 @@
   }
 
   /* The player's estimate in kyu (25 for a new player, as in grade.js). */
-  function myKyu() {
-    const GR = window.GoGrade, st = G.grade ? G.grade.read() : null;
-    return st && st.whole !== null ? GR.toKyu(st.r) : GR.START;
+  /* A player without a grade yet (everyone not signed in, and a new account) starts at the easiest puzzle, puzzle 1 (Boon, 27 Nov 2026). */
+  function myKyu(index) {
+    const GR = window.GoGrade, st = keep() && G.grade ? G.grade.read() : null;
+    return st && st.whole !== null ? GR.toKyu(st.r) : Math.max(...index.map(e => e.kyu));
   }
   /* The best puzzle at the chosen level that is not solved yet: the nearest in difficulty, the harder one first on a tie. */
   function pick(index, skip) {
-    const k = myKyu() + level();
+    const k = myKyu(index) + level();
     const open = index.filter(e => !solvedId(e) && e.id !== skip && !trail.includes(e.id));
     open.sort((a, b) => Math.abs(a.kyu - k) - Math.abs(b.kyu - k) || a.kyu - b.kyu);
     return open[0] || null;

@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two eyes in the corner]DI[27k]PL[B]
+AB[ah][bh][ch][dh][di]
+AW[ag][bg][cg][dg][eh][ei]
+C[Your group in the corner surrounds three empty points in a row.
+
+Task: Make two eyes, so the group lives.]
+(;B[bi]C[RIGHT B1, in the middle, makes two separate eyes. The group lives.])
+(;B[ai];W[bi]C[White plays B1, the middle point, and you have only one eye. The middle point was the key.])
+(;B[ci];W[ai]C[White plays A1, the middle point, and you have only one eye. The middle point was the key.])
+)

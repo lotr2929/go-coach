@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Three in a row]DI[29k]PL[B]
+AB[dd][fd][ce][ge][df][ef][ff]
+AW[de][ee][fe]
+C[Three white stones in a row share their liberties. Black has taken all but one.
+
+Task: Capture all three.]
+(;B[ed]C[RIGHT E6 closes the last gap: all three stones are captured.])
+)

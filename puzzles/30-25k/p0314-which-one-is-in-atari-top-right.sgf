@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Which one is in atari? (top right)]DI[29k]PL[B]
+AB[dc][fg][hg][gh]
+AW[cc][gg]
+C[There are two white stones. Count their liberties: one has a single liberty left, the other has three.
+
+Task: Capture a white stone now.]
+(;B[gf]C[RIGHT G4 captures the stone that was in atari. The other one still has three liberties and could simply run away.])
+)

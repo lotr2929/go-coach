@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two stones in the corner]DI[30k]PL[B]
+AB[bh][bi]
+AW[ah][ai]
+C[Two white stones sit in the corner. Count the empty points next to them: there is only one.
+
+Task: Capture both stones.]
+(;B[ag]C[RIGHT A3 takes the last liberty: two stones captured with one move.])
+)

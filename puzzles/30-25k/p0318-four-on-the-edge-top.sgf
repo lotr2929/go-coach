@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Four on the edge (top)]DI[29k]PL[B]
+AB[ba][ga][cb][db][eb]
+AW[ca][da][ea][fa]
+C[Four white stones lie along the edge. A long group can still have only one liberty.
+
+Task: Capture the four stones.]
+(;B[fb]C[RIGHT F8 takes the last liberty and all four stones are captured.])
+)

@@ -54,4 +54,11 @@ target stone and the words, run it (`node tools/lessons/build-2026-11-27.js`), t
 whose claimed answer does not work, or whose "tempting wrong move" actually works. It reads only captures and escapes, so keep
 those positions small and clear; other ideas (shape, territory, life and death) are written by hand.
 
+## Simple puzzles, and eyes
+
+`tools/lessons/build-puzzles-2026-11-27.js` made the 50 simplest puzzles (puzzles/30-25k, p0301 to p0350, 30 to 26 kyu): last
+liberty, counting liberties, escaping from atari, making two eyes and taking an eye away. Captures are read by tactics.js;
+escapes by a check that reads six White moves ahead; eyes by `tools/lessons/eyes.js`, which reads every reply inside a small
+eye space (up to 5 points). Each position is written once for the bottom left and can be flipped to another corner or side.
+
 Later, lessons will also be checked with KataGo (that the right answer is really the best move, and how hard it is).

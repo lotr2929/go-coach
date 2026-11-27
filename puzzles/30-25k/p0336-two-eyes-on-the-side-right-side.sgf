@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two eyes on the side (right side)]DI[27k]PL[B]
+AB[hc][ic][hd][he][hf][hg][ig]
+AW[hb][ib][gc][gd][ge][gf][gg][hh][ih]
+C[Your group on the side of the board surrounds three empty points.
+
+Task: Make two eyes.]
+(;B[ie]C[RIGHT J5 makes two eyes, one above and one below. The group lives.])
+(;B[if];W[ie]C[White takes J5, the middle point, and you are left with one eye. Your group dies.])
+(;B[id];W[if]C[White takes J4, the middle point, and you are left with one eye. Your group dies.])
+)
