@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Miyamoto beats Go Seigen: move 50]DI[18k]PL[W]PB[Miyamoto Naoki]PW[Go Seigen]DT[1968]
+AB[ea][fa][eb][gb][bc][fc][gc][hc][bd][cd][ed][de][ee][cf][ef][ff][eg][ch][dh][eh]
+AW[ca][bb][db][cc][dc][ec][fd][gd][hd][be][fe][ie][bf][gf][hf][cg][dg][fg][ig][bh][fh][gh][hh]
+C[In the middle of the game: Miyamoto Naoki (Black, 8d) against Go Seigen (White, 9d), 9x9 game, 1968. Move 50 of 80. White to play.
+
+Task: Find White's move.]
+(;W[da]C[RIGHT D9 is the move, and KataGo's first choice. The next best try, C5, is about 8.9 points worse for White. White went on to lose the game by 4 points.])
+(;W[ce]C[C5 is the second best try, but KataGo reads it as about 8.9 points worse than D9. Look again.])
+)

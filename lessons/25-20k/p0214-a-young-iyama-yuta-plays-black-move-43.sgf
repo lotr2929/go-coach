@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[A young Iyama Yuta plays Black: move 43]DI[21k]PL[B]PB[Iyama Yuta]PW[Mochizuki Kenichi]DT[2003-01-02]
+AB[gb][bc][fc][gc][hc][cd][gd][ce][de][he][cf][ff][gf][dg][gg][dh][hh][ci]
+AW[ca][bb][db][fb][cc][ec][dd][fd][fe][ge][df][eg][fg][ch][eh][gh][di][ei]
+C[Near the end of the game: Iyama Yuta (Black, 2p) against Mochizuki Kenichi (White, 3p), 10th 9x9 tournament, 2003-01-02. Move 43 of 53. Black to play.
+
+Task: Find Black's move.]
+(;B[cg]C[RIGHT C3 is the move, and KataGo's first choice. The next best try, E4, is about 11.1 points worse for Black. Black went on to win the game by resignation.])
+(;B[ef]C[E4 is the second best try, but KataGo reads it as about 11.1 points worse than C3. Look again.])
+)

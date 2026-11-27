@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Iyama Yuta wins in 36 moves: move 17]DI[10k]PL[B]PB[Ohashi Hirofumi]PW[Iyama Yuta]DT[2003-01-02]
+AB[gb][gc][fd][ee][ge][he][dg][eg]
+AW[hb][ec][fc][hc][gd][hd][de][df]
+C[In the middle of the game: Ohashi Hirofumi (Black, 1p) against Iyama Yuta (White, 2p), 10th 9x9 tournament, 2003-01-02. Move 17 of 36. Black to play.
+
+Task: Find Black's move.]
+(;B[bd]C[RIGHT B6 is the move, and KataGo's first choice. The next best try, D6, is about 3.2 points worse for Black. Black went on to lose the game by resignation.])
+(;B[dd]C[D6 is the second best try, but KataGo reads it as about 3.2 points worse than B6. Look again.])
+)

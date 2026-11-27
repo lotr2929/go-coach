@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[A celebration game: move 51]DI[25k]PL[B]PB[Yamamori Tadanao]PW[Shimojima Yohei]DT[2005-05-08]
+AB[ba][ab][cb][db][cc][ec][fc][hc][bd][dd][fd][hd][id][ie][df][ef][if][cg][eg][gg][hg][ig][eh][fh][hh]
+AW[bb][gb][hb][bc][gc][ic][cd][ed][gd][ce][de][ee][fe][ge][he][bf][ff][hf][bg][fg][ch][dh][ei][fi]
+C[Near the end of the game: Yamamori Tadanao (Black, 5p) against Shimojima Yohei (White, 7p), 50th Anniversary of Nihon Ki-in Central Branch, 2005-05-08. Move 51 of 54. Black to play.
+
+Task: Find Black's move.]
+(;B[gi]C[RIGHT G1 is the move, and KataGo's first choice. The next best try, B2, is about 6.2 points worse for Black. Black went on to lose the game by resignation.])
+(;B[bh]C[B2 is the second best try, but KataGo reads it as about 6.2 points worse than G1. Look again.])
+)

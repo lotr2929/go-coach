@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[A 41-move win: move 35]DI[18k]PL[B]PB[Kamimura Kunio]PW[Abe Yoshiteru]DT[1989]
+AB[eb][ec][dd][ae][de][fe][af][bf][cf][ff][cg][fg][ah][bh][gh]
+AW[ca][bb][db][bc][dc][bd][cd][be][ce][df][ag][dg][eg][ch][dh][fh][gi]
+C[Near the end of the game: Kamimura Kunio (Black, 8p) against Abe Yoshiteru (White, 9p), NHK TV 9x9, 1989. Move 35 of 41. Black to play.
+
+Task: Find Black's move.]
+(;B[hi]C[RIGHT H1 is the move, and KataGo's first choice. The next best try, H2, is about 3.2 points worse for Black. Black went on to win the game by resignation.])
+(;B[hh]C[H2 is the second best try, but KataGo reads it as about 3.2 points worse than H1. Look again.])
+)

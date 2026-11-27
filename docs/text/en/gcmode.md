@@ -27,7 +27,7 @@ Welcome to Go Coach! Here is today's lesson, chosen for your grade. Solve it fir
 Welcome back! Your streak: {days}. Here is today's lesson, chosen for your grade.
 
 ## done-today
-You have already solved today's lesson (streak: {days}). Here is another at your grade: it counts towards your grade too.
+You have already solved today's lesson (streak: {days}). Here is another at your level: it counts towards your grade too.
 
 ## streak-started
 Today's lesson is done: your streak has begun. Come back tomorrow to keep it going.
@@ -40,3 +40,6 @@ You have solved every lesson at your grade for now. More are on the way. Tap the
 
 ## no-lessons
 The lessons could not be loaded. Check your connection and try again.
+
+## limit
+That is your {n} free games for today. Subscribers play as many as they like (subscriptions are coming soon). Come back tomorrow for {n} more and keep your streak going.

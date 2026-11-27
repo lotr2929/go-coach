@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Eight players against Cho Chikun: move 13]DI[21k]PL[B]PB[Kim Sujun & Kobayashi Izumi & Inori Yoko & Umezawa Yukari & Hosaka Mayu & Hans Pietsch & Takemiya Yoko & Kono Rin]PW[Cho Chikun]DT[2000-03-28]
+AB[gc][fd][ce][de][fe][cf]
+AW[hc][gd][ge][df][ef][ff]
+C[In the middle of the game: Kim Sujun & Kobayashi Izumi & Inori Yoko & Umezawa Yukari & Hosaka Mayu & Hans Pietsch & Takemiya Yoko & Kono Rin (Black, 5p & 4p & 4p & 3p & 2p & 3p & 2p & 5p) against Cho Chikun (White, 9p), Kitani school 500 dan celebration, 2000-03-28. Move 13 of 40. Black to play.
+
+Task: Find Black's move.]
+(;B[gf]C[RIGHT G4 is the move, and KataGo's first choice. The next best try, F7, is about 3.3 points worse for Black. Black went on to lose the game by resignation.])
+(;B[fc]C[F7 is the second best try, but KataGo reads it as about 3.3 points worse than G4. Look again.])
+)

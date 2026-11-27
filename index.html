@@ -119,6 +119,16 @@
     <label class="switch"><input type="checkbox" id="setConfirm"> <span data-t="screen.tap-twice">Tap twice to place (avoids slips on a phone)</span></label>
     <label class="switch"><input type="checkbox" id="setSound"> <span data-t="screen.sound">Stone sound</span></label>
     <div class="opt">
+      <label class="lbl" for="setGcLevel" data-t="screen.game-level">Level of the games (Go Coach mode)</label>
+      <select id="setGcLevel">
+        <option value="6" data-t="screen.level-much-easier">Much easier</option>
+        <option value="3" data-t="screen.level-easier">Easier</option>
+        <option value="0" data-t="screen.level-grade">At my grade</option>
+        <option value="-3" data-t="screen.level-harder">Harder</option>
+        <option value="-6" data-t="screen.level-much-harder">Much harder</option>
+      </select>
+    </div>
+    <div class="opt">
       <label class="lbl" for="setTerrSecs"><span data-t="screen.accuracy-before">Territory accuracy: up to</span> <b id="terrSecsOut"></b> <span data-t="screen.accuracy-after">per map</span></label>
       <input type="range" id="setTerrSecs" min="0" max="9" step="1" aria-describedby="terrHelp">
       <p data-t="screen.accuracy-help" class="small" id="terrHelp">The Territory tab plays random games after every move. A longer time means more games and a steadier map, but a longer wait.</p>
