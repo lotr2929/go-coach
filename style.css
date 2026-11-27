@@ -312,8 +312,9 @@ button.tri.fwd::before { clip-path: polygon(0 0, 0 100%, 100% 50%); }
 .userStreak { font-size: .85rem; white-space: nowrap; margin-left: .5em; }
 .userStreak:empty { display: none; }
 .userStreak:not(:empty) + #btnFlag { margin-left: 0; }
-h1.gcOn { color: #b5651d; } /* Go Coach mode is on (gcmode.js) */
-h1.gcOn::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #b5651d; }
+/* Go Coach mode is on (gcmode.js): the title becomes a piece of the board, the same wood and faint grain as board.js draws. */
+h1.gcOn { color: #2b1d0e; padding: 2px 10px 2px 4px; margin-left: -4px; border-radius: 4px; box-shadow: 0 1px 3px rgba(60, 40, 10, .35);
+  background: repeating-linear-gradient(178deg, transparent 0 7px, rgba(90, 58, 16, .06) 7px 8px), linear-gradient(135deg, #edcd92, #dfb470); }
 .userName:empty + .userGrade:not(:empty) { margin-left: auto; }
 #btnFlag { margin-left: auto; width: 30px; }
 #btnFlag + #btnSettings { width: auto; padding: 0 6px 0 0; margin-left: -2px; } /* envelope and Settings sit close together */
