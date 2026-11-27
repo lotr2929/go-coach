@@ -39,10 +39,11 @@
   }
   function setChips(labels) {
     quick.textContent = '';
-    for (const label of labels) {
+    for (const item of labels) {
+      const label = typeof item === 'string' ? item : item.label;
       const b = document.createElement('button');
       b.type = 'button'; b.textContent = label;
-      b.addEventListener('click', () => ask(label));
+      b.addEventListener('click', () => (typeof item === 'string' ? ask(label) : item.run()));
       quick.append(b);
     }
   }
@@ -100,7 +101,7 @@
     hint: () => { const info = G.lessonInfo(); if (info && info.hasHint) G.lessonHint(); else say(T('no-ring')); },
     why: () => { const r = C.lessonReply(E, 'explain more', G.lessonInfo()); if (r) say(r.text); },
     reset: () => G.lessonReset(),
-    next: () => { if ($('#btnLNext').disabled) say(T('finish-first')); else G.lessonNext(); },
+    next: () => { if (!G.isPuzzle() && $('#btnLNext').disabled) say(T('finish-first')); else G.lessonNext(); },
     point: idx => say(C.describePoint(E, G.Lesson.s, idx, G.Lesson.s.turn)),
     play: idx => G.onLessonTap(idx),
     set: arg => { Object.assign(settings, arg); saveSettings(); },

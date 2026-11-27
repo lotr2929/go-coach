@@ -32,6 +32,12 @@
           <button data-t="screen.territory" type="button" id="btnTerr" class="tab" aria-pressed="false">Territory</button>
         </div>
       </div>
+      <div id="puzzleBar" class="boardBar puzzleBar" hidden>
+        <button type="button" id="btnPFirst" class="tab ico" data-t-aria="screen.puzzle-first.aria" data-t-title="screen.puzzle-first.tip" aria-label="Back to the start" title="Back to the start of the puzzle"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="3" height="14"/><polygon points="20,5 20,19 9,12"/></svg></button>
+        <button type="button" id="btnPUndo" class="tab ico" data-t-aria="screen.puzzle-undo.aria" data-t-title="screen.puzzle-undo.tip" aria-label="Undo" title="Take back your last move"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="17,5 17,19 6,12"/></svg></button>
+        <button type="button" id="btnPRedo" class="tab ico" data-t-aria="screen.puzzle-redo.aria" data-t-title="screen.puzzle-redo.tip" aria-label="Redo" title="Play again the move you took back"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="7,5 7,19 18,12"/></svg></button>
+        <button type="button" id="btnPLast" class="tab ico" data-t-aria="screen.puzzle-last.aria" data-t-title="screen.puzzle-last.tip" aria-label="To the end" title="Forward to the last move you played"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="4,5 4,19 15,12"/><rect x="17" y="5" width="3" height="14"/></svg></button>
+      </div>
     </div>
     <aside class="panel">
       <div class="row controls" id="controls">
@@ -49,6 +55,7 @@
       </div>
       <div data-t-aria="screen.move-tree.aria" data-t-title="screen.move-tree.tip" id="moveTree" class="moveTree" role="group" aria-label="Moves of this game" title="Every move of this game. Tap one to go back to it; moves you tried before stay as branches."></div>
       <div class="row controls" id="lessonBar" hidden>
+        <button data-t="screen.puzzle-back" id="btnLBack" hidden>Back to game</button>
         <button data-t="screen.lesson-hint" id="btnLHint">Hint</button>
         <button data-t="screen.lesson-reset" id="btnLReset">Reset</button>
         <button data-t="screen.lesson-next" id="btnLNext" class="primary">Next</button>
@@ -113,13 +120,22 @@
 <dialog id="setDlg">
   <form method="dialog">
     <h2><span data-t="screen.settings">Settings</span><span id="acctTag"></span></h2>
+    <h3 class="grp" data-t="screen.set-board">Board</h3>
     <label class="switch"><input type="checkbox" id="setCoords"> <span data-t="screen.coords">Show coordinates</span></label>
     <label class="switch"><input type="checkbox" id="setLibs"> <span data-t="screen.libs">Show liberties (green dots, red when in atari)</span></label>
-    <label class="switch"><input type="checkbox" id="setCoach"> <span data-t="screen.coach-tips">Coach tips</span></label>
     <label class="switch"><input type="checkbox" id="setConfirm"> <span data-t="screen.tap-twice">Tap twice to place (avoids slips on a phone)</span></label>
     <label class="switch"><input type="checkbox" id="setSound"> <span data-t="screen.sound">Stone sound</span></label>
+    <h3 class="grp" data-t="screen.set-coach">Coach</h3>
+    <label class="switch"><input type="checkbox" id="setCoach"> <span data-t="screen.coach-tips">Coach tips</span></label>
     <div class="opt">
-      <label class="lbl" for="setGcLevel" data-t="screen.game-level">Level of the games (Go Coach mode)</label>
+      <label class="lbl" for="setTerrSecs"><span data-t="screen.accuracy-before">Territory accuracy: up to</span> <b id="terrSecsOut"></b> <span data-t="screen.accuracy-after">per map</span></label>
+      <input type="range" id="setTerrSecs" min="0" max="9" step="1" aria-describedby="terrHelp">
+      <p data-t="screen.accuracy-help" class="small" id="terrHelp">The Territory tab plays random games after every move. A longer time means more games and a steadier map, but a longer wait.</p>
+    </div>
+    <h3 class="grp" data-t="screen.set-general">General</h3>
+    <div class="row wrap"><button data-t="screen.copy-sgf" type="button" id="btnSGF">Copy game record (SGF)</button></div>
+    <div class="opt inline">
+      <label class="lbl" for="setGcLevel" data-t="screen.game-level">Level of Puzzle mode:</label>
       <select id="setGcLevel">
         <option value="6" data-t="screen.level-much-easier">Much easier</option>
         <option value="3" data-t="screen.level-easier">Easier</option>
@@ -128,12 +144,6 @@
         <option value="-6" data-t="screen.level-much-harder">Much harder</option>
       </select>
     </div>
-    <div class="opt">
-      <label class="lbl" for="setTerrSecs"><span data-t="screen.accuracy-before">Territory accuracy: up to</span> <b id="terrSecsOut"></b> <span data-t="screen.accuracy-after">per map</span></label>
-      <input type="range" id="setTerrSecs" min="0" max="9" step="1" aria-describedby="terrHelp">
-      <p data-t="screen.accuracy-help" class="small" id="terrHelp">The Territory tab plays random games after every move. A longer time means more games and a steadier map, but a longer wait.</p>
-    </div>
-    <div class="row wrap"><button data-t="screen.copy-sgf" type="button" id="btnSGF">Copy game record (SGF)</button></div>
     <div class="row wrap"><button data-t="screen.check-updates" type="button" id="btnUpdate">Check for updates</button></div>
     <p class="small" id="verText"></p>
     <p class="small" id="installHelp"></p>

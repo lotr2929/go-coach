@@ -17,7 +17,7 @@ Last updated: 27 November 2026.
 ## Opening and signing in (Boon, 27 Nov 2026; replaces "one account per device")
 - **The app opens fresh every time, as a guest:** a new board and the welcome in the chat, no automatic tour, nothing from earlier visits.
 - **A guest's data is wiped at the next open** (account.js): everything stored under a `gocoach.` name, including settings, the game, the chat and its history, grade, streak, lessons done and the cloud-save/messages key. Kept for the device only: the usage-log switch and its anonymous device number.
-- **Signing in is typing a name** (no password yet). It brings back that name's data; a new name becomes a new account and keeps what the guest did so far. Several names can share a device. Straight after signing in, the game and chat carry on where they were. Signed-in data is put away under `gcacct/<name>/` at the next open. A reload during a signed-in visit stays signed in; closing the app or tab signs out.
+- **Signing in is typing a name** (no password yet). It brings back that name's data; a new name becomes a new account and keeps what the guest did so far. **A guest's puzzles, lesson ticks, streak and grade are not recorded at all** (Boon, 27 Nov 2026): Puzzle mode works for the visit but records only once signed in. Several names can share a device. Straight after signing in, the game and chat carry on where they were. Signed-in data is put away under `gcacct/<name>/` at the next open. A reload during a signed-in visit stays signed in; closing the app or tab signs out.
 - On upgrade, a device with a name already keeps its data under that name; a device with no name starts fresh.
 
 ## Product
@@ -120,6 +120,12 @@ Last updated: 27 November 2026.
 - **It must be addictive:** quick to start, finished in a minute or two, a streak, the grade moving after every game, always "one more".
 - **KataGo builds it** (laptop install in tools/katago/bin: v1.18.1 OpenCL, the b10c384 net for fast screening, the b11c768 net to confirm, the human-style model to rank). tools/katago/find-decisive.js finds positions where the move played is also the best and the next best is clearly worse. Claude writes the short stories; they are checked against the kifu's own details (players, event, date), never invented.
 - **Speed on the laptop (Intel Arc graphics, OpenCL):** b11c768 about 3 visits a second on 19x19, b10c384 about 64, so the small net screens and the big net confirms.
+
+## Puzzle mode and signing in (Boon, 27 Nov 2026)
+- **"Game mode" is renamed Puzzle mode** so it is not confused with a normal game. The title tap turns it on. Puzzles (puzzles/) and lessons (lessons/) are separate lists: each lesson teaches a principle, and several puzzles can be built around the same principle (puzzles are not yet tagged by principle).
+- **Puzzle screen:** only "Back to game" at the top; Hint, Previous puzzle, Next puzzle and Puzzles list are the suggestion buttons; four video-style buttons under the board (back to start, undo, redo, forward to the last move). "Previous puzzle" shows the puzzle again before it was solved. "Puzzles list" shows only the puzzles solved, never the full list.
+- **Signed out is a clean start:** first built in guard.js on the laptop; merged on 27 Nov 2026 into account.js (see "Opening and signing in"), which does the same without changing how the browser's storage works. No daily limit during the beta; no automatic tour (Boon, 27 Nov 2026).
+- **Settings in groups:** Board, Coach, General; "Level of Puzzle mode:" sits on one line just before Check for updates.
 
 ## Engine (search.js)
 - Tree search with RAVE over fast play-outs; used by Hard, the coach's hints, the win-chance bar and the explanations.

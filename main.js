@@ -13,6 +13,8 @@
   $('#btnResume').onclick = resumePlay;
   $('#btnLHint').onclick = lessonHint;
   $('#btnLReset').onclick = lessonReset;
+  $('#btnLBack').onclick = () => G.exitLesson();
+  $('#btnPFirst').onclick = G.puzzleFirst; $('#btnPUndo').onclick = G.puzzleUndo; $('#btnPRedo').onclick = G.puzzleRedo; $('#btnPLast').onclick = G.puzzleLast;
   $('#btnLNext').onclick = lessonNext;
   $('#btnLMenu').onclick = showMenu;
 

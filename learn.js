@@ -7,10 +7,26 @@
   const T = (k, v) => window.GoText.T('learn.' + k, v); /* wording: docs/text/en/learn.md */
   const CHIPS = ['Explain more', 'Hint', 'Why is that?', 'Next lesson', 'Lessons', 'Back to game'];
 
-  const Lesson = { on: false, idx: -1, s: null, status: null, answered: false, hintPts: [], done: new Set(load(KEY.done, [])) };
+  const Lesson = { on: false, idx: -1, s: null, status: null, answered: false, hintPts: [], hist: [], fwd: [], done: new Set(load(KEY.done, [])) };
+  const isPuzzle = () => Lesson.on && !!(LS.list[Lesson.idx] && LS.list[Lesson.idx].puzzle);
+  /* Puzzle mode's suggestion buttons run their action directly (chat.js setChips accepts { label, run }). */
+  const puzzleChips = () => [
+    { label: T('chip-hint'), run: () => { const i = lessonInfo(); if (i && i.hasHint) lessonHint(); else say(T('no-hint')); } },
+    { label: T('chip-prev'), run: () => G.gcMode.prev() },
+    { label: T('chip-next'), run: () => G.gcMode.next(LS.list[Lesson.idx].id) },
+    { label: T('chip-list'), run: () => G.gcMode.list() }
+  ];
+  /* Undo and redo in a puzzle: the position, the file's place and the result are kept before each move. */
+  const snap = () => { const s = Lesson.s; return { s: E.clone(s), at: s.data && s.data.at, tried: s.data && s.data.tried ? s.data.tried.slice() : [], status: Lesson.status }; };
+  const apply = sn => { const s = E.clone(sn.s); s.data = Object.assign({}, sn.s.data, { at: sn.at, tried: sn.tried.slice() }); Lesson.s = s; Lesson.status = sn.status; Lesson.hintPts = []; renderLesson(); };
+  function puzzleUndo() { if (!isPuzzle() || !Lesson.hist.length) return; Lesson.fwd.push(snap()); apply(Lesson.hist.pop()); }
+  function puzzleRedo() { if (!isPuzzle() || !Lesson.fwd.length) return; Lesson.hist.push(snap()); apply(Lesson.fwd.pop()); }
+  function puzzleFirst() { while (isPuzzle() && Lesson.hist.length) puzzleUndo(); }
+  function puzzleLast() { while (isPuzzle() && Lesson.fwd.length) puzzleRedo(); }
 
   /* The lessons by chapter: each chapter is a skill from "What is Go?", in order from the simplest. */
   function showMenu() {
+    if (isPuzzle()) return G.gcMode.list(); /* in Puzzle mode the list is the puzzles already solved */
     const items = [];
     LS.CHAPTERS.forEach((c, k) => {
       items.push({ head: true, label: T('chapter-head', { count: k + 1, title: c.title }), note: c.intro });
@@ -27,7 +43,7 @@
     if (G.kifu && G.kifu.on) G.exitKifu(true);
     if (G.setupOn && G.setupOn()) G.leaveSetup();
     const L = LS.list[i];
-    Lesson.on = true; Lesson.idx = i; Lesson.s = LS.setup(L); Lesson.status = null; Lesson.answered = false; Lesson.hintPts = []; Lesson.hinted = false;
+    Lesson.on = true; Lesson.idx = i; Lesson.s = LS.setup(L); Lesson.status = null; Lesson.answered = false; Lesson.hintPts = []; Lesson.hinted = false; Lesson.hist = []; Lesson.fwd = [];
     const q = $('#quizOptions'); q.innerHTML = '';
     if (L.type === 'quiz') {
       L.options.forEach((o, k) => {
@@ -36,16 +52,18 @@
         q.append(b);
       });
     }
-    G.setChips(CHIPS);
+    G.setChips(L.puzzle ? puzzleChips() : CHIPS);
     const ch = LS.chapterOf(L.id);
-    if (L.file) say(T('heading-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) + '\n\n' + L.text.join('\n\n'));
+    if (L.puzzle) say(T('heading-puzzle', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) + '\n\n' + L.text.join('\n\n'));
+    else if (L.file) say(T('heading-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) + '\n\n' + L.text.join('\n\n'));
     else say(T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.CORE, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'));
-    say((L.task ? T('task', { task: L.task }) + '\n' : '') + T('ask-me'));
+    say((L.task ? T('task', { task: L.task }) + '\n' : '') + T(L.puzzle ? 'puzzle-ask' : 'ask-me'));
     renderLesson();
   }
   function exitLesson() {
     if (!Lesson.on) return;
     Lesson.on = false; Lesson.hintPts = [];
+    $('#puzzleBar').hidden = true; $('#btnLBack').hidden = true;
     if (G.gcMode) G.gcMode.left(); /* leaving the lessons also leaves Go Coach mode */
     G.setChips(G.PLAY_CHIPS);
     G.renderPlay();
@@ -61,7 +79,7 @@
       n: s.n, board: s.board, last: s.last, ko: s.ko, coords: false, libs: !!L.libs,
       marks: LS.marksFor(L, s), markColor: s.turn, hint: Lesson.hintPts, ghost: -1, hoverColor: 0, terr, dead: null, own: null, shapes: null
     });
-    $('#whoTurn').textContent = L.file ? T('who-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) : T('heading', { count: Lesson.idx + 1, total: LS.CORE, title: L.title });
+    $('#whoTurn').textContent = L.puzzle ? T('who-puzzle', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) : L.file ? T('who-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) : T('heading', { count: Lesson.idx + 1, total: LS.CORE, title: L.title });
     $('#capsInfo').textContent = '';
     $('#posInfo').hidden = true;
     const isTask = !L.type;
@@ -71,17 +89,28 @@
     next.textContent = T(last ? 'play-a-game' : 'next');
     next.disabled = !(L.type === 'info' || Lesson.status === 'win');
     next.classList.toggle('primary', !next.disabled);
+    /* A puzzle has only "Back to game" at the top; Hint, Previous, Next and the list are the suggestion buttons, and the icons under the board step through it. */
+    const pz = !!L.puzzle;
+    for (const id of ['#btnLHint', '#btnLReset', '#btnLNext', '#btnLMenu']) if (pz) $(id).hidden = true; else if (id === '#btnLNext' || id === '#btnLMenu') $(id).hidden = false;
+    $('#btnLBack').hidden = !pz; $('#puzzleBar').hidden = !pz;
+    if (pz) {
+      $('#btnPFirst').disabled = $('#btnPUndo').disabled = !Lesson.hist.length;
+      $('#btnPRedo').disabled = $('#btnPLast').disabled = !Lesson.fwd.length;
+    }
   }
   /* A lesson's difficulty for the grade: a lesson file's own (DI), or the built-in lessons' place from 30 to 18 kyu. */
   const kyuOf = L => (L.file ? L.kyu : window.GoGrade.lessonKyu(LS.list.indexOf(L), LS.CORE));
   function markDone(L) {
-    Lesson.done.add(L.id); store(KEY.done, [...Lesson.done]);
+    Lesson.done.add(L.id); /* a guest's ticks last only for this visit (account.js) */
+    if (window.GoAccount.signedIn()) store(KEY.done, [...Lesson.done]);
   }
   function onLessonTap(i) {
     const L = LS.list[Lesson.idx];
     if (!L || L.type || Lesson.status === 'win' || Lesson.status === 'fail') return;
     Lesson.hintPts = [];
+    if (L.puzzle) { Lesson.hist.push(snap()); Lesson.fwd = []; }
     const r = LS.handle(L, Lesson.s, i);
+    if (L.puzzle && r.ev.type === 'illegal') Lesson.hist.pop();
     if (r.ev.type === 'move') click();
     if (r.status) Lesson.status = r.status;
     if (r.status === 'win') markDone(L);
@@ -113,12 +142,14 @@
   }
   function lessonReset() {
     const L = LS.list[Lesson.idx];
+    if (L.puzzle) { puzzleFirst(); return; }
     Lesson.s = LS.setup(L); Lesson.status = null; Lesson.hintPts = [];
     say(T('reset'));
     renderLesson();
   }
   function lessonNext() {
     const L = LS.list[Lesson.idx];
+    if (L.puzzle) { G.gcMode.next(L.id); return; }
     if (L.type === 'info') markDone(L);
     if (L.file) { G.lessonFiles.openNext(L.id); return; }
     if (Lesson.idx === LS.CORE - 1) {
@@ -134,5 +165,5 @@
     return { id: L.id, n: s.n, s, marks, task: L.task, hasHint: !L.type && LS.hintPoints(L, s).length > 0 };
   }
 
-  Object.assign(G, { Lesson, renderLesson, showMenu, openLesson, exitLesson, onLessonTap, lessonInfo, lessonHint, lessonReset, lessonNext });
+  Object.assign(G, { Lesson, renderLesson, showMenu, openLesson, exitLesson, onLessonTap, lessonInfo, lessonHint, lessonReset, lessonNext, isPuzzle, puzzleUndo, puzzleRedo, puzzleFirst, puzzleLast });
 })();

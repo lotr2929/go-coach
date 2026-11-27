@@ -4,11 +4,11 @@ const assert = require('assert');
 module.exports = async function (t) {
   const fs = require('fs'), E = require('./engine.js'), PR = require('./problems.js');
 
-  await t('lessons folder: every lesson is valid and lessons/index.json is up to date', () => {
-    const { index, errors } = require('./make-lessons.js').build();
+  for (const name of ['lessons', 'puzzles']) await t(`${name} folder: every file is valid and ${name}/index.json is up to date`, () => {
+    const { index, errors } = require('./make-lessons.js').build(name);
     assert.deepStrictEqual(errors, [], errors.join('\n'));
     assert(index.lessons.length >= 5, 'at least the five starter lessons');
-    assert.strictEqual(fs.readFileSync('lessons/index.json', 'utf8'), JSON.stringify(index, null, 1) + '\n', 'lessons/index.json is out of date: run node make-lessons.js');
+    assert.strictEqual(fs.readFileSync(`${name}/index.json`, 'utf8'), JSON.stringify(index, null, 1) + '\n', `${name}/index.json is out of date: run node make-lessons.js`);
     for (let k = 1; k < index.lessons.length; k++) assert(index.lessons[k - 1].kyu >= index.lessons[k].kyu, 'easiest first');
   });
 

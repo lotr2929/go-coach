@@ -99,7 +99,7 @@ module.exports = async function (t) {
     assert.strictEqual(W.match('D4'), null);
     assert.strictEqual(W.OPTIONS[0].label, '1  What is Go?');
     /* The saved welcome must stay word for word as before, or chats saved on phones would lose their buttons. */
-    assert.strictEqual(C.INTRO, C.INTRO_BETA + '\n\n' + C.INTRO_TOP + '\n\n1. What is Go?\n2. A Short History of Go.\n3. Teach me.\n4. Coach me.\n5. How to use the app.\n\n' + C.INTRO_PUZZLES + '\n\n' + C.INTRO_END);
+    assert.strictEqual(C.INTRO, C.INTRO_BETA + '\n\n' + C.INTRO_TOP + '\n\n1. What is Go?\n2. A Short History of Go.\n3. Teach me.\n4. Coach me.\n5. How to use the app.\n\n' + C.INTRO_END + '\n\n' + C.INTRO_PUZZLES);
     assert(/^Hello, I am your Go coach\./.test(C.INTRO_TOP));
   });
   await t('whatisgo.md reads as a page with no mistakes', () => {

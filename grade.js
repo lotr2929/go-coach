@@ -108,7 +108,10 @@
     const extra = res.change > 0 ? '\n' + T('promoted', { grade: text(res.st) }) : res.change < 0 ? '\n' + T('demoted', { grade: text(res.st) }) : '';
     G.say(line + extra);
   }
+  /* A guest's games and exercises are not recorded and do not move a grade: sign in first (Boon, 27 Nov 2026). */
+  const keep = () => !window.GoAccount || window.GoAccount.signedIn();
   function game(g) {
+    if (!keep()) return;
     if (!gameWeight(g)) { if (g.helped && !g.guided && !g.both && shown()) G.say(T('not-counted-help')); return; }
     const res = apply(read(), opponentKyu(g), g.won ? 1 : 0, 1);
     res.st.games++;
@@ -116,6 +119,7 @@
   }
   /* kyu: the exercise's difficulty (a lesson file's DI, or lessonKyu() for the built-in lessons). */
   function lesson(id, kyu, solved) {
+    if (!keep()) return;
     const st = read();
     if (st.lessons.includes(id)) return; /* first try only */
     st.lessons.push(id);
