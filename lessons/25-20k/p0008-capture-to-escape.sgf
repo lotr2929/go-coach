@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Capture to escape]DI[24k]PL[B]
+AB[ee][ff][fd]
+AW[de][ef][fe]
+C[Your stone at E5 is in atari. But look at the white stone at F5: it is short of liberties too.
+
+Task: Save your stone at E5. There are two ways.]
+(;B[ed]C[RIGHT E6 joins your stones together, with plenty of liberties. The other way was to capture the white stone at F5 first.])
+(;B[ge];W[ed]C[White chases you at E6.](;B[fe]C[RIGHT Your stones are safe. Capturing a stone that surrounds you gives you its point as a new liberty: often the best way out of atari.]))
+)

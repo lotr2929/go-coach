@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Run to a friend]DI[27k]PL[B]
+AB[ae][bd][cd]
+AW[af][be]
+C[Your stone at A5, on the edge, is in atari: its only liberty is A6. Your stones at B6 and C6 are close by.
+
+Task: Save your stone.]
+(;B[ad]C[RIGHT A6 saves the stone and joins it to B6 and C6. Together they have plenty of liberties, so White cannot capture them.])
+)

@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two stones in atari]DI[29k]PL[B]
+AB[ce][df][ef][fe][dd]
+AW[de][ee]
+C[Stones that touch along a line form one group and share their liberties. White's two stones at D5 and E5 have only one liberty left between them.
+
+Task: Capture both.]
+(;B[ed]C[RIGHT E6 was the group's last liberty, so both stones are captured together.])
+)

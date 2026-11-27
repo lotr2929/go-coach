@@ -1,0 +1,12 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Trapped in the corner]DI[22k]PL[B]
+AB[bg][ch]
+AW[bh]
+C[The white stone at B2 is close to the corner, with only two liberties, A2 and B1. Near the corner a stone has very little room to run.
+
+Task: Capture the white stone, however it runs.]
+(;B[ah]C[RIGHT A2 works: whichever way White runs, it meets the edge of the board and runs out of liberties. Near the corner there are several ways to catch a stone.])
+(;B[bi]C[RIGHT B1 works: whichever way White runs, it meets the edge of the board and runs out of liberties. Near the corner there are several ways to catch a stone.])
+(;B[ag]C[RIGHT A3 works: whichever way White runs, it meets the edge of the board and runs out of liberties. Near the corner there are several ways to catch a stone.])
+(;B[ai]C[RIGHT A1 works: whichever way White runs, it meets the edge of the board and runs out of liberties. Near the corner there are several ways to catch a stone.])
+(;B[ci]C[RIGHT C1 works: whichever way White runs, it meets the edge of the board and runs out of liberties. Near the corner there are several ways to catch a stone.])
+)

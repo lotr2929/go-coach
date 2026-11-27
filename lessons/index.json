@@ -8,10 +8,38 @@
    "band": "30-25k"
   },
   {
+   "id": "p0004-capture-in-the-corner",
+   "file": "lessons/30-25k/p0004-capture-in-the-corner.sgf",
+   "title": "Capture in the corner",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0005-two-stones-in-atari",
+   "file": "lessons/30-25k/p0005-two-stones-in-atari.sgf",
+   "title": "Two stones in atari",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
    "id": "p0002-run-to-safety",
    "file": "lessons/30-25k/p0002-run-to-safety.sgf",
    "title": "Run to safety",
    "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0006-which-one",
+   "file": "lessons/30-25k/p0006-which-one.sgf",
+   "title": "Which one can you capture?",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0007-run-to-a-friend",
+   "file": "lessons/30-25k/p0007-run-to-a-friend.sgf",
+   "title": "Run to a friend",
+   "kyu": 27,
    "band": "30-25k"
   },
   {
@@ -22,6 +50,13 @@
    "band": "30-25k"
   },
   {
+   "id": "p0008-capture-to-escape",
+   "file": "lessons/25-20k/p0008-capture-to-escape.sgf",
+   "title": "Capture to escape",
+   "kyu": 24,
+   "band": "25-20k"
+  },
+  {
    "id": "p0101-mend-the-cut",
    "file": "lessons/25-20k/p0101-mend-the-cut.sgf",
    "title": "Mend the cut",
@@ -29,10 +64,24 @@
    "band": "25-20k"
   },
   {
-   "id": "p0102-push-to-the-edge",
-   "file": "lessons/25-20k/p0102-push-to-the-edge.sgf",
-   "title": "Push it to the edge",
-   "kyu": 20,
+   "id": "p0102-trapped-in-the-corner",
+   "file": "lessons/25-20k/p0102-trapped-in-the-corner.sgf",
+   "title": "Trapped in the corner",
+   "kyu": 22,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0103-the-ladder",
+   "file": "lessons/25-20k/p0103-the-ladder.sgf",
+   "title": "The ladder",
+   "kyu": 21,
+   "band": "25-20k"
+  },
+  {
+   "id": "p0104-the-net",
+   "file": "lessons/25-20k/p0104-the-net.sgf",
+   "title": "The net",
+   "kyu": 19,
    "band": "25-20k"
   }
  ]

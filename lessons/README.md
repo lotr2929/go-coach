@@ -46,4 +46,12 @@ Task: Capture it.]
    rebuilds `index.json`, the list the app shows (easiest first). It names any file with a problem and what to fix.
 3. Run `node test.js`, then put the change live in the usual way (see CLAUDE.md, rule 7).
 
+## Capture and escape lessons, read out by the computer
+
+`tools/lessons/tactics.js` reads out capture and escape problems (every defence, every right move) and writes the answer
+tree; `tools/lessons/build-2026-11-27.js` is the first batch made with it and a model for the next: describe the position, the
+target stone and the words, run it (`node tools/lessons/build-2026-11-27.js`), then `node make-lessons.js`. It refuses a lesson
+whose claimed answer does not work, or whose "tempting wrong move" actually works. It reads only captures and escapes, so keep
+those positions small and clear; other ideas (shape, territory, life and death) are written by hand.
+
 Later, lessons will also be checked with KataGo (that the right answer is really the best move, and how hard it is).
