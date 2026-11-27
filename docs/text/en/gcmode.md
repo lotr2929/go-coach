@@ -1,12 +1,11 @@
 # Puzzle mode
 
-The daily puzzles (gcmode.js): clicking the title "Go Coach" turns Puzzle mode on or off. Today's puzzle at your level, a streak of days,
-then more puzzles. {days} is "1 day" or "5 days"; {n} is a number.
+Puzzle mode (gcmode.js): clicking the title "Go Coach" turns it on or off. Puzzles at your rank, a streak of days. {days} is "1 day" or "5 days"; {n} is a number.
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 
 ## toggle
-Puzzle mode: tap to start today's puzzle, tap again to stop
+Puzzle mode: tap to start, tap again to stop
 
 ## day
 {n} day
@@ -21,22 +20,22 @@ Puzzle mode: tap to start today's puzzle, tap again to stop
 Your streak: {days} in a row with a puzzle solved in Puzzle mode.
 
 ## welcome
-Welcome to Puzzle mode! Here is today's puzzle, chosen for your level. Solve it first time to build your Go Coach grade, and come back tomorrow for the next one.
+Welcome to Puzzle mode! Here is a puzzle chosen for your rank. Solve it at the first try to build your Go Coach grade.
 
 ## welcome-again
 Welcome back to Puzzle mode. Here is the puzzle you were on.
 
-## welcome-streak
-Welcome back! Your streak: {days}. Here is today's puzzle, chosen for your level.
+## welcome-left
+Welcome back! Here is the puzzle where you left off, with your moves.
 
-## done-today
-You have already solved today's puzzle (streak: {days}). Here is another at your level: it counts towards your grade too.
+## welcome-streak
+Welcome back! Your streak: {days}. Here is a puzzle chosen for your rank.
 
 ## streak-started
-Today's puzzle is done: your streak has begun. Come back tomorrow to keep it going.
+Puzzle solved: your streak has begun. Solve one tomorrow to keep it going.
 
 ## streak-up
-Today's puzzle is done: your streak is now {days}. See you tomorrow!
+Puzzle solved: your streak is now {days}. See you tomorrow!
 
 ## all-done
 You have solved every puzzle at your level for now. More are on the way. Tap the title Go Coach to leave Puzzle mode.

@@ -1,14 +1,15 @@
-/* Go Coach - Puzzle mode, the daily puzzles (Boon, 27 Nov 2026). Clicking the title "Go Coach" (or its logo) turns it on or off.
-   On: today's puzzle, picked at the player's Go Coach grade (moved up or down by the level chosen in Settings) from the puzzles in
-   puzzles/, the same one all day; solving a puzzle keeps up a streak of days ("?? 3" beside the grade at the top); "Next puzzle" keeps
-   going. "Previous puzzle" goes back to the one before, unsolved, to play again. "Puzzles list" shows the puzzles already solved, never
+/* Go Coach - Puzzle mode (Boon, 27 Nov 2026). Clicking the title "Go Coach" (or its logo) turns it on or off.
+   Where it starts: back during a visit, the puzzle the player was on; a new visit signed in, the puzzle where they last left off (with
+   its moves); otherwise the first puzzle at their rank (puzzle 1 for a new player), from puzzles/, picked at the player's Go Coach grade
+   moved up or down by the level chosen in Settings. There is no "today's puzzle". Every puzzle keeps its moves (learn.js). Solving a
+   puzzle keeps up a streak of days ("🔥 3" beside the grade at the top); "Next puzzle" keeps going. "Previous puzzle" goes back to the one before, unsolved, to play again. "Puzzles list" shows the puzzles already solved, never
    the full list. Free players have FREE new puzzles a day; subscribers (G.subscriber, not built yet) have no limit.
    The puzzles run in the usual lesson view (learn.js, lessonfiles.js), so no new board mode is needed. */
 (() => {
   'use strict';
   const G = window.GC;
   const T = (k, v) => window.GoText.T('gcmode.' + k, v); /* wording: docs/text/en/gcmode.md */
-  const KEY = { today: 'gocoach.today', streak: 'gocoach.streak', level: 'gocoach.gclevel', plays: 'gocoach.gcplays' };
+  const KEY = { pos: 'gocoach.gcpos', streak: 'gocoach.streak', level: 'gocoach.gclevel', plays: 'gocoach.gcplays' };
   const FREE = 3; /* free puzzles a day once the beta ends; subscribers have no limit (Boon, 27 Nov 2026) */
   /* Signed in, the records are kept on the device; a guest's only in memory for this visit, so nothing is recorded (Boon, 27 Nov 2026). */
   const mem = {}, keep = () => window.GoAccount.signedIn();
@@ -49,8 +50,10 @@
     if (!canPlay(e)) { G.say(T('limit', { n: FREE })); return null; }
     const p = plays();
     if (!solvedId(e) && !p.ids.includes(e.id)) { p.ids.push(e.id); write(KEY.plays, p); }
-    return G.lessonFiles.openFile(e);
+    return G.lessonFiles.openFile(e).then(r => { M.moved(e.id, G.Lesson.line.slice()); return r; });
   }
+  /* Where the player is: the puzzle and the moves tapped in it, so a signed-in player comes back to it next visit (learn.js calls this). */
+  M.moved = (id, line) => write(KEY.pos, { id, line });
   /* A new puzzle: put on the trail, then opened. */
   function openNew(e) {
     if (!canPlay(e)) { G.say(T('limit', { n: FREE })); return null; }
@@ -76,22 +79,21 @@
     if (!index) { G.say(T('no-puzzles')); return; }
     M.on = true; paint();
     /* Back in Puzzle mode during the same visit: carry on with the puzzle the player was on (Boon, 27 Nov 2026). A new visit
-       starts afresh: a guest at puzzle 1, a signed-in player at today's puzzle. */
+       starts afresh: a guest at puzzle 1, a signed-in player where they last left off. */
     const was = at >= 0 && index.find(e => e.id === trail[at]);
     if (was) { G.say(T('welcome-again')); return openEntry(was); }
-    let t = read(KEY.today, null);
-    if (!t || t.date !== today() || !index.some(e => e.id === t.id)) {
-      const e = pick(index);
-      t = e ? { date: today(), id: e.id, solved: false } : null;
-      if (t) write(KEY.today, t);
+    const pos = keep() ? read(KEY.pos, null) : null, last = pos && index.find(e => e.id === pos.id);
+    if (last) { /* signed in: where they left off on an earlier visit, with its moves */
+      G.say(T('welcome-left'));
+      trail.push(last.id); at = 0;
+      await openEntry(last);
+      return G.puzzleReplay(pos.line);
     }
-    const n = streak(), days = T(n === 1 ? 'day' : 'days', { n });
-    if (t && !t.solved) {
-      G.say(T(n ? 'welcome-streak' : 'welcome', { days }));
-      return openNew(index.find(e => e.id === t.id));
-    }
-    G.say(T('done-today', { days }));
-    return next();
+    const e = pick(index);
+    if (!e) { G.say(T('all-done')); return; }
+    const n = streak();
+    G.say(T(n ? 'welcome-streak' : 'welcome', { days: T(n === 1 ? 'day' : 'days', { n }) }));
+    return openNew(e);
   }
   function stop() {
     M.on = false; paint();
@@ -123,11 +125,9 @@
     for (const e of mine) items.push({ label: T('list-label', { grade: G.lessonFiles.gradeText(e.kyu), title: e.title }), done: true, run: () => { trail.splice(at + 1); trail.push(e.id); at = trail.length - 1; openEntry(e); } });
     G.chatMenu(items, T('list-title'));
   }
-  /* A puzzle solved in Puzzle mode (learn.js): today's puzzle is ticked and the streak moves on, once a day. */
+  /* A puzzle solved in Puzzle mode (learn.js): the streak moves on, once a day. */
   function solved(L) {
     if (!M.on || !L.file || !L.puzzle) return;
-    const t = read(KEY.today, null), id = L.id.replace(/^file:/, '');
-    if (t && t.date === today() && t.id === id) { t.solved = true; write(KEY.today, t); }
     if (!keep()) return; /* no streak for a guest */
     const st = read(KEY.streak, { last: '', days: 0 });
     if (st.last === today()) return;
