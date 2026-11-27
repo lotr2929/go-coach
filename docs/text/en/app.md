@@ -148,10 +148,16 @@ Sign in
 Sign in
 
 ## sign-in-note
-Type your name to sign in. Your grade, streak, games and chat are kept under that name on this device, and come back when you sign in again. Without signing in, nothing is kept after you close the app. You are signed out each time the app is opened. There is no password yet, so anyone using this device can sign in with your name.
+Type your username to sign in. Your grade, streak, games and chat are kept under it on this device, and come back when you sign in again. If you have changed your username, any of your usernames signs you in. Without signing in, nothing is kept after you close the app. You are signed out each time the app is opened. There is no password yet, so anyone using this device can sign in with your username.
 
 ## name-taken
-Another account on this device already has that name.
+Another account on this device already has that username.
+
+## other-usernames
+Other usernames used in this account: {names}. Any of them signs you in.
+
+## new-account-warn
+"{name}" is a new username on this device, so it will start a new account. This device already has {n} account(s), and they all share the small amount of storage a browser gives Go Coach. If you already have an account, cancel and sign in with your username. Start a new account?
 
 ## signed-in-as
 Signed in as
