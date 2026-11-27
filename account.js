@@ -108,12 +108,6 @@
       return { acct, name: main.trim(), names: all };
     }).sort((a, b) => a.name.localeCompare(b.name));
   }
-  /* Removes another account from this device (not the one signed in: that is Clear Account). */
-  function remove(acct) {
-    if (!acct || acct === current) return;
-    keys().filter(k => k.startsWith(pre(acct))).forEach(k => set(ls, k, null));
-    dropNames(acct);
-  }
   /* How full the site's storage is, from 0 to 1 (browsers allow about 5 million characters). */
   const LIMIT = 5e6;
   function usage() { let n = 0; for (const k of keys()) n += k.length + (get(ls, k) || '').length; return n / LIMIT; }
@@ -126,7 +120,7 @@
     name: () => (current ? (get(ls, NAME) || '').trim() : ''),
     justSignedIn: () => justIn, /* this page load came straight from signing in: carry on where the player was */
     isNew: n => !!id(n) && !exists(resolve(n)) && resolve(n) !== current,
-    accounts, remove, usage,
+    accounts, usage,
     signIn, signOut, rename, clear
   };
 })();

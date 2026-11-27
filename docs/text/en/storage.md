@@ -1,12 +1,12 @@
 # Storage
 
 The warnings when this device's storage for Go Coach is nearly full or full (storagewarn.js). A browser gives Go Coach only
-about 5 MB, shared by every account on the device. {pct} is how full it is, e.g. 83%; {name} is an account's name.
+about 5 MB, shared by every account on the device. {pct} is how full it is, e.g. 83%.
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 
 ## near
-This device's storage for Go Coach is {pct} full. It is shared by every account on this device, and the chat history takes the most room. When it is full, Go Coach stops keeping your progress. To make room, clear your chat history (pull the chat down, or ask me) or remove accounts you no longer use.
+This device's storage for Go Coach is {pct} full. It is shared by every account on this device, and the chat history takes the most room. When it is full, Go Coach stops keeping your progress. To make room, clear your chat history, or delete accounts that are no longer used: each player can delete only their own account (Clear Account in Settings).
 
 ## full-title
 Storage is full
@@ -17,14 +17,11 @@ This device's storage for Go Coach is full ({pct}), so Go Coach has stopped keep
 ## clear-chat
 Clear my chat history
 
-## remove-acct
-Remove another account
+## delete-mine
+Delete my account
 
-## remove-head
-Tap an account to remove it from this device, with all its progress:
-
-## remove-confirm
-Remove the account "{name}" and all its progress from this device? This cannot be undone.
+## delete-confirm
+Delete your account and all its progress from this device? This cannot be undone.
 
 ## carry-on
 Carry on without saving
