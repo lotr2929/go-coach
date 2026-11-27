@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Kill on the side (left side)]DI[26k]PL[B]
+AB[ab][bb][cc][cd][ce][cf][cg][ah][bh]
+AW[ac][bc][bd][be][bf][ag][bg]
+C[White's group on the side has three empty points in a row.
+
+Task: Stop White making two eyes.]
+(;B[ae]C[RIGHT A5 takes the middle point, and White is left with one eye.])
+(;B[af];W[ae]C[White plays A5 in the middle and lives with two eyes.])
+(;B[ad];W[ae]C[White plays A5 in the middle and lives with two eyes.])
+)

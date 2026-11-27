@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Atari on the edge (top)]DI[30k]PL[B]
+AB[da][fa]
+AW[ea]
+C[A stone on the edge of the board has only three liberties. The white stone at E9 has already lost two of them.
+
+Task: Capture it.]
+(;B[eb]C[RIGHT E8 takes the last liberty. Stones on the edge have fewer liberties, so they are easier to capture.])
+)

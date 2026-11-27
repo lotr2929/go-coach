@@ -1,6 +1,356 @@
 {
  "lessons": [
   {
+   "id": "p0301-take-the-last-liberty",
+   "file": "puzzles/30-25k/p0301-take-the-last-liberty.sgf",
+   "title": "Take the last liberty",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0302-take-the-last-liberty-again",
+   "file": "puzzles/30-25k/p0302-take-the-last-liberty-again.sgf",
+   "title": "Take the last liberty again",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0303-atari-on-the-edge",
+   "file": "puzzles/30-25k/p0303-atari-on-the-edge.sgf",
+   "title": "Atari on the edge",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0304-atari-on-the-edge-top",
+   "file": "puzzles/30-25k/p0304-atari-on-the-edge-top.sgf",
+   "title": "Atari on the edge (top)",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0305-atari-in-the-corner",
+   "file": "puzzles/30-25k/p0305-atari-in-the-corner.sgf",
+   "title": "Atari in the corner",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0306-atari-in-the-corner-top-right",
+   "file": "puzzles/30-25k/p0306-atari-in-the-corner-top-right.sgf",
+   "title": "Atari in the corner (top right)",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0307-two-stones-one-liberty",
+   "file": "puzzles/30-25k/p0307-two-stones-one-liberty.sgf",
+   "title": "Two stones, one liberty",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0308-two-stones-on-the-edge",
+   "file": "puzzles/30-25k/p0308-two-stones-on-the-edge.sgf",
+   "title": "Two stones on the edge",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0309-two-stones-on-the-edge-top-right",
+   "file": "puzzles/30-25k/p0309-two-stones-on-the-edge-top-right.sgf",
+   "title": "Two stones on the edge (top right)",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0310-two-stones-in-the-corner",
+   "file": "puzzles/30-25k/p0310-two-stones-in-the-corner.sgf",
+   "title": "Two stones in the corner",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0311-two-stones-in-the-corner-top-right",
+   "file": "puzzles/30-25k/p0311-two-stones-in-the-corner-top-right.sgf",
+   "title": "Two stones in the corner (top right)",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0312-three-stones-one-liberty",
+   "file": "puzzles/30-25k/p0312-three-stones-one-liberty.sgf",
+   "title": "Three stones, one liberty",
+   "kyu": 30,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0313-which-one-is-in-atari",
+   "file": "puzzles/30-25k/p0313-which-one-is-in-atari.sgf",
+   "title": "Which one is in atari?",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0314-which-one-is-in-atari-top-right",
+   "file": "puzzles/30-25k/p0314-which-one-is-in-atari-top-right.sgf",
+   "title": "Which one is in atari? (top right)",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0315-count-the-liberties",
+   "file": "puzzles/30-25k/p0315-count-the-liberties.sgf",
+   "title": "Count the liberties",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0316-three-in-a-row",
+   "file": "puzzles/30-25k/p0316-three-in-a-row.sgf",
+   "title": "Three in a row",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0317-four-on-the-edge",
+   "file": "puzzles/30-25k/p0317-four-on-the-edge.sgf",
+   "title": "Four on the edge",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0318-four-on-the-edge-top",
+   "file": "puzzles/30-25k/p0318-four-on-the-edge-top.sgf",
+   "title": "Four on the edge (top)",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0319-three-in-the-corner",
+   "file": "puzzles/30-25k/p0319-three-in-the-corner.sgf",
+   "title": "Three in the corner",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0320-three-in-the-corner-top-right",
+   "file": "puzzles/30-25k/p0320-three-in-the-corner-top-right.sgf",
+   "title": "Three in the corner (top right)",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0321-two-at-once",
+   "file": "puzzles/30-25k/p0321-two-at-once.sgf",
+   "title": "Two at once",
+   "kyu": 29,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0322-run-away",
+   "file": "puzzles/30-25k/p0322-run-away.sgf",
+   "title": "Run away",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0323-run-along-the-edge",
+   "file": "puzzles/30-25k/p0323-run-along-the-edge.sgf",
+   "title": "Run along the edge",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0324-run-along-the-edge-top-right",
+   "file": "puzzles/30-25k/p0324-run-along-the-edge-top-right.sgf",
+   "title": "Run along the edge (top right)",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0325-join-your-friend",
+   "file": "puzzles/30-25k/p0325-join-your-friend.sgf",
+   "title": "Join your friend",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0326-capture-to-escape",
+   "file": "puzzles/30-25k/p0326-capture-to-escape.sgf",
+   "title": "Capture to escape",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0327-connect-along-the-edge",
+   "file": "puzzles/30-25k/p0327-connect-along-the-edge.sgf",
+   "title": "Connect along the edge",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0328-connect-along-the-edge-top-right",
+   "file": "puzzles/30-25k/p0328-connect-along-the-edge-top-right.sgf",
+   "title": "Connect along the edge (top right)",
+   "kyu": 28,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0329-make-two-eyes",
+   "file": "puzzles/30-25k/p0329-make-two-eyes.sgf",
+   "title": "Make two eyes",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0330-make-two-eyes-top-right",
+   "file": "puzzles/30-25k/p0330-make-two-eyes-top-right.sgf",
+   "title": "Make two eyes (top right)",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0331-two-eyes-in-the-corner",
+   "file": "puzzles/30-25k/p0331-two-eyes-in-the-corner.sgf",
+   "title": "Two eyes in the corner",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0332-two-eyes-in-the-corner-top-right",
+   "file": "puzzles/30-25k/p0332-two-eyes-in-the-corner-top-right.sgf",
+   "title": "Two eyes in the corner (top right)",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0333-the-bent-three",
+   "file": "puzzles/30-25k/p0333-the-bent-three.sgf",
+   "title": "The bent three",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0334-the-bent-three-top-right",
+   "file": "puzzles/30-25k/p0334-the-bent-three-top-right.sgf",
+   "title": "The bent three (top right)",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0335-two-eyes-on-the-side",
+   "file": "puzzles/30-25k/p0335-two-eyes-on-the-side.sgf",
+   "title": "Two eyes on the side",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0336-two-eyes-on-the-side-right-side",
+   "file": "puzzles/30-25k/p0336-two-eyes-on-the-side-right-side.sgf",
+   "title": "Two eyes on the side (right side)",
+   "kyu": 27,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0337-take-away-an-eye",
+   "file": "puzzles/30-25k/p0337-take-away-an-eye.sgf",
+   "title": "Take away an eye",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0338-take-away-an-eye-bottom-right",
+   "file": "puzzles/30-25k/p0338-take-away-an-eye-bottom-right.sgf",
+   "title": "Take away an eye (bottom right)",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0339-kill-in-the-corner",
+   "file": "puzzles/30-25k/p0339-kill-in-the-corner.sgf",
+   "title": "Kill in the corner",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0340-kill-in-the-corner-bottom-left",
+   "file": "puzzles/30-25k/p0340-kill-in-the-corner-bottom-left.sgf",
+   "title": "Kill in the corner (bottom left)",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0341-kill-the-bent-three",
+   "file": "puzzles/30-25k/p0341-kill-the-bent-three.sgf",
+   "title": "Kill the bent three",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0342-kill-the-bent-three-bottom-left",
+   "file": "puzzles/30-25k/p0342-kill-the-bent-three-bottom-left.sgf",
+   "title": "Kill the bent three (bottom left)",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0343-kill-on-the-side",
+   "file": "puzzles/30-25k/p0343-kill-on-the-side.sgf",
+   "title": "Kill on the side",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0344-kill-on-the-side-left-side",
+   "file": "puzzles/30-25k/p0344-kill-on-the-side-left-side.sgf",
+   "title": "Kill on the side (left side)",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0345-four-in-a-t",
+   "file": "puzzles/30-25k/p0345-four-in-a-t.sgf",
+   "title": "Four in a T",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0346-kill-the-t",
+   "file": "puzzles/30-25k/p0346-kill-the-t.sgf",
+   "title": "Kill the T",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0347-bent-three-on-the-edge",
+   "file": "puzzles/30-25k/p0347-bent-three-on-the-edge.sgf",
+   "title": "Bent three on the edge",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0348-kill-the-bent-three-on-the-edge",
+   "file": "puzzles/30-25k/p0348-kill-the-bent-three-on-the-edge.sgf",
+   "title": "Kill the bent three on the edge",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0349-atari-towards-the-edge",
+   "file": "puzzles/30-25k/p0349-atari-towards-the-edge.sgf",
+   "title": "Atari towards the edge",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
+   "id": "p0350-atari-towards-the-edge-top-right",
+   "file": "puzzles/30-25k/p0350-atari-towards-the-edge-top-right.sgf",
+   "title": "Atari towards the edge (top right)",
+   "kyu": 26,
+   "band": "30-25k"
+  },
+  {
    "id": "p0210-the-25-move-game-move-25",
    "file": "puzzles/30-25k/p0210-the-25-move-game-move-25.sgf",
    "title": "The 25-move game: move 25",

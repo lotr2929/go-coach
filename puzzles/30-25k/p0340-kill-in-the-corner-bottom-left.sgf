@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Kill in the corner (bottom left)]DI[26k]PL[B]
+AB[ag][bg][cg][dg][eh][ei]
+AW[ah][bh][ch][dh][di]
+C[White's group in the corner has three empty points in a row.
+
+Task: Stop White making two eyes.]
+(;B[bi]C[RIGHT B1 takes the middle point. White has only one eye, so the group is dead.])
+(;B[ai];W[bi]C[White plays B1 and has two eyes. Take the middle point first.])
+(;B[ci];W[bi]C[White plays B1 and has two eyes. Take the middle point first.])
+)

@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Atari in the corner]DI[30k]PL[B]
+AB[bi]
+AW[ai]
+C[A stone in the corner has only two liberties. The white stone at A1 has one left.
+
+Task: Capture it.]
+(;B[ah]C[RIGHT A2 takes the last liberty. In the corner a stone runs out of liberties very quickly.])
+)

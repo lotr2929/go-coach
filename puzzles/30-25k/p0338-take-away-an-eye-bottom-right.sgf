@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Take away an eye (bottom right)]DI[26k]PL[B]
+AB[eg][fg][gg][hg][ig][dh][di]
+AW[eh][fh][gh][hh][ih][ei][ii]
+C[Now it is White's group that is surrounded, with three empty points in a row. If White plays first in the middle, it makes two eyes and lives.
+
+Task: Stop White making two eyes.]
+(;B[gi]C[RIGHT G1 takes the vital point. White can make only one eye now, so the group will die.])
+(;B[hi];W[gi]C[White plays G1 and makes two eyes: the group lives. Look for the point that White needs most.])
+(;B[fi];W[gi]C[White plays G1 and makes two eyes: the group lives. Look for the point that White needs most.])
+)

@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Make two eyes]DI[27k]PL[B]
+AB[ah][bh][ch][dh][eh][ai][ei]
+AW[ag][bg][cg][dg][eg][fh][fi]
+C[Your group is surrounded. Inside it are three empty points in a row. A group lives only if it has two eyes: two separate empty points that the opponent can never fill.
+
+Task: Make two eyes.]
+(;B[ci]C[RIGHT C1 splits the space into two eyes. White can never play in either of them, so your group lives.])
+(;B[bi];W[ci]C[White plays C1 in the middle, and your space is left with only one eye. Your group will die. Look for the point that splits the space in two.])
+(;B[di];W[bi]C[White plays B1 in the middle, and your space is left with only one eye. Your group will die. Look for the point that splits the space in two.])
+)

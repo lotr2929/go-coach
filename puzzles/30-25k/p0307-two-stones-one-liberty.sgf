@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two stones, one liberty]DI[30k]PL[B]
+AB[dc][cd][ed][ce][ee]
+AW[dd][de]
+C[Stones that touch along a line are one group and share their liberties. The two white stones at D5 and above it have only one liberty between them.
+
+Task: Capture both.]
+(;B[df]C[RIGHT D4 was the group's last liberty, so both stones are captured together.])
+)

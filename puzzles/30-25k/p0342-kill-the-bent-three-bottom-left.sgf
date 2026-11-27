@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Kill the bent three (bottom left)]DI[26k]PL[B]
+AB[af][bf][cg][dh][di]
+AW[ag][bg][bh][ch][ci]
+C[White's eye space is bent around the corner.
+
+Task: Stop White making two eyes.]
+(;B[ai]C[RIGHT A1, at the bend, is the vital point. White cannot make two eyes now.])
+(;B[bi];W[ai]C[White plays A1, at the bend, and makes two eyes. The bend was the vital point.])
+(;B[ah];W[ai]C[White plays A1, at the bend, and makes two eyes. The bend was the vital point.])
+)

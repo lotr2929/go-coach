@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[The bent three (top right)]DI[27k]PL[B]
+AB[ga][gb][hb][hc][ic]
+AW[fa][fb][gc][hd][id]
+C[Here the three empty points make a bend in the corner.
+
+Task: Make two eyes.]
+(;B[ia]C[RIGHT J9, at the bend, leaves two separate eyes. The group lives.])
+(;B[ha];W[ia]C[White plays J9, at the bend, and only one eye is left. The point at the bend was the key.])
+(;B[ib];W[ia]C[White plays J9, at the bend, and only one eye is left. The point at the bend was the key.])
+)

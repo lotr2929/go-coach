@@ -1,0 +1,11 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Kill the T]DI[26k]PL[B]
+AB[da][db][ec][ic][fd][gd][hd]
+AW[ea][ia][eb][fb][hb][ib][fc][gc][hc]
+C[White's eye space has four points in the shape of a T.
+
+Task: Stop White making two eyes.]
+(;B[ga]C[RIGHT G9, the centre of the T, is the vital point. White cannot make two eyes.])
+(;B[ha];W[ga]C[White plays G9, the centre, and lives.])
+(;B[fa];W[ga]C[White plays G9, the centre, and lives.])
+(;B[gb];W[ga]C[White plays G9, the centre, and lives.])
+)

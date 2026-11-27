@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Run along the edge (top right)]DI[28k]PL[B]
+AB[ga]
+AW[fa][ha]
+C[Your stone at G9 on the edge is in atari.
+
+Task: Save it. Run away from the edge.]
+(;B[gb]C[RIGHT G8 moves away from the edge. Your stones now have 3 liberties and are safe.])
+)

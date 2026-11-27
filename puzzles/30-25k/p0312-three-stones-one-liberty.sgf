@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Three stones, one liberty]DI[30k]PL[B]
+AB[dd][ce][fe][cf][ef][dg]
+AW[de][ee][df]
+C[Three white stones are joined into one group. However big a group is, it is captured when its last liberty is taken.
+
+Task: Capture the whole group.]
+(;B[ed]C[RIGHT E6 was the last liberty of all three stones, so the whole group is captured.])
+)

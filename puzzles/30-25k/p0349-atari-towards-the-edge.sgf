@@ -1,0 +1,11 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Atari towards the edge]DI[26k]PL[B]
+AB[ch][eh]
+AW[dh]
+C[The white stone at D2 has two liberties: one towards the edge, one towards the centre. Give atari from the right side and it has nowhere to run.
+
+Task: Capture the white stone, however it runs.]
+(;B[dg]C[RIGHT D3 gives atari from the centre side, so White can only run towards the edge, where it runs out of liberties.])
+(;B[cg]C[RIGHT C3 does not even touch the stone, but it closes the way out: wherever White runs, you can capture it against the edge. This is called a net.])
+(;B[eg]C[RIGHT E3 does not even touch the stone, but it closes the way out: wherever White runs, you can capture it against the edge. This is called a net.])
+(;B[df]C[RIGHT D4 does not even touch the stone, but it closes the way out: wherever White runs, you can capture it against the edge. This is called a net.])
+)

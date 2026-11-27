@@ -1,0 +1,10 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Bent three on the edge]DI[26k]PL[B]
+AB[cg][dg][eg][bh][ch][eh][bi][ei]
+AW[cf][df][ef][bg][fg][ah][fh][ai][fi]
+C[Your three empty points bend away from the edge.
+
+Task: Make two eyes.]
+(;B[di]C[RIGHT D1, at the bend, makes two eyes.])
+(;B[ci];W[di]C[White plays D1, at the bend, and you have only one eye.])
+(;B[dh];W[ci]C[White plays C1, at the bend, and you have only one eye.])
+)

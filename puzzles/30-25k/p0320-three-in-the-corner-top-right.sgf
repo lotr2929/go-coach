@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Three in the corner (top right)]DI[29k]PL[B]
+AB[ga][gb][hc]
+AW[ha][ia][hb]
+C[Three white stones are joined in the corner. Look for the one empty point they still have.
+
+Task: Capture them.]
+(;B[ib]C[RIGHT J8 fills their last liberty. You may play there even though it looks surrounded, because your move captures.])
+)

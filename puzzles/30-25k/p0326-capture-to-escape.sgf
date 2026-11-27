@@ -1,0 +1,9 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Capture to escape]DI[28k]PL[B]
+AB[fd][ee][ff]
+AW[de][fe][ef]
+C[Your stone at E5 is in atari. But one of the white stones around it has only one liberty too.
+
+Task: Save your stone.]
+(;B[ed]C[RIGHT E6 joins your stone to your other stones, with 4 liberties: that saves it too. The other way was to capture the white stone that was short of liberties.])
+(;B[ge]C[RIGHT G5 captures a white stone, and its empty point becomes a new liberty for you. Capturing is often the best way out of atari.])
+)

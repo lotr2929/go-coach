@@ -1,0 +1,8 @@
+(;GM[1]FF[4]CA[UTF-8]SZ[9]GN[Two stones on the edge]DI[30k]PL[B]
+AB[ch][bi][ei]
+AW[ci][di]
+C[The two white stones on the edge are joined, so they share their liberties. Only one is left.
+
+Task: Capture both stones.]
+(;B[dh]C[RIGHT D2 fills their last liberty and both stones are captured.])
+)
