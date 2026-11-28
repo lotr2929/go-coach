@@ -16,8 +16,9 @@
   const KEEP = 100, MAX = 120, PULL = 70;
   const box = $('#chat .chatLog');
   const isIntro = text => text === C.INTRO;
-  /* A welcome saved by an older version (its wording has changed since) becomes today's, so it shows its buttons. */
-  const freshen = m => (m.who === 'coach' && !isIntro(m.text) && /^Hello, I am your Go coach\. I am not an AI model[.:] /.test(m.text) ? { who: 'coach', text: C.INTRO } : m);
+  /* A welcome saved by an older version (its wording has changed since) becomes today's, so it shows its buttons.
+     Since the beta line was added the welcome no longer starts with "Hello", so the greeting may follow a first paragraph. */
+  const freshen = m => (m.who === 'coach' && !isIntro(m.text) && /(^|\n)Hello, I am your Go coach\. I am not an AI model[.:] /.test(m.text) ? { who: 'coach', text: C.INTRO } : m);
   const stamp = ms => new Date(ms).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
 
   /* ---------- what is kept ---------- */
