@@ -22,7 +22,7 @@ module.exports = async function (t) {
     assert.strictEqual(problems.length, 3, problems.join(' | '));
   });
   await t('T fills in {names} and marks a missing name', () => {
-    assert.strictEqual(TX.T('welcome.whatisgo'), 'What is Go?');
+    assert.strictEqual(TX.T('welcome.whatisgo'), 'Why Play Go?');
     const warn = console.warn; console.warn = () => {}; /* the app warns about a missing name; not needed here */
     try { assert.strictEqual(TX.T('no.such-name'), '[no.such-name]'); } finally { console.warn = warn; }
     assert.strictEqual(TX.page('history'), 'docs/text/en/pages/history.md');
@@ -92,19 +92,20 @@ module.exports = async function (t) {
     assert.deepStrictEqual(W.OPTIONS.map(o => o.key), C.WELCOME_KEYS);
     assert.deepStrictEqual(['1', '2', '3', '4', '5'].map(W.match), ['whatisgo', 'history', 'teach', 'coach', 'tour']);
     assert.strictEqual(W.match('What is Go?'), 'whatisgo');
+    assert.strictEqual(W.match('Why play Go?'), 'whatisgo');
     assert.strictEqual(W.match('How do I use the app?'), 'tour');
     assert.strictEqual(W.match('Help'), 'help');
     assert.strictEqual(W.match('coach me'), 'coach');
     assert.strictEqual(W.match('what is ko?'), null);
     assert.strictEqual(W.match('D4'), null);
-    assert.strictEqual(W.OPTIONS[0].label, '1  What is Go?');
+    assert.strictEqual(W.OPTIONS[0].label, '1  Why Play Go?');
     /* The saved welcome must stay word for word as before, or chats saved on phones would lose their buttons. */
-    assert.strictEqual(C.INTRO, C.INTRO_BETA + '\n\n' + C.INTRO_TOP + '\n\n1. What is Go?\n2. A Short History of Go.\n3. Teach me.\n4. Coach me.\n5. How to use the app.\n\n' + C.INTRO_END + '\n\n' + C.INTRO_PUZZLES);
+    assert.strictEqual(C.INTRO, C.INTRO_BETA + '\n\n' + C.INTRO_TOP + '\n\n1. Why Play Go?\n2. A Short History of Go.\n3. Teach me.\n4. Coach me.\n5. How to use the app.\n\n' + C.INTRO_END + '\n\n' + C.INTRO_PUZZLES);
     assert(/^Hello, I am your Go coach\./.test(C.INTRO_TOP));
   });
   await t('whatisgo.md reads as a page with no mistakes', () => {
     const page = HISTORY.parse(read('pages', 'whatisgo.md'));
-    assert.strictEqual(page.title, 'What is Go?');
+    assert.strictEqual(page.title, 'Why Play Go?');
     /* It opens with its introduction, perhaps after a quotation. */
     assert(page.blocks.length > 10 && page.blocks.find(b => b.t !== 'quote').t === 'lead');
     assert.deepStrictEqual(HISTORY.problems(page), []);
