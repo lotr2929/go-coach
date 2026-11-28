@@ -366,7 +366,7 @@ h3.grp { font: 600 .8rem var(--sans, inherit); letter-spacing: .06em; text-trans
 .coachStrip { display: none; }
 body.boardBig #chat, body.boardBig #moveTree { display: none !important; }
 body.boardBig #controls > button:not(#btnPass):not(#btnResign):not(#btnNew):not(#btnSCancel) { display: none; }
-body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; min-height: 0; }
+body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; min-height: 0; overflow: hidden; }
 body.boardBig .coachStrip.empty { display: none; }
 body.boardBig .stripText { flex: 1; min-width: 0; max-height: 100%; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
 .stripNav { display: grid; justify-items: center; gap: 0; }
@@ -374,36 +374,49 @@ body.boardBig .stripText { flex: 1; min-width: 0; max-height: 100%; overflow-y: 
 .stripNav button { width: 34px; height: 26px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
 .stripCount { font-size: .75rem; color: var(--mute); white-space: nowrap; }
 
-/* The layout (Boon, 28 Nov 2026): the title bar stays. Upright: the title bar on top, the game buttons and the coach strip under it,
-   and the board centred in the rest. On its side: the title bar, buttons and strip in a column on the left, and the board centred
-   in the rest. main and .stage step aside (display: contents) so the title bar, the board column and the panel are laid out
-   together; nothing is moved in the page, so the usual view comes back exactly. The board column measures itself (container
-   units), so the board is always as large as the space allows. */
-body.boardBig { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); }
-body.boardBig main, body.boardBig .stage { display: contents; }
-body.boardBig header { grid-column: 1; grid-row: 1; position: relative; inset: auto; height: auto; min-height: 3rem; padding: 6px 14px; }
-body.boardBig .panel { grid-column: 1; grid-row: 2; padding: 0 14px 6px; gap: 6px; max-height: 32vh; }
-body.boardBig .panel > .coachStrip { flex: 0 1 auto; }
-body.boardBig .boardCol { grid-column: 1; grid-row: 3; min-height: 0; container-type: size; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 12px 10px; }
-body.boardBig .boardWrap, body.boardBig .boardBar, body.boardBig #statusBar { width: min(100cqw, calc(100cqh - 84px)); }
+/* The layout (Boon, 28 Nov 2026): the title bar stays and the board sits in the middle of the screen. main, .stage and .panel step
+   aside (display: contents) so the title bar, the game buttons, the board column and the coach strip are placed directly; nothing
+   is moved in the page, so the usual view comes back exactly.
+   Upright: title bar, game buttons, the board (as large as fits, centred in its space), then the coach strip.
+   On its side: title bar and game buttons on the left, the board in the middle, the coach strip on the right. */
+body.boardBig { display: grid; row-gap: 0; column-gap: 12px; }
+body.boardBig main, body.boardBig .stage, body.boardBig .panel { display: contents; }
+body.boardBig header { position: relative; inset: auto; height: auto; min-height: 3rem; padding: 6px 14px; }
+body.boardBig #controls, body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 14px 6px; }
+body.boardBig .coachStrip { margin: 0 14px 10px; }
+body.boardBig .boardCol { min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 body.boardBig .boardWrap { margin: 0; }
+@media (orientation: portrait) {
+  body.boardBig { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto auto auto auto minmax(0, 1fr) auto; }
+  body.boardBig header { grid-row: 1; }
+  body.boardBig #controls { grid-row: 2; } body.boardBig #lessonBar { grid-row: 3; } body.boardBig #kifuBar { grid-row: 4; }
+  body.boardBig #quizOptions { grid-row: 5; } body.boardBig #scorePanel { grid-row: 6; }
+  body.boardBig .boardCol { grid-row: 7; container-type: size; padding: 0 12px; }
+  body.boardBig .coachStrip { grid-row: 8; max-height: 22vh; }
+  body.boardBig .boardWrap, body.boardBig .boardBar, body.boardBig #statusBar { width: min(100cqw, calc(100cqh - 84px)); }
+}
 @media (orientation: landscape) {
-  body.boardBig { grid-template-columns: minmax(15rem, 24rem) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
-  body.boardBig .panel { grid-row: 2; max-height: none; padding-bottom: 12px; }
-  body.boardBig .panel > .coachStrip { flex: 1 1 auto; }
-  body.boardBig .boardCol { grid-column: 2; grid-row: 1 / -1; padding: 8px 12px; }
+  /* The board's size comes from the screen: its height less the turn line and the bar under it, and never so wide that the side
+     columns drop below 13rem. */
+  body.boardBig { --bb: min(calc(100dvh - 90px), calc(100vw - 26rem - 48px)); grid-template-columns: minmax(13rem, 1fr) auto minmax(13rem, 1fr); grid-template-rows: auto auto auto auto auto minmax(0, 1fr); }
+  body.boardBig header { grid-column: 1; grid-row: 1; flex-wrap: wrap; }
+  body.boardBig #controls { grid-column: 1; grid-row: 2; } body.boardBig #lessonBar { grid-column: 1; grid-row: 3; }
+  body.boardBig #kifuBar { grid-column: 1; grid-row: 4; } body.boardBig #quizOptions { grid-column: 1; grid-row: 5; }
+  body.boardBig #scorePanel { grid-column: 1; grid-row: 6; align-self: start; }
+  body.boardBig .boardCol { grid-column: 2; grid-row: 1 / -1; padding: 6px 0; }
+  body.boardBig .coachStrip { grid-column: 3; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin-top: 10px; }
+  body.boardBig .boardWrap, body.boardBig .boardBar, body.boardBig #statusBar { width: var(--bb); }
   body.boardBig .verStamp { display: none; }
 }
 
-/* The board panel full screen with a reading page open (body.paging, page.js): the page fills the board column; the game
-   buttons and the strip step aside. */
-body.boardBig.paging .panel, body.boardBig.paging .boardBar { display: none !important; }
-body.boardBig.paging .boardCol { align-items: stretch; justify-content: flex-start; padding: 0; }
+/* The board panel full screen with a reading page open (body.paging, page.js): the title bar on top and the page, under the turn
+   line with the full-screen button, fills the rest; the game buttons and the strip step aside. */
+body.boardBig.paging { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) !important; }
+body.boardBig.paging header { grid-column: 1; grid-row: 1; }
+body.boardBig.paging #controls, body.boardBig.paging #lessonBar, body.boardBig.paging #kifuBar, body.boardBig.paging #quizOptions,
+body.boardBig.paging #scorePanel, body.boardBig.paging .coachStrip, body.boardBig.paging .boardBar { display: none !important; }
+body.boardBig.paging .boardCol { grid-column: 1; grid-row: 2; container-type: normal; align-items: stretch; justify-content: flex-start; padding: 0; }
 body.boardBig.paging #statusBar { width: auto; padding: 6px 12px; }
 body.boardBig.paging .boardWrap { width: auto !important; aspect-ratio: auto; flex: 1; min-height: 0; }
 body.boardBig.paging .pageView { box-shadow: none; }
 body.boardBig.paging .pageBody { max-width: 46rem; margin: 0 auto; }
-@media (orientation: landscape) {
-  body.boardBig.paging header { grid-column: 1 / -1; }
-  body.boardBig.paging .boardCol { grid-column: 1 / -1; grid-row: 2; }
-}
