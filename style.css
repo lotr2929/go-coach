@@ -16,6 +16,7 @@
   --shadow: 0 1px 2px rgba(31, 37, 35, .06), 0 6px 20px rgba(31, 37, 35, .07);
   --board-shadow: 0 2px 6px rgba(31, 37, 35, .12), 0 14px 34px rgba(31, 37, 35, .14);
   --serif: ui-serif, Georgia, "Times New Roman", serif;
+  --text: .95rem; /* the reading size of the chat and the pages: change it here and both follow (Boon, 28 Nov 2026) */
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color-scheme: light;
 }
@@ -30,7 +31,11 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--ink); font: 1rem/1.5 var(--sans); }
+/* Every font is shown with the same letter height (x-height) at the same size, so a serif page and the sans chat look alike
+   (Boon, 28 Nov 2026). 0.52 is about the x-height of the system sans fonts, so the sans text barely changes. It is !important
+   because the font shorthand (font: ...) used in many rules would otherwise reset it. */
 html { font-size: calc(16px * var(--fs, 1)); }
+*, *::before, *::after { font-size-adjust: 0.52 !important; }
 body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
 [hidden] { display: none !important; }
 
@@ -114,25 +119,31 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .boardWrap.paged canvas { visibility: hidden; }
 .pageHead { position: sticky; top: 0; z-index: 1; display: flex; justify-content: flex-end; padding: 6px 10px; background: #e6e0d0; border-bottom: 1px solid #cfc7b2; }
 .pageHead .pageClose { padding: 3px 8px; font-size: .85rem; }
-.pageBody { padding: 4px 18px 22px; line-height: 1.6; font-size: 1rem; }
-.pageBody h1 { position: static; transform: none; white-space: normal; font: 600 1.7rem/1.2 var(--serif); margin: .5rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid #cfc7b2; letter-spacing: 0; }
-.pageBody h2 { font: 600 1.25rem var(--serif); margin: 1.4rem 0 .3rem; padding-bottom: .15rem; border-bottom: 1px solid #ddd6c4; }
+/* The page's full-screen button, on the left of the page's top bar (page.js). Full screen fixes the page over the whole screen. */
+.pageHead .pageSize { margin-right: auto; width: 34px; height: 34px; padding: 6px; border-radius: 0; background: transparent; border: 0; box-shadow: none; display: grid; place-items: center; }
+.pageHead .pageSize svg { width: 18px; height: 18px; fill: none; stroke: #5a6560; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.boardWrap.pageBig .pageView { position: fixed; inset: 0; z-index: 40; box-shadow: none; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+.boardWrap.pageBig .pageBody { max-width: 46rem; margin: 0 auto; }
+/* The page's text is the chat's size (--text); headings are in em so they follow it. Settings > Text size scales it all. */
+.pageBody { padding: 4px 18px 22px; line-height: 1.55; font-size: var(--text); }
+.pageBody h1 { position: static; transform: none; white-space: normal; font: 600 1.6em/1.2 var(--serif); margin: .5rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid #cfc7b2; letter-spacing: 0; }
+.pageBody h2 { font: 600 1.2em var(--serif); margin: 1.4rem 0 .3rem; padding-bottom: .15rem; border-bottom: 1px solid #ddd6c4; }
 .pageBody p { margin: .6rem 0; }
-.pageBody h3 { font: 600 1.05rem var(--serif); margin: 1rem 0 .2rem; }
+.pageBody h3 { font: 600 1.05em var(--serif); margin: 1rem 0 .2rem; }
 .pageBody ul { margin: .5rem 0; padding-left: 1.4rem; }
 .pageBody li { margin: .25rem 0; }
-.pageBody .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: .6rem 0 1rem; font: .9rem var(--sans); }
+.pageBody .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: .6rem 0 1rem; font: .9em var(--sans); }
 .pageBody .cards { display: grid; gap: 8px; margin: .6rem 0; }
 .pageBody button.card { display: grid; gap: 2px; width: 100%; text-align: left; padding: 9px 12px; background: #fbf8f0; color: #1d2422; border: 1px solid #cfc7b2; border-radius: 0; font-family: var(--sans); }
 .pageBody button.card:hover { border-color: #1a5f8a; background: #fff; }
-.pageBody .cardTitle { font: 600 1rem var(--serif); }
-.pageBody .cardMeta { font-size: .8rem; color: #5a6560; }
-.pageBody .cardNote { font-size: .88rem; line-height: 1.4; }
+.pageBody .cardTitle { font: 600 1em var(--serif); }
+.pageBody .cardMeta { font-size: .8em; color: #5a6560; }
+.pageBody .cardNote { font-size: .88em; line-height: 1.4; }
 .pageBody .lead { color: #3a4642; } /* the introduction (before the first ## heading): normal text, a shade softer (Boon's choice) */
 .pageBody blockquote { margin: 1rem 0; padding: .4rem 1rem; border-left: 3px solid #b9a77a; background: #ece5d3; border-radius: 0; }
 .pageBody a { color: #1a5f8a; }
 .pageBody a.cite { font-size: .75em; vertical-align: super; text-decoration: none; margin-left: 1px; }
-.pageBody .refs { padding-left: 1.6rem; font-size: .9rem; }
+.pageBody .refs { padding-left: 1.6rem; font-size: .9em; }
 .pageBody .refs li { margin: .35rem 0; padding: 2px 4px;  overflow-wrap: anywhere; }
 .pageBody .refs li.flash { background: #fbe9a8; }
 .pageBody .host { color: #6a756f; font-size: .85em; }
@@ -188,7 +199,7 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 .chatSize svg { width: 18px; height: 18px; fill: none; stroke: var(--mute); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
 body.chatBig #chat { position: fixed; z-index: 30; top: calc(env(safe-area-inset-top) + 8px); bottom: calc(env(safe-area-inset-bottom) + 8px); left: calc(env(safe-area-inset-left) + 8px); right: calc(env(safe-area-inset-right) + 8px); min-height: 0; box-shadow: 0 8px 30px rgba(0,0,0,.5); }
 .chatLog { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 12px; }
-.msg { max-width: 92%; width: fit-content; margin: 8px 0; padding: 9px 13px; border-radius: 0; font-size: .95rem; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+.msg { max-width: 92%; width: fit-content; margin: 8px 0; padding: 9px 13px; border-radius: 0; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
 .msg.coach { padding-left: 0; padding-right: 0; } /* no tint: the coach's words sit on the page (Boon's choice) */
 .msg.user { color: var(--mute); margin-left: auto; text-align: right; padding-right: 0; } /* what you typed: plain grey words on the right, no box */
 .quick { flex: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; }
