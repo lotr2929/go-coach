@@ -219,7 +219,7 @@
     const r = E.play(s, i);
     if (!r.ok) { toast(REASONS[r.reason] || T('illegal')); renderPlay(); return; }
     click();
-    Play.redo = [];
+    Play.redo = keepAhead(i);
     renderPlay(); saveGame();
     const verdict = prev ? G.coachVerdict(prev, i) : '';
     if (verdict) say(verdict);
@@ -232,14 +232,16 @@
     if (!s || Play.phase !== 'play' || s.turn === Play.human || s.passes >= 2) return;
     if (Play.both) { renderPlay(); G.analyse(true); return; } /* Play both sides: mark the best moves A to E and let the learner choose */
     const tok = ++Play.token;
+    /* Back on a line already played (Boon, 28 Nov 2026): the computer plays the same move again, so the line ahead is kept. */
+    const next = ahead(), again = next.length > 0 && next[0].c === s.turn;
     Play.thinking = true; renderPlay();
-    const res = await E.chooseMove(s, s.turn, { level: Play.level, cancelled: () => tok !== Play.token });
+    const res = again ? { move: next[0].i, note: window.GoText.T('engine.nothing-left') } : await E.chooseMove(s, s.turn, { level: Play.level, cancelled: () => tok !== Play.token });
     if (tok !== Play.token || !res) return;
     /* Resign when clearly lost, or pass first when nothing is left worth playing (endgame.js). Not in the guided first game. */
-    const end = Play.guided ? null : window.GoEndgame.decide(E, s, s.turn, res.move, Play.endMem || (Play.endMem = {}));
+    const end = Play.guided || again ? null : window.GoEndgame.decide(E, s, s.turn, res.move, Play.endMem || (Play.endMem = {}));
     if (tok !== Play.token) return;
     Play.thinking = false;
-    Play.redo = [];
+    Play.redo = again ? keepAhead(res.move) : [];
     if (end === 'resign') {
       Play.compResigned = true; /* for the Computer panel (computer.js) */
       saveGame();
@@ -269,11 +271,19 @@
   function humanPass() {
     const s = Play.s;
     if (!s || !myTurn(s)) return;
-    Play.pending = -1; Play.hint = []; Play.redo = [];
+    Play.pending = -1; Play.hint = []; Play.redo = keepAhead(-1);
     E.pass(s); saveGame();
     if (Play.guided) say(window.GoGuide.humanPass());
     if (s.passes >= 2) { renderPlay(); startScoring(); return; }
     renderPlay(); maybeAI();
+  }
+
+  /* The moves taken back, in order (Play.redo is a stack: its last entry holds the next moves). */
+  const ahead = () => [].concat(...Play.redo.slice().reverse());
+  /* After a move at point i: if it is the next move of the line taken back, the rest of that line is kept; otherwise it is dropped. */
+  function keepAhead(i) {
+    const next = ahead();
+    return next.length > 1 && next[0].i === i ? [next.slice(1)] : [];
   }
 
   function undoMove() {
@@ -309,13 +319,15 @@
     const s = Play.s;
     if (!s || Play.phase !== 'play') return;
     Play.token++; Play.thinking = false; Play.pending = -1; Play.hint = [];
-    const before = s.moves.slice();
+    const before = s.moves.slice(), full = before.concat(ahead());
     let k = 0;
     while (k < before.length && k < path.length && before[k].i === path[k].i) k++;
     if (k === before.length && k === path.length) return renderPlay();
     while (s.moves.length > k) E.undo(s);
     for (const m of path.slice(k)) { if (!(m.i < 0 ? E.pass(s) : E.play(s, m.i)).ok) break; }
-    Play.redo = k === path.length && k < before.length ? [before.slice(k)] : [];
+    /* Back or forward along the line played: the rest of it stays for Redo and the Computer panel; another line drops it. */
+    const onLine = path.length <= full.length && path.every((m, j) => m.i === full[j].i);
+    Play.redo = onLine && full.length > path.length ? [full.slice(path.length)] : [];
     click();
     G.explained = null; G.lastExplain = null;
     renderPlay(); saveGame();
