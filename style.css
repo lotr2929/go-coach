@@ -403,41 +403,43 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig .coachStrip { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; }
 }
 @media (orientation: landscape) {
-  body.boardBig { --bb: min(calc(100dvh - 16px), calc(100vw - 22rem - 60px));
-    /* the space above and below the board, used to line things up with its top and bottom edges */
+  /* Three columns: the left column, the board in the very middle, and a right column of the same width (Boon, 28 Nov 2026).
+     The board is as tall as the screen unless the side columns would be narrower than 13.5rem. */
+  body.boardBig { --side: 11.5rem; --bb: min(calc(100dvh - 16px), calc(100vw - 2 * var(--side) - 40px));
     --bbgap: calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--bb)) / 2);
-    grid-template-columns: minmax(max-content, 1fr) auto auto auto var(--bb) minmax(3rem, 1fr);
-    grid-template-rows: auto auto auto auto auto auto auto auto minmax(0, 1fr) auto; padding-left: 12px; padding-right: 12px; }
-  /* The title bar keeps its own layout (Boon, 28 Nov 2026: signing in had pushed the envelope and Settings apart). It covers the
-     left column's first two rows and wraps into two lines: the title on the left with the name and grade on the right, then
-     the envelope and Settings on the right of the second line, beside Pass, Resign and New. */
-  body.boardBig header { grid-column: 1 / 5; grid-row: 1 / 3; display: flex; flex-wrap: wrap; align-content: space-between; align-items: center; justify-content: flex-start; gap: 0 4px; padding: 0; min-height: 0; }
-  body.boardBig header { z-index: auto; pointer-events: none; } /* taps pass through its empty part to Pass, Resign and New */
-  body.boardBig header > * { pointer-events: auto; }
-  body.boardBig header::after { content: ""; order: 5; flex-basis: 100%; height: 0; }
-  body.boardBig .titleBox { order: 1; margin-right: auto; padding: 2px 0 0; }
-  body.boardBig .userName { order: 2; margin: 0; max-width: 12rem; }
-  body.boardBig .userGrade { order: 3; } body.boardBig .userStreak { order: 4; }
-  body.boardBig #btnFlag { order: 6; margin-left: auto; }
-  body.boardBig #btnSettings { order: 7; }
+    grid-template-columns: minmax(var(--side), 1fr) var(--bb) minmax(var(--side), 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto auto minmax(0, 1fr) auto; padding-left: 12px; padding-right: 12px; column-gap: 8px; }
+  /* The title bar covers the left column's first two rows, laid out as a small grid of its own: the title on the left with the
+     name above the grade on the right (small, so they take little room), then the envelope and Settings beside Pass, Resign and New. */
+  body.boardBig header { grid-column: 1; grid-row: 1 / 3; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto;
+    align-items: center; gap: 0 2px; padding: 0; min-height: 0; z-index: auto; pointer-events: none; }
+  body.boardBig header > * { pointer-events: auto; } /* taps pass through its empty part to Pass, Resign and New */
+  body.boardBig .titleBox { grid-column: 1; grid-row: 1 / 3; margin: 0; padding: 2px 0 0; }
+  body.boardBig .userName { grid-column: 2; grid-row: 1; justify-self: end; align-self: end; margin: 0; max-width: 9rem; font-size: .75rem; line-height: 1.15; }
+  body.boardBig .userGrade { grid-column: 2; grid-row: 2; justify-self: end; align-self: start; margin: 0; font-size: .75rem; line-height: 1.15; }
+  body.boardBig .userStreak { grid-column: 1; grid-row: 2; justify-self: end; margin: 0 .4em 0 0; font-size: .75rem; }
+  html.signedOut body.boardBig .userName { grid-row: 1 / 3; align-self: center; }
+  /* the envelope and Settings share the last cell, side by side at its right */
+  body.boardBig #btnFlag { grid-column: 1 / 3; grid-row: 3; justify-self: end; width: 30px; margin: 0 30px 0 0; }
+  body.boardBig #btnSettings { grid-column: 1 / 3; grid-row: 3; justify-self: end; width: 28px; }
   body.boardBig #btnFlag, body.boardBig #btnSettings { height: 24px; } /* the three top rows close together */
-  body.boardBig #controls { grid-column: 1 / 5; grid-row: 2; align-self: end; justify-self: start; margin: 0; position: relative; z-index: 1; }
-  body.boardBig #lessonBar { grid-column: 1 / 5; grid-row: 3; } body.boardBig #kifuBar { grid-column: 1 / 5; grid-row: 4; }
-  body.boardBig #quizOptions { grid-column: 1 / 5; grid-row: 5; } body.boardBig #scorePanel { grid-column: 1 / 5; grid-row: 6; }
+  body.boardBig #controls { grid-column: 1; grid-row: 2; align-self: end; justify-self: start; margin: 0; position: relative; z-index: 1; }
+  body.boardBig #lessonBar { grid-column: 1; grid-row: 3; } body.boardBig #kifuBar { grid-column: 1; grid-row: 4; }
+  body.boardBig #quizOptions { grid-column: 1; grid-row: 5; } body.boardBig #scorePanel { grid-column: 1; grid-row: 6; }
   body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 0 6px; }
   body.boardBig #statusBar { display: contents; }
   body.boardBig #whoTurn { grid-column: 1; grid-row: 7; align-self: center; padding: 0 0 2px; }
-  body.boardBig #capsInfo { grid-column: 2 / 5; grid-row: 7; justify-self: end; align-self: center; margin: 0; }
+  body.boardBig #capsInfo { grid-column: 1; grid-row: 7; justify-self: end; align-self: center; margin: 0; }
   /* The shrink button just to the right of the board's top corner (Boon, 28 Nov 2026). */
-  body.boardBig #btnBoardSize { grid-column: 6; grid-row: 1 / -1; justify-self: start; align-self: start; margin: var(--bbgap) 0 0; } /* level with the board's top */
-  body.boardBig #posInfo { grid-column: 1 / 5; grid-row: 8; }
-  body.boardBig .boardWrap { grid-column: 5; grid-row: 1 / -1; width: var(--bb); }
+  body.boardBig #btnBoardSize { grid-column: 3; grid-row: 1 / -1; justify-self: start; align-self: start; margin: var(--bbgap) 0 0; } /* level with the board's top */
+  body.boardBig #posInfo { grid-column: 1; grid-row: 8; }
+  body.boardBig .boardWrap { grid-column: 2; grid-row: 1 / -1; width: var(--bb); }
   body.boardBig #boardBar { display: contents; }
   /* undo/redo and Shapes/Territory with their bottom level with the board's bottom */
   body.boardBig #boardBar .barSide:first-child { grid-column: 1; grid-row: 10; justify-self: start; align-self: end; margin-bottom: var(--bbgap); }
-  body.boardBig #boardBar .barSide:last-child { grid-column: 2 / 5; grid-row: 10; justify-self: end; align-self: end; margin-bottom: var(--bbgap); }
-  body.boardBig #puzzleBar { grid-column: 1 / 5; grid-row: 10; width: auto; margin: 0 0 var(--bbgap); align-self: end; }
-  body.boardBig .coachStrip { grid-column: 6; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin: 0; }
+  body.boardBig #boardBar .barSide:last-child { grid-column: 1; grid-row: 10; justify-self: end; align-self: end; margin-bottom: var(--bbgap); }
+  body.boardBig #puzzleBar { grid-column: 1; grid-row: 10; width: auto; margin: 0 0 var(--bbgap); align-self: end; }
+  body.boardBig .coachStrip { grid-column: 3; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin: 0; }
   body.boardBig .verStamp { display: none; }
 }
 
