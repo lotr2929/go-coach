@@ -10,6 +10,9 @@ Move {n}: {point}
 ## pass
 Move {n}: Pass
 
+## go-to
+Go back to this move
+
 ## thinking
 Thinking…
 

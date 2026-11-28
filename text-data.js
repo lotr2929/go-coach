@@ -259,6 +259,7 @@
   "commentary.summary-open-move": "Biggest open area: the {where} part of the board. Claiming it is usually the most valuable thing to do, for example with a move at {point}.",
   "computer.move": "Move {n}: {point}",
   "computer.pass": "Move {n}: Pass",
+  "computer.go-to": "Go back to this move",
   "computer.thinking": "Thinking…",
   "computer.resigned": "Resigns",
   "curriculum.next": "Say \"next\" when you are ready, or ask me anything.",
