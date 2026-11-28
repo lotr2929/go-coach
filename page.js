@@ -13,6 +13,15 @@
   root.setAttribute('aria-label', window.GoText.T('app.reading-page'));
   wrap.append(root);
   let open = false;
+  /* TEMPORARY debug (branch debug-page only, never merged): add ?debug to the address to see in the chat what opens and closes a page. */
+  const DBG = /debug/.test(location.search);
+  const dbg = (what, stack) => setTimeout(() => G.say('DEBUG ' + what + ' | paged=' + wrap.classList.contains('paged') + (stack ? ' | ' + String(stack).split('\n').slice(1, 6).map(l => l.trim().replace(/https?:\/\/[^/]+\//, '')).join(' < ') : '')), 0);
+  if (DBG) {
+    window.addEventListener('error', e => dbg('error ' + e.message + ' ' + (e.filename || '').split('/').pop() + ':' + e.lineno, ''));
+    window.addEventListener('unhandledrejection', e => dbg('rejection ' + (e.reason && e.reason.stack || e.reason), ''));
+    new MutationObserver(() => dbg('class now ' + wrap.className, '')).observe(wrap, { attributes: true, attributeFilter: ['class'] });
+    document.addEventListener('click', e => dbg('click on ' + e.target.tagName + '.' + e.target.className + ' "' + (e.target.textContent || '').slice(0, 20) + '"', ''), true);
+  }
 
   const el = (tag, cls, text) => {
     const e = document.createElement(tag);
@@ -107,10 +116,12 @@
     root.append(head, body);
     wrap.classList.add('paged');
     open = true;
+    if (DBG) dbg('showPage ' + page.title + ' blocks=' + page.blocks.length, '');
     root.scrollTop = 0;
     $('#whoTurn').textContent = page.title;
   }
   function closePage() {
+    if (DBG) dbg('closePage', new Error().stack);
     if (!open) return;
     open = false;
     wrap.classList.remove('paged');
