@@ -22,6 +22,7 @@
   function setBig(on) {
     big = !!on;
     wrap.classList.toggle('pageBig', big);
+    if (G.syncFullscreen) G.syncFullscreen(); /* the device's own full screen too (boardbig.js) */
     if (!sizeBtn) return;
     sizeBtn.innerHTML = big ? ICON_SMALL : ICON_BIG;
     sizeBtn.setAttribute('aria-pressed', String(big));
@@ -163,5 +164,5 @@
     G.say(T(`pages.${name}-opened`));
   }
 
-  Object.assign(G, { showPage, closePage, pageOpen: () => open, openDoc, openHistory: () => openDoc('history') });
+  Object.assign(G, { showPage, closePage, pageOpen: () => open, pageBig: () => big, setPageBig: setBig, openDoc, openHistory: () => openDoc('history') });
 })();

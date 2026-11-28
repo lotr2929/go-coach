@@ -27,7 +27,25 @@
     btn.setAttribute('aria-label', btn.title);
     at = -1;
     showStrip();
+    syncFull();
   }
+
+  /* The device's own full screen (Boon, 28 Nov 2026: "it's not really full screen"): while the board or a reading page is full
+     screen, the browser's address bar and the phone's bars are hidden too. Where a browser cannot (an iPhone), the app's own
+     full screen still works. Leaving the device's full screen (the phone's back gesture, Esc) also ends the app's. */
+  const wantFull = () => big || !!(G.pageBig && G.pageBig());
+  function syncFull() {
+    const want = wantFull(), on = !!document.fullscreenElement, el = document.documentElement;
+    try {
+      if (want && !on && el.requestFullscreen) el.requestFullscreen({ navigationUI: 'hide' }).catch(() => { /* not allowed here */ });
+      else if (!want && on && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    } catch (e) { /* no full screen in this browser */ }
+  }
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) return;
+    if (big) setBig(false);
+    if (G.pageBig && G.pageBig()) G.setPageBig(false);
+  });
 
   function showStrip() {
     if (!big) return;
@@ -57,5 +75,5 @@
   document.addEventListener('keydown', e => { if (big && e.key === 'Escape' && !e.defaultPrevented) setBig(false); });
 
   setBig(false);
-  Object.assign(G, { boardBig: () => big, setBoardBig: setBig });
+  Object.assign(G, { boardBig: () => big, setBoardBig: setBig, syncFullscreen: syncFull });
 })();
