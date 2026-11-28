@@ -24,4 +24,29 @@
     bar.append(id('btnMode'), id('btnPass'), id('btnUndo'), id('btnRedo'), id('btnResign'), id('btnAnalyse'), id('btnSave'), pair);
     css.textContent += ' .btnPair { display: inline-flex; gap: 10px; flex: 0 0 auto; }';
   }
+
+  /* 3. (Boon, 28 Nov 2026) A Clear button in the middle of the row under the board (the Shapes and Territory row): it clears
+        the board for a new game with the same settings (size, handicap, colour), without the New game box. A slip would lose
+        the game, so the first tap asks "Sure?" and a second tap within 3 seconds clears. Shown only in an ordinary game: not
+        in a famous game or while exploring a move (lessons, puzzles and the teacher hide the whole row already). */
+  const row = document.getElementById('boardBar');
+  if (row) {
+    const clear = document.createElement('button');
+    clear.type = 'button'; clear.className = 'tab'; clear.id = 'btnClearBoard'; clear.textContent = 'Clear';
+    clear.title = 'Clear the board for a new game with the same settings';
+    row.lastElementChild.before(clear);
+    row.style.position = 'relative';
+    css.textContent += ' #btnClearBoard { position: absolute; left: 50%; transform: translateX(-50%); }';
+    let armed = 0;
+    const reset = () => { armed = 0; clear.textContent = 'Clear'; };
+    clear.addEventListener('click', () => {
+      if (Date.now() - armed > 3000) { armed = Date.now(); clear.textContent = 'Sure?'; setTimeout(() => { if (armed && Date.now() - armed >= 3000) reset(); }, 3100); return; }
+      reset();
+      G.startNewGame();
+    });
+    const show = () => { clear.hidden = !!((G.kifu && G.kifu.on) || (G.exploring && G.exploring.on) || (G.setupOn && G.setupOn())); };
+    new MutationObserver(show).observe(row, { attributes: true, subtree: true, attributeFilter: ['hidden'] });
+    document.addEventListener('click', () => setTimeout(show, 0), true);
+    show();
+  }
 })();
