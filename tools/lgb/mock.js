@@ -55,7 +55,7 @@
     show();
   }
   /* 5. (Boon, 28 Nov 2026) Play mode: the chat panel becomes the moves panel. In your own game in Play mode, the chat's
-        messages are hidden and the panel lists every move, Black and White, numbered (a tap goes back or forward to that
+        messages are hidden and the panel lists every move in two columns, Black then White, numbered (a tap goes back or forward to that
         move, as on the Computer panel). The message row stays: sending a message, Analyse or "Show chat" brings the chat
         back until the next move is played. Coach mode, lessons, puzzles, famous games and Set up keep the chat. */
   const log = document.querySelector('#chat .chatLog');
@@ -68,7 +68,9 @@
     const list = document.createElement('ol'); list.className = 'computerLog';
     head.append(title, toChat); box.append(head, list); log.before(box);
     css.textContent += ' body:not(.lgbMovesOn) #lgbMoves { display: none; } body.lgbMovesOn #chat .chatLog:not(#lgbMoves) { display: none; }' +
-      ' #lgbMoves { display: flex; flex-direction: column; } .lgbMovesHead { display: flex; justify-content: space-between; align-items: center; padding-right: 30px; }';
+      ' #lgbMoves { display: flex; flex-direction: column; } #lgbMoves .computerLog { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; align-content: start; }' +
+      ' #lgbMoves .colHead { font-weight: 600; padding: 1px 4px; color: var(--mute); } #lgbMoves .wide { grid-column: 1 / -1; }' +
+      ' .lgbMovesHead { display: flex; justify-content: space-between; align-items: center; padding-right: 30px; }';
     const E = G.E;
     let showChat = false, seen = -1;
     const ownGame = () => { const P = G.Play; return !!(P && P.s) && !(G.Lesson && G.Lesson.on) && !(G.teaching && G.teaching.on) &&
@@ -83,18 +85,27 @@
       const s = P.s, all = line(), now = s.moves.length, canJump = P.phase === 'play';
       list.textContent = '';
       let cur = null;
+      /* Two columns, Black then White (Boon, 28 Nov 2026): a row for each Black move with White's reply beside it; a White
+         move with no Black move before it in its row (a handicap game starts with White) gets an empty Black cell. */
+      const who = c => (c === 1 ? 'Black' : 'White') + (c === P.human && !P.both ? ' (you)' : '');
+      for (const c of [1, 2]) { const h = document.createElement('li'); h.className = 'colHead'; h.textContent = who(c); list.append(h); }
+      let col = 0; /* the column the next cell goes in: 0 Black, 1 White */
       all.forEach((m, k) => {
+        const want = m.c === 1 ? 0 : 1;
+        if (want !== col) { list.append(document.createElement('li')); col = 1 - col; }
         const li = document.createElement('li'), b = document.createElement('button');
         b.type = 'button'; b.disabled = !canJump;
-        b.textContent = (k + 1) + '. ' + (m.c === 1 ? 'Black' : 'White') + (m.c === P.human && !P.both ? ' (you)' : '') + ' ' + (m.i < 0 ? 'passes' : E.coord(s.n, m.i));
+        b.textContent = (k + 1) + '. ' + (m.i < 0 ? 'pass' : E.coord(s.n, m.i));
+        b.title = 'Go to move ' + (k + 1);
         if (k >= now) li.className = 'later';
         b.addEventListener('click', () => G.jumpTo(all.slice(0, k + 1)));
         li.append(b); list.append(li);
+        col = 1 - col;
         if (k < now) cur = li;
       });
       if (cur) cur.classList.add('now');
-      if (!all.length) { const li = document.createElement('li'); li.className = 'note'; li.textContent = 'No moves yet.'; list.append(li); }
-      if (P.thinking && P.phase === 'play' && s.turn !== P.human && !P.both) { const li = document.createElement('li'); li.className = 'note'; li.textContent = 'Computer thinking…'; list.append(li); cur = li; }
+      if (!all.length) { const li = document.createElement('li'); li.className = 'note wide'; li.textContent = 'No moves yet.'; list.append(li); }
+      if (P.thinking && P.phase === 'play' && s.turn !== P.human && !P.both) { const li = document.createElement('li'); li.className = 'note wide'; li.textContent = 'Computer thinking…'; list.append(li); cur = li; }
       if (cur) list.scrollTop = Math.max(0, cur.offsetTop + cur.offsetHeight - list.clientHeight + 4);
     }
     const chatBack = () => { showChat = true; paint(); };
