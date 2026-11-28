@@ -109,30 +109,32 @@ button.tab[aria-pressed="true"] { font-weight: 700; }
 button.tab.busy { animation: tabPulse 1.2s ease-in-out infinite; }
 @keyframes tabPulse { 50% { opacity: .6; } }
 input[type="range"] { width: 100%; accent-color: var(--accent); }
-.pageView { display: none; position: absolute; inset: 0; overflow-y: auto; background: #f4f0e6; color: #1d2422; border-radius: 0; box-shadow: var(--board-shadow); font-family: var(--serif); -webkit-overflow-scrolling: touch; }
+.pageView { display: none; position: absolute; inset: 0; overflow-y: auto; background: #f4f0e6; color: #1d2422; border-radius: 0; box-shadow: var(--board-shadow); font-family: var(--serif); -webkit-overflow-scrolling: touch; container-type: inline-size; }
 .boardWrap.paged .pageView { display: block; }
 .boardWrap.paged canvas { visibility: hidden; }
 .pageHead { position: sticky; top: 0; z-index: 1; display: flex; justify-content: flex-end; padding: 6px 10px; background: #e6e0d0; border-bottom: 1px solid #cfc7b2; }
 .pageHead .pageClose { padding: 3px 8px; font-size: .85rem; }
-.pageBody { padding: 4px 18px 22px; line-height: 1.6; font-size: 1rem; }
-.pageBody h1 { position: static; transform: none; white-space: normal; font: 600 1.7rem/1.2 var(--serif); margin: .5rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid #cfc7b2; letter-spacing: 0; }
-.pageBody h2 { font: 600 1.25rem var(--serif); margin: 1.4rem 0 .3rem; padding-bottom: .15rem; border-bottom: 1px solid #ddd6c4; }
+/* The page's text follows the width of the board window (Boon, 28 Nov 2026): about the chat's size on a phone, a little larger on a
+   laptop, never below .85rem or above 1.05rem. Headings are in em so they follow it; Settings > Text size still scales it all. */
+.pageBody { padding: 4px 18px 22px; line-height: 1.55; font-size: .95rem; font-size: clamp(.85rem, .69rem + .89cqi, 1.05rem); }
+.pageBody h1 { position: static; transform: none; white-space: normal; font: 600 1.6em/1.2 var(--serif); margin: .5rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid #cfc7b2; letter-spacing: 0; }
+.pageBody h2 { font: 600 1.2em var(--serif); margin: 1.4rem 0 .3rem; padding-bottom: .15rem; border-bottom: 1px solid #ddd6c4; }
 .pageBody p { margin: .6rem 0; }
-.pageBody h3 { font: 600 1.05rem var(--serif); margin: 1rem 0 .2rem; }
+.pageBody h3 { font: 600 1.05em var(--serif); margin: 1rem 0 .2rem; }
 .pageBody ul { margin: .5rem 0; padding-left: 1.4rem; }
 .pageBody li { margin: .25rem 0; }
-.pageBody .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: .6rem 0 1rem; font: .9rem var(--sans); }
+.pageBody .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: .6rem 0 1rem; font: .9em var(--sans); }
 .pageBody .cards { display: grid; gap: 8px; margin: .6rem 0; }
 .pageBody button.card { display: grid; gap: 2px; width: 100%; text-align: left; padding: 9px 12px; background: #fbf8f0; color: #1d2422; border: 1px solid #cfc7b2; border-radius: 0; font-family: var(--sans); }
 .pageBody button.card:hover { border-color: #1a5f8a; background: #fff; }
-.pageBody .cardTitle { font: 600 1rem var(--serif); }
-.pageBody .cardMeta { font-size: .8rem; color: #5a6560; }
-.pageBody .cardNote { font-size: .88rem; line-height: 1.4; }
+.pageBody .cardTitle { font: 600 1em var(--serif); }
+.pageBody .cardMeta { font-size: .8em; color: #5a6560; }
+.pageBody .cardNote { font-size: .88em; line-height: 1.4; }
 .pageBody .lead { color: #3a4642; } /* the introduction (before the first ## heading): normal text, a shade softer (Boon's choice) */
 .pageBody blockquote { margin: 1rem 0; padding: .4rem 1rem; border-left: 3px solid #b9a77a; background: #ece5d3; border-radius: 0; }
 .pageBody a { color: #1a5f8a; }
 .pageBody a.cite { font-size: .75em; vertical-align: super; text-decoration: none; margin-left: 1px; }
-.pageBody .refs { padding-left: 1.6rem; font-size: .9rem; }
+.pageBody .refs { padding-left: 1.6rem; font-size: .9em; }
 .pageBody .refs li { margin: .35rem 0; padding: 2px 4px;  overflow-wrap: anywhere; }
 .pageBody .refs li.flash { background: #fbe9a8; }
 .pageBody .host { color: #6a756f; font-size: .85em; }
