@@ -72,6 +72,8 @@ the principle they teach.
    the app; only the finished puzzle files are.
 5. After adding files: `node make-lessons.js` (checks every puzzle and rebuilds `puzzles/index.json`, easiest first), then
    `node test.js`. Put them live as `CLAUDE.md` rule 7 says, only with Boon's yes.
+6. **How a puzzle reads** (Boon, 28 Nov 2026): background first, hints step by step after wrong moves, a short explanation
+   at the end, and a longer one if asked. See `lessons/README.md`, "How a puzzle should read".
 
 ## Handover, 28 Nov 2026: puzzles move to Boon's Claude Desktop (Curtin account)
 
