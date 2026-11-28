@@ -54,4 +54,56 @@
     document.addEventListener('click', () => setTimeout(show, 0), true);
     show();
   }
+  /* 5. (Boon, 28 Nov 2026) Play mode: the chat panel becomes the moves panel. In your own game in Play mode, the chat's
+        messages are hidden and the panel lists every move, Black and White, numbered (a tap goes back or forward to that
+        move, as on the Computer panel). The message row stays: sending a message, Analyse or "Show chat" brings the chat
+        back until the next move is played. Coach mode, lessons, puzzles, famous games and Set up keep the chat. */
+  const log = document.querySelector('#chat .chatLog');
+  if (log) {
+    const box = document.createElement('div');
+    box.id = 'lgbMoves'; box.className = 'chatLog lgbMoves';
+    const head = document.createElement('div'); head.className = 'lgbMovesHead';
+    const title = document.createElement('span'); title.className = 'computerHead'; title.textContent = 'Moves:';
+    const toChat = document.createElement('button'); toChat.type = 'button'; toChat.className = 'tab'; toChat.textContent = 'Show chat';
+    const list = document.createElement('ol'); list.className = 'computerLog';
+    head.append(title, toChat); box.append(head, list); log.before(box);
+    css.textContent += ' body:not(.lgbMovesOn) #lgbMoves { display: none; } body.lgbMovesOn #chat .chatLog:not(#lgbMoves) { display: none; }' +
+      ' #lgbMoves { display: flex; flex-direction: column; } .lgbMovesHead { display: flex; justify-content: space-between; align-items: center; padding-right: 30px; }';
+    const E = G.E;
+    let showChat = false, seen = -1;
+    const ownGame = () => { const P = G.Play; return !!(P && P.s) && !(G.Lesson && G.Lesson.on) && !(G.teaching && G.teaching.on) &&
+      !(G.exploring && G.exploring.on) && !(G.kifu && G.kifu.on) && !(G.setupOn && G.setupOn()); };
+    const line = () => { const P = G.Play, out = P.s.moves.slice(); for (let r = P.redo.length - 1; r >= 0; r--) out.push(...P.redo[r]); return out; };
+    function paint() {
+      const P = G.Play;
+      if (P && P.s && P.s.moves.length !== seen) { seen = P.s.moves.length; showChat = false; }
+      const on = (G.settings.mode || 'play') !== 'coach' && ownGame() && !showChat;
+      document.body.classList.toggle('lgbMovesOn', on);
+      if (!on) return;
+      const s = P.s, all = line(), now = s.moves.length, canJump = P.phase === 'play';
+      list.textContent = '';
+      let cur = null;
+      all.forEach((m, k) => {
+        const li = document.createElement('li'), b = document.createElement('button');
+        b.type = 'button'; b.disabled = !canJump;
+        b.textContent = (k + 1) + '. ' + (m.c === 1 ? 'Black' : 'White') + (m.c === P.human && !P.both ? ' (you)' : '') + ' ' + (m.i < 0 ? 'passes' : E.coord(s.n, m.i));
+        if (k >= now) li.className = 'later';
+        b.addEventListener('click', () => G.jumpTo(all.slice(0, k + 1)));
+        li.append(b); list.append(li);
+        if (k < now) cur = li;
+      });
+      if (cur) cur.classList.add('now');
+      if (!all.length) { const li = document.createElement('li'); li.className = 'note'; li.textContent = 'No moves yet.'; list.append(li); }
+      if (P.thinking && P.phase === 'play' && s.turn !== P.human && !P.both) { const li = document.createElement('li'); li.className = 'note'; li.textContent = 'Computer thinking…'; list.append(li); cur = li; }
+      if (cur) list.scrollTop = Math.max(0, cur.offsetTop + cur.offsetHeight - list.clientHeight + 4);
+    }
+    const chatBack = () => { showChat = true; paint(); };
+    toChat.addEventListener('click', chatBack);
+    document.querySelector('#chat .chatForm').addEventListener('submit', chatBack, true);
+    document.getElementById('btnAnalyse').addEventListener('click', chatBack, true);
+    document.addEventListener('gc:play-changed', () => setTimeout(paint, 0));
+    document.addEventListener('gc:chat-changed', () => setTimeout(paint, 0));
+    document.getElementById('btnMode').addEventListener('click', () => setTimeout(paint, 0));
+    paint();
+  }
 })();
