@@ -32,6 +32,7 @@
   const scratch = {};
   function flood(g, board, i) {
     const sc = scratch[g.n] || (scratch[g.n] = { m: new Int32Array(g.n * g.n), l: new Int32Array(g.n * g.n), s: 0 });
+    if (sc.s >= 0x7ffffff0) { sc.m.fill(0); sc.l.fill(0); sc.s = 0; } /* the marks are 32-bit: start again before they overflow */
     const stamp = ++sc.s, c = board[i];
     const stones = [i], libs = [];
     sc.m[i] = stamp;
