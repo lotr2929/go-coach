@@ -56,17 +56,16 @@
   }
   /* 5. (Boon, 28 Nov 2026) Play mode: the chat panel becomes the moves panel. In your own game in Play mode, the chat's
         messages are hidden and the panel lists every move in two columns, Black then White, numbered (a tap goes back or forward to that
-        move, as on the Computer panel). The message row stays: sending a message, Analyse or "Show chat" brings the chat
-        back until the next move is played. Coach mode, lessons, puzzles, famous games and Set up keep the chat. */
+        move, as on the Computer panel). The message row stays: sending a message or Analyse brings the chat back until the
+        next move is played ("Show chat" was removed, Boon, 28 Nov 2026). Coach mode, lessons, puzzles, famous games and Set up keep the chat. */
   const log = document.querySelector('#chat .chatLog');
   if (log) {
     const box = document.createElement('div');
     box.id = 'lgbMoves'; box.className = 'chatLog lgbMoves';
     const head = document.createElement('div'); head.className = 'lgbMovesHead';
     const title = document.createElement('span'); title.className = 'computerHead'; title.textContent = 'Moves:';
-    const toChat = document.createElement('button'); toChat.type = 'button'; toChat.className = 'tab'; toChat.textContent = 'Show chat';
     const list = document.createElement('ol'); list.className = 'computerLog';
-    head.append(title, toChat); box.append(head, list); log.before(box);
+    head.append(title); box.append(head, list); log.before(box);
     css.textContent += ' body:not(.lgbMovesOn) #lgbMoves { display: none; } body.lgbMovesOn #chat .chatLog:not(#lgbMoves) { display: none; }' +
       ' #lgbMoves { display: flex; flex-direction: column; } #lgbMoves .computerLog { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; align-content: start; }' +
       ' #lgbMoves .colHead { font-weight: 600; padding: 1px 4px; color: var(--mute); } #lgbMoves .wide { grid-column: 1 / -1; }' +
@@ -109,7 +108,6 @@
       if (cur) list.scrollTop = Math.max(0, cur.offsetTop + cur.offsetHeight - list.clientHeight + 4);
     }
     const chatBack = () => { showChat = true; paint(); };
-    toChat.addEventListener('click', chatBack);
     document.querySelector('#chat .chatForm').addEventListener('submit', chatBack, true);
     document.getElementById('btnAnalyse').addEventListener('click', chatBack, true);
     document.addEventListener('gc:play-changed', () => setTimeout(paint, 0));
