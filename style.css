@@ -408,19 +408,20 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
     --bbgap: calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--bb)) / 2);
     grid-template-columns: minmax(max-content, 1fr) auto auto auto var(--bb) minmax(3rem, 1fr);
     grid-template-rows: auto auto auto auto auto auto auto auto minmax(0, 1fr) auto; padding-left: 12px; padding-right: 12px; }
-  body.boardBig header { display: contents; }
-  body.boardBig .titleBox { grid-column: 1; grid-row: 1; align-self: center; padding: 2px 0 0; }
-  body.boardBig #btnFlag, body.boardBig #btnSettings { height: 24px; } /* the three top rows close together (Boon, 28 Nov 2026) */
-  /* The name, then the grade and the streak when they show, ending at the column's right edge. */
-  body.boardBig .userName { grid-column: 2 / 5; grid-row: 1; justify-self: end; align-self: center; margin: 0; max-width: 12rem; }
-  body.boardBig .userGrade { grid-column: 4; grid-row: 1; justify-self: end; align-self: center; }
-  body.boardBig .userStreak { grid-column: 4; grid-row: 1; justify-self: end; align-self: center; }
-  html:not(.signedOut) body.boardBig:has(.userGrade:not(:empty)) .userName { grid-column: 2 / 4; }
-  html:not(.signedOut) body.boardBig:has(.userGrade:not(:empty)):has(.userStreak:not(:empty)) .userName { grid-column: 2; }
-  html:not(.signedOut) body.boardBig:has(.userGrade:not(:empty)):has(.userStreak:not(:empty)) .userGrade { grid-column: 3; }
-  body.boardBig #controls { grid-column: 1 / 3; grid-row: 2; align-self: center; margin: 0; }
-  body.boardBig #btnFlag { grid-column: 3; grid-row: 2; justify-self: end; }
-  body.boardBig #btnSettings { grid-column: 4; grid-row: 2; }
+  /* The title bar keeps its own layout (Boon, 28 Nov 2026: signing in had pushed the envelope and Settings apart). It covers the
+     left column's first two rows and wraps into two lines: the title on the left with the name and grade on the right, then
+     the envelope and Settings on the right of the second line, beside Pass, Resign and New. */
+  body.boardBig header { grid-column: 1 / 5; grid-row: 1 / 3; display: flex; flex-wrap: wrap; align-content: space-between; align-items: center; justify-content: flex-start; gap: 0 4px; padding: 0; min-height: 0; }
+  body.boardBig header { z-index: auto; pointer-events: none; } /* taps pass through its empty part to Pass, Resign and New */
+  body.boardBig header > * { pointer-events: auto; }
+  body.boardBig header::after { content: ""; order: 5; flex-basis: 100%; height: 0; }
+  body.boardBig .titleBox { order: 1; margin-right: auto; padding: 2px 0 0; }
+  body.boardBig .userName { order: 2; margin: 0; max-width: 12rem; }
+  body.boardBig .userGrade { order: 3; } body.boardBig .userStreak { order: 4; }
+  body.boardBig #btnFlag { order: 6; margin-left: auto; }
+  body.boardBig #btnSettings { order: 7; }
+  body.boardBig #btnFlag, body.boardBig #btnSettings { height: 24px; } /* the three top rows close together */
+  body.boardBig #controls { grid-column: 1 / 5; grid-row: 2; align-self: end; justify-self: start; margin: 0; position: relative; z-index: 1; }
   body.boardBig #lessonBar { grid-column: 1 / 5; grid-row: 3; } body.boardBig #kifuBar { grid-column: 1 / 5; grid-row: 4; }
   body.boardBig #quizOptions { grid-column: 1 / 5; grid-row: 5; } body.boardBig #scorePanel { grid-column: 1 / 5; grid-row: 6; }
   body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 0 6px; }
