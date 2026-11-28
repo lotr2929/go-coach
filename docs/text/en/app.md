@@ -102,11 +102,11 @@ Reading page
 ## back-to-board
 ← Back to the board
 
-## page-enlarge
-Show the page full screen
+## board-enlarge
+Show the board full screen
 
-## page-shrink
-Back to the board window
+## board-shrink
+Back to the usual view
 
 ## busy-thinking
 Give me a moment: I am still thinking about my move.

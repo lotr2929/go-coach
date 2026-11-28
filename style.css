@@ -119,11 +119,6 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .boardWrap.paged canvas { visibility: hidden; }
 .pageHead { position: sticky; top: 0; z-index: 1; display: flex; justify-content: flex-end; padding: 6px 10px; background: #e6e0d0; border-bottom: 1px solid #cfc7b2; }
 .pageHead .pageClose { padding: 3px 8px; font-size: .85rem; }
-/* The page's full-screen button, on the left of the page's top bar (page.js). Full screen fixes the page over the whole screen. */
-.pageHead .pageSize { margin-right: auto; width: 34px; height: 34px; padding: 6px; border-radius: 0; background: transparent; border: 0; box-shadow: none; display: grid; place-items: center; }
-.pageHead .pageSize svg { width: 18px; height: 18px; fill: none; stroke: #5a6560; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
-.boardWrap.pageBig .pageView { position: fixed; inset: 0; z-index: 40; box-shadow: none; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
-.boardWrap.pageBig .pageBody { max-width: 46rem; margin: 0 auto; }
 /* The page's text is the chat's size (--text); headings are in em so they follow it. Settings > Text size scales it all. */
 .pageBody { padding: 4px 18px 22px; line-height: 1.55; font-size: var(--text); }
 .pageBody h1 { position: static; transform: none; white-space: normal; font: 600 1.6em/1.2 var(--serif); margin: .5rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid #cfc7b2; letter-spacing: 0; }
@@ -197,7 +192,7 @@ dialog::backdrop { background: rgba(20, 24, 23, .45); }
 /* The enlarge/shrink button at the top right of the chat; when enlarged the chat covers the screen until tapped again. */
 .chatSize { position: absolute; top: 6px; right: 6px; z-index: 1; width: 34px; height: 34px; padding: 6px; border-radius: 0; background: var(--surface); display: grid; place-items: center; }
 .chatSize svg { width: 18px; height: 18px; fill: none; stroke: var(--mute); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
-body.chatBig #chat { position: fixed; z-index: 30; top: calc(env(safe-area-inset-top) + 8px); bottom: calc(env(safe-area-inset-bottom) + 8px); left: calc(env(safe-area-inset-left) + 8px); right: calc(env(safe-area-inset-right) + 8px); min-height: 0; box-shadow: 0 8px 30px rgba(0,0,0,.5); }
+body.chatBig #chat { position: fixed; z-index: 30; top: env(safe-area-inset-top); bottom: env(safe-area-inset-bottom); left: env(safe-area-inset-left); right: env(safe-area-inset-right); min-height: 0; box-shadow: none; } /* full screen, edge to edge (Boon, 28 Nov 2026) */
 .chatLog { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 12px; }
 .msg { max-width: 92%; width: fit-content; margin: 8px 0; padding: 9px 13px; border-radius: 0; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
 .msg.coach { padding-left: 0; padding-right: 0; } /* no tint: the coach's words sit on the page (Boon's choice) */
@@ -363,3 +358,101 @@ h1.gcOn { color: #2b1d0e; line-height: 1; padding: 0 10px 0 4px; margin-left: -4
 h3.grp { font: 600 .8rem var(--sans, inherit); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); margin: 16px 0 4px; border-bottom: 1px solid var(--line, #0002); padding-bottom: 2px; }
 .opt.inline { display: flex; align-items: center; gap: 10px; }
 .opt.inline .lbl { display: inline; margin: 0; font-size: .95rem; color: inherit; }
+
+/* The board full screen (boardbig.js): only the class boardBig on the body; nothing is moved, so shrinking back is exact. */
+#capsInfo { margin-left: auto; }
+.boardSize { width: 28px; height: 22px; padding: 2px 5px; margin: -2px 0 -2px 4px; border: 0; border-radius: 0; background: none; box-shadow: none; display: grid; place-items: center; }
+.boardSize svg { width: 18px; height: 18px; fill: none; stroke: var(--mute); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.coachStrip { display: none; }
+body.boardBig #chat, body.boardBig #moveTree { display: none !important; }
+body.boardBig #controls > button:not(#btnPass):not(#btnResign):not(#btnNew):not(#btnSCancel) { display: none; }
+body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; min-height: 0; overflow: hidden; }
+body.boardBig .coachStrip.empty { display: none; }
+body.boardBig .stripText { flex: 1; min-width: 0; max-height: 100%; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+.stripNav { display: grid; justify-items: center; gap: 0; }
+.coachStrip.single .stripNav { display: none; }
+.stripNav button { width: 34px; height: 26px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.stripCount { font-size: .75rem; color: var(--mute); white-space: nowrap; }
+
+/* The layout (Boon, 28 Nov 2026). main, .stage, .panel and .boardCol step aside (display: contents) so their parts are placed
+   one by one on the screen grid; nothing is moved in the page, so the usual view comes back exactly.
+   Upright: the title bar on top, then (a little above the middle) Pass, Resign and New, the counts, the board and the bar under
+   it, and the coach strip in the space below.
+   On its side: the board fills the screen's height in the middle. The left column holds, in rows: the title (left) and the
+   player's name and grade (right); Pass, Resign and New, with the envelope and Settings on the right; the counts and prisoners;
+   and, level with the bottom of the board, undo and redo (left) with Shapes and Territory (right). The coach strip is on the right. */
+body.boardBig { display: grid; gap: 0 8px; }
+body.boardBig main, body.boardBig .stage, body.boardBig .panel, body.boardBig .boardCol { display: contents; }
+body.boardBig header { position: relative; inset: auto; height: auto; min-height: 3rem; padding: 6px 14px; }
+body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; }
+@media (orientation: portrait) {
+  body.boardBig { --bb: min(calc(100vw - 24px), calc(100dvh - 270px)); grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, .35fr) auto auto auto auto auto auto auto auto minmax(0, 1fr); }
+  body.boardBig header { grid-row: 1; height: 3.6rem; min-height: 0; }
+  body.boardBig header button.icon { height: 34px; } /* leaves room for the shrink button right under Settings */
+  /* The shrink button just below Settings (Boon, 28 Nov 2026): taken out of the turn line and placed under the title bar's right
+     end; the title bar has a fixed height here so the place is known. */
+  body.boardBig #btnBoardSize { position: fixed; top: calc(env(safe-area-inset-top) + 3.6rem - 12px); right: calc(env(safe-area-inset-right) + 12px); width: 28px; height: 24px; margin: 0; z-index: 5; }
+  body.boardBig #controls { grid-row: 3; } body.boardBig #lessonBar { grid-row: 4; } body.boardBig #kifuBar { grid-row: 5; }
+  body.boardBig #quizOptions { grid-row: 6; } body.boardBig #scorePanel { grid-row: 7; }
+  body.boardBig #controls, body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { width: var(--bb); justify-self: center; margin: 0 0 4px; }
+  body.boardBig #statusBar { grid-row: 8; }
+  body.boardBig .boardWrap { grid-row: 9; }
+  body.boardBig .boardBar { grid-row: 10; margin-top: 8px; }
+  body.boardBig #statusBar, body.boardBig .boardWrap, body.boardBig .boardBar { width: var(--bb); justify-self: center; }
+  body.boardBig .coachStrip { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; }
+}
+@media (orientation: landscape) {
+  /* Three columns: the left column, the board in the very middle, and a right column of the same width (Boon, 28 Nov 2026).
+     The board is as tall as the screen unless the side columns would be narrower than 13.5rem. */
+  body.boardBig { --side: 11.5rem; --bb: min(calc(100dvh - 16px), calc(100vw - 2 * var(--side) - 40px));
+    --bbgap: calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--bb)) / 2);
+    grid-template-columns: minmax(var(--side), 1fr) var(--bb) minmax(var(--side), 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto auto minmax(0, 1fr) auto; padding-left: 12px; padding-right: 12px; column-gap: 8px; }
+  /* The title bar covers the left column's first two rows, laid out as a small grid of its own (Boon, 28 Nov 2026): the title,
+     then the name and grade on a row of their own, then the envelope and Settings at the right, beside Pass, Resign and New. */
+  body.boardBig header { grid-column: 1; grid-row: 1 / 3; display: grid; grid-template-columns: auto auto minmax(0, 1fr); grid-template-rows: auto auto auto;
+    align-items: center; gap: 0 .5em; padding: 0; min-height: 0; z-index: auto; pointer-events: none; }
+  body.boardBig header > * { pointer-events: auto; } /* taps pass through its empty part to Pass, Resign and New */
+  body.boardBig .titleBox { grid-column: 1 / -1; grid-row: 1; margin: 0; padding: 2px 0 0; }
+  body.boardBig .userName { grid-column: 1; grid-row: 2; justify-self: start; margin: 0; padding: 0; max-width: 10rem; }
+  body.boardBig .userGrade { grid-column: 2; grid-row: 2; justify-self: start; margin: 0; }
+  body.boardBig .userStreak { grid-column: 3; grid-row: 2; justify-self: start; margin: 0; }
+  /* the envelope and Settings share the last cell, side by side at its right */
+  body.boardBig #btnFlag { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: 30px; margin: 0 30px 0 0; }
+  body.boardBig #btnSettings { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: 28px; }
+  body.boardBig #btnFlag, body.boardBig #btnSettings { height: 24px; } /* the three top rows close together */
+  body.boardBig #controls { grid-column: 1; grid-row: 2; align-self: end; justify-self: start; margin: 0; position: relative; z-index: 1; }
+  body.boardBig #btnPass { padding-left: 0; } /* the P of Pass in line with the name above (Boon, 28 Nov 2026) */
+  body.boardBig #lessonBar { grid-column: 1; grid-row: 3; } body.boardBig #kifuBar { grid-column: 1; grid-row: 4; }
+  body.boardBig #quizOptions { grid-column: 1; grid-row: 5; } body.boardBig #scorePanel { grid-column: 1; grid-row: 6; }
+  body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 0 6px; }
+  body.boardBig #statusBar { display: contents; }
+  body.boardBig #whoTurn { grid-column: 1; grid-row: 7; align-self: center; padding: 0 0 2px; }
+  body.boardBig #capsInfo { grid-column: 1; grid-row: 7; justify-self: end; align-self: center; margin: 0; }
+  /* The shrink button just to the right of the board's top corner (Boon, 28 Nov 2026). */
+  body.boardBig #btnBoardSize { grid-column: 3; grid-row: 1 / -1; justify-self: start; align-self: start; margin: var(--bbgap) 0 0; } /* level with the board's top */
+  body.boardBig #posInfo { grid-column: 1; grid-row: 8; }
+  body.boardBig .boardWrap { grid-column: 2; grid-row: 1 / -1; width: var(--bb); }
+  body.boardBig #boardBar { display: contents; }
+  /* undo/redo and Shapes/Territory with their bottom level with the board's bottom */
+  body.boardBig #boardBar .barSide:first-child { grid-column: 1; grid-row: 10; justify-self: start; align-self: end; margin-bottom: var(--bbgap); }
+  body.boardBig #boardBar .barSide:last-child { grid-column: 1; grid-row: 10; justify-self: end; align-self: end; margin-bottom: var(--bbgap); }
+  body.boardBig #puzzleBar { grid-column: 1; grid-row: 10; width: auto; margin: 0 0 var(--bbgap); align-self: end; }
+  body.boardBig .coachStrip { grid-column: 3; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin: 0; }
+  body.boardBig .verStamp { display: none; }
+}
+
+/* The board panel full screen with a reading page open (body.paging, page.js): the title bar on top and the page, under the turn
+   line with the full-screen button, fills the rest; the game buttons, the bars and the strip step aside. */
+body.boardBig.paging { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) !important; padding-left: 0; padding-right: 0; }
+body.boardBig.paging header { display: flex !important; grid-column: 1; grid-row: 1; }
+body.boardBig.paging #controls, body.boardBig.paging #lessonBar, body.boardBig.paging #kifuBar, body.boardBig.paging #quizOptions,
+body.boardBig.paging #scorePanel, body.boardBig.paging .coachStrip, body.boardBig.paging .boardBar, body.boardBig.paging #puzzleBar { display: none !important; }
+body.boardBig.paging .boardCol { display: flex !important; flex-direction: column; grid-column: 1; grid-row: 2; min-height: 0; }
+body.boardBig.paging #statusBar { display: flex !important; width: auto; padding: 6px 12px; }
+body.boardBig.paging .boardWrap { width: auto !important; aspect-ratio: auto; flex: 1; min-height: 0; align-self: stretch; }
+body.boardBig.paging .pageView { box-shadow: none; }
+body.boardBig.paging .pageBody { max-width: 46rem; margin: 0 auto; }
+body.boardBig.paging #capsInfo { margin-left: auto; }
+body.boardBig.paging #btnBoardSize { position: static; width: 28px; height: 22px; margin: -2px 0 -2px 4px; }
