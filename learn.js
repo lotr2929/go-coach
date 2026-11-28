@@ -78,9 +78,10 @@
     G.setChips(L.puzzle ? puzzleChips() : CHIPS);
     const ch = LS.chapterOf(L.id);
     if (L.puzzle) say(T('heading-puzzle', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu), colour: G.colourName(L.turn) }) + '\n\n' + L.text.join('\n\n'));
+    else if (L.story) say(T('heading-story', { title: L.title }) + '\n\n' + L.text.join('\n\n'));
     else if (L.file) say(T('heading-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) + '\n\n' + L.text.join('\n\n'));
     else say(T(ch ? 'heading-chapter' : 'heading', { count: i + 1, total: LS.CORE, title: L.title, chapter: ch ? ch.title : '' }) + '\n\n' + L.text.join('\n\n'));
-    say((L.task ? T('task', { task: L.task }) + '\n' : '') + T(L.puzzle ? 'puzzle-ask' : 'ask-me'));
+    say((L.task ? T('task', { task: L.task }) + '\n' : '') + T(L.puzzle ? 'puzzle-ask' : L.story ? 'story-ask' : 'ask-me'));
     renderLesson();
   }
   function exitLesson() {
@@ -96,12 +97,12 @@
   function renderLesson() {
     const L = LS.list[Lesson.idx], s = Lesson.s;
     let terr = null;
-    if (L.type === 'quiz' && Lesson.answered) terr = E.scoreArea(s.n, s.board).terr;
+    if ((L.type === 'quiz' && Lesson.answered) || (L.story && Lesson.status === 'win')) terr = E.scoreArea(s.n, s.board).terr; /* a lesson game ends with the count */
     $('#scorePanel').hidden = true; $('#controls').hidden = true; $('#chat').hidden = false;
     $('#lessonBar').hidden = false; $('#quizOptions').hidden = L.type !== 'quiz';
     playView.set({
       n: s.n, board: s.board, last: s.last, ko: s.ko, coords: false, libs: !!L.libs,
-      marks: LS.marksFor(L, s), markColor: s.turn, hint: Lesson.hintPts, ghost: -1, hoverColor: 0, terr, dead: null, own: null, shapes: null
+      marks: LS.marksFor(L, s), markColor: s.turn, hint: Lesson.hintPts.length || !L.follow ? Lesson.hintPts : L.follow(s), ghost: -1, hoverColor: 0, terr, dead: null, own: null, shapes: null
     });
     $('#whoTurn').textContent = L.puzzle ? T('who-puzzle', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) : L.file ? T('who-file', { title: L.title, grade: G.lessonFiles.gradeText(L.kyu) }) : T('heading', { count: Lesson.idx + 1, total: LS.CORE, title: L.title });
     $('#capsInfo').textContent = '';
@@ -110,8 +111,9 @@
     $('#btnLHint').hidden = !isTask; $('#btnLReset').hidden = !isTask;
     const next = $('#btnLNext');
     const last = !L.file && Lesson.idx === LS.CORE - 1;
-    next.textContent = T(last ? 'play-a-game' : 'next');
-    next.disabled = !(L.type === 'info' || Lesson.status === 'win');
+    const going = L.story && Lesson.status !== 'win'; /* a lesson game before its end: Play on, or Take back after a mistake */
+    next.textContent = T(going ? L.nextKey(s) : last ? 'play-a-game' : 'next');
+    next.disabled = going ? !L.canNext(s) : !(L.type === 'info' || Lesson.status === 'win');
     next.classList.toggle('primary', !next.disabled);
     /* A puzzle has only "Back to game" at the top; Hint, Previous, Next and the list are the suggestion buttons, and the icons under the board step through it. */
     const pz = !!L.puzzle;
@@ -141,7 +143,7 @@
     say(r.msg);
     if (r.status === 'win' && G.gcMode) G.gcMode.solved(L); /* Go Coach mode: today's lesson and the streak (gcmode.js) */
     /* The first try at each exercise counts towards the Go Coach grade (grade.js), unless a hint was used; said after the lesson's own words. */
-    if (r.status && !Lesson.hinted && G.grade) G.grade.lesson(L.id, kyuOf(L), r.status === 'win');
+    if (r.status && !Lesson.hinted && !L.story && G.grade) G.grade.lesson(L.id, kyuOf(L), r.status === 'win');
     renderLesson(); moved();
   }
   function answerQuiz(k, btn) {
@@ -160,6 +162,7 @@
   }
   function lessonHint() {
     const L = LS.list[Lesson.idx];
+    if (L.story) { say(L.bestHint(Lesson.s)); renderLesson(); return; } /* a lesson game: the top moves, A to E (it does not count towards the grade) */
     Lesson.hintPts = LS.hintPoints(L, Lesson.s); Lesson.hinted = true;
     if (G.grade) G.grade.lesson(L.id, kyuOf(L), null); /* a hint first: this exercise does not count */
     renderLesson();
@@ -174,6 +177,11 @@
   function lessonNext() {
     const L = LS.list[Lesson.idx];
     if (L.puzzle) { G.gcMode.next(L.id); return; }
+    if (L.story && Lesson.status !== 'win') { /* Play on, or Take back (lessonfiles.js) */
+      const r = L.next(Lesson.s);
+      if (r.status) { Lesson.status = r.status; markDone(L); }
+      say(r.msg); renderLesson(); return;
+    }
     if (L.type === 'info') markDone(L);
     if (L.file) { G.lessonFiles.openNext(L.id); return; }
     if (Lesson.idx === LS.CORE - 1) {
@@ -186,7 +194,7 @@
     if (!Lesson.on) return null;
     const L = LS.list[Lesson.idx], s = Lesson.s, shown = LS.marksFor(L, s), marks = {};
     for (const k of Object.keys(shown)) if (/^[A-F]$/.test(shown[k])) marks[shown[k]] = +k;
-    return { id: L.id, n: s.n, s, marks, task: L.task, hasHint: !L.type && LS.hintPoints(L, s).length > 0 };
+    return { id: L.id, n: s.n, s, marks, task: L.task, hasHint: !L.type && (L.story ? !!(s.data && s.data.at ? s.data.at : L.problem.root).kids.length : LS.hintPoints(L, s).length > 0) };
   }
 
   Object.assign(G, { Lesson, renderLesson, showMenu, openLesson, exitLesson, onLessonTap, lessonInfo, lessonHint, lessonReset, lessonNext, isPuzzle, puzzleUndo, puzzleRedo, puzzleFirst, puzzleLast, puzzleReplay });

@@ -16,7 +16,7 @@ function build(name = 'lessons') {
       const L = PR.fromSGF(fs.readFileSync(path.join(DIR, band, f), 'utf8'), id);
       const bad = PR.problemsWith(L, E);
       for (const b of bad) errors.push(`${rel}: ${b}`);
-      if (!bad.length) list.push({ id, file: rel, title: L.title, kyu: L.kyu, band });
+      if (!bad.length) list.push(Object.assign({ id, file: rel, title: L.title, kyu: L.kyu, band }, L.story ? { story: true } : {}));
     }
   }
   list.sort((a, b) => b.kyu - a.kyu || a.id.localeCompare(b.id)); /* easiest (most kyu) first */

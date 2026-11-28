@@ -51,7 +51,7 @@
     const task = taskAt >= 0 ? paras.splice(taskAt, 1)[0].replace(/^task:\s*/i, '') : '';
     const pl = first('PL').toUpperCase();
     return {
-      id, n, root, title: first('GN').trim(), kyu: kyuOf(first('DI')),
+      id, n, root, title: first('GN').trim(), kyu: kyuOf(first('DI')), story: /^story$/i.test(first('TY').trim()),
       turn: pl === 'W' ? 2 : pl === 'B' ? 1 : (root.kids[0] && root.kids[0].color) || 1,
       black: SGF.points(r.AB, n), white: SGF.points(r.AW, n), intro: paras, task
     };
@@ -75,6 +75,32 @@
     const good = nd => isRight(nd.comment) || nd.kids.some(good);
     const k = at.kids.find(good);
     return k ? k.point : -1;
+  }
+
+  /* ---------- Lesson games (TY[story], lessons/README.md "Lesson games") ----------
+     One game on the main line: the player taps their own moves and the opponent's answers follow, each with its note. A comment
+     paragraph starting "Your turn:" means the player finds the next move alone (no circle on it); "Best:" paragraphs are kept
+     back and shown with the top moves (LB labels A to E on the same node) when the player asks for a hint. */
+  const paras = c => (c || '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+  const isBest = p => /^best:/i.test(p);
+  /* What the player sees of a note: everything but the Best: paragraphs. */
+  const note = c => paras(clean(c)).filter(p => !isBest(p)).join('\n\n');
+  /* The words for the top moves at this node: the Best: paragraphs, without the label. */
+  const bestWords = nd => paras(nd.comment).filter(isBest).map(p => p.replace(/^best:\s*/i, '')).join('\n\n');
+  /* The top moves at this node: [{ point, label }] from its LB property, in the order A, B, C... */
+  const bestMoves = (nd, n) => (nd.props.LB || []).map(v => { const [p, l] = v.split(':'); return { point: SGF.point(p, n), label: (l || '').trim() }; })
+    .filter(m => m.point >= 0 && m.label).sort((a, b) => a.label.localeCompare(b.label));
+  /* Does the player find the next move alone? (A "Your turn:" paragraph in the note before it, or in the introduction.) */
+  const yourTurn = nd => paras(nd.comment).some(p => /^your turn:/i.test(p));
+  /* Follows the player's move from `at` in a lesson game. Right: { ok: true, mine, reply (the opponent's node or null), end }.
+     Not the game's move: { ok: false, side } (side: the side branch for that move, if the file shows what happens after it). */
+  function storyStep(at, point) {
+    const main = at.kids[0];
+    if (main && main.point === point) {
+      const reply = main.kids[0] || null, last = reply || main;
+      return { ok: true, mine: main, reply, at: last, end: !last.kids.length };
+    }
+    return { ok: false, side: at.kids.slice(1).find(k => k.point === point) || null };
   }
 
   /* Everything wrong with a lesson, as sentences for the person who wrote it (empty when it is fine). E is engine.js. */
@@ -101,9 +127,18 @@
         walk(k, r.board, 3 - turn, r.ko, where + ' ');
       }
     })(L.root, (() => { const b = new Array(L.n * L.n).fill(0); L.black.forEach(i => { b[i] = 1; }); L.white.forEach(i => { b[i] = 2; }); return b; })(), L.turn, -1, '');
-    if (!rights) out.push('no try is marked RIGHT');
+    if (L.story) {
+      if (L.turn !== 1) out.push('a lesson game is played from the start: PL must be B');
+      for (let nd = L.root; nd; nd = nd.kids[0]) {
+        for (const k of nd.kids.slice(1)) {
+          if (k.color !== L.turn) out.push(`${E.coord(L.n, k.point)}: a side branch in a lesson game starts with the player's move`);
+          for (let b = k; b; b = b.kids[0]) if (b.kids.length > 1) out.push(`${E.coord(L.n, k.point)}: a side branch in a lesson game is one line, without branches of its own`);
+        }
+        if (nd !== L.root && !nd.kids.length && !nd.comment) out.push('the last move of a lesson game needs a comment (the end of the game)');
+      }
+    } else if (!rights) out.push('no try is marked RIGHT');
     return out;
   }
 
-  return { kyuOf, fromSGF, step, hint, problemsWith, isRight };
+  return { kyuOf, fromSGF, step, hint, problemsWith, isRight, storyStep, note, bestWords, bestMoves, yourTurn };
 });

@@ -31,6 +31,26 @@ module.exports = async function (t) {
     assert.strictEqual(PR.kyuOf('2d'), -1); assert.strictEqual(PR.kyuOf('18k'), 18); assert.strictEqual(PR.kyuOf(''), null);
   });
 
+  await t('lesson games: the main line, Your turn, the top moves and a wrong move', () => {
+    const at = c => (9 - +c.slice(1)) * 9 + 'ABCDEFGHJ'.indexOf(c[0]);
+    const P = PR.fromSGF('(;GM[1]FF[4]SZ[9]TY[story]GN[Test game]DI[30k]PL[B]C[A game.]LB[gc:A][cg:B]' +
+      ';B[gc]C[A corner.\n\nYour turn: take another corner.\n\nBest: the other corners.];W[gg]C[White too.]LB[cc:A]' +
+      '(;B[cc]C[Good.];W[cg]C[The end.])(;B[ee]C[The centre is smaller here.]))', 'test');
+    assert(P.story); assert.deepStrictEqual(PR.problemsWith(P, E), []);
+    assert(!PR.yourTurn(P.root)); assert.deepStrictEqual(PR.bestMoves(P.root, 9).map(m => m.label + E.coord(9, m.point)), ['AG7', 'BC3']);
+    let r = PR.storyStep(P.root, at('G7'));
+    assert(r.ok && !r.end); assert.strictEqual(r.reply.point, at('G3'));
+    assert.strictEqual(PR.note(r.mine.comment), 'A corner.\n\nYour turn: take another corner.', 'Best: is kept back');
+    assert.strictEqual(PR.bestWords(r.mine), 'the other corners.');
+    assert(PR.yourTurn(r.mine) === true && !PR.yourTurn(r.at));
+    const w = PR.storyStep(r.at, at('E5'));
+    assert(!w.ok); assert(/smaller/.test(PR.note(w.side.comment)));
+    assert(!PR.storyStep(r.at, at('A1')).side, 'a move the file does not show');
+    r = PR.storyStep(r.at, at('C7'));
+    assert(r.ok && r.end); assert.strictEqual(PR.note(r.at.comment), 'The end.');
+    assert(PR.problemsWith(PR.fromSGF('(;GM[1]FF[4]SZ[9]TY[story]GN[x]DI[30k]PL[B]C[x];B[gc];W[gg])', 'x'), E).join().includes('last move'));
+  });
+
   await t('lessons folder: the checker names what is wrong with a bad lesson', () => {
     const bad = PR.fromSGF('(;GM[1]FF[4]SZ[9]PL[B]AB[ee](;B[ee]C[RIGHT])(;W[aa]C[x]))', 'bad');
     const p = PR.problemsWith(bad, E).join('\n');
