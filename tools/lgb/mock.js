@@ -54,4 +54,65 @@
     document.addEventListener('click', () => setTimeout(show, 0), true);
     show();
   }
+  /* 5. (Boon, 28 Nov 2026) Play mode: the chat panel becomes the moves panel. In your own game in Play mode, the chat's
+        messages are hidden and the panel lists every move in two columns, Black then White, numbered (a tap goes back or forward to that
+        move, as on the Computer panel). The message row stays: sending a message or Analyse brings the chat back until the
+        next move is played ("Show chat" was removed, Boon, 28 Nov 2026). Coach mode, lessons, puzzles, famous games and Set up keep the chat. */
+  const log = document.querySelector('#chat .chatLog');
+  if (log) {
+    const box = document.createElement('div');
+    box.id = 'lgbMoves'; box.className = 'chatLog lgbMoves';
+    const head = document.createElement('div'); head.className = 'lgbMovesHead';
+    const title = document.createElement('span'); title.className = 'computerHead'; title.textContent = 'Moves:';
+    const list = document.createElement('ol'); list.className = 'computerLog';
+    head.append(title); box.append(head, list); log.before(box);
+    css.textContent += ' body:not(.lgbMovesOn) #lgbMoves { display: none; } body.lgbMovesOn #chat .chatLog:not(#lgbMoves) { display: none; }' +
+      ' #lgbMoves { display: flex; flex-direction: column; } #lgbMoves .computerLog { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; align-content: start; }' +
+      ' #lgbMoves .colHead { font-weight: 600; padding: 1px 4px; color: var(--mute); } #lgbMoves .wide { grid-column: 1 / -1; }' +
+      ' .lgbMovesHead { display: flex; justify-content: space-between; align-items: center; padding-right: 30px; }';
+    const E = G.E;
+    let showChat = false, seen = -1;
+    const ownGame = () => { const P = G.Play; return !!(P && P.s) && !(G.Lesson && G.Lesson.on) && !(G.teaching && G.teaching.on) &&
+      !(G.exploring && G.exploring.on) && !(G.kifu && G.kifu.on) && !(G.setupOn && G.setupOn()); };
+    const line = () => { const P = G.Play, out = P.s.moves.slice(); for (let r = P.redo.length - 1; r >= 0; r--) out.push(...P.redo[r]); return out; };
+    function paint() {
+      const P = G.Play;
+      if (P && P.s && P.s.moves.length !== seen) { seen = P.s.moves.length; showChat = false; }
+      const on = (G.settings.mode || 'play') !== 'coach' && ownGame() && !showChat;
+      document.body.classList.toggle('lgbMovesOn', on);
+      if (!on) return;
+      const s = P.s, all = line(), now = s.moves.length, canJump = P.phase === 'play';
+      list.textContent = '';
+      let cur = null;
+      /* Two columns, Black then White (Boon, 28 Nov 2026): a row for each Black move with White's reply beside it; a White
+         move with no Black move before it in its row (a handicap game starts with White) gets an empty Black cell. */
+      const who = c => (c === 1 ? 'Black' : 'White') + (c === P.human && !P.both ? ' (you)' : '');
+      for (const c of [1, 2]) { const h = document.createElement('li'); h.className = 'colHead'; h.textContent = who(c); list.append(h); }
+      let col = 0; /* the column the next cell goes in: 0 Black, 1 White */
+      all.forEach((m, k) => {
+        const want = m.c === 1 ? 0 : 1;
+        if (want !== col) { list.append(document.createElement('li')); col = 1 - col; }
+        const li = document.createElement('li'), b = document.createElement('button');
+        b.type = 'button'; b.disabled = !canJump;
+        b.textContent = (k + 1) + '. ' + (m.i < 0 ? 'pass' : E.coord(s.n, m.i));
+        b.title = 'Go to move ' + (k + 1);
+        if (k >= now) li.className = 'later';
+        b.addEventListener('click', () => G.jumpTo(all.slice(0, k + 1)));
+        li.append(b); list.append(li);
+        col = 1 - col;
+        if (k < now) cur = li;
+      });
+      if (cur) cur.classList.add('now');
+      if (!all.length) { const li = document.createElement('li'); li.className = 'note wide'; li.textContent = 'No moves yet.'; list.append(li); }
+      if (P.thinking && P.phase === 'play' && s.turn !== P.human && !P.both) { const li = document.createElement('li'); li.className = 'note wide'; li.textContent = 'Computer thinking…'; list.append(li); cur = li; }
+      if (cur) list.scrollTop = Math.max(0, cur.offsetTop + cur.offsetHeight - list.clientHeight + 4);
+    }
+    const chatBack = () => { showChat = true; paint(); };
+    document.querySelector('#chat .chatForm').addEventListener('submit', chatBack, true);
+    document.getElementById('btnAnalyse').addEventListener('click', chatBack, true);
+    document.addEventListener('gc:play-changed', () => setTimeout(paint, 0));
+    document.addEventListener('gc:chat-changed', () => setTimeout(paint, 0));
+    document.getElementById('btnMode').addEventListener('click', () => setTimeout(paint, 0));
+    paint();
+  }
 })();
