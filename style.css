@@ -374,49 +374,72 @@ body.boardBig .stripText { flex: 1; min-width: 0; max-height: 100%; overflow-y: 
 .stripNav button { width: 34px; height: 26px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
 .stripCount { font-size: .75rem; color: var(--mute); white-space: nowrap; }
 
-/* The layout (Boon, 28 Nov 2026): the title bar stays and the board sits in the middle of the screen. main, .stage and .panel step
-   aside (display: contents) so the title bar, the game buttons, the board column and the coach strip are placed directly; nothing
-   is moved in the page, so the usual view comes back exactly.
-   Upright: title bar, game buttons, the board (as large as fits, centred in its space), then the coach strip.
-   On its side: title bar and game buttons on the left, the board in the middle, the coach strip on the right. */
-body.boardBig { display: grid; row-gap: 0; column-gap: 12px; }
-body.boardBig main, body.boardBig .stage, body.boardBig .panel { display: contents; }
+/* The layout (Boon, 28 Nov 2026). main, .stage, .panel and .boardCol step aside (display: contents) so their parts are placed
+   one by one on the screen grid; nothing is moved in the page, so the usual view comes back exactly.
+   Upright: the title bar on top, then (a little above the middle) Pass, Resign and New, the counts, the board and the bar under
+   it, and the coach strip in the space below.
+   On its side: the board fills the screen's height in the middle. The left column holds, in rows: the title (left) and the
+   player's name and grade (right); Pass, Resign and New, with the envelope and Settings on the right; the counts and prisoners;
+   and, level with the bottom of the board, undo and redo (left) with Shapes and Territory (right). The coach strip is on the right. */
+body.boardBig { display: grid; gap: 0 8px; }
+body.boardBig main, body.boardBig .stage, body.boardBig .panel, body.boardBig .boardCol { display: contents; }
 body.boardBig header { position: relative; inset: auto; height: auto; min-height: 3rem; padding: 6px 14px; }
-body.boardBig #controls, body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 14px 6px; }
-body.boardBig .coachStrip { margin: 0 14px 10px; }
-body.boardBig .boardCol { min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-body.boardBig .boardWrap { margin: 0; }
+body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; }
 @media (orientation: portrait) {
-  body.boardBig { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto auto auto auto minmax(0, 1fr) auto; }
+  body.boardBig { --bb: min(calc(100vw - 24px), calc(100dvh - 270px)); grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, .35fr) auto auto auto auto auto auto auto auto minmax(0, 1fr); }
   body.boardBig header { grid-row: 1; }
-  body.boardBig #controls { grid-row: 2; } body.boardBig #lessonBar { grid-row: 3; } body.boardBig #kifuBar { grid-row: 4; }
-  body.boardBig #quizOptions { grid-row: 5; } body.boardBig #scorePanel { grid-row: 6; }
-  body.boardBig .boardCol { grid-row: 7; container-type: size; padding: 0 12px; }
-  body.boardBig .coachStrip { grid-row: 8; max-height: 22vh; }
-  body.boardBig .boardWrap, body.boardBig .boardBar, body.boardBig #statusBar { width: min(100cqw, calc(100cqh - 84px)); }
+  body.boardBig #controls { grid-row: 3; } body.boardBig #lessonBar { grid-row: 4; } body.boardBig #kifuBar { grid-row: 5; }
+  body.boardBig #quizOptions { grid-row: 6; } body.boardBig #scorePanel { grid-row: 7; }
+  body.boardBig #controls, body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { width: var(--bb); justify-self: center; margin: 0 0 4px; }
+  body.boardBig #statusBar { grid-row: 8; }
+  body.boardBig .boardWrap { grid-row: 9; }
+  body.boardBig .boardBar { grid-row: 10; margin-top: 8px; }
+  body.boardBig #statusBar, body.boardBig .boardWrap, body.boardBig .boardBar { width: var(--bb); justify-self: center; }
+  body.boardBig .coachStrip { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; }
 }
 @media (orientation: landscape) {
-  /* The board's size comes from the screen: its height less the turn line and the bar under it, and never so wide that the side
-     columns drop below 13rem. */
-  body.boardBig { --bb: min(calc(100dvh - 90px), calc(100vw - 26rem - 48px)); grid-template-columns: minmax(13rem, 1fr) auto minmax(13rem, 1fr); grid-template-rows: auto auto auto auto auto minmax(0, 1fr); }
-  body.boardBig header { grid-column: 1; grid-row: 1; flex-wrap: wrap; }
-  body.boardBig #controls { grid-column: 1; grid-row: 2; } body.boardBig #lessonBar { grid-column: 1; grid-row: 3; }
-  body.boardBig #kifuBar { grid-column: 1; grid-row: 4; } body.boardBig #quizOptions { grid-column: 1; grid-row: 5; }
-  body.boardBig #scorePanel { grid-column: 1; grid-row: 6; align-self: start; }
-  body.boardBig .boardCol { grid-column: 2; grid-row: 1 / -1; padding: 6px 0; }
-  body.boardBig .coachStrip { grid-column: 3; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin-top: 10px; }
-  body.boardBig .boardWrap, body.boardBig .boardBar, body.boardBig #statusBar { width: var(--bb); }
+  body.boardBig { --bb: min(calc(100dvh - 16px), calc(100vw - 27rem - 60px));
+    grid-template-columns: minmax(max-content, 1fr) auto auto auto var(--bb) minmax(8rem, 1fr);
+    grid-template-rows: auto auto auto auto auto auto auto auto minmax(0, 1fr) auto; padding-left: 12px; padding-right: 12px; }
+  body.boardBig header { display: contents; }
+  body.boardBig .titleBox { grid-column: 1; grid-row: 1; align-self: center; padding: 6px 0; }
+  /* The name, then the grade and the streak when they show, ending at the column's right edge. */
+  body.boardBig .userName { grid-column: 2 / 5; grid-row: 1; justify-self: end; align-self: center; margin: 0; max-width: 12rem; }
+  body.boardBig .userGrade { grid-column: 4; grid-row: 1; justify-self: end; align-self: center; }
+  body.boardBig .userStreak { grid-column: 4; grid-row: 1; justify-self: end; align-self: center; }
+  html:not(.signedOut) body.boardBig:has(.userGrade:not(:empty)) .userName { grid-column: 2 / 4; }
+  html:not(.signedOut) body.boardBig:has(.userGrade:not(:empty)):has(.userStreak:not(:empty)) .userName { grid-column: 2; }
+  html:not(.signedOut) body.boardBig:has(.userGrade:not(:empty)):has(.userStreak:not(:empty)) .userGrade { grid-column: 3; }
+  body.boardBig #controls { grid-column: 1 / 3; grid-row: 2; align-self: center; margin: 0; }
+  body.boardBig #btnFlag { grid-column: 3; grid-row: 2; justify-self: end; }
+  body.boardBig #btnSettings { grid-column: 4; grid-row: 2; }
+  body.boardBig #lessonBar { grid-column: 1 / 5; grid-row: 3; } body.boardBig #kifuBar { grid-column: 1 / 5; grid-row: 4; }
+  body.boardBig #quizOptions { grid-column: 1 / 5; grid-row: 5; } body.boardBig #scorePanel { grid-column: 1 / 5; grid-row: 6; }
+  body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 0 6px; }
+  body.boardBig #statusBar { display: contents; }
+  body.boardBig #whoTurn { grid-column: 1; grid-row: 7; align-self: center; padding: 6px 0; }
+  body.boardBig #capsInfo { grid-column: 2 / 4; grid-row: 7; justify-self: end; align-self: center; margin: 0; }
+  body.boardBig #btnBoardSize { grid-column: 4; grid-row: 7; align-self: center; justify-self: center; margin: 0; }
+  body.boardBig #posInfo { grid-column: 1 / 5; grid-row: 8; }
+  body.boardBig .boardWrap { grid-column: 5; grid-row: 1 / -1; width: var(--bb); }
+  body.boardBig #boardBar { display: contents; }
+  body.boardBig #boardBar .barSide:first-child { grid-column: 1; grid-row: 10; justify-self: start; align-self: end; padding-bottom: 8px; }
+  body.boardBig #boardBar .barSide:last-child { grid-column: 2 / 5; grid-row: 10; justify-self: end; align-self: end; padding-bottom: 8px; }
+  body.boardBig #puzzleBar { grid-column: 1 / 5; grid-row: 10; width: auto; margin: 0; align-self: end; }
+  body.boardBig .coachStrip { grid-column: 6; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin: 0; }
   body.boardBig .verStamp { display: none; }
 }
 
 /* The board panel full screen with a reading page open (body.paging, page.js): the title bar on top and the page, under the turn
-   line with the full-screen button, fills the rest; the game buttons and the strip step aside. */
-body.boardBig.paging { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) !important; }
-body.boardBig.paging header { grid-column: 1; grid-row: 1; }
+   line with the full-screen button, fills the rest; the game buttons, the bars and the strip step aside. */
+body.boardBig.paging { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) !important; padding-left: 0; padding-right: 0; }
+body.boardBig.paging header { display: flex !important; grid-column: 1; grid-row: 1; }
 body.boardBig.paging #controls, body.boardBig.paging #lessonBar, body.boardBig.paging #kifuBar, body.boardBig.paging #quizOptions,
-body.boardBig.paging #scorePanel, body.boardBig.paging .coachStrip, body.boardBig.paging .boardBar { display: none !important; }
-body.boardBig.paging .boardCol { grid-column: 1; grid-row: 2; container-type: normal; align-items: stretch; justify-content: flex-start; padding: 0; }
-body.boardBig.paging #statusBar { width: auto; padding: 6px 12px; }
-body.boardBig.paging .boardWrap { width: auto !important; aspect-ratio: auto; flex: 1; min-height: 0; }
+body.boardBig.paging #scorePanel, body.boardBig.paging .coachStrip, body.boardBig.paging .boardBar, body.boardBig.paging #puzzleBar { display: none !important; }
+body.boardBig.paging .boardCol { display: flex !important; flex-direction: column; grid-column: 1; grid-row: 2; min-height: 0; }
+body.boardBig.paging #statusBar { display: flex !important; width: auto; padding: 6px 12px; }
+body.boardBig.paging .boardWrap { width: auto !important; aspect-ratio: auto; flex: 1; min-height: 0; align-self: stretch; }
 body.boardBig.paging .pageView { box-shadow: none; }
 body.boardBig.paging .pageBody { max-width: 46rem; margin: 0 auto; }
+body.boardBig.paging #capsInfo { margin-left: auto; }
