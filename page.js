@@ -121,7 +121,7 @@
     sizeBtn = el('button', 'pageSize');
     sizeBtn.type = 'button';
     sizeBtn.addEventListener('click', () => setBig(!big));
-    setBig(big); /* a page opened from a full-screen page stays full screen */
+    setBig(big || !!(G.boardBig && G.boardBig())); /* full screen when opened from a full-screen page or a full-screen board (Boon, 28 Nov 2026) */
     head.append(sizeBtn, close);
     const body = el('div', 'pageBody');
     body.append(el('h1', null, page.title));

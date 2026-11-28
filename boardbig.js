@@ -4,14 +4,15 @@
    keep their own bars), and makes the board as large as the screen allows. Nothing is moved or rebuilt: shrinking back only
    takes the class away, and the board redraws itself at its usual size (board.js watches its own size).
    With the chat hidden, the coach strip under the buttons shows the coach's latest message; ˄ and ˅ step through the earlier
-   ones. Something only the chat can show (a menu, such as the lessons) brings the usual view back, so it is never missed. */
+   ones, with "2/5" between them. The board and its strip sit in the middle of the screen. A reading page opened while the
+   board is full screen opens full screen too (page.js). Something only the chat can show (a menu, such as the lessons) brings the usual view back, so it is never missed. */
 (() => {
   'use strict';
   const G = window.GC;
   const { $ } = G;
   const T = k => window.GoText.T('app.' + k);
   const btn = $('#btnBoardSize'), strip = $('#coachStrip'), text = strip.querySelector('.stripText');
-  const up = $('#btnStripUp'), down = $('#btnStripDown');
+  const up = $('#btnStripUp'), down = $('#btnStripDown'), count = $('#stripCount');
   const ICON_BIG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h10v10M13 21H3V11M21 3l-8 8M3 21l8-8"/></svg>';
   const ICON_SMALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 13h10v10M23 11H13V1M13 11l8-8M3 21l8-8"/></svg>';
   let big = false;
@@ -54,6 +55,10 @@
     text.textContent = '';
     if (i >= 0) G.chatFill(text, all[i]);
     text.scrollTop = 0;
+    /* No message yet: no strip. One message: no arrows. More: the arrows with "2/5" between them, so their use is plain. */
+    strip.classList.toggle('empty', i < 0);
+    strip.classList.toggle('single', all.length <= 1);
+    count.textContent = all.length > 1 ? `${i + 1}/${all.length}` : '';
     up.disabled = i <= 0;
     down.disabled = i < 0 || i >= all.length - 1;
   }

@@ -372,18 +372,24 @@ h3.grp { font: 600 .8rem var(--sans, inherit); letter-spacing: .06em; text-trans
 body.boardBig header, body.boardBig #chat, body.boardBig #moveTree { display: none !important; }
 body.boardBig #controls > button:not(#btnPass):not(#btnResign):not(#btnNew):not(#btnSCancel) { display: none; }
 body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; }
-body.boardBig .stripText { flex: 1; min-width: 0; max-height: 4.6em; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
-.stripNav { display: grid; gap: 2px; }
-.stripNav button { width: 34px; height: 28px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
-/* The strip takes all the room left under the buttons and scrolls when a message is longer. */
-body.boardBig .panel > .coachStrip { flex: 1 1 auto; min-height: 3em; }
-body.boardBig .stripText { max-height: none; align-self: stretch; }
+body.boardBig .coachStrip.empty { display: none; }
+body.boardBig .stripText { flex: 1; min-width: 0; max-height: 6em; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+.stripNav { display: grid; justify-items: center; gap: 0; }
+.coachStrip.single .stripNav { display: none; }
+.stripNav button { width: 34px; height: 26px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.stripCount { font-size: .75rem; color: var(--mute); white-space: nowrap; }
+/* Everything sits in the middle of the screen, upright or on its side. */
+body.boardBig main { align-items: center; }
+body.boardBig .stage { flex: none; align-content: center; justify-content: center; }
+body.boardBig .panel { justify-content: center; }
 /* Board sizes: what is left of the screen after the turn line, the bar under the board, the buttons and the strip. */
 @media (orientation: portrait) {
+  body.boardBig .stage { grid-template-rows: auto auto; }
   body.boardBig .boardWrap { width: min(100%, calc(100vh - 250px)); width: min(100%, calc(100dvh - 250px)); }
 }
 @media (orientation: landscape) {
   body.boardBig .boardWrap, body.boardBig .boardBar { width: min(calc(100vh - 110px), 66vw); width: min(calc(100dvh - 110px), 66vw); }
+  body.boardBig .stage { grid-template-columns: auto minmax(12rem, 22rem); align-items: center; }
   body.boardBig .panel { padding-top: 0; }
 }
 @media (orientation: landscape) and (max-height: 560px) {
