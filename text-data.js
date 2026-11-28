@@ -35,6 +35,8 @@
   "app.share-log": "Share usage log with Claude",
   "app.reading-page": "Reading page",
   "app.back-to-board": "← Back to the board",
+  "app.page-enlarge": "Show the page full screen",
+  "app.page-shrink": "Back to the board window",
   "app.busy-thinking": "Give me a moment: I am still thinking about my move.",
   "app.back-to-game": "Back to your game.",
   "app.black-word": "black",

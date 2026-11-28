@@ -119,6 +119,11 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .boardWrap.paged canvas { visibility: hidden; }
 .pageHead { position: sticky; top: 0; z-index: 1; display: flex; justify-content: flex-end; padding: 6px 10px; background: #e6e0d0; border-bottom: 1px solid #cfc7b2; }
 .pageHead .pageClose { padding: 3px 8px; font-size: .85rem; }
+/* The page's full-screen button, on the left of the page's top bar (page.js). Full screen fixes the page over the whole screen. */
+.pageHead .pageSize { margin-right: auto; width: 34px; height: 34px; padding: 6px; border-radius: 0; background: transparent; border: 0; box-shadow: none; display: grid; place-items: center; }
+.pageHead .pageSize svg { width: 18px; height: 18px; fill: none; stroke: #5a6560; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.boardWrap.pageBig .pageView { position: fixed; inset: 0; z-index: 40; box-shadow: none; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+.boardWrap.pageBig .pageBody { max-width: 46rem; margin: 0 auto; }
 /* The page's text is the chat's size (--text); headings are in em so they follow it. Settings > Text size scales it all. */
 .pageBody { padding: 4px 18px 22px; line-height: 1.55; font-size: var(--text); }
 .pageBody h1 { position: static; transform: none; white-space: normal; font: 600 1.6em/1.2 var(--serif); margin: .5rem 0 .6rem; padding-bottom: .3rem; border-bottom: 1px solid #cfc7b2; letter-spacing: 0; }
