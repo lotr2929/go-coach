@@ -69,6 +69,28 @@ explanation, so there is nowhere yet for step-by-step hints or the longer explan
 Until that change is made, do not add `Hint:` or `More:` paragraphs: today's app would show them in the introduction and the
 explanation. Steps 1 to 3 can be written now in the existing format (introduction, wrong-try comments, `RIGHT` comment).
 
+## Lesson games (Boon, 28 Nov 2026)
+
+A lesson game teaches by playing one whole game: the rules and ideas come up as they happen on the board, so the player gets a
+sense of how a game goes from the first stone to the count. Each chapter of the lessons can become one such game. They go in
+`lessons/games/` and are listed first in the Lessons menu, under "Lesson games". They do not count towards the grade.
+
+- Mark the file with `TY[story]` on the first node, and `PL[B]`: the player plays Black from an empty board.
+- The main line is the game. The player taps each Black move (a blue circle shows where); White's answers follow by themselves.
+  Each move's `C` is its note, shown as the move is played. A move that is not the game's is taken back with a gentle message.
+- A note paragraph starting `Your turn:` hides the circle for the next move: the player finds it alone. Use it for the moments
+  the lesson is about (a capture, an escape).
+- `LB[..:A][..:B]...` on the node where Black is to move: the top moves there, A first, shown when the player taps Hint. A note
+  paragraph starting `Best:` holds the words for them; it is shown with the marks, never with the note.
+- A side branch (one move with a comment) explains a tempting wrong move at a `Your turn:` point.
+- The game ends where the main line ends; the board then shows each side's area. Fill every border first, so the count is right.
+
+**Black's moves must be good, and checked.** Every Black move is checked by KataGo (`tools/katago/top-moves.js`, the human
+model at its strongest with search): the game's move must be KataGo's first choice at a `Your turn:` point, and within 1.5
+points of it elsewhere. The top moves (LB) are KataGo's. White may play badly on purpose, to show a mistake, and the note
+should say so. Every claim in a note (liberties, captures, who is in atari, the count) is checked by the builder, which plays
+the game with engine.js. `tools/lessons/build-game-2026-11-28.js` is the first; copy it for the next.
+
 ## Checking and publishing
 
 1. Put the file in its band folder.

@@ -25,8 +25,41 @@
   }
   const gradeText = k => (k >= 1 ? T('file-kyu', { n: k }) : T('file-dan', { n: 1 - k }));
 
+  /* A lesson game (TY[story]) for learn.js: the player taps their moves, marked by a circle unless the note says "Your turn:";
+     the opponent's answers follow from the file. A move that is not the game's is taken back. Hint shows the top moves (A to E). */
+  function asStory(P, entry) {
+    const at = s => (s.data && s.data.at) || P.root;
+    const line = (nd, num) => { const t = PR.note(nd.comment), w = { num, colour: G.colourName(nd.color), point: E.coord(P.n, nd.point) }; return t ? T('story-move', Object.assign(w, { note: t })) : T('story-move-plain', w); };
+    return {
+      id: 'file:' + entry.id, file: true, story: true, n: P.n, turn: P.turn, kyu: P.kyu,
+      black: [], white: [], title: P.title, text: P.intro, task: P.task, problem: P,
+      /* The circle on the game's next move, unless the player is to find it alone (or has finished). */
+      follow: s => { const nd = at(s); return nd.kids[0] && !PR.yourTurn(nd) ? [nd.kids[0].point] : []; },
+      /* The top moves at this point, as marks A to E, while the player has asked for them. */
+      marks: s => { const o = {}; if (s.data && s.data.best) for (const m of PR.bestMoves(at(s), P.n)) { const [x, y] = XY(P.n, m.point); o[x + ',' + y] = m.label; } return o; },
+      bestHint(s) {
+        const nd = at(s), moves = PR.bestMoves(nd, P.n);
+        if (!moves.length || !nd.kids.length) return T('no-hint');
+        s.data.best = true;
+        const words = PR.bestWords(nd);
+        return T('story-best', { moves: moves.map(m => m.label + ' ' + E.coord(P.n, m.point)).join(', ') }) + (words ? '\n\n' + words : '');
+      },
+      check(s, ev) {
+        if (ev.type !== 'move') return null;
+        const from = at(s), r = PR.storyStep(from, ev.point);
+        if (!r.ok) { E.undo(s); return { msg: r.comment || T(PR.yourTurn(from) ? 'story-try' : 'story-follow') }; }
+        s.data.at = r.at; s.data.best = false;
+        const out = [line(r.mine, s.moves.length)];
+        if (r.reply) { E.play(s, r.reply.point); out.push(line(r.reply, s.moves.length)); }
+        if (r.end) return { status: 'win', msg: out.join('\n\n') + '\n\n' + T('story-end') };
+        return { msg: out.join('\n\n') };
+      }
+    };
+  }
+
   /* A lesson file as a lesson for learn.js: its stones, its words, and check(), which follows the moves through the file. */
   function asLesson(P, entry) {
+    if (P.story) return asStory(P, entry);
     const pz = entry.file.startsWith('puzzles/'); /* a puzzle (Puzzle mode), not a lesson */
     const pairs = pts => pts.map(i => XY(P.n, i));
     return {
@@ -71,12 +104,15 @@
   function menuItems() {
     const index = cache.lessons && cache.lessons.index;
     if (!index || !index.length) return [];
-    const done = G.Lesson.done, items = [{ head: true, label: T('files-head'), note: T('files-note') }];
+    const done = G.Lesson.done, items = [];
+    const item = e => { const id = 'file:' + e.id; return { label: T('file-label', { mark: done.has(id) ? '✓' : '•', grade: gradeText(e.kyu), title: e.title }), done: done.has(id), run: () => openFile(e) }; };
+    const games = index.filter(e => e.story); /* the lesson games first, under their own heading */
+    if (games.length) items.push({ head: true, label: T('games-head'), note: T('games-note') }, ...games.map(item));
+    items.push({ head: true, label: T('files-head'), note: T('files-note') });
     let band = null;
-    for (const e of index) {
+    for (const e of index.filter(x => !x.story)) {
       if (e.band !== band) { band = e.band; items.push({ head: true, label: T('band-head', { band }) }); }
-      const id = 'file:' + e.id;
-      items.push({ label: T('file-label', { mark: done.has(id) ? '✓' : '•', grade: gradeText(e.kyu), title: e.title }), done: done.has(id), run: () => openFile(e) });
+      items.push(item(e));
     }
     return items;
   }

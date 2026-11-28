@@ -115,3 +115,33 @@ Puzzles list
 
 ## no-hint
 There is no hint for this one.
+
+## games-head
+Lesson games
+
+## games-note
+Each one is a whole game on the 9×9 board: the rules and ideas come up as they happen. You play Black.
+
+## heading-story
+Lesson game: {title}. You play Black.
+
+## story-ask
+Tap the blue circle to play each move of the game. When the coach says "Your turn", there is no circle: find the move yourself. Tap Hint at any time to see the best moves there, A first.
+
+## story-move
+{num}. {colour} {point}: {note}
+
+## story-move-plain
+{num}. {colour} {point}.
+
+## story-follow
+That is not the move in this game. Play on the blue circle, or tap Hint to see the best moves here.
+
+## story-try
+Not this one. Look again, or tap Hint to see the best moves.
+
+## story-best
+The best moves here: {moves}.
+
+## story-end
+That is the end of the game. The colours on the board show whose area each empty point is. Tap Next for the next lesson.
