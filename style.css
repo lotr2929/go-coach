@@ -391,7 +391,7 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig header { grid-row: 1; height: 3.6rem; min-height: 0; }
   /* The shrink button just below Settings (Boon, 28 Nov 2026): taken out of the turn line and placed under the title bar's right
      end; the title bar has a fixed height here so the place is known. */
-  body.boardBig #btnBoardSize { position: fixed; top: calc(env(safe-area-inset-top) + 3.6rem); right: calc(env(safe-area-inset-right) + 12px); width: 28px; height: 32px; margin: 0; z-index: 5; }
+  body.boardBig #btnBoardSize { position: fixed; top: calc(env(safe-area-inset-top) + 3.6rem - 12px); right: calc(env(safe-area-inset-right) + 12px); width: 28px; height: 32px; margin: 0; z-index: 5; }
   body.boardBig #controls { grid-row: 3; } body.boardBig #lessonBar { grid-row: 4; } body.boardBig #kifuBar { grid-row: 5; }
   body.boardBig #quizOptions { grid-row: 6; } body.boardBig #scorePanel { grid-row: 7; }
   body.boardBig #controls, body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { width: var(--bb); justify-self: center; margin: 0 0 4px; }
@@ -402,11 +402,14 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig .coachStrip { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; }
 }
 @media (orientation: landscape) {
-  body.boardBig { --bb: min(calc(100dvh - 16px), calc(100vw - 27rem - 60px));
-    grid-template-columns: minmax(max-content, 1fr) auto auto auto var(--bb) minmax(8rem, 1fr);
+  body.boardBig { --bb: min(calc(100dvh - 16px), calc(100vw - 22rem - 60px));
+    /* the space above and below the board, used to line things up with its top and bottom edges */
+    --bbgap: calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--bb)) / 2);
+    grid-template-columns: minmax(max-content, 1fr) auto auto auto var(--bb) minmax(3rem, 1fr);
     grid-template-rows: auto auto auto auto auto auto auto auto minmax(0, 1fr) auto; padding-left: 12px; padding-right: 12px; }
   body.boardBig header { display: contents; }
-  body.boardBig .titleBox { grid-column: 1; grid-row: 1; align-self: center; padding: 6px 0; }
+  body.boardBig .titleBox { grid-column: 1; grid-row: 1; align-self: center; padding: 4px 0 2px; }
+  body.boardBig #btnFlag, body.boardBig #btnSettings { height: 30px; } /* the three top rows close together (Boon, 28 Nov 2026) */
   /* The name, then the grade and the streak when they show, ending at the column's right edge. */
   body.boardBig .userName { grid-column: 2 / 5; grid-row: 1; justify-self: end; align-self: center; margin: 0; max-width: 12rem; }
   body.boardBig .userGrade { grid-column: 4; grid-row: 1; justify-self: end; align-self: center; }
@@ -421,16 +424,17 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig #quizOptions { grid-column: 1 / 5; grid-row: 5; } body.boardBig #scorePanel { grid-column: 1 / 5; grid-row: 6; }
   body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 0 6px; }
   body.boardBig #statusBar { display: contents; }
-  body.boardBig #whoTurn { grid-column: 1; grid-row: 7; align-self: center; padding: 6px 0; }
+  body.boardBig #whoTurn { grid-column: 1; grid-row: 7; align-self: center; padding: 2px 0 4px; }
   body.boardBig #capsInfo { grid-column: 2 / 5; grid-row: 7; justify-self: end; align-self: center; margin: 0; }
   /* The shrink button just to the right of the board's top corner (Boon, 28 Nov 2026). */
-  body.boardBig #btnBoardSize { grid-column: 6; grid-row: 1; justify-self: start; align-self: start; margin: 8px 0 0; }
+  body.boardBig #btnBoardSize { grid-column: 6; grid-row: 1 / -1; justify-self: start; align-self: start; margin: var(--bbgap) 0 0; } /* level with the board's top */
   body.boardBig #posInfo { grid-column: 1 / 5; grid-row: 8; }
   body.boardBig .boardWrap { grid-column: 5; grid-row: 1 / -1; width: var(--bb); }
   body.boardBig #boardBar { display: contents; }
-  body.boardBig #boardBar .barSide:first-child { grid-column: 1; grid-row: 10; justify-self: start; align-self: end; padding-bottom: 8px; }
-  body.boardBig #boardBar .barSide:last-child { grid-column: 2 / 5; grid-row: 10; justify-self: end; align-self: end; padding-bottom: 8px; }
-  body.boardBig #puzzleBar { grid-column: 1 / 5; grid-row: 10; width: auto; margin: 0; align-self: end; }
+  /* undo/redo and Shapes/Territory with their bottom level with the board's bottom */
+  body.boardBig #boardBar .barSide:first-child { grid-column: 1; grid-row: 10; justify-self: start; align-self: end; margin-bottom: var(--bbgap); }
+  body.boardBig #boardBar .barSide:last-child { grid-column: 2 / 5; grid-row: 10; justify-self: end; align-self: end; margin-bottom: var(--bbgap); }
+  body.boardBig #puzzleBar { grid-column: 1 / 5; grid-row: 10; width: auto; margin: 0 0 var(--bbgap); align-self: end; }
   body.boardBig .coachStrip { grid-column: 6; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin: 0; }
   body.boardBig .verStamp { display: none; }
 }
