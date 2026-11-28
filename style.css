@@ -373,6 +373,12 @@ body.boardBig .stripText { flex: 1; min-width: 0; max-height: 100%; overflow-y: 
 .coachStrip.single .stripNav { display: none; }
 .stripNav button { width: 34px; height: 26px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
 .stripCount { font-size: .75rem; color: var(--mute); white-space: nowrap; }
+/* The Computer panel (computer.js): in your own game with the board full screen it takes the coach strip's place. */
+.computerPanel { display: none; }
+body.boardBig.ownGame .coachStrip { display: none !important; }
+body.boardBig.ownGame .computerPanel { display: flex; flex-direction: column; min-height: 0; overflow: hidden; border-top: 1px solid var(--line, #0002); padding-top: 6px; }
+.computerHead { font-weight: 600; font-size: var(--text); }
+.computerLog { list-style: none; margin: 4px 0 0; padding: 0; min-height: 0; overflow-y: auto; font-size: var(--text); line-height: 1.5; }
 
 /* The layout (Boon, 28 Nov 2026). main, .stage, .panel and .boardCol step aside (display: contents) so their parts are placed
    one by one on the screen grid; nothing is moved in the page, so the usual view comes back exactly.
@@ -401,6 +407,7 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig .boardBar { grid-row: 10; margin-top: 8px; }
   body.boardBig #statusBar, body.boardBig .boardWrap, body.boardBig .boardBar { width: var(--bb); justify-self: center; }
   body.boardBig .coachStrip { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; }
+  body.boardBig .computerPanel { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; } /* beneath undo */
 }
 @media (orientation: landscape) {
   /* Three columns: the left column, the board in the very middle, and a right column of the same width (Boon, 28 Nov 2026).
@@ -440,6 +447,7 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig #boardBar .barSide:last-child { grid-column: 1; grid-row: 10; justify-self: end; align-self: end; margin-bottom: var(--bbgap); }
   body.boardBig #puzzleBar { grid-column: 1; grid-row: 10; width: auto; margin: 0 0 var(--bbgap); align-self: end; }
   body.boardBig .coachStrip { grid-column: 3; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin: 0; }
+  body.boardBig .computerPanel { grid-column: 1; grid-row: 9; align-self: stretch; max-height: 100%; margin: 6px 0 8px; } /* under the score */
   body.boardBig .verStamp { display: none; }
 }
 
@@ -448,7 +456,7 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
 body.boardBig.paging { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) !important; padding-left: 0; padding-right: 0; }
 body.boardBig.paging header { display: flex !important; grid-column: 1; grid-row: 1; }
 body.boardBig.paging #controls, body.boardBig.paging #lessonBar, body.boardBig.paging #kifuBar, body.boardBig.paging #quizOptions,
-body.boardBig.paging #scorePanel, body.boardBig.paging .coachStrip, body.boardBig.paging .boardBar, body.boardBig.paging #puzzleBar { display: none !important; }
+body.boardBig.paging #scorePanel, body.boardBig.paging .coachStrip, body.boardBig.paging .computerPanel, body.boardBig.paging .boardBar, body.boardBig.paging #puzzleBar { display: none !important; }
 body.boardBig.paging .boardCol { display: flex !important; flex-direction: column; grid-column: 1; grid-row: 2; min-height: 0; }
 body.boardBig.paging #statusBar { display: flex !important; width: auto; padding: 6px 12px; }
 body.boardBig.paging .boardWrap { width: auto !important; aspect-ratio: auto; flex: 1; min-height: 0; align-self: stretch; }

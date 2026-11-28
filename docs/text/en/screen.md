@@ -140,6 +140,9 @@ Earlier message
 ## strip-down.aria
 Later message
 
+## computer-head
+Computer:
+
 ## chat-size.aria
 Enlarge the chat
 

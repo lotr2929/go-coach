@@ -93,7 +93,7 @@
     Play.token++;
     Play.guided = !!(opts && opts.guided); Play.seen = {};
     Play.helped = false; Play.edited = false; Play.graded = false; /* for the Go Coach grade (grade.js) */
-    Play.endMem = {}; /* endgame.js: turns in a row the computer has been clearly lost */
+    Play.endMem = {}; Play.compResigned = false; /* endgame.js: turns in a row the computer has been clearly lost; computer.js */
     Play.s = E.newState(settings.size, settings.handicap);
     Play.human = settings.colour === 'random' ? (Math.random() < .5 ? 1 : 2) : (settings.colour === 'white' ? 2 : 1);
     Play.level = settings.level;
@@ -120,7 +120,7 @@
       Play.helped = !!g.helped; Play.edited = !!g.edited; Play.graded = !!g.graded;
       Play.tree = g.tree && g.tree.k ? g.tree : null;
     } catch (e) { return false; }
-    Play.token++; Play.redo = []; Play.lastAI = null; G.explained = null; G.lastExplain = null; /* a game opened over another one (from the saved games) drops the old game's leftovers */
+    Play.token++; Play.redo = []; Play.lastAI = null; Play.compResigned = false; G.explained = null; G.lastExplain = null; /* a game opened over another one (from the saved games) drops the old game's leftovers */
     Play.phase = 'play'; Play.dead = null; Play.hint = []; Play.pending = -1; Play.thinking = false;
     renderPlay();
     if (Play.over) { Play.phase = 'done'; renderPlay(); }
@@ -154,6 +154,7 @@
     const s = Play.s;
     if (!s) return;
     tipEl.hidden = true;
+    document.dispatchEvent(new Event('gc:play-changed')); /* the Computer panel (computer.js) */
     if (G.Lesson.on) return G.renderLesson();
     if (G.teaching && G.teaching.on) return G.renderTeach();
     if (G.exploring && G.exploring.on) return G.renderExplore();
@@ -240,6 +241,7 @@
     Play.thinking = false;
     Play.redo = [];
     if (end === 'resign') {
+      Play.compResigned = true; /* for the Computer panel (computer.js) */
       saveGame();
       return finish(T('computer-resigned', { winner: colourName(Play.human) }), T('computer-resigned-title'), true);
     }
