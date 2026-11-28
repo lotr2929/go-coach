@@ -12,4 +12,16 @@
   new MutationObserver(() => {
     if (!document.body.classList.contains('paging') && G.boardBig && G.boardBig()) G.setBoardBig(false);
   }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+  /* 2. (Boon, 28 Nov 2026) The game buttons in this order: the mode switch, Pass, Resign, Analyse, Save, then New and Set up.
+        New and Set up are kept together, so when the row wraps they go to the second row as a pair. */
+  const bar = document.getElementById('controls');
+  const id = x => document.getElementById(x);
+  if (bar) {
+    const pair = document.createElement('span');
+    pair.className = 'btnPair';
+    pair.append(id('btnNew'), id('btnSetup'), id('btnSCancel'));
+    bar.append(id('btnMode'), id('btnPass'), id('btnUndo'), id('btnRedo'), id('btnResign'), id('btnAnalyse'), id('btnSave'), pair);
+    css.textContent += ' .btnPair { display: inline-flex; gap: 10px; flex: 0 0 auto; }';
+  }
 })();
