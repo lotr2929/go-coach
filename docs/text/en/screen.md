@@ -128,6 +128,18 @@ Confirm result
 ## keep-playing
 Keep playing
 
+## board-size.aria
+Show the board full screen
+
+## board-size.tip
+Show the board full screen
+
+## strip-up.aria
+Earlier message
+
+## strip-down.aria
+Later message
+
 ## chat-size.aria
 Enlarge the chat
 

@@ -116,6 +116,7 @@
 
   let pastEl, hintEl, nowEl;
   function render() {
+    changed();
     box.textContent = '';
     hintEl = Object.assign(document.createElement('button'), { type: 'button', className: 'pullHint', textContent: T('history-hint') });
     hintEl.addEventListener('click', reveal);
@@ -160,9 +161,11 @@
     nowEl.append(who === 'user' ? userLine(text) : message(text));
     if (who === 'coach') clipOlder();
     box.scrollTop = box.scrollHeight;
+    changed();
   }
   /* Something that is not kept, such as the lessons menu, shown under the current question. */
   function show(el) {
+    document.dispatchEvent(new Event('gc:chat-show')); /* something only the chat can show (a menu): boardbig.js makes room */
     nowEl.append(el);
     clipOlder();
     box.scrollTop = box.scrollHeight;
@@ -195,5 +198,8 @@
   }
   save(); render();
 
-  Object.assign(G, { chatRecord: record, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
+  /* The coach's messages in this session, oldest first, without the welcome (for the full-screen board's strip, boardbig.js). */
+  const coachTexts = () => cur.log.filter(m => m.who === 'coach' && !isIntro(m.text)).map(m => m.text);
+  function changed() { document.dispatchEvent(new Event('gc:chat-changed')); }
+  Object.assign(G, { chatCoachTexts: coachTexts, chatFill: fill, chatRecord: record, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
 })();

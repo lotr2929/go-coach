@@ -102,6 +102,12 @@ Reading page
 ## back-to-board
 ← Back to the board
 
+## board-enlarge
+Show the board full screen
+
+## board-shrink
+Back to the usual view
+
 ## page-enlarge
 Show the page full screen
 

@@ -140,12 +140,12 @@
     G.renderPlay();
   }
 
-  /* Any button in the side panel (except the chat's own Send and Clear, and its enlarge/shrink button) is about the board, so the page gives way to it. */
+  /* Any button in the side panel (except the chat's own Send and Clear, its enlarge/shrink button and the coach strip's ˄ ˅) is about the board, so the page gives way to it. */
   panel.addEventListener('click', e => {
-    if (open && e.target.closest('button') && !e.target.closest('.chatForm, #btnChatSize')) closePage();
+    if (open && e.target.closest('button') && !e.target.closest('.chatForm, #btnChatSize, .coachStrip')) closePage();
   }, true);
   /* Escape first leaves full screen, then closes the page. */
-  document.addEventListener('keydown', e => { if (open && e.key === 'Escape') { if (big) setBig(false); else closePage(); } });
+  document.addEventListener('keydown', e => { if (open && e.key === 'Escape') { e.preventDefault(); if (big) setBig(false); else closePage(); } });
 
   /* An article kept whole in a Markdown file in docs/text/<language>/pages (so it can be edited without touching the code),
      such as 'history' or 'whatisgo'. It opens in the board window and the chat only says so (docs/text/en/pages.md). */

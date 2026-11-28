@@ -20,7 +20,7 @@
 <main>
   <section id="playView" class="stage">
     <div class="boardCol">
-      <div id="statusBar"><span id="whoTurn"></span><span id="posInfo" class="pos" hidden><i id="posB"></i><b id="posL"></b><b id="posR"></b></span><span data-t-title="screen.prisoners.tip" id="capsInfo" title="Prisoners: stones each colour has lost"></span></div>
+      <div id="statusBar"><span id="whoTurn"></span><span id="posInfo" class="pos" hidden><i id="posB"></i><b id="posL"></b><b id="posR"></b></span><span data-t-title="screen.prisoners.tip" id="capsInfo" title="Prisoners: stones each colour has lost"></span><button data-t-aria="screen.board-size.aria" data-t-title="screen.board-size.tip" type="button" id="btnBoardSize" class="boardSize" aria-label="Show the board full screen" aria-pressed="false" title="Show the board full screen"></button></div>
       <div class="boardWrap"><canvas id="playBoard"></canvas></div>
       <div id="boardBar" class="boardBar">
         <div class="barSide">
@@ -80,6 +80,8 @@
           <button data-t="screen.keep-playing" id="btnResume">Keep playing</button>
         </div>
       </div>
+      <!-- The coach's latest message, shown only while the board is full screen (boardbig.js). -->
+      <div id="coachStrip" class="coachStrip"><div class="stripText" aria-live="polite"></div><div class="stripNav"><button data-t-aria="screen.strip-up.aria" data-t-title="screen.strip-up.aria" type="button" id="btnStripUp" aria-label="Earlier message" title="Earlier message">˄</button><button data-t-aria="screen.strip-down.aria" data-t-title="screen.strip-down.aria" type="button" id="btnStripDown" aria-label="Later message" title="Later message">˅</button></div></div>
       <div id="chat" class="chat">
         <button data-t-aria="screen.chat-size.aria" data-t-title="screen.chat-size.tip" type="button" id="btnChatSize" class="chatSize" aria-label="Enlarge the chat" aria-pressed="false" title="Enlarge the chat"></button>
         <div class="chatLog" aria-live="polite"></div>
@@ -216,6 +218,7 @@
 <script src="lessonfiles.js"></script>
 <script src="gcmode.js"></script>
 <script src="fontsize.js"></script>
+<script src="boardbig.js"></script>
 <script src="main.js"></script>
 <script src="update.js"></script>
 </body>

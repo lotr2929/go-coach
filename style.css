@@ -363,3 +363,29 @@ h1.gcOn { color: #2b1d0e; line-height: 1; padding: 0 10px 0 4px; margin-left: -4
 h3.grp { font: 600 .8rem var(--sans, inherit); letter-spacing: .06em; text-transform: uppercase; color: var(--mute); margin: 16px 0 4px; border-bottom: 1px solid var(--line, #0002); padding-bottom: 2px; }
 .opt.inline { display: flex; align-items: center; gap: 10px; }
 .opt.inline .lbl { display: inline; margin: 0; font-size: .95rem; color: inherit; }
+
+/* The board full screen (boardbig.js): only the class boardBig on the body; nothing is moved, so shrinking back is exact. */
+#capsInfo { margin-left: auto; }
+.boardSize { width: 28px; height: 22px; padding: 2px 5px; margin: -2px 0 -2px 4px; border: 0; border-radius: 0; background: none; box-shadow: none; display: grid; place-items: center; }
+.boardSize svg { width: 18px; height: 18px; fill: none; stroke: var(--mute); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.coachStrip { display: none; }
+body.boardBig header, body.boardBig #chat, body.boardBig #moveTree { display: none !important; }
+body.boardBig #controls > button:not(#btnPass):not(#btnResign):not(#btnNew):not(#btnSCancel) { display: none; }
+body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; }
+body.boardBig .stripText { flex: 1; min-width: 0; max-height: 4.6em; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+.stripNav { display: grid; gap: 2px; }
+.stripNav button { width: 34px; height: 28px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
+/* The strip takes all the room left under the buttons and scrolls when a message is longer. */
+body.boardBig .panel > .coachStrip { flex: 1 1 auto; min-height: 3em; }
+body.boardBig .stripText { max-height: none; align-self: stretch; }
+/* Board sizes: what is left of the screen after the turn line, the bar under the board, the buttons and the strip. */
+@media (orientation: portrait) {
+  body.boardBig .boardWrap { width: min(100%, calc(100vh - 250px)); width: min(100%, calc(100dvh - 250px)); }
+}
+@media (orientation: landscape) {
+  body.boardBig .boardWrap, body.boardBig .boardBar { width: min(calc(100vh - 110px), 66vw); width: min(calc(100dvh - 110px), 66vw); }
+  body.boardBig .panel { padding-top: 0; }
+}
+@media (orientation: landscape) and (max-height: 560px) {
+  body.boardBig .boardWrap, body.boardBig .boardBar { width: min(calc(100dvh - 84px), 66vw); } /* a phone on its side already uses its full height */
+}
