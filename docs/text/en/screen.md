@@ -203,9 +203,6 @@ The Territory tab plays random games after every move. A longer time means more 
 ## copy-sgf
 Copy game record (SGF)
 
-## live-board
-Live Go Board with Claude
-
 ## check-updates
 Check for updates
 
