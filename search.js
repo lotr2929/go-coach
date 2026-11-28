@@ -36,6 +36,7 @@
 
   /* Counts the liberties of the group at p, stopping once `max` are found. The ones found are left in G.lb. */
   function libs(G, b, p, max) {
+    if (G.stamp >= 0x7ffffff0) { G.mark.fill(0); G.lmark.fill(0); G.stamp = 0; } /* the marks are 32-bit: start again before they overflow */
     const c = b[p], st = ++G.stamp, stack = G.stack, mark = G.mark, lmark = G.lmark, d = G.dirs;
     let top = 0, nl = 0;
     stack[top++] = p; mark[p] = st;
