@@ -1,7 +1,8 @@
 /* Go Coach — keeps the installed app up to date.
    1. Whenever the app is opened or brought back to the front, it asks for a new version. If one has arrived, the page
       reloads itself (the game in progress is saved after every move and carries on). During a lesson, guided teaching,
-      exploring or a famous game it only shows a notice, so nothing is interrupted.
+      exploring, a famous game or while a reading page (such as Why Play Go?) is open it only shows a notice, so nothing is
+      interrupted (Boon, 28 Nov 2026: a reload had closed a page he had just opened).
    2. Settings has a "Check for updates" button that always reloads the newest files.
    3. The version date shows under the title and in Settings. */
 (() => {
@@ -10,15 +11,16 @@
   const btn = $('#btnUpdate'), ver = $('#verText'), stamp = $('#verStamp');
   if (!('serviceWorker' in navigator) || location.protocol === 'file:') { if (btn) btn.hidden = true; return; }
 
-  const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on) || (G.setupOn && G.setupOn());
+  const busy = () => (G.Lesson && G.Lesson.on) || (G.teaching && G.teaching.on) || (G.exploring && G.exploring.on) || (G.kifu && G.kifu.on) || (G.setupOn && G.setupOn()) || (G.pageOpen && G.pageOpen());
   let hadController = !!navigator.serviceWorker.controller, reloading = false;
   const reload = () => { if (!reloading) { reloading = true; location.reload(); } };
 
   /* A new service worker takes over only when sw.js has changed, i.e. a new version was published. */
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (!hadController) { hadController = true; return; } /* first install, not an update */
-    if (busy()) toast(window.GoText.T('app.update-ready'), 6000);
-    else { toast(window.GoText.T('app.updating')); setTimeout(reload, 600); }
+    const ready = () => toast(window.GoText.T('app.update-ready'), 6000);
+    if (busy()) ready();
+    else { toast(window.GoText.T('app.updating')); setTimeout(() => (busy() ? ready() : reload()), 600); } /* a page opened in that moment stays open */
   });
 
   const check = () => navigator.serviceWorker.getRegistration().then(r => r && r.update()).catch(() => { /* offline: try later */ });
