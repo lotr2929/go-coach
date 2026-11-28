@@ -1055,6 +1055,7 @@
   "screen.seconds": "{count} seconds",
   "screen.accuracy-help": "The Territory tab plays random games after every move. A longer time means more games and a steadier map, but a longer wait.",
   "screen.copy-sgf": "Copy game record (SGF)",
+  "screen.live-board": "Live Go Board with Claude",
   "screen.check-updates": "Check for updates",
   "screen.clear-account": "Clear Account",
   "screen.done": "Done",

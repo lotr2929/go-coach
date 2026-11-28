@@ -28,6 +28,15 @@
   outBtn.addEventListener('click', () => A.signOut());
   if (acct) acct.append(document.createTextNode(' ('), chip, edit, document.createTextNode(')'), outBtn);
 
+  /* Boon's Live Go Board, where he plays and talks with Claude (Boon, 28 Nov 2026). It is a private claude.ai page that
+     only Boon can open, so the button in Settings shows only when he is signed in as Boon. It is a link, not a network call. */
+  const LGB = 'https://claude.ai/artifact/LDuvdwuhbf6FRxBQDKcXEd';
+  const lgbRow = document.getElementById('lgbRow'), lgbBtn = document.getElementById('btnLiveBoard');
+  if (lgbRow && lgbBtn) {
+    lgbRow.hidden = !(signed && name().toLowerCase() === 'boon');
+    lgbBtn.addEventListener('click', () => window.open(LGB, '_blank', 'noopener'));
+  }
+
   const show = () => {
     tag.textContent = signed ? name() : T('sign-in');
     tag.classList.toggle('out', !signed);
