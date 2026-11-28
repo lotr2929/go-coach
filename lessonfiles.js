@@ -26,7 +26,8 @@
   const gradeText = k => (k >= 1 ? T('file-kyu', { n: k }) : T('file-dan', { n: 1 - k }));
 
   /* A lesson game (TY[story]) for learn.js: the player taps their moves, marked by a circle unless the note says "Your turn:";
-     the opponent's answers follow from the file. A move that is not the game's is taken back. Hint shows the top moves (A to E). */
+     the opponent's answers follow from the file. A move that is not the game's is taken back, or, if the file shows what follows it,
+     played out until the player takes it back. Hint shows the top moves (A to E). Next plays on to the next "Your turn". */
   function asStory(P, entry) {
     const at = s => (s.data && s.data.at) || P.root;
     const line = (nd, num) => { const t = PR.note(nd.comment), w = { num, colour: G.colourName(nd.color), point: E.coord(P.n, nd.point) }; return t ? T('story-move', Object.assign(w, { note: t })) : T('story-move-plain', w); };
@@ -34,7 +35,7 @@
       id: 'file:' + entry.id, file: true, story: true, n: P.n, turn: P.turn, kyu: P.kyu,
       black: [], white: [], title: P.title, text: P.intro, task: P.task, problem: P,
       /* The circle on the game's next move, unless the player is to find it alone (or has finished). */
-      follow: s => { const nd = at(s); return nd.kids[0] && !PR.yourTurn(nd) ? [nd.kids[0].point] : []; },
+      follow: s => { const nd = at(s); return nd.kids[0] && !PR.yourTurn(nd) && !s.data.wrong ? [nd.kids[0].point] : []; },
       /* The top moves at this point, as marks A to E, while the player has asked for them. */
       marks: s => { const o = {}; if (s.data && s.data.best) for (const m of PR.bestMoves(at(s), P.n)) { const [x, y] = XY(P.n, m.point); o[x + ',' + y] = m.label; } return o; },
       bestHint(s) {
@@ -46,15 +47,43 @@
       },
       check(s, ev) {
         if (ev.type !== 'move') return null;
+        if (s.data.wrong) { E.undo(s); return { msg: T('story-take-back-first') }; }
         const from = at(s), r = PR.storyStep(from, ev.point);
-        if (!r.ok) { E.undo(s); return { msg: r.comment || T(PR.yourTurn(from) ? 'story-try' : 'story-follow') }; }
-        s.data.at = r.at; s.data.best = false;
-        const out = [line(r.mine, s.moves.length)];
-        if (r.reply) { E.play(s, r.reply.point); out.push(line(r.reply, s.moves.length)); }
-        if (r.end) return { status: 'win', msg: out.join('\n\n') + '\n\n' + T('story-end') };
-        return { msg: out.join('\n\n') };
+        if (!r.ok && !r.side) { E.undo(s); return { msg: T(PR.yourTurn(from) ? 'story-try' : 'story-follow') }; }
+        if (!r.ok) { /* a mistake the file shows: play it out, then the player takes it back */
+          const out = [line(r.side, s.moves.length)];
+          let k = 1;
+          for (let nd = r.side.kids[0]; nd; nd = nd.kids[0], k++) { E.play(s, nd.point); out.push(line(nd, s.moves.length)); }
+          s.data.wrong = k; s.data.best = false;
+          return { msg: out.join('\n\n') + '\n\n' + T('story-mistake') };
+        }
+        return advance(s, r);
+      },
+      /* The Next button before the end: Take back after a mistake; otherwise Play on to the next "Your turn" (or the end). */
+      nextKey: s => (s.data.wrong ? 'story-take-back' : 'story-play-on'),
+      canNext: s => !!s.data.wrong || (at(s).kids.length > 0 && !PR.yourTurn(at(s))),
+      next(s) {
+        if (s.data.wrong) { for (let k = 0; k < s.data.wrong; k++) E.undo(s); s.data.wrong = 0; return { msg: T('story-back') }; }
+        const out = [];
+        let res = null;
+        while (at(s).kids.length && !PR.yourTurn(at(s))) {
+          const nd = at(s).kids[0];
+          E.play(s, nd.point);
+          res = advance(s, PR.storyStep(at(s), nd.point));
+          out.push(res.msg);
+          if (res.status) break;
+        }
+        return { status: res && res.status, msg: out.join('\n\n') };
       }
     };
+    /* The player's move was the game's: the opponent's answer follows. */
+    function advance(s, r) {
+      s.data.at = r.at; s.data.best = false;
+      const out = [line(r.mine, s.moves.length)];
+      if (r.reply) { E.play(s, r.reply.point); out.push(line(r.reply, s.moves.length)); }
+      if (r.end) return { status: 'win', msg: out.join('\n\n') + '\n\n' + T('story-end') };
+      return { msg: out.join('\n\n') };
+    }
   }
 
   /* A lesson file as a lesson for learn.js: its stones, its words, and check(), which follows the moves through the file. */

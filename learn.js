@@ -111,8 +111,9 @@
     $('#btnLHint').hidden = !isTask; $('#btnLReset').hidden = !isTask;
     const next = $('#btnLNext');
     const last = !L.file && Lesson.idx === LS.CORE - 1;
-    next.textContent = T(last ? 'play-a-game' : 'next');
-    next.disabled = !(L.type === 'info' || Lesson.status === 'win');
+    const going = L.story && Lesson.status !== 'win'; /* a lesson game before its end: Play on, or Take back after a mistake */
+    next.textContent = T(going ? L.nextKey(s) : last ? 'play-a-game' : 'next');
+    next.disabled = going ? !L.canNext(s) : !(L.type === 'info' || Lesson.status === 'win');
     next.classList.toggle('primary', !next.disabled);
     /* A puzzle has only "Back to game" at the top; Hint, Previous, Next and the list are the suggestion buttons, and the icons under the board step through it. */
     const pz = !!L.puzzle;
@@ -176,6 +177,11 @@
   function lessonNext() {
     const L = LS.list[Lesson.idx];
     if (L.puzzle) { G.gcMode.next(L.id); return; }
+    if (L.story && Lesson.status !== 'win') { /* Play on, or Take back (lessonfiles.js) */
+      const r = L.next(Lesson.s);
+      if (r.status) { Lesson.status = r.status; markDone(L); }
+      say(r.msg); renderLesson(); return;
+    }
     if (L.type === 'info') markDone(L);
     if (L.file) { G.lessonFiles.openNext(L.id); return; }
     if (Lesson.idx === LS.CORE - 1) {

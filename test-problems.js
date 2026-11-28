@@ -44,7 +44,8 @@ module.exports = async function (t) {
     assert.strictEqual(PR.bestWords(r.mine), 'the other corners.');
     assert(PR.yourTurn(r.mine) === true && !PR.yourTurn(r.at));
     const w = PR.storyStep(r.at, at('E5'));
-    assert(!w.ok); assert(/smaller/.test(w.comment));
+    assert(!w.ok); assert(/smaller/.test(PR.note(w.side.comment)));
+    assert(!PR.storyStep(r.at, at('A1')).side, 'a move the file does not show');
     r = PR.storyStep(r.at, at('C7'));
     assert(r.ok && r.end); assert.strictEqual(PR.note(r.at.comment), 'The end.');
     assert(PR.problemsWith(PR.fromSGF('(;GM[1]FF[4]SZ[9]TY[story]GN[x]DI[30k]PL[B]C[x];B[gc];W[gg])', 'x'), E).join().includes('last move'));

@@ -93,15 +93,14 @@
   /* Does the player find the next move alone? (A "Your turn:" paragraph in the note before it, or in the introduction.) */
   const yourTurn = nd => paras(nd.comment).some(p => /^your turn:/i.test(p));
   /* Follows the player's move from `at` in a lesson game. Right: { ok: true, mine, reply (the opponent's node or null), end }.
-     Not the game's move: { ok: false, comment } (the comment of a side branch for that move, if the file explains it). */
+     Not the game's move: { ok: false, side } (side: the side branch for that move, if the file shows what happens after it). */
   function storyStep(at, point) {
     const main = at.kids[0];
     if (main && main.point === point) {
       const reply = main.kids[0] || null, last = reply || main;
       return { ok: true, mine: main, reply, at: last, end: !last.kids.length };
     }
-    const side = at.kids.slice(1).find(k => k.point === point);
-    return { ok: false, comment: side ? note(side.comment) : '' };
+    return { ok: false, side: at.kids.slice(1).find(k => k.point === point) || null };
   }
 
   /* Everything wrong with a lesson, as sentences for the person who wrote it (empty when it is fine). E is engine.js. */
@@ -130,9 +129,12 @@
     })(L.root, (() => { const b = new Array(L.n * L.n).fill(0); L.black.forEach(i => { b[i] = 1; }); L.white.forEach(i => { b[i] = 2; }); return b; })(), L.turn, -1, '');
     if (L.story) {
       if (L.turn !== 1) out.push('a lesson game is played from the start: PL must be B');
-      for (let nd = L.root.kids[0]; nd; nd = nd.kids[0]) {
-        for (const k of nd.kids.slice(1)) if (k.kids.length || !k.comment) out.push(`${E.coord(L.n, k.point)}: a side branch in a lesson game is one move with a comment`);
-        if (!nd.kids.length && !nd.comment) out.push('the last move of a lesson game needs a comment (the end of the game)');
+      for (let nd = L.root; nd; nd = nd.kids[0]) {
+        for (const k of nd.kids.slice(1)) {
+          if (k.color !== L.turn) out.push(`${E.coord(L.n, k.point)}: a side branch in a lesson game starts with the player's move`);
+          for (let b = k; b; b = b.kids[0]) if (b.kids.length > 1) out.push(`${E.coord(L.n, k.point)}: a side branch in a lesson game is one line, without branches of its own`);
+        }
+        if (nd !== L.root && !nd.kids.length && !nd.comment) out.push('the last move of a lesson game needs a comment (the end of the game)');
       }
     } else if (!rights) out.push('no try is marked RIGHT');
     return out;
