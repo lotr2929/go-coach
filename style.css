@@ -409,19 +409,18 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
     --bbgap: calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--bb)) / 2);
     grid-template-columns: minmax(var(--side), 1fr) var(--bb) minmax(var(--side), 1fr);
     grid-template-rows: auto auto auto auto auto auto auto auto minmax(0, 1fr) auto; padding-left: 12px; padding-right: 12px; column-gap: 8px; }
-  /* The title bar covers the left column's first two rows, laid out as a small grid of its own: the title on the left with the
-     name above the grade on the right (small, so they take little room), then the envelope and Settings beside Pass, Resign and New. */
-  body.boardBig header { grid-column: 1; grid-row: 1 / 3; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto;
-    align-items: center; gap: 0 2px; padding: 0; min-height: 0; z-index: auto; pointer-events: none; }
+  /* The title bar covers the left column's first two rows, laid out as a small grid of its own (Boon, 28 Nov 2026): the title,
+     then the name and grade on a row of their own, then the envelope and Settings at the right, beside Pass, Resign and New. */
+  body.boardBig header { grid-column: 1; grid-row: 1 / 3; display: grid; grid-template-columns: auto auto minmax(0, 1fr); grid-template-rows: auto auto auto;
+    align-items: center; gap: 0 .5em; padding: 0; min-height: 0; z-index: auto; pointer-events: none; }
   body.boardBig header > * { pointer-events: auto; } /* taps pass through its empty part to Pass, Resign and New */
-  body.boardBig .titleBox { grid-column: 1; grid-row: 1 / 3; margin: 0; padding: 2px 0 0; }
-  body.boardBig .userName { grid-column: 2; grid-row: 1; justify-self: end; align-self: end; margin: 0; max-width: 9rem; font-size: .75rem; line-height: 1.15; }
-  body.boardBig .userGrade { grid-column: 2; grid-row: 2; justify-self: end; align-self: start; margin: 0; font-size: .75rem; line-height: 1.15; }
-  body.boardBig .userStreak { grid-column: 1; grid-row: 2; justify-self: end; margin: 0 .4em 0 0; font-size: .75rem; }
-  html.signedOut body.boardBig .userName { grid-row: 1 / 3; align-self: center; }
+  body.boardBig .titleBox { grid-column: 1 / -1; grid-row: 1; margin: 0; padding: 2px 0 0; }
+  body.boardBig .userName { grid-column: 1; grid-row: 2; justify-self: start; margin: 0; padding: 0; max-width: 10rem; }
+  body.boardBig .userGrade { grid-column: 2; grid-row: 2; justify-self: start; margin: 0; }
+  body.boardBig .userStreak { grid-column: 3; grid-row: 2; justify-self: start; margin: 0; }
   /* the envelope and Settings share the last cell, side by side at its right */
-  body.boardBig #btnFlag { grid-column: 1 / 3; grid-row: 3; justify-self: end; width: 30px; margin: 0 30px 0 0; }
-  body.boardBig #btnSettings { grid-column: 1 / 3; grid-row: 3; justify-self: end; width: 28px; }
+  body.boardBig #btnFlag { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: 30px; margin: 0 30px 0 0; }
+  body.boardBig #btnSettings { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: 28px; }
   body.boardBig #btnFlag, body.boardBig #btnSettings { height: 24px; } /* the three top rows close together */
   body.boardBig #controls { grid-column: 1; grid-row: 2; align-self: end; justify-self: start; margin: 0; position: relative; z-index: 1; }
   body.boardBig #lessonBar { grid-column: 1; grid-row: 3; } body.boardBig #kifuBar { grid-column: 1; grid-row: 4; }
