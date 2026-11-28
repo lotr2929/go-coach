@@ -39,6 +39,36 @@ Task: Capture it.]
   - Any move that is not in a branch is simply wrong, with a general message; only add wrong tries worth explaining.
 - Write for a real beginner: plain words, British English, short sentences. Say why the right move works.
 
+## How a puzzle should read (Boon, 28 Nov 2026)
+
+Boon liked this style when Claude set him a puzzle on a shared board, and wants every puzzle written this way. When he asks
+to redo the puzzles, rewrite each one to it.
+
+1. **Background first** (the introduction, before `Task:`). Where the position comes from (the game, the players, the year,
+   the move number) and, in a sentence or two, what is going on: which areas belong to whom, which group is weak, what is
+   still open. Help the player see the board before they look for a move. Never give the answer away.
+2. **Hints for wrong moves, step by step.** Each wrong try worth explaining says briefly why that move falls short, then
+   points the player closer without naming the point: first the area ("look at the lower right, near the edge"), then
+   narrower ("the second line from the bottom, on the right"). A puzzle should have two or three such hints, from broad to
+   narrow, so a player who keeps missing is led to the answer rather than told it.
+3. **A short explanation at the end** (the `RIGHT` comment): two or three sentences on what the move does and why it is
+   the best, in plain words ("It stops White's G2 stone from pushing into Black's corner").
+4. **A longer explanation, if the player asks for it.** It walks through the position: what each side's areas are, what
+   the opponent threatens, what the right move stops or makes, and why the tempting moves (the second-best, the obvious
+   attack) are smaller. It ends with the lesson in one line ("close the gap into your territory before you attack").
+   A small text diagram of the position may help in chat, but the board shows it in the app.
+
+Be truthful: a KataGo figure (such as "13 points worse") is KataGo's, and the words are the writer's own reading; check every
+claim in the explanation against the position (liberties, who escapes, what is captured). A wrong explanation is worse than none.
+
+**Not built yet (needs a change to the app first):** the app shows one hint (it marks the first move of a right try) and one
+explanation, so there is nowhere yet for step-by-step hints or the longer explanation. The planned format, once the app reads it:
+- `Hint:` paragraphs in the first `C`, after `Task:`, broad to narrow, shown one at a time when the player asks for a hint
+  or misses (instead of marking the answer straight away).
+- A `More:` paragraph at the end of the `RIGHT` comment, shown only when the player presses a new "Explain more" button.
+Until that change is made, do not add `Hint:` or `More:` paragraphs: today's app would show them in the introduction and the
+explanation. Steps 1 to 3 can be written now in the existing format (introduction, wrong-try comments, `RIGHT` comment).
+
 ## Checking and publishing
 
 1. Put the file in its band folder.
