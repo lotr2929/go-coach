@@ -364,39 +364,46 @@ h3.grp { font: 600 .8rem var(--sans, inherit); letter-spacing: .06em; text-trans
 .boardSize { width: 28px; height: 22px; padding: 2px 5px; margin: -2px 0 -2px 4px; border: 0; border-radius: 0; background: none; box-shadow: none; display: grid; place-items: center; }
 .boardSize svg { width: 18px; height: 18px; fill: none; stroke: var(--mute); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
 .coachStrip { display: none; }
-body.boardBig header, body.boardBig #chat, body.boardBig #moveTree { display: none !important; }
+body.boardBig #chat, body.boardBig #moveTree { display: none !important; }
 body.boardBig #controls > button:not(#btnPass):not(#btnResign):not(#btnNew):not(#btnSCancel) { display: none; }
-body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; }
+body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; min-height: 0; }
 body.boardBig .coachStrip.empty { display: none; }
-body.boardBig .stripText { flex: 1; min-width: 0; max-height: 6em; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+body.boardBig .stripText { flex: 1; min-width: 0; max-height: 100%; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
 .stripNav { display: grid; justify-items: center; gap: 0; }
 .coachStrip.single .stripNav { display: none; }
 .stripNav button { width: 34px; height: 26px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
 .stripCount { font-size: .75rem; color: var(--mute); white-space: nowrap; }
-/* Everything sits in the middle of the screen, upright or on its side. */
-body.boardBig main { align-items: center; }
-body.boardBig .stage { flex: none; align-content: center; justify-content: center; }
-body.boardBig .panel { justify-content: center; }
-/* Board sizes: what is left of the screen after the turn line, the bar under the board, the buttons and the strip. */
-@media (orientation: portrait) {
-  body.boardBig .stage { grid-template-rows: auto auto; }
-  body.boardBig .boardWrap { width: min(100%, calc(100vh - 250px)); width: min(100%, calc(100dvh - 250px)); }
-}
+
+/* The layout (Boon, 28 Nov 2026): the title bar stays. Upright: the title bar on top, the game buttons and the coach strip under it,
+   and the board centred in the rest. On its side: the title bar, buttons and strip in a column on the left, and the board centred
+   in the rest. main and .stage step aside (display: contents) so the title bar, the board column and the panel are laid out
+   together; nothing is moved in the page, so the usual view comes back exactly. The board column measures itself (container
+   units), so the board is always as large as the space allows. */
+body.boardBig { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); }
+body.boardBig main, body.boardBig .stage { display: contents; }
+body.boardBig header { grid-column: 1; grid-row: 1; position: relative; inset: auto; height: auto; min-height: 3rem; padding: 6px 14px; }
+body.boardBig .panel { grid-column: 1; grid-row: 2; padding: 0 14px 6px; gap: 6px; max-height: 32vh; }
+body.boardBig .panel > .coachStrip { flex: 0 1 auto; }
+body.boardBig .boardCol { grid-column: 1; grid-row: 3; min-height: 0; container-type: size; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 12px 10px; }
+body.boardBig .boardWrap, body.boardBig .boardBar, body.boardBig #statusBar { width: min(100cqw, calc(100cqh - 84px)); }
+body.boardBig .boardWrap { margin: 0; }
 @media (orientation: landscape) {
-  body.boardBig .boardWrap, body.boardBig .boardBar { width: min(calc(100vh - 110px), 66vw); width: min(calc(100dvh - 110px), 66vw); }
-  body.boardBig .stage { grid-template-columns: auto minmax(12rem, 22rem); align-items: center; }
-  body.boardBig .panel { padding-top: 0; }
+  body.boardBig { grid-template-columns: minmax(15rem, 24rem) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  body.boardBig .panel { grid-row: 2; max-height: none; padding-bottom: 12px; }
+  body.boardBig .panel > .coachStrip { flex: 1 1 auto; }
+  body.boardBig .boardCol { grid-column: 2; grid-row: 1 / -1; padding: 8px 12px; }
+  body.boardBig .verStamp { display: none; }
 }
-@media (orientation: landscape) and (max-height: 560px) {
-  body.boardBig .boardWrap, body.boardBig .boardBar { width: min(calc(100dvh - 84px), 66vw); } /* a phone on its side already uses its full height */
-}
-/* The board panel full screen with a reading page open (body.paging, page.js): the turn line with the full-screen button stays
-   at the top and the page fills the rest of the screen; the board, its bars and the side panel wait underneath. */
-body.boardBig.paging main { align-items: stretch; padding: 0; }
-body.boardBig.paging .stage { flex: 1; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; max-width: none; gap: 0; }
+
+/* The board panel full screen with a reading page open (body.paging, page.js): the page fills the board column; the game
+   buttons and the strip step aside. */
 body.boardBig.paging .panel, body.boardBig.paging .boardBar { display: none !important; }
-body.boardBig.paging .boardCol { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-body.boardBig.paging #statusBar { padding: 6px 12px; }
-body.boardBig.paging .boardWrap { width: 100% !important; aspect-ratio: auto; flex: 1; min-height: 0; }
+body.boardBig.paging .boardCol { align-items: stretch; justify-content: flex-start; padding: 0; }
+body.boardBig.paging #statusBar { width: auto; padding: 6px 12px; }
+body.boardBig.paging .boardWrap { width: auto !important; aspect-ratio: auto; flex: 1; min-height: 0; }
 body.boardBig.paging .pageView { box-shadow: none; }
 body.boardBig.paging .pageBody { max-width: 46rem; margin: 0 auto; }
+@media (orientation: landscape) {
+  body.boardBig.paging header { grid-column: 1 / -1; }
+  body.boardBig.paging .boardCol { grid-column: 1 / -1; grid-row: 2; }
+}
