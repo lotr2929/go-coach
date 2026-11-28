@@ -363,19 +363,10 @@ h3.grp { font: 600 .8rem var(--sans, inherit); letter-spacing: .06em; text-trans
 #capsInfo { margin-left: auto; }
 .boardSize { width: 28px; height: 22px; padding: 2px 5px; margin: -2px 0 -2px 4px; border: 0; border-radius: 0; background: none; box-shadow: none; display: grid; place-items: center; }
 .boardSize svg { width: 18px; height: 18px; fill: none; stroke: var(--mute); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
-.coachStrip { display: none; }
 body.boardBig #chat, body.boardBig #moveTree { display: none !important; }
 body.boardBig #controls > button:not(#btnPass):not(#btnResign):not(#btnNew):not(#btnSCancel) { display: none; }
-body.boardBig .coachStrip { display: flex; gap: 8px; align-items: flex-start; border-top: 1px solid var(--line, #0002); padding-top: 6px; min-height: 0; overflow: hidden; }
-body.boardBig .coachStrip.empty { display: none; }
-body.boardBig .stripText { flex: 1; min-width: 0; max-height: 100%; overflow-y: auto; font-size: var(--text); line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
-.stripNav { display: grid; justify-items: center; gap: 0; }
-.coachStrip.single .stripNav { display: none; }
-.stripNav button { width: 34px; height: 26px; padding: 0; font-size: 1.15rem; line-height: 1; border: 0; border-radius: 0; background: none; box-shadow: none; }
-.stripCount { font-size: .75rem; color: var(--mute); white-space: nowrap; }
-/* The Computer panel (computer.js): in your own game with the board full screen it takes the coach strip's place. */
+/* The Computer panel (computer.js): in a game against the computer with the board full screen (Game mode). */
 .computerPanel { display: none; }
-body.boardBig.ownGame .coachStrip { display: none !important; }
 body.boardBig.ownGame .computerPanel { display: flex; flex-direction: column; min-height: 0; overflow: hidden; border-top: 1px solid var(--line, #0002); padding-top: 6px; }
 .computerHead { font-weight: 600; font-size: var(--text); }
 .computerLog { list-style: none; margin: 4px 0 0; padding: 0; min-height: 0; overflow-y: auto; font-size: var(--text); line-height: 1.5; }
@@ -383,10 +374,10 @@ body.boardBig.ownGame .computerPanel { display: flex; flex-direction: column; mi
 /* The layout (Boon, 28 Nov 2026). main, .stage, .panel and .boardCol step aside (display: contents) so their parts are placed
    one by one on the screen grid; nothing is moved in the page, so the usual view comes back exactly.
    Upright: the title bar on top, then (a little above the middle) Pass, Resign and New, the counts, the board and the bar under
-   it, and the coach strip in the space below.
+   it, and the Computer panel (computer.js) in the space below.
    On its side: the board fills the screen's height in the middle. The left column holds, in rows: the title (left) and the
    player's name and grade (right); Pass, Resign and New, with the envelope and Settings on the right; the counts and prisoners;
-   and, level with the bottom of the board, undo and redo (left) with Shapes and Territory (right). The coach strip is on the right. */
+   and, level with the bottom of the board, undo and redo (left) with Shapes and Territory (right). The Computer panel sits under the counts. */
 body.boardBig { display: grid; gap: 0 8px; }
 body.boardBig main, body.boardBig .stage, body.boardBig .panel, body.boardBig .boardCol { display: contents; }
 body.boardBig header { position: relative; inset: auto; height: auto; min-height: 3rem; padding: 6px 14px; }
@@ -406,7 +397,6 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig .boardWrap { grid-row: 9; }
   body.boardBig .boardBar { grid-row: 10; margin-top: 8px; }
   body.boardBig #statusBar, body.boardBig .boardWrap, body.boardBig .boardBar { width: var(--bb); justify-self: center; }
-  body.boardBig .coachStrip { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; }
   body.boardBig .computerPanel { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; } /* beneath undo */
 }
 @media (orientation: landscape) {
@@ -446,17 +436,16 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig #boardBar .barSide:first-child { grid-column: 1; grid-row: 10; justify-self: start; align-self: end; margin-bottom: var(--bbgap); }
   body.boardBig #boardBar .barSide:last-child { grid-column: 1; grid-row: 10; justify-self: end; align-self: end; margin-bottom: var(--bbgap); }
   body.boardBig #puzzleBar { grid-column: 1; grid-row: 10; width: auto; margin: 0 0 var(--bbgap); align-self: end; }
-  body.boardBig .coachStrip { grid-column: 3; grid-row: 1 / -1; align-self: center; max-height: 80dvh; margin: 0; }
   body.boardBig .computerPanel { grid-column: 1; grid-row: 9; align-self: stretch; max-height: 100%; margin: 6px 0 8px; } /* under the score */
   body.boardBig .verStamp { display: none; }
 }
 
 /* The board panel full screen with a reading page open (body.paging, page.js): the title bar on top and the page, under the turn
-   line with the full-screen button, fills the rest; the game buttons, the bars and the strip step aside. */
+   line with the full-screen button, fills the rest; the game buttons, the bars and the Computer panel step aside. */
 body.boardBig.paging { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) !important; padding-left: 0; padding-right: 0; }
 body.boardBig.paging header { display: flex !important; grid-column: 1; grid-row: 1; }
 body.boardBig.paging #controls, body.boardBig.paging #lessonBar, body.boardBig.paging #kifuBar, body.boardBig.paging #quizOptions,
-body.boardBig.paging #scorePanel, body.boardBig.paging .coachStrip, body.boardBig.paging .computerPanel, body.boardBig.paging .boardBar, body.boardBig.paging #puzzleBar { display: none !important; }
+body.boardBig.paging #scorePanel, body.boardBig.paging .computerPanel, body.boardBig.paging .boardBar, body.boardBig.paging #puzzleBar { display: none !important; }
 body.boardBig.paging .boardCol { display: flex !important; flex-direction: column; grid-column: 1; grid-row: 2; min-height: 0; }
 body.boardBig.paging #statusBar { display: flex !important; width: auto; padding: 6px 12px; }
 body.boardBig.paging .boardWrap { width: auto !important; aspect-ratio: auto; flex: 1; min-height: 0; align-self: stretch; }

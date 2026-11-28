@@ -198,8 +198,6 @@
   }
   save(); render();
 
-  /* The coach's messages in this session, oldest first, without the welcome (for the full-screen board's strip, boardbig.js). */
-  const coachTexts = () => cur.log.filter(m => m.who === 'coach' && !isIntro(m.text)).map(m => m.text);
   function changed() { document.dispatchEvent(new Event('gc:chat-changed')); }
-  Object.assign(G, { chatCoachTexts: coachTexts, chatFill: fill, chatRecord: record, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
+  Object.assign(G, { chatRecord: record, chatShow: show, chatBusy: busy, newChatSession: newSession, clearChat: clearNow });
 })();

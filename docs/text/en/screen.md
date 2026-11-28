@@ -134,12 +134,6 @@ Show the board full screen
 ## board-size.tip
 Show the board full screen
 
-## strip-up.aria
-Earlier message
-
-## strip-down.aria
-Later message
-
 ## computer-head
 Computer:
 

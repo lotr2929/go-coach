@@ -1031,8 +1031,6 @@
   "screen.keep-playing": "Keep playing",
   "screen.board-size.aria": "Show the board full screen",
   "screen.board-size.tip": "Show the board full screen",
-  "screen.strip-up.aria": "Earlier message",
-  "screen.strip-down.aria": "Later message",
   "screen.computer-head": "Computer:",
   "screen.chat-size.aria": "Enlarge the chat",
   "screen.chat-size.tip": "Enlarge the chat",

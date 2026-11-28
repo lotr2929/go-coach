@@ -1,8 +1,8 @@
-/* Go Coach — the Computer panel (Boon, 28 Nov 2026). With the board full screen in your own game there is no coach: the coach
-   strip steps aside and this panel shows what the computer does, under the header "Computer:": each of its moves, its passes,
+/* Go Coach — the Computer panel (Boon, 28 Nov 2026). The board full screen is Game mode: there is no coach (shrink the board to
+   reach it). In a game against the computer this panel shows what the computer does, under the header "Computer:": its moves, passes,
    "Thinking…" while it chooses, and its resignation. The player cannot type into it. It is built from the game itself
    (Play.s.moves), so undo, redo, a restored game and a new game are always shown correctly.
-   Lessons, famous games, puzzles, the guided first game, Set up and the other board modes keep the coach strip (boardbig.js).
+   Lessons, famous games, puzzles, Set up and the other board modes have no computer opponent, so no panel: just the board.
    style.css shows the panel only with body.boardBig.ownGame: under the score on its side, under undo and redo upright. */
 (() => {
   'use strict';
@@ -11,10 +11,10 @@
   const T = (k, v) => window.GoText.T('computer.' + k, v); /* wording: docs/text/en/computer.md */
   const list = $('#computerLog');
 
-  /* Your own game against the computer: no other mode has the board (the same modes renderPlay hands the board to). */
+  /* A game against the computer, the guided first game too: no other mode has the board (the modes renderPlay hands it to). */
   function ownGame() {
     const P = G.Play;
-    return !!(P && P.s) && !P.guided && !(G.Lesson && G.Lesson.on) && !(G.teaching && G.teaching.on) &&
+    return !!(P && P.s) && !(G.Lesson && G.Lesson.on) && !(G.teaching && G.teaching.on) &&
       !(G.exploring && G.exploring.on) && !(G.kifu && G.kifu.on) && !(G.setupOn && G.setupOn());
   }
 

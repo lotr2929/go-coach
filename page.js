@@ -125,9 +125,9 @@
     G.renderPlay();
   }
 
-  /* Any button in the side panel (except the chat's own Send and Clear, its enlarge/shrink button and the coach strip's ˄ ˅) is about the board, so the page gives way to it. */
+  /* Any button in the side panel (except the chat's own Send and Clear, and its enlarge/shrink button) is about the board, so the page gives way to it. */
   panel.addEventListener('click', e => {
-    if (open && e.target.closest('button') && !e.target.closest('.chatForm, #btnChatSize, .coachStrip')) closePage();
+    if (open && e.target.closest('button') && !e.target.closest('.chatForm, #btnChatSize')) closePage();
   }, true);
   /* Escape first leaves full screen, then closes the page. */
   document.addEventListener('keydown', e => { if (open && e.key === 'Escape') { e.preventDefault(); closePage(); } });
