@@ -369,7 +369,12 @@ body.boardBig #controls > button:not(#btnPass):not(#btnResign):not(#btnNew):not(
 .computerPanel { display: none; }
 body.boardBig.ownGame .computerPanel { display: flex; flex-direction: column; min-height: 0; overflow: hidden; border-top: 1px solid var(--line, #0002); padding-top: 6px; }
 .computerHead { font-weight: 600; font-size: var(--text); }
-.computerLog { list-style: none; margin: 4px 0 0; padding: 0; min-height: 0; overflow-y: auto; font-size: var(--text); line-height: 1.5; }
+.computerLog { position: relative; list-style: none; margin: 4px 0 0; padding: 0; min-height: 0; flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; font-size: var(--text); line-height: 1.5; }
+.computerLog button { display: block; width: 100%; text-align: left; font: inherit; color: inherit; padding: 1px 4px; border: 0; border-radius: 4px; background: none; box-shadow: none; cursor: pointer; }
+.computerLog button:disabled { cursor: default; opacity: 1; }
+.computerLog .now button { font-weight: 600; background: var(--line, #0001); }
+.computerLog .later button { color: var(--mute); }
+.computerLog .note { padding: 1px 4px; color: var(--mute); }
 
 /* The layout (Boon, 28 Nov 2026). main, .stage, .panel and .boardCol step aside (display: contents) so their parts are placed
    one by one on the screen grid; nothing is moved in the page, so the usual view comes back exactly.
@@ -397,7 +402,7 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig .boardWrap { grid-row: 9; }
   body.boardBig .boardBar { grid-row: 10; margin-top: 8px; }
   body.boardBig #statusBar, body.boardBig .boardWrap, body.boardBig .boardBar { width: var(--bb); justify-self: center; }
-  body.boardBig .computerPanel { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: 100%; margin-top: 10px; } /* beneath undo */
+  body.boardBig .computerPanel { grid-row: 11; align-self: start; width: var(--bb); justify-self: center; max-height: calc(100% - 10px); margin-top: 10px; } /* beneath undo */
 }
 @media (orientation: landscape) {
   /* Three columns: the left column, the board in the very middle, and a right column of the same width (Boon, 28 Nov 2026).
@@ -436,7 +441,7 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig #boardBar .barSide:first-child { grid-column: 1; grid-row: 10; justify-self: start; align-self: end; margin-bottom: var(--bbgap); }
   body.boardBig #boardBar .barSide:last-child { grid-column: 1; grid-row: 10; justify-self: end; align-self: end; margin-bottom: var(--bbgap); }
   body.boardBig #puzzleBar { grid-column: 1; grid-row: 10; width: auto; margin: 0 0 var(--bbgap); align-self: end; }
-  body.boardBig .computerPanel { grid-column: 1; grid-row: 9; align-self: stretch; max-height: 100%; margin: 6px 0 8px; } /* under the score */
+  body.boardBig .computerPanel { grid-column: 1; grid-row: 9; align-self: stretch; max-height: calc(100% - 14px); margin: 6px 0 8px; } /* under the score */
   body.boardBig .verStamp { display: none; }
 }
 
