@@ -4,8 +4,8 @@
    keep their own bars), and makes the board as large as the screen allows. Nothing is moved or rebuilt: shrinking back only
    takes the class away, and the board redraws itself at its usual size (board.js watches its own size).
    With the chat hidden, the coach strip under the buttons shows the coach's latest message; ˄ and ˅ step through the earlier
-   ones, with "2/5" between them. The board and its strip sit in the middle of the screen. A reading page opened while the
-   board is full screen opens full screen too (page.js). Something only the chat can show (a menu, such as the lessons) brings the usual view back, so it is never missed. */
+   ones, with "2/5" between them. The board and its strip sit in the middle of the screen. With a reading page open (body.paging,
+   page.js) the board panel's full screen is the page over the whole screen, under the turn line that holds this button. Something only the chat can show (a menu, such as the lessons) brings the usual view back, so it is never missed. */
 (() => {
   'use strict';
   const G = window.GC;
@@ -31,10 +31,10 @@
     syncFull();
   }
 
-  /* The device's own full screen (Boon, 28 Nov 2026: "it's not really full screen"): while the board or a reading page is full
+  /* The device's own full screen (Boon, 28 Nov 2026: "it's not really full screen"): while the board panel or the chat is full
      screen, the browser's address bar and the phone's bars are hidden too. Where a browser cannot (an iPhone), the app's own
      full screen still works. Leaving the device's full screen (the phone's back gesture, Esc) also ends the app's. */
-  const wantFull = () => big || !!(G.pageBig && G.pageBig());
+  const wantFull = () => big || document.body.classList.contains('chatBig');
   function syncFull() {
     const want = wantFull(), on = !!document.fullscreenElement, el = document.documentElement;
     try {
@@ -45,7 +45,7 @@
   document.addEventListener('fullscreenchange', () => {
     if (document.fullscreenElement) return;
     if (big) setBig(false);
-    if (G.pageBig && G.pageBig()) G.setPageBig(false);
+    if (document.body.classList.contains('chatBig')) $('#btnChatSize').click();
   });
 
   function showStrip() {

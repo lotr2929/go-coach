@@ -108,12 +108,6 @@ Show the board full screen
 ## board-shrink
 Back to the usual view
 
-## page-enlarge
-Show the page full screen
-
-## page-shrink
-Back to the board window
-
 ## busy-thinking
 Give me a moment: I am still thinking about my move.
 

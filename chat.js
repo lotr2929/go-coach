@@ -167,6 +167,7 @@
     sizeBtn.setAttribute('aria-pressed', String(big));
     sizeBtn.title = sizeBtn.ariaLabel = T(big ? 'shrink' : 'enlarge');
     box.scrollTop = box.scrollHeight;
+    if (G.syncFullscreen) G.syncFullscreen(); /* the device's own full screen too (boardbig.js) */
   }
   sizeBtn.onclick = () => setBig(!document.body.classList.contains('chatBig'));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('chatBig')) setBig(false); });

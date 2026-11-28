@@ -13,22 +13,9 @@
   root.setAttribute('aria-label', window.GoText.T('app.reading-page'));
   wrap.append(root);
   let open = false;
-  /* Full screen (Boon, 28 Nov 2026): a page can cover the whole screen for easier reading, then go back to the board window.
-     Only the page grows (it is fixed over everything); the board and the panel underneath are not touched, so shrinking it
-     back needs no redrawing. Closing a page always ends full screen. */
-  let big = false, sizeBtn = null;
-  const ICON_BIG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h10v10M13 21H3V11M21 3l-8 8M3 21l8-8"/></svg>';
-  const ICON_SMALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 13h10v10M23 11H13V1M13 11l8-8M3 21l8-8"/></svg>';
-  function setBig(on) {
-    big = !!on;
-    wrap.classList.toggle('pageBig', big);
-    if (G.syncFullscreen) G.syncFullscreen(); /* the device's own full screen too (boardbig.js) */
-    if (!sizeBtn) return;
-    sizeBtn.innerHTML = big ? ICON_SMALL : ICON_BIG;
-    sizeBtn.setAttribute('aria-pressed', String(big));
-    sizeBtn.title = window.GoText.T(big ? 'app.page-shrink' : 'app.page-enlarge');
-    sizeBtn.setAttribute('aria-label', sizeBtn.title);
-  }
+  /* While a page is open the body has the class paging, so the board panel's full screen (boardbig.js) shows the page over the
+     whole screen instead of the board (Boon, 28 Nov 2026: one full-screen button for the board panel, none inside pages). */
+  const paging = on => document.body.classList.toggle('paging', on);
 
   const el = (tag, cls, text) => {
     const e = document.createElement(tag);
@@ -118,24 +105,21 @@
     const close = el('button', 'pageClose primary', window.GoText.T('app.back-to-board'));
     close.type = 'button';
     close.addEventListener('click', closePage);
-    sizeBtn = el('button', 'pageSize');
-    sizeBtn.type = 'button';
-    sizeBtn.addEventListener('click', () => setBig(!big));
-    setBig(big || !!(G.boardBig && G.boardBig())); /* full screen when opened from a full-screen page or a full-screen board (Boon, 28 Nov 2026) */
-    head.append(sizeBtn, close);
+    head.append(close);
     const body = el('div', 'pageBody');
     body.append(el('h1', null, page.title));
     for (const b of page.blocks) { const f = BLOCKS[b.t]; if (f) body.append(f(b)); }
     root.append(head, body);
     wrap.classList.add('paged');
     open = true;
+    paging(true);
     root.scrollTop = 0;
     $('#whoTurn').textContent = page.title;
   }
   function closePage() {
     if (!open) return;
     open = false;
-    setBig(false);
+    paging(false);
     wrap.classList.remove('paged');
     G.playView.resize();
     G.renderPlay();
@@ -146,7 +130,7 @@
     if (open && e.target.closest('button') && !e.target.closest('.chatForm, #btnChatSize, .coachStrip')) closePage();
   }, true);
   /* Escape first leaves full screen, then closes the page. */
-  document.addEventListener('keydown', e => { if (open && e.key === 'Escape') { e.preventDefault(); if (big) setBig(false); else closePage(); } });
+  document.addEventListener('keydown', e => { if (open && e.key === 'Escape') { e.preventDefault(); closePage(); } });
 
   /* An article kept whole in a Markdown file in docs/text/<language>/pages (so it can be edited without touching the code),
      such as 'history' or 'whatisgo'. It opens in the board window and the chat only says so (docs/text/en/pages.md). */
@@ -164,5 +148,5 @@
     G.say(T(`pages.${name}-opened`));
   }
 
-  Object.assign(G, { showPage, closePage, pageOpen: () => open, pageBig: () => big, setPageBig: setBig, openDoc, openHistory: () => openDoc('history') });
+  Object.assign(G, { showPage, closePage, pageOpen: () => open, openDoc, openHistory: () => openDoc('history') });
 })();
