@@ -423,6 +423,7 @@ body.boardBig .boardWrap { margin: 0; justify-self: center; align-self: center; 
   body.boardBig #btnSettings { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: 28px; }
   body.boardBig #btnFlag, body.boardBig #btnSettings { height: 24px; } /* the three top rows close together */
   body.boardBig #controls { grid-column: 1; grid-row: 2; align-self: end; justify-self: start; margin: 0; position: relative; z-index: 1; }
+  body.boardBig #btnPass { padding-left: 0; } /* the P of Pass in line with the name above (Boon, 28 Nov 2026) */
   body.boardBig #lessonBar { grid-column: 1; grid-row: 3; } body.boardBig #kifuBar { grid-column: 1; grid-row: 4; }
   body.boardBig #quizOptions { grid-column: 1; grid-row: 5; } body.boardBig #scorePanel { grid-column: 1; grid-row: 6; }
   body.boardBig #lessonBar, body.boardBig #kifuBar, body.boardBig #quizOptions, body.boardBig #scorePanel { margin: 0 0 6px; }
