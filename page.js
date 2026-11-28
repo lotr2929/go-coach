@@ -95,6 +95,8 @@
   };
 
   function showPage(page) {
+    /* A full-screen chat would hide the page, so it goes back to its usual size first (Boon, 28 Nov 2026). */
+    if (document.body.classList.contains('chatBig')) $('#btnChatSize').click();
     root.textContent = '';
     const head = el('div', 'pageHead');
     const close = el('button', 'pageClose primary', window.GoText.T('app.back-to-board'));
@@ -118,9 +120,9 @@
     G.renderPlay();
   }
 
-  /* Any button in the side panel (except the chat's own Send and Clear) is about the board, so the page gives way to it. */
+  /* Any button in the side panel (except the chat's own Send and Clear, and its enlarge/shrink button) is about the board, so the page gives way to it. */
   panel.addEventListener('click', e => {
-    if (open && e.target.closest('button') && !e.target.closest('.chatForm')) closePage();
+    if (open && e.target.closest('button') && !e.target.closest('.chatForm, #btnChatSize')) closePage();
   }, true);
   document.addEventListener('keydown', e => { if (open && e.key === 'Escape') closePage(); });
 
