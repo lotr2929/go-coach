@@ -1,87 +1,33 @@
-# What is Go?
+# Why Play Go?
 
-> Go is harmony (attributed to Go Seigen)
+A few simple rules. Endless possibilities.
 
-Go is one of the oldest continuously played board games in the world. It originated in China more than 2,500 years ago, where it is called _weiqi_. In Korea it is known as _baduk_, and in Japan as _igo_, often shortened simply to _go_. The West came to know the game largely through Japan, which is why the Japanese name became established in English.
+Go is one of the world's oldest games, played in China for more than 2,500 years. Two players take turns placing black and white stones on a board, each trying to surround more territory than the other.
 
-Like chess, Go can be understood as a game of war. Two armies, Black and White, contest a common battlefield. But they represent very different conceptions of warfare.
+You can learn the rules in five minutes. Mastering them can take a lifetime. The good news is that the fun starts long before mastery.
 
-Chess is hierarchical. Its pieces have different ranks, powers and values, and ultimately everything may be sacrificed to protect the king. Go has no king and no hierarchy. Every stone begins equal. A stone acquires strength and value only through its position and its relationship with other stones.
+## You learn to see
 
-The rules are remarkably few: place a stone, surround to capture, and control more ground than your opponent. Beyond that, strategy emerges from the interaction between the two players.
+At first, a stone is just a stone. Soon you start to notice which groups are strong, which are in danger, and where the opportunities are. Every game, you see a little more.
 
-Perhaps for this reason, Go offers not merely a simulation of battle but a remarkably rich way of thinking about adversarial competition itself, where there are few rules to follow.
+## You don't have to win every fight
 
-## The Battlefield
+Give up a corner to gain a side. Sacrifice a few stones to build something bigger. Go rewards the big picture, not every small battle.
 
-Go is played on a grid of lines: 19 × 19 for a full game, or 9 × 9 and 13 × 13 for shorter games. Stones are placed on the intersections of the lines, not in the squares.
+## Every move matters
 
-Black moves first, after which the players alternate, placing one stone at a time. Once placed, a stone does not move.
+Go asks you to slow down, look carefully and choose well. Even a lost game teaches you something.
 
-Unlike chess, there is no predetermined front line, no king to defend and no single objective to attack. The battlefield develops progressively as both players establish positions, extend their influence, attack weaknesses and defend what they have gained.
+## The tricky part: the ending
 
-## The Rules in Brief
+Many beginners find the end of a game confusing, and that's normal. The board fills up, and it's hard to tell who owns what or whether any useful moves are left.
 
-The empty points immediately next to a stone are called its **liberties**. In military terms, they might be thought of as its opportunities to manoeuvre.
+A game ends when both players pass in turn, or when one player resigns, often before the score has been counted. Recognising that moment is a skill you'll build.
 
-Stones of the same colour that connect along the lines form a group and share their liberties. When a stone or group has no liberties remaining, it is surrounded, captured and removed from the board. What is interesting here is that the more stones there are in a group, the more stones are needed to capture it. But the ratio of stones required changes as well. An individual stone needs 4 stones to capture it. But a group of 2 stones needs only 6 stones, a ratio of 1:3 as opposed to 1:4 for individual stones. 
+## That's where Go Coach helps
 
-A stone may not normally be played where it would immediately have no liberties of its own. This is called a suicide move, since the stone is dead as soon as it is played. Unless doing so captures opposing stones.
+When the computer passes, it is telling you nothing is left worth playing. In Coach mode, the Territory map shows who controls each area, so you can learn to see it for yourself.
 
-The **ko** rule prevents an immediate recapture that would simply recreate the previous position.
+You don't play Go just to win. You play to think, to discover and to enjoy getting better.
 
-When neither player sees further advantage in continuing, both pass and the battle ends. The players then determine who controls more of the board. White receives additional points, called _komi_, to compensate for Black moving first.
-
-## The Four Skills of Command
-
-The lessons follow these skills in order: basic training and tactics first, then formations, the terrain, calculating the engagement and, last, strategy. Type 3, then choose Lessons and Puzzles.
-
-### Reading the terrain
-
-Seeing which ground can be occupied, where influence can be extended, which positions can be attacked and where one's own forces are exposed. This is called mapping the **territory** in Go.
-
-### Judging formations
-
-Understanding which arrangements of forces are strong or weak, and why. Go players call this **shape**. A collection of stones may be numerous yet inefficient, while a much smaller force can be extremely strong if its stones support one another well.
-
-### Calculating the engagement
-
-Foreseeing how a local battle is likely to develop: _if I attack here, my opponent responds there; if I answer there, what happens next?_
-
-Go players call this **reading**. In this app, we call it **analysis**.
-
-### Developing strategies
-
-**Strategy** involves recognising what matters most across the whole battlefield and directing your moves towards that larger purpose. A commander may win a skirmish yet lose the war. Conversely, stones may deliberately be sacrificed because defending them would consume resources better employed elsewhere.
-
-This app will teach you Go by teaching you all these skills - mapping territories, judging shapes, analysing the game, and developing strategies.
-
-## Winning in Go
-
-Go offers a strikingly different conception of victory.
-
-The objective is not the annihilation of the opposing army nor the capture of the governing authority. Both sides normally survive, retain substantial forces and control territory when the game ends. Victory requires not the destruction of the opponent, simply a stronger overall position.
-
-This changes the logic of battle.
-
-An enemy group does not need to be destroyed merely because it can be attacked. An attack must justify the resources committed to it. Territory should not be seized simply because it appears available. It must also be capable of being defended. A local defeat may be accepted because fighting elsewhere produces greater strategic value.
-
-Above all, **strength comes from relationships**. An isolated stone is vulnerable. Connected stones support one another. Yet simply accumulating more stones is not enough: badly positioned forces become inefficient, while well-connected forces can exert influence far beyond the ground they physically occupy.  
-
-Also, the relationship of the stones to the rest of the board is also important. In that sense, strength depends on location and terrain as well.
-
-Go therefore rewards restraint as much as aggression, connection as much as independence, and judgement as much as strength.
-
-This recalls the strategic principles associated with Sun Tzu's _The Art of War_: the highest achievement of command is not indiscriminate destruction, but achieving one's objective while conserving forces, avoiding unnecessary engagements and preserving what is valuable.
-
-Go therefore suggests an alternative way of thinking about competition.
-
-**Winning does not necessarily require the destruction of the enemy.** It is often enough, if not better, to just have the strategic advantage. 
-
-Competitors may fight intensely while continuing to coexist. An opponent does not have to lose everything for you to win. Indeed, attempts to dominate everywhere frequently produce overextension, vulnerability and eventual defeat.
-
-This lesson reaches beyond warfare and the Go board. Modern businesses, nations and individuals increasingly operate within systems of mutual dependence. Competitors may simultaneously be collaborators; prosperity depends upon customers, workers, suppliers, communities, competitors and ecological systems remaining viable. Go provides a platform to train a different way of thinking in an adversarial environment.
-
-Go does not ask us to abandon competition. It suggests something more subtle:
-
-> **Do not seek to destroy your opponent; they are also the source of your strength. Opposition gives shape to purpose, resistance gives rise to wisdom, and both sides must live. The greatest victory is not annihilation, but a stronger position within the whole. Strength lies in knowing when to fight, when to yield, and when to let both sides live. Keep your eyes on the whole board.**
+**Welcome to Go. Let's learn to see the board.**

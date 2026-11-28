@@ -9,7 +9,7 @@
 
   /* In the order of the numbers in the welcome (coach.js WELCOME_KEYS). `words` lets a request in your own words pick one. */
   const OPTIONS = [
-    { key: 'whatisgo', words: /^(what('s| is) go|about go|tell me about go)\b/ },
+    { key: 'whatisgo', words: /^(what('s| is) go|why play go|about go|tell me about go)\b/ },
     { key: 'history', words: /^(a )?(short )?history( of go)?$/ },
     { key: 'teach', words: /^teach me$/ },
     { key: 'coach', words: /^(coach me|coach mode)$/ },

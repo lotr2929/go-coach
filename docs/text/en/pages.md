@@ -1,15 +1,15 @@
 # Pages
 
-The long pages (What is Go? and A history of Go) are kept whole in the pages folder next to this file.
+The long pages (Why Play Go? and A history of Go) are kept whole in the pages folder next to this file.
 These are the short messages around them.
 
 How to edit: change the words under a "## name" heading, but leave the heading itself as it is.
 
 ## whatisgo-title
-What is Go?
+Why Play Go?
 
 ## whatisgo-opened
-"What is Go?" is open in the board window. Press "Back to the board" when you have finished reading.
+"Why Play Go?" is open in the board window. Press "Back to the board" when you have finished reading.
 
 ## history-title
 A history of Go

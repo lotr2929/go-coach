@@ -22,7 +22,7 @@ Tap the title Go Coach at the top to start Puzzle mode: short puzzles chosen for
 Type your request by typing one of the numbers above or by clicking on one of the options. You can also make your own request simply by asking in your own words. I will try to answer your question if I can. However, since I am not an AI model, I may not understand your query as fully as an AI model can. Typing Help brings you back to this prompt. Type Tour to start a tour of the app.
 
 ## whatisgo
-What is Go?
+Why Play Go?
 
 ## history
 A Short History of Go
