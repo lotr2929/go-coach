@@ -29,6 +29,11 @@
         the board for a new game with the same settings (size, handicap, colour), without the New game box. A slip would lose
         the game, so the first tap asks "Sure?" and a second tap within 3 seconds clears. Shown only in an ordinary game: not
         in a famous game or while exploring a move (lessons, puzzles and the teacher hide the whole row already). */
+  /* 4. (Boon, 28 Nov 2026) The message row under the chat was larger than the rest (16px against the chat's 15.2px and the
+        buttons' 13.6px). Its typing and placeholder now match the chat text (--text), and Clear and Send match the other
+        buttons (.85rem). Note for Go Coach: on an iPhone, a typing box under 16px makes Safari zoom in when tapped. */
+  css.textContent += ' .chatInput { font-size: var(--text); } .chatForm button { font-size: .85rem; }';
+
   const row = document.getElementById('boardBar');
   if (row) {
     const clear = document.createElement('button');
